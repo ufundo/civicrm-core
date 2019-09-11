@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -27,7 +27,7 @@
 
 /**
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 /**
@@ -154,10 +154,13 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
 
   public $_pcpId;
 
-  /* Is event already full.
+  /**
+   * Is event already full.
    *
    * @var boolean
+   *
    */
+
 
   public $_isEventFull;
 
@@ -167,14 +170,35 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
 
   public $_forcePayement;
 
+  /**
+   * @var bool
+   * @deprecated
+   */
   public $_isBillingAddressRequiredForPayLater;
+
+  /**
+   * Is this a back office form
+   *
+   * @var bool
+   */
+  public $isBackOffice = FALSE;
+
+  /**
+   * Payment instrument iD for the transaction.
+   *
+   * This will generally be drawn from the payment processor and is ignored for
+   * front end forms.
+   *
+   * @var int
+   */
+  public $paymentInstrumentID;
 
   /**
    * Set variables up before form is built.
    */
   public function preProcess() {
     $this->_eventId = CRM_Utils_Request::retrieve('id', 'Positive', $this, TRUE);
-    $this->_action = CRM_Utils_Request::retrieve('action', 'String', $this, FALSE);
+    $this->_action = CRM_Utils_Request::retrieve('action', 'Alphanumeric', $this, FALSE, CRM_Core_Action::ADD);
 
     //CRM-4320
     $this->_participantId = CRM_Utils_Request::retrieve('participantId', 'Positive', $this);
@@ -369,9 +393,7 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
     $this->_contributeMode = $this->get('contributeMode');
     $this->assign('contributeMode', $this->_contributeMode);
 
-    // setting CMS page title
-    CRM_Utils_System::setTitle($this->_values['event']['title']);
-    $this->assign('title', $this->_values['event']['title']);
+    $this->setTitle($this->_values['event']['title']);
 
     $this->assign('paidEvent', $this->_values['event']['is_monetary']);
 
@@ -467,23 +489,7 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
       }
     }
 
-    // assign the address formatted up for display
-    $addressParts = array(
-      "street_address-{$this->_bltID}",
-      "city-{$this->_bltID}",
-      "postal_code-{$this->_bltID}",
-      "state_province-{$this->_bltID}",
-      "country-{$this->_bltID}",
-    );
-    $addressFields = array();
-    foreach ($addressParts as $part) {
-      list($n, $id) = explode('-', $part);
-      if (isset($params['billing_' . $part])) {
-        $addressFields[$n] = CRM_Utils_Array::value('billing_' . $part, $params);
-      }
-    }
-
-    $this->assign('address', CRM_Utils_Address::format($addressFields));
+    $this->assign('address', CRM_Utils_Address::getFormattedBillingAddressFieldsFromParameters($params, $this->_bltID));
 
     // The concept of contributeMode is deprecated.
     if ($this->_contributeMode == 'direct' && empty($params['is_pay_later'])) {
@@ -755,8 +761,7 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
         'participant_id' => $participant->id,
         'contribution_id' => $contribution->id,
       );
-      $ids = array();
-      $paymentPartcipant = CRM_Event_BAO_ParticipantPayment::create($paymentParams, $ids);
+      $paymentPartcipant = CRM_Event_BAO_ParticipantPayment::create($paymentParams);
     }
 
     //set only primary participant's params for transfer checkout.
@@ -785,12 +790,11 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
       }
 
       // we should use primary email for
-      // 1. free event registration.
-      // 2. pay later participant.
-      // 3. waiting list participant.
-      // 4. require approval participant.
+      // 1. pay later participant.
+      // 2. waiting list participant.
+      // 3. require approval participant.
       if (!empty($this->_params['is_pay_later']) ||
-        $this->_allowWaitlist || $this->_requireApproval || empty($this->_values['event']['is_monetary'])
+        $this->_allowWaitlist || $this->_requireApproval
       ) {
         $mail = 'email-Primary';
       }
@@ -1253,10 +1257,10 @@ WHERE  v.option_group_id = g.id
       return;
     }
     foreach (array(
-               'constantValues',
-               'submitValues',
-               'defaultValues',
-             ) as $val) {
+      'constantValues',
+      'submitValues',
+      'defaultValues',
+    ) as $val) {
       $values = $form->{"_$val"};
       if (!is_array($values) || empty($values)) {
         continue;
@@ -1483,7 +1487,7 @@ WHERE  v.option_group_id = g.id
       $startDate &&
       $startDate >= $now
     ) {
-      CRM_Core_Error::statusBounce(ts('Registration for this event begins on %1', array(1 => CRM_Utils_Date::customFormat(CRM_Utils_Array::value('registration_start_date', $this->_values['event'])))), $redirect);
+      CRM_Core_Error::statusBounce(ts('Registration for this event begins on %1', array(1 => CRM_Utils_Date::customFormat(CRM_Utils_Array::value('registration_start_date', $this->_values['event'])))), $redirect, ts('Sorry'));
     }
 
     $regEndDate = CRM_Utils_Date::processDate(CRM_Utils_Array::value('registration_end_date',
@@ -1495,7 +1499,7 @@ WHERE  v.option_group_id = g.id
       if (empty($regEndDate)) {
         $endDate = CRM_Utils_Date::customFormat(CRM_Utils_Array::value('event_end_date', $this->_values['event']));
       }
-      CRM_Core_Error::statusBounce(ts('Registration for this event ended on %1', array(1 => $endDate)), $redirect);
+      CRM_Core_Error::statusBounce(ts('Registration for this event ended on %1', array(1 => $endDate)), $redirect, ts('Sorry'));
     }
   }
 

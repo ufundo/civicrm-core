@@ -8,10 +8,10 @@
  *   API result array
  */
 function activity_get_example() {
-  $params = array(
+  $params = [
     'filter.activity_date_time_low' => '20120101000000',
     'sequential' => 1,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Activity', 'get', $params);
@@ -21,11 +21,12 @@ function activity_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -39,15 +40,15 @@ function activity_get_example() {
  */
 function activity_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 2,
-    'values' => array(
-      '0' => array(
+    'values' => [
+      '0' => [
         'id' => '2',
-        'activity_type_id' => '51',
+        'activity_type_id' => '9999',
         'subject' => 'Make-it-Happen Meeting',
         'activity_date_time' => '2012-02-16 00:00:00',
         'duration' => '120',
@@ -59,10 +60,11 @@ function activity_get_expectedresult() {
         'is_auto' => 0,
         'is_current_revision' => '1',
         'is_deleted' => 0,
+        'is_star' => 0,
         'source_contact_id' => '1',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

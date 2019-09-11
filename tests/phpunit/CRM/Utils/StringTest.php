@@ -131,7 +131,8 @@ class CRM_Utils_StringTest extends CiviUnitTestCase {
    * @return array
    */
   public function booleanDataProvider() {
-    $cases = array(); // array(0 => $input, 1 => $expectedOutput)
+    // array(0 => $input, 1 => $expectedOutput)
+    $cases = array();
     $cases[] = array(TRUE, TRUE);
     $cases[] = array(FALSE, FALSE);
     $cases[] = array(1, TRUE);
@@ -225,6 +226,149 @@ class CRM_Utils_StringTest extends CiviUnitTestCase {
 
     $actualResults = CRM_Utils_String::filterByWildcards($patterns, $data, TRUE);
     $this->assertEquals(array_merge($expectedResults, array('noise')), $actualResults);
+  }
+
+  /**
+   * CRM-20821
+   * CRM-14283
+   *
+   * @param string $imageURL
+   * @param book $forceHttps
+   * @param string $expected
+   *
+   * @dataProvider simplifyURLProvider
+   */
+  public function testSimplifyURL($imageURL, $forceHttps, $expected) {
+    $this->assertEquals(
+      $expected,
+      CRM_Utils_String::simplifyURL($imageURL, $forceHttps)
+    );
+  }
+
+  /**
+   * Used for testNormalizeImageURL above
+   *
+   * @return array
+   */
+  public function simplifyURLProvider() {
+    $config = CRM_Core_Config::singleton();
+    $urlParts = CRM_Utils_String::simpleParseUrl($config->userFrameworkBaseURL);
+    $localDomain = $urlParts['host+port'];
+    if (empty($localDomain)) {
+      throw new \Exception("Failed to determine local base URL");
+    }
+    $externalDomain = 'example.org';
+
+    // Ensure that $externalDomain really is different from $localDomain
+    if ($externalDomain == $localDomain) {
+      $externalDomain = 'example.net';
+    }
+
+    return array(
+      'prototypical example' => array(
+        "https://$localDomain/sites/default/files/coffee-mug.jpg",
+        FALSE,
+        '/sites/default/files/coffee-mug.jpg',
+      ),
+      'external domain with https' => array(
+        "https://$externalDomain/sites/default/files/coffee-mug.jpg",
+        FALSE,
+        "https://$externalDomain/sites/default/files/coffee-mug.jpg",
+      ),
+      'external domain with http forced to https' => array(
+        "http://$externalDomain/sites/default/files/coffee-mug.jpg",
+        TRUE,
+        "https://$externalDomain/sites/default/files/coffee-mug.jpg",
+      ),
+      'external domain with http not forced' => array(
+        "http://$externalDomain/sites/default/files/coffee-mug.jpg",
+        FALSE,
+        "http://$externalDomain/sites/default/files/coffee-mug.jpg",
+      ),
+      'local URL' => array(
+        "/sites/default/files/coffee-mug.jpg",
+        FALSE,
+        "/sites/default/files/coffee-mug.jpg",
+      ),
+      'local URL without a forward slash' => array(
+        "sites/default/files/coffee-mug.jpg",
+        FALSE,
+        "/sites/default/files/coffee-mug.jpg",
+      ),
+      'empty input' => array(
+        '',
+        FALSE,
+        '',
+      ),
+    );
+  }
+
+  /**
+   * @param string $url
+   * @param array $expected
+   *
+   * @dataProvider parseURLProvider
+   */
+  public function testSimpleParseUrl($url, $expected) {
+    $this->assertEquals(
+      $expected,
+      CRM_Utils_String::simpleParseUrl($url)
+    );
+  }
+
+  /**
+   * Used for testSimpleParseUrl above
+   *
+   * @return array
+   */
+  public function parseURLProvider() {
+    return array(
+      "prototypical example" => array(
+        "https://example.com:8000/foo/bar/?id=1#fragment",
+        array(
+          'host+port' => "example.com:8000",
+          'path+query' => "/foo/bar/?id=1",
+        ),
+      ),
+      "default port example" => array(
+        "https://example.com/foo/bar/?id=1#fragment",
+        array(
+          'host+port' => "example.com",
+          'path+query' => "/foo/bar/?id=1",
+        ),
+      ),
+      "empty" => array(
+        "",
+        array(
+          'host+port' => "",
+          'path+query' => "",
+        ),
+      ),
+      "path only" => array(
+        "/foo/bar/image.png",
+        array(
+          'host+port' => "",
+          'path+query' => "/foo/bar/image.png",
+        ),
+      ),
+    );
+  }
+
+  public function purifyHTMLProvider() {
+    $tests = [];
+    $tests[] = ['<span onmouseover=alert(0)>HOVER</span>', '<span>HOVER</span>'];
+    $tests[] = ['<a href="https://civicrm.org" target="_blank" class="button-purple">hello</a>', '<a href="https://civicrm.org" target="_blank" class="button-purple" rel="noreferrer noopener">hello</a>'];
+    return $tests;
+  }
+
+  /**
+   * Test ouput of purifyHTML
+   * @param string $testString
+   * @param string $expectedString
+   * @dataProvider purifyHTMLProvider
+   */
+  public function testPurifyHTML($testString, $expectedString) {
+    $this->assertEquals($expectedString, CRM_Utils_String::purifyHTML($testString));
   }
 
 }

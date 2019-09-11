@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
@@ -38,17 +38,18 @@
  * @group headless
  */
 class CRM_Core_BAO_LocationTest extends CiviUnitTestCase {
+
   public function setUp() {
     parent::setUp();
 
     $this->quickCleanup(array(
-        'civicrm_contact',
-        'civicrm_address',
-        'civicrm_loc_block',
-        'civicrm_email',
-        'civicrm_phone',
-        'civicrm_im',
-      ));
+      'civicrm_contact',
+      'civicrm_address',
+      'civicrm_loc_block',
+      'civicrm_email',
+      'civicrm_phone',
+      'civicrm_im',
+    ));
   }
 
   /**
@@ -97,6 +98,7 @@ class CRM_Core_BAO_LocationTest extends CiviUnitTestCase {
           'street_address' => 'Saint Helier St',
           'supplemental_address_1' => 'Hallmark Ct',
           'supplemental_address_2' => 'Jersey Village',
+          'supplemental_address_3' => 'My Town',
           'city' => 'Newark',
           'postal_code' => '01903',
           'country_id' => 1228,
@@ -160,6 +162,7 @@ class CRM_Core_BAO_LocationTest extends CiviUnitTestCase {
       'street_address' => 'Saint Helier St',
       'supplemental_address_1' => 'Hallmark Ct',
       'supplemental_address_2' => 'Jersey Village',
+      'supplemental_address_3' => 'My Town',
       'city' => 'Newark',
       'postal_code' => '01903',
       'country_id' => 1228,
@@ -217,6 +220,7 @@ class CRM_Core_BAO_LocationTest extends CiviUnitTestCase {
           'street_address' => 'Saint Helier St',
           'supplemental_address_1' => 'Hallmark Ct',
           'supplemental_address_2' => 'Jersey Village',
+          'supplemental_address_3' => 'My Town',
           'city' => 'Newark',
           'postal_code' => '01903',
           'country_id' => 1228,
@@ -300,6 +304,7 @@ class CRM_Core_BAO_LocationTest extends CiviUnitTestCase {
       'street_address' => 'Saint Helier St',
       'supplemental_address_1' => 'Hallmark Ct',
       'supplemental_address_2' => 'Jersey Village',
+      'supplemental_address_3' => 'My Town',
       'city' => 'Newark',
       'postal_code' => '01903',
       'country_id' => 1228,
@@ -367,6 +372,7 @@ class CRM_Core_BAO_LocationTest extends CiviUnitTestCase {
         'street_address' => 'Saint Helier St',
         'supplemental_address_1' => 'Hallmark Ct',
         'supplemental_address_2' => 'Jersey Village',
+        'supplemental_address_3' => 'My Town',
         'city' => 'Newark',
         'postal_code' => '01903',
         'country_id' => 1228,
@@ -459,6 +465,7 @@ class CRM_Core_BAO_LocationTest extends CiviUnitTestCase {
           'street_address' => 'Saint Helier St',
           'supplemental_address_1' => 'Hallmark Ct',
           'supplemental_address_2' => 'Jersey Village',
+          'supplemental_address_3' => 'My Town',
           'city' => 'Newark',
           'postal_code' => '01903',
           'country_id' => 1228,

@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -24,12 +24,21 @@
  +--------------------------------------------------------------------+
 *}
 <div class="batch-update crm-block crm-form-block crm-event-batch-form-block">
-<fieldset>
   <div class="help">
     {if $context EQ 'statusChange'} {* Update Participant Status task *}
-      {ts}Update the status for each participant individually, OR change all statuses to:{/ts}
+      {ts}Update the status for each participant individually below, or change all statuses to:{/ts}
       {$form.status_change.html}  {help id="id-status_change"}
-      <div class="status">{$status}</div>
+      {if $status}
+        <div class="status">
+          <p>{ts}This form <strong>will send email</strong> to contacts only in certain circumstances:{/ts}</p>
+          <ul>
+            <li>{ts}<strong>Resolving "Pay Later" registrations for online registrations:</strong> Participants who registered online whose status is changed from <em>Pending Pay Later</em> to <em>Registered</em> or <em>Attended</em> will receive a confirmation email and their payment status will be set to completed. If this is not you want to do, you can change their participant status by editing their event registration record directly.{/ts}</li>
+          {if $notifyingStatuses}
+            <li>{ts 1=$notifyingStatuses}<strong>Special statuses:</strong> Participants whose status is changed to any of the following will be automatically notified via email: %1{/ts}</li>
+          {/if}
+          </ul>
+        </div>
+      {/if}
     {else}
       {if $statusProfile EQ 1} {* Update Participant Status in batch task *}
         <div class="status">{$status}</div>
@@ -63,8 +72,34 @@
               <td class="crm-event-title">{$details.$pid.title}</td>
               {foreach from=$fields item=field key=fieldName}
                 {assign var=n value=$field.name}
-                {if ( $fields.$n.data_type eq 'Date') or ( $n eq 'participant_register_date' ) }
-                   <td class="compressed">{include file="CRM/common/jcalendar.tpl" elementName=$n elementIndex=$pid batchUpdate=1}</td>
+
+                {* CRM-19860 Copied from templates/CRM/Contact/Form/Task/Batch.tpl *}
+                {if $field.options_per_line}
+                  <td class="compressed">
+                    {assign var="count" value="1"}
+                    {strip}
+                      <table class="form-layout-compressed">
+                      <tr>
+                        {* sort by fails for option per line. Added a variable to iterate through the element array*}
+                        {assign var="index" value="1"}
+                        {foreach name=optionOuter key=optionKey item=optionItem from=$form.field.$pid.$n}
+                          {if $index < 10}
+                            {assign var="index" value=`$index+1`}
+                          {else}
+                            <td class="labels font-light">{$form.field.$pid.$n.$optionKey.html}</td>
+                            {if $count == $field.options_per_line}
+                            </tr>
+                            <tr>
+                              {assign var="count" value="1"}
+                              {else}
+                              {assign var="count" value=`$count+1`}
+                            {/if}
+                          {/if}
+                        {/foreach}
+                      </tr>
+                      </table>
+                    {/strip}
+                  </td>
                 {else}
                   <td class="compressed">{$form.field.$pid.$n.html}</td>
                 {/if}
@@ -72,15 +107,10 @@
              </tr>
             {/foreach}
            </tr>
-           <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td> {if $fields}{$form._qf_Batch_refresh.html}{/if}{include file="CRM/common/formButtons.tpl"}
-              </td>
-           </tr>
          </table>
-
-</fieldset>
+<div class="crm-submit-buttons">
+{if $fields}{$form._qf_Batch_refresh.html}{/if}{include file="CRM/common/formButtons.tpl"}
+</div>
 </div>
 
 {if $context EQ 'statusChange'} {* Update Participant Status task *}

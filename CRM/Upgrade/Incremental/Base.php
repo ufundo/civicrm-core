@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7.alpha1                                         |
+ | CiviCRM version 5  .alpha1                                         |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -94,20 +94,20 @@ class CRM_Upgrade_Incremental_Base {
    * @param string $funcName
    */
   protected function addTask($title, $funcName) {
-    $queue = CRM_Queue_Service::singleton()->load(array(
+    $queue = CRM_Queue_Service::singleton()->load([
       'type' => 'Sql',
       'name' => CRM_Upgrade_Form::QUEUE_NAME,
-    ));
+    ]);
 
     $args = func_get_args();
     $title = array_shift($args);
     $funcName = array_shift($args);
     $task = new CRM_Queue_Task(
-      array(get_class($this), $funcName),
+      [get_class($this), $funcName],
       $args,
       $title
     );
-    $queue->createItem($task, array('weight' => -1));
+    $queue->createItem($task, ['weight' => -1]);
   }
 
   /**
@@ -119,15 +119,154 @@ class CRM_Upgrade_Incremental_Base {
    * @throws \CiviCRM_API3_Exception
    */
   public static function removePaymentProcessorType(CRM_Queue_TaskContext $ctx, $name) {
-    $processors = civicrm_api3('PaymentProcessor', 'getcount', array('payment_processor_type_id' => $name));
+    $processors = civicrm_api3('PaymentProcessor', 'getcount', ['payment_processor_type_id' => $name]);
     if (empty($processors['result'])) {
-      $result = civicrm_api3('PaymentProcessorType', 'get', array(
+      $result = civicrm_api3('PaymentProcessorType', 'get', [
         'name' => $name,
         'return' => 'id',
-      ));
+      ]);
       if (!empty($result['id'])) {
-        civicrm_api3('PaymentProcessorType', 'delete', array('id' => $result['id']));
+        civicrm_api3('PaymentProcessorType', 'delete', ['id' => $result['id']]);
       }
+    }
+    return TRUE;
+  }
+
+  /**
+   * @param string $table_name
+   * @param string $constraint_name
+   * @return bool
+   */
+  public static function checkFKExists($table_name, $constraint_name) {
+    return CRM_Core_BAO_SchemaHandler::checkFKExists($table_name, $constraint_name);
+  }
+
+  /**
+   * Add a column to a table if it doesn't already exist
+   *
+   * @param CRM_Queue_TaskContext $ctx
+   * @param string $table
+   * @param string $column
+   * @param string $properties
+   * @param bool $localizable is this a field that should be localized
+   * @param string|NULL $version CiviCRM version to use if rebuilding multilingual schema
+   * @return bool
+   */
+  public static function addColumn($ctx, $table, $column, $properties, $localizable = FALSE, $version = NULL) {
+    $domain = new CRM_Core_DAO_Domain();
+    $domain->find(TRUE);
+    $queries = [];
+    if (!CRM_Core_BAO_SchemaHandler::checkIfFieldExists($table, $column, FALSE)) {
+      if ($domain->locales) {
+        if ($localizable) {
+          $locales = explode(CRM_Core_DAO::VALUE_SEPARATOR, $domain->locales);
+          foreach ($locales as $locale) {
+            if (!CRM_Core_BAO_SchemaHandler::checkIfFieldExists($table, "{$column}_{$locale}", FALSE)) {
+              $queries[] = "ALTER TABLE `$table` ADD COLUMN `{$column}_{$locale}` $properties";
+            }
+          }
+        }
+        else {
+          $queries[] = "ALTER TABLE `$table` ADD COLUMN `$column` $properties";
+        }
+      }
+      else {
+        $queries[] = "ALTER TABLE `$table` ADD COLUMN `$column` $properties";
+      }
+      foreach ($queries as $query) {
+        CRM_Core_DAO::executeQuery($query, [], TRUE, NULL, FALSE, FALSE);
+      }
+    }
+    if ($domain->locales) {
+      $locales = explode(CRM_Core_DAO::VALUE_SEPARATOR, $domain->locales);
+      CRM_Core_I18n_Schema::rebuildMultilingualSchema($locales, $version, TRUE);
+    }
+    return TRUE;
+  }
+
+  /**
+   * Do any relevant message template updates.
+   *
+   * @param CRM_Queue_TaskContext $ctx
+   * @param string $version
+   */
+  public static function updateMessageTemplates($ctx, $version) {
+    $messageTemplateObject = new CRM_Upgrade_Incremental_MessageTemplates($version);
+    $messageTemplateObject->updateTemplates();
+
+  }
+
+  /**
+   * Do any relevant smart group updates.
+   *
+   * @param CRM_Queue_TaskContext $ctx
+   * @param array $actions
+   *
+   * @return bool
+   */
+  public function updateSmartGroups($ctx, $actions) {
+    $groupUpdateObject = new CRM_Upgrade_Incremental_SmartGroups();
+    $groupUpdateObject->updateGroups($actions);
+    return TRUE;
+  }
+
+  /**
+   * Drop a column from a table if it exist.
+   *
+   * @param CRM_Queue_TaskContext $ctx
+   * @param string $table
+   * @param string $column
+   * @return bool
+   */
+  public static function dropColumn($ctx, $table, $column) {
+    if (CRM_Core_BAO_SchemaHandler::checkIfFieldExists($table, $column)) {
+      CRM_Core_DAO::executeQuery("ALTER TABLE `$table` DROP COLUMN `$column`",
+        [], TRUE, NULL, FALSE, FALSE);
+    }
+    return TRUE;
+  }
+
+  /**
+   * Add a index to a table column.
+   *
+   * @param CRM_Queue_TaskContext $ctx
+   * @param string $table
+   * @param string|array $column
+   * @return bool
+   */
+  public static function addIndex($ctx, $table, $column) {
+    $tables = [$table => (array) $column];
+    CRM_Core_BAO_SchemaHandler::createIndexes($tables);
+
+    return TRUE;
+  }
+
+  /**
+   * Drop a index from a table if it exist.
+   *
+   * @param CRM_Queue_TaskContext $ctx
+   * @param string $table
+   * @param string $indexName
+   * @return bool
+   */
+  public static function dropIndex($ctx, $table, $indexName) {
+    CRM_Core_BAO_SchemaHandler::dropIndexIfExists($table, $indexName);
+
+    return TRUE;
+  }
+
+  /**
+   * Rebuild Multilingual Schema.
+   * @param CRM_Queue_TaskContext $ctx
+   * @param string|NULL $version CiviCRM version to use if rebuilding multilingual schema
+   * @return bool
+   */
+  public static function rebuildMultilingalSchema($ctx, $version = NULL) {
+    $domain = new CRM_Core_DAO_Domain();
+    $domain->find(TRUE);
+    if ($domain->locales) {
+      $locales = explode(CRM_Core_DAO::VALUE_SEPARATOR, $domain->locales);
+      CRM_Core_I18n_Schema::rebuildMultilingualSchema($locales, $version);
     }
     return TRUE;
   }

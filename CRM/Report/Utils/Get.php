@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
@@ -66,9 +66,12 @@ class CRM_Report_Utils_Get {
     $from = self::getTypedValue("{$fieldName}_from", $type);
     $to = self::getTypedValue("{$fieldName}_to", $type);
 
-    $relative = CRM_Utils_Array::value("{$fieldName}_relative", $_GET);
+    $relative = self::getTypedValue("{$fieldName}_relative", CRM_Utils_Type::T_STRING);
+    if ($relative !== NULL) {
+      $defaults["{$fieldName}_relative"] = $relative;
+    }
     if ($relative) {
-      list($from, $to) = CRM_Report_Form::getFromTo($relative, NULL, NULL);
+      list($from, $to) = CRM_Utils_Date::getFromTo($relative, NULL, NULL);
       $from = substr($from, 0, 8);
       $to = substr($to, 0, 8);
     }
@@ -110,6 +113,7 @@ class CRM_Report_Utils_Get {
       case 'ew':
       case 'nhas':
       case 'like':
+      case 'eq':
       case 'neq':
         $value = self::getTypedValue("{$fieldName}_value", CRM_Utils_Array::value('type', $field));
         if ($value !== NULL) {
@@ -196,10 +200,10 @@ class CRM_Report_Utils_Get {
    */
   public static function processChart(&$defaults) {
     $chartType = CRM_Utils_Array::value("charts", $_GET);
-    if (in_array($chartType, array(
+    if (in_array($chartType, [
       'barChart',
       'pieChart',
-    ))) {
+    ])) {
       $defaults["charts"] = $chartType;
     }
   }
@@ -294,7 +298,7 @@ class CRM_Report_Utils_Get {
       }
       if (CRM_Utils_Array::value("ufld", $_GET) == 1) {
         // unset all display columns
-        $defaults['fields'] = array();
+        $defaults['fields'] = [];
       }
       if (!empty($urlFields)) {
         foreach ($reportFields as $tableName => $fields) {

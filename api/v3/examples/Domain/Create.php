@@ -6,12 +6,12 @@
  *   API result array
  */
 function domain_create_example() {
-  $params = array(
+  $params = [
     'name' => 'A-team domain',
     'description' => 'domain of chaos',
     'domain_version' => '4.2',
     'contact_id' => 6,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Domain', 'create', $params);
@@ -21,11 +21,12 @@ function domain_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -39,24 +40,24 @@ function domain_create_example() {
  */
 function domain_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 3,
-    'values' => array(
-      '3' => array(
+    'values' => [
+      '3' => [
         'id' => '3',
         'name' => 'A-team domain',
         'description' => 'domain of chaos',
         'config_backend' => '',
-        'version' => '4.2',
         'contact_id' => '6',
         'locales' => '',
         'locale_custom_strings' => '',
-      ),
-    ),
-  );
+        'domain_version' => '4.2',
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

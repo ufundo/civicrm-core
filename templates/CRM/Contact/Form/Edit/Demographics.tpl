@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -37,7 +37,7 @@
   </div>
   <div class="form-item">
         <span class="label">{$form.birth_date.label}</span>
-        <span class="value">{include file="CRM/common/jcalendar.tpl" elementName=birth_date}</span>
+        <span class="fields">{$form.birth_date.html}</span>
   </div>
   <div class="form-item">
        {$form.is_deceased.html}
@@ -45,7 +45,7 @@
   </div>
   <div id="showDeceasedDate" class="form-item">
        <span class="label">{$form.deceased_date.label}</span>
-       <span class="value">{include file="CRM/common/jcalendar.tpl" elementName=deceased_date}</span>
+       <span class="fields">{$form.deceased_date.html}</span>
   </div>
  </div><!-- /.crm-accordion-body -->
 </div><!-- /.crm-accordion-wrapper -->

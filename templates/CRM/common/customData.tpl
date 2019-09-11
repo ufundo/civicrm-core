@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -26,7 +26,7 @@
 {literal}
 <script type="text/javascript">
   (function($) {
-    CRM.buildCustomData = function (type, subType, subName, cgCount, groupID, isMultiple) {
+    CRM.buildCustomData = function (type, subType, subName, cgCount, groupID, isMultiple, onlySubtype) {
       var dataUrl = CRM.url('civicrm/custom', {type: type}),
         prevCount = 1,
         fname = '#customData',
@@ -34,6 +34,10 @@
 
       if (subType) {
         dataUrl += '&subType=' + subType;
+      }
+
+      if (onlySubtype) {
+        dataUrl += '&onlySubtype=' + onlySubtype;
       }
 
       if (subName) {
@@ -56,6 +60,9 @@
       {/if}
       {if $qfKey}
         dataUrl += '&qf=' + '{$qfKey}';
+      {/if}
+      {if $action}
+      dataUrl += '&action=' + '{$action}';
       {/if}
       {literal}
 

@@ -8,9 +8,9 @@
  *   API result array
  */
 function group_getfields_example() {
-  $params = array(
+  $params = [
     'action' => 'create',
-  );
+  ];
 
   try{
     $result = civicrm_api3('Group', 'getfields', $params);
@@ -20,11 +20,12 @@ function group_getfields_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -38,147 +39,236 @@ function group_getfields_example() {
  */
 function group_getfields_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 20,
-    'values' => array(
-      'id' => array(
+    'values' => [
+      'id' => [
         'name' => 'id',
         'type' => 1,
         'title' => 'Group ID',
+        'description' => 'Group ID',
         'required' => TRUE,
-        'api.aliases' => array(
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+        'api.aliases' => [
           '0' => 'group_id',
-        ),
-      ),
-      'name' => array(
+        ],
+      ],
+      'name' => [
         'name' => 'name',
         'type' => 2,
         'title' => 'Group Name',
+        'description' => 'Internal name of Group.',
         'maxlength' => 64,
         'size' => 30,
-      ),
-      'title' => array(
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'title' => [
         'name' => 'title',
         'type' => 2,
         'title' => 'Group Title',
+        'description' => 'Name of Group.',
         'maxlength' => 64,
         'size' => 30,
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
         'api.required' => 1,
-      ),
-      'description' => array(
+      ],
+      'description' => [
         'name' => 'description',
         'type' => 32,
         'title' => 'Group Description',
+        'description' => 'Optional verbose description of the group.',
         'rows' => 2,
         'cols' => 60,
-        'html' => array(
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+        'html' => [
           'type' => 'TextArea',
-        ),
-      ),
-      'source' => array(
+          'rows' => 2,
+          'cols' => 60,
+        ],
+      ],
+      'source' => [
         'name' => 'source',
         'type' => 2,
         'title' => 'Group Source',
+        'description' => 'Module or process which created this group.',
         'maxlength' => 64,
         'size' => 30,
-      ),
-      'saved_search_id' => array(
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'saved_search_id' => [
         'name' => 'saved_search_id',
         'type' => 1,
         'title' => 'Saved Search ID',
+        'description' => 'FK to saved search table.',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
         'FKClassName' => 'CRM_Contact_DAO_SavedSearch',
         'FKApiName' => 'SavedSearch',
-      ),
-      'is_active' => array(
+      ],
+      'is_active' => [
         'name' => 'is_active',
         'type' => 16,
         'title' => 'Group Enabled',
+        'description' => 'Is this entry active?',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
         'api.default' => 1,
-      ),
-      'visibility' => array(
+      ],
+      'visibility' => [
         'name' => 'visibility',
         'type' => 2,
         'title' => 'Group Visibility Setting',
+        'description' => 'In what context(s) is this field visible.',
         'maxlength' => 24,
         'size' => 20,
         'default' => 'User and User Admin Only',
-        'html' => array(
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+        'html' => [
           'type' => 'Select',
-        ),
-        'pseudoconstant' => array(
+          'maxlength' => 24,
+          'size' => 20,
+        ],
+        'pseudoconstant' => [
           'callback' => 'CRM_Core_SelectValues::groupVisibility',
-        ),
-      ),
-      'where_clause' => array(
+        ],
+      ],
+      'where_clause' => [
         'name' => 'where_clause',
         'type' => 32,
         'title' => 'Group Where Clause',
-      ),
-      'select_tables' => array(
+        'description' => 'the sql where clause if a saved search acl',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'select_tables' => [
         'name' => 'select_tables',
         'type' => 32,
         'title' => 'Tables For Select Clause',
-      ),
-      'where_tables' => array(
+        'description' => 'the tables to be included in a select data',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'where_tables' => [
         'name' => 'where_tables',
         'type' => 32,
         'title' => 'Tables For Where Clause',
-      ),
-      'group_type' => array(
+        'description' => 'the tables to be included in the count statement',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'group_type' => [
         'name' => 'group_type',
         'type' => 2,
         'title' => 'Group Type',
+        'description' => 'FK to group type',
         'maxlength' => 128,
         'size' => 45,
-      ),
-      'cache_date' => array(
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+        'pseudoconstant' => [
+          'optionGroupName' => 'group_type',
+          'optionEditPath' => 'civicrm/admin/options/group_type',
+        ],
+      ],
+      'cache_date' => [
         'name' => 'cache_date',
-        'type' => 12,
+        'type' => 256,
         'title' => 'Group Cache Date',
-      ),
-      'refresh_date' => array(
+        'description' => 'Date when we created the cache for a smart group',
+        'required' => '',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'refresh_date' => [
         'name' => 'refresh_date',
-        'type' => 12,
+        'type' => 256,
         'title' => 'Next Group Refresh Time',
-      ),
-      'parents' => array(
+        'description' => 'Date and time when we need to refresh the cache next.',
+        'required' => '',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'parents' => [
         'name' => 'parents',
         'type' => 32,
         'title' => 'Group Parents',
-      ),
-      'children' => array(
+        'description' => 'IDs of the parent(s)',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'children' => [
         'name' => 'children',
         'type' => 32,
         'title' => 'Group Children',
-      ),
-      'is_hidden' => array(
+        'description' => 'IDs of the child(ren)',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'is_hidden' => [
         'name' => 'is_hidden',
         'type' => 16,
         'title' => 'Group is Hidden',
-      ),
-      'is_reserved' => array(
+        'description' => 'Is this group hidden?',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'is_reserved' => [
         'name' => 'is_reserved',
         'type' => 16,
         'title' => 'Group is Reserved',
-      ),
-      'created_id' => array(
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
+      ],
+      'created_id' => [
         'name' => 'created_id',
         'type' => 1,
         'title' => 'Group Created By',
+        'description' => 'FK to contact table.',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
         'FKClassName' => 'CRM_Contact_DAO_Contact',
         'FKApiName' => 'Contact',
-      ),
-      'modified_id' => array(
+      ],
+      'modified_id' => [
         'name' => 'modified_id',
         'type' => 1,
         'title' => 'Group Modified By',
+        'description' => 'FK to contact table.',
+        'table_name' => 'civicrm_group',
+        'entity' => 'Group',
+        'bao' => 'CRM_Contact_BAO_Group',
         'FKClassName' => 'CRM_Contact_DAO_Contact',
         'FKApiName' => 'Contact',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

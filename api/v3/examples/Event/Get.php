@@ -6,10 +6,10 @@
  *   API result array
  */
 function event_get_example() {
-  $params = array(
+  $params = [
     'event_title' => 'Annual CiviCRM meet',
     'sequential' => TRUE,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Event', 'get', $params);
@@ -19,11 +19,12 @@ function event_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -37,21 +38,23 @@ function event_get_example() {
  */
 function event_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '0' => array(
+    'values' => [
+      '0' => [
         'id' => '1',
         'title' => 'Annual CiviCRM meet',
         'event_title' => 'Annual CiviCRM meet',
+        'event_description' => '',
         'event_type_id' => '1',
         'participant_listing_id' => 0,
         'is_public' => '1',
         'start_date' => '2013-07-29 00:00:00',
         'event_start_date' => '2013-07-29 00:00:00',
+        'event_end_date' => '',
         'is_online_registration' => 0,
         'is_monetary' => 0,
         'is_map' => 0,
@@ -62,15 +65,18 @@ function event_get_expectedresult() {
         'is_pay_later' => 0,
         'is_partial_payment' => 0,
         'is_multiple_registrations' => 0,
+        'max_additional_participants' => 0,
         'allow_same_participant_emails' => 0,
+        'allow_selfcancelxfer' => 0,
+        'selfcancelxfer_time' => 0,
         'is_template' => 0,
         'created_date' => '2013-07-28 08:49:19',
         'is_share' => '1',
         'is_confirm_enabled' => '1',
         'is_billing_required' => 0,
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

@@ -6,9 +6,9 @@
  *   API result array
  */
 function participant_get_example() {
-  $params = array(
+  $params = [
     'id' => 1,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Participant', 'get', $params);
@@ -18,11 +18,12 @@ function participant_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,19 +37,19 @@ function participant_get_example() {
  */
 function participant_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'contact_id' => '2',
         'contact_type' => 'Individual',
         'contact_sub_type' => '',
         'sort_name' => 'Anderson, Anthony',
         'display_name' => 'Mr. Anthony Anderson II',
-        'event_id' => '5',
+        'event_id' => '6',
         'event_title' => 'Annual CiviCRM meet',
         'event_start_date' => '2013-07-29 00:00:00',
         'event_end_date' => '2013-08-04 00:00:00',
@@ -59,8 +60,8 @@ function participant_get_expectedresult() {
         'event_type' => 'Conference',
         'participant_status_id' => '2',
         'participant_status' => 'Attended',
-        'participant_role' => 'Attendee',
         'participant_role_id' => '1',
+        'participant_role' => 'Attendee',
         'participant_register_date' => '2007-02-19 00:00:00',
         'participant_source' => 'Wimbeldon',
         'participant_note' => '',
@@ -70,9 +71,9 @@ function participant_get_expectedresult() {
         'participant_discount_name' => '',
         'participant_campaign_id' => '',
         'id' => '1',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

@@ -6,7 +6,7 @@
  *   API result array
  */
 function job_create_example() {
-  $params = array(
+  $params = [
     'sequential' => 1,
     'name' => 'API_Test_Job',
     'description' => 'A long description written by hand in cursive',
@@ -15,7 +15,7 @@ function job_create_example() {
     'api_action' => 'apitestaction',
     'parameters' => 'Semi-formal explanation of runtime job parameters',
     'is_active' => 1,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Job', 'create', $params);
@@ -25,11 +25,12 @@ function job_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -43,26 +44,27 @@ function job_create_example() {
  */
 function job_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
-    'id' => 29,
-    'values' => array(
-      '0' => array(
-        'id' => '29',
+    'id' => 30,
+    'values' => [
+      '0' => [
+        'id' => '30',
         'domain_id' => '1',
         'run_frequency' => 'Daily',
         'last_run' => '',
+        'scheduled_run_date' => '',
         'name' => 'API_Test_Job',
         'description' => 'A long description written by hand in cursive',
         'api_entity' => 'ApiTestEntity',
         'api_action' => 'apitestaction',
         'parameters' => 'Semi-formal explanation of runtime job parameters',
         'is_active' => '1',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

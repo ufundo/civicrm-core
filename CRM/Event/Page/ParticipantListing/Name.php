@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,13 +28,14 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
 class CRM_Event_Page_ParticipantListing_Name extends CRM_Event_Page_ParticipantListing_Simple {
+
   public function preProcess() {
-    $this->_participantListingType == 'Name';
+    $this->_participantListingType = 'Name';
 
     parent::preProcess();
   }

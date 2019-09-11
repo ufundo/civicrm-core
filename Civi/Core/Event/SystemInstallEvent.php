@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -37,5 +37,13 @@ class SystemInstallEvent extends \Symfony\Component\EventDispatcher\Event {
    * The SystemInstallEvent fires once after installation - during the first page-view.
    */
   const EVENT_NAME = 'civi.core.install';
+
+  /**
+   * @param \Civi\Core\Event\GenericHookEvent $e
+   * @see \CRM_Utils_Hook::eventDefs
+   */
+  public static function hookEventDefs($e) {
+    $e->inspector->addEventClass(self::EVENT_NAME, __CLASS__);
+  }
 
 }

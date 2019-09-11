@@ -6,9 +6,9 @@
  *   API result array
  */
 function uf_match_get_example() {
-  $params = array(
+  $params = [
     'contact_id' => 69,
-  );
+  ];
 
   try{
     $result = civicrm_api3('UFMatch', 'get', $params);
@@ -18,11 +18,12 @@ function uf_match_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,20 +37,20 @@ function uf_match_get_example() {
  */
 function uf_match_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
         'domain_id' => '1',
         'uf_id' => '42',
         'contact_id' => '69',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

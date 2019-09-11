@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -60,7 +60,6 @@ class api_v3_ContributionSoftTest extends CiviUnitTestCase {
   protected $_entity = 'Contribution';
   public $debug = 0;
   protected $_params;
-
 
   public function setUp() {
     parent::setUp();
@@ -148,9 +147,8 @@ class api_v3_ContributionSoftTest extends CiviUnitTestCase {
 
     //test get by contact id works
     $result = $this->callAPISuccess('contribution_soft', 'get', array(
-        'contact_id' => $this->_softIndividual2Id,
-      )
-    );
+      'contact_id' => $this->_softIndividual2Id,
+    ));
     $this->assertEquals(1, $result['count']);
 
     $this->callAPISuccess('contribution_soft', 'Delete', array(
@@ -167,7 +165,6 @@ class api_v3_ContributionSoftTest extends CiviUnitTestCase {
       'id' => $this->_softcontribution2['id'],
     ));
   }
-
 
   /**
    * civicrm_contribution_soft.
@@ -291,7 +288,7 @@ class api_v3_ContributionSoftTest extends CiviUnitTestCase {
     $params = array(
       'id' => $softcontributionID,
     );
-    $result = $this->callAPISuccess('contribution_soft', 'delete', $params);
+    $this->callAPISuccess('contribution_soft', 'delete', $params);
   }
 
   /**
@@ -307,7 +304,7 @@ class api_v3_ContributionSoftTest extends CiviUnitTestCase {
     $params = array(
       'contribution_source' => 'SSF',
     );
-    $softcontribution = $this->callAPIFailure('contribution_soft', 'delete', $params);
+    $this->callAPIFailure('contribution_soft', 'delete', $params);
   }
 
   public function testDeleteContributionSoft() {
@@ -324,7 +321,7 @@ class api_v3_ContributionSoftTest extends CiviUnitTestCase {
     $params = array(
       'id' => $softcontributionID,
     );
-    $result = $this->callAPIAndDocument('contribution_soft', 'delete', $params, __FUNCTION__, __FILE__);
+    $this->callAPIAndDocument('contribution_soft', 'delete', $params, __FUNCTION__, __FILE__);
   }
 
   ///////////////// civicrm_contribution_search methods

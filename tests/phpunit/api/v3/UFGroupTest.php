@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -33,7 +33,10 @@
  * @group headless
  */
 class api_v3_UFGroupTest extends CiviUnitTestCase {
-  // ids from the uf_group_test.xml fixture
+  /**
+   * ids from the uf_group_test.xml fixture
+   * @var int
+   */
   protected $_ufGroupId;
   protected $_ufFieldId;
   protected $_contactId;
@@ -125,10 +128,6 @@ class api_v3_UFGroupTest extends CiviUnitTestCase {
       }
       $expected = $this->params[$key];
       $received = $result['values'][$result['id']][$key];
-      // group names are renamed to name_id by BAO
-      if ($key == 'name') {
-        $expected = $this->params[$key] . '_' . $result['id'];
-      }
       $this->assertEquals($expected, $received, "The string '$received' does not equal '$expected' for key '$key' in line " . __LINE__);
     }
   }
@@ -187,10 +186,6 @@ class api_v3_UFGroupTest extends CiviUnitTestCase {
       }
       $expected = $this->params[$key];
       $received = $result['values'][$result['id']][$key];
-      // group names are renamed to name_id by BAO
-      if ($key == 'name') {
-        $expected = $this->params[$key] . '_' . $result['id'];
-      }
       $this->assertEquals($expected, $received, "The string '$received' does not equal '$expected' for key '$key' in line " . __LINE__);
     }
   }

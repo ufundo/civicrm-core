@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -89,15 +89,14 @@
 </tr>
 
 <tr>
-  <td><label>{ts}Activity Dates{/ts}</label></td>
-</tr>
-<tr>
-  {include file="CRM/Core/DateRange.tpl" fieldName="activity_date" from='_low' to='_high'}
+  {include file="CRM/Core/DatePickerRangeWrapper.tpl" fieldName="activity_date_time" colspan="2"}
+  <td>&nbsp;</td>
 </tr>
 <tr>
   <td>
-    {$form.activity_subject.label}<br/>
-    {$form.activity_subject.html|crmAddClass:big}
+    {$form.activity_text.label}<br/>
+    {$form.activity_text.html|crmAddClass:big}<br/>
+    {$form.activity_option.html}<br/>
   </td>
   <td colspan="2">
     {$form.status_id.label}<br/>
@@ -105,8 +104,10 @@
   </td>
 </tr>
 <tr>
-  {* td intentionally left blank to align the 'is test' widget on the right *}
-  <td></td>
+  <td>
+    {$form.priority_id.label}<br />
+    {$form.priority_id.html}
+  </td>
   <td colspan="2">
     {$form.activity_test.label} {help id="is-test" file="CRM/Contact/Form/Search/Advanced"}
     &nbsp; {$form.activity_test.html}
@@ -132,7 +133,7 @@ campaignContext="componentSearch" campaignTrClass='' campaignTdClass=''}
 
 {if $activityGroupTree}
   <tr id="activityCustom">
-    <td id="activityCustomData" colspan="2">
+    <td id="activityCustomData" colspan="4">
       {include file="CRM/Custom/Form/Search.tpl" groupTree=$activityGroupTree showHideLinks=false}
     </td>
   </tr>

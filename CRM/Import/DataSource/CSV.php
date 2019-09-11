@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Import_DataSource_CSV extends CRM_Import_DataSource {
   const
@@ -41,7 +41,7 @@ class CRM_Import_DataSource_CSV extends CRM_Import_DataSource {
    *   collection of info about this data source
    */
   public function getInfo() {
-    return array('title' => ts('Comma-Separated Values (CSV)'));
+    return ['title' => ts('Comma-Separated Values (CSV)')];
   }
 
   /**
@@ -66,14 +66,18 @@ class CRM_Import_DataSource_CSV extends CRM_Import_DataSource {
     $config = CRM_Core_Config::singleton();
 
     $uploadFileSize = CRM_Utils_Number::formatUnitSize($config->maxFileSize . 'm', TRUE);
+    //Fetch uploadFileSize from php_ini when $config->maxFileSize is set to "no limit".
+    if (empty($uploadFileSize)) {
+      $uploadFileSize = CRM_Utils_Number::formatUnitSize(ini_get('upload_max_filesize'), TRUE);
+    }
     $uploadSize = round(($uploadFileSize / (1024 * 1024)), 2);
     $form->assign('uploadSize', $uploadSize);
     $form->add('File', 'uploadFile', ts('Import Data File'), 'size=30 maxlength=255', TRUE);
     $form->setMaxFileSize($uploadFileSize);
-    $form->addRule('uploadFile', ts('File size should be less than %1 MBytes (%2 bytes)', array(
-          1 => $uploadSize,
-          2 => $uploadFileSize,
-        )), 'maxfilesize', $uploadFileSize);
+    $form->addRule('uploadFile', ts('File size should be less than %1 MBytes (%2 bytes)', [
+      1 => $uploadSize,
+      2 => $uploadFileSize,
+    ]), 'maxfilesize', $uploadFileSize);
     $form->addRule('uploadFile', ts('Input file must be in CSV format'), 'utf8File');
     $form->addRule('uploadFile', ts('A valid file must be uploaded.'), 'uploadedfile');
 
@@ -127,7 +131,7 @@ class CRM_Import_DataSource_CSV extends CRM_Import_DataSource {
     $table = NULL,
     $fieldSeparator = ','
   ) {
-    $result = array();
+    $result = [];
     $fd = fopen($file, 'r');
     if (!$fd) {
       CRM_Core_Error::fatal("Could not read $file");
@@ -188,7 +192,7 @@ class CRM_Import_DataSource_CSV extends CRM_Import_DataSource {
       }
     }
     else {
-      $columns = array();
+      $columns = [];
       foreach ($firstrow as $i => $_) {
         $columns[] = "col_$i";
       }
@@ -235,7 +239,7 @@ class CRM_Import_DataSource_CSV extends CRM_Import_DataSource {
         function($string) {
           return trim($string, chr(0xC2) . chr(0xA0));
         }, $row);
-      $row = array_map(array('CRM_Core_DAO', 'escapeString'), $row);
+      $row = array_map(['CRM_Core_DAO', 'escapeString'], $row);
       $sql .= "('" . implode("', '", $row) . "')";
       $count++;
 

@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -42,6 +42,8 @@
  */
 class api_v3_EntityTagACLTest extends CiviUnitTestCase {
 
+  use CRMTraits_ACL_PermissionTrait;
+
   /**
    * API Version in use.
    *
@@ -79,8 +81,7 @@ class api_v3_EntityTagACLTest extends CiviUnitTestCase {
         'used_for' => $key,
         'name' => $entity,
         'description' => $entity,
-        )
-      );
+      ));
     }
     CRM_Core_Config::singleton()->userPermissionClass->permissions = array('access CiviCRM');
   }
@@ -106,6 +107,7 @@ class api_v3_EntityTagACLTest extends CiviUnitTestCase {
     $options = $this->getTagOptions();
     return array_search($entity, $options);
   }
+
   /**
    * Get entities which can be tagged in data provider format.
    */
@@ -151,16 +153,12 @@ class api_v3_EntityTagACLTest extends CiviUnitTestCase {
   public function testThatForEntityWithoutACLOrEditAllThereIsNoAccess($entity) {
 
     CRM_Core_Config::singleton()->userPermissionClass->permissions = array('access CiviCRM', 'view all contacts');
-    $this->callAPISuccess('EntityTag', 'create', array(
+    $this->callAPIFailure('EntityTag', 'create', array(
       'entity_id' => 1,
       'tag_id' => $entity,
       'check_permissions' => TRUE,
       'entity_table' => $this->getTableForTag($entity),
     ));
-    $this->callAPISuccessGetCount('EntityTag', array(
-      'entity_id' => 1,
-      'entity_table' => $this->getTableForTag($entity),
-    ), 0);
   }
 
   /**
@@ -203,7 +201,8 @@ class api_v3_EntityTagACLTest extends CiviUnitTestCase {
 
     CRM_Core_Config::singleton()->userPermissionClass->permissions = array('access CiviCRM', 'view all contacts');
     $this->hookClass->setHook('civicrm_aclWhereClause', array($this, 'aclWhereHookAllResults'));
-    $this->callAPISuccess('EntityTag', 'create', array(
+    civicrm_api('EntityTag', 'create', array(
+      'version' => 3,
       'entity_id' => 1,
       'tag_id' => $entity,
       'entity_table' => $this->getTableForTag($entity),
@@ -213,21 +212,6 @@ class api_v3_EntityTagACLTest extends CiviUnitTestCase {
       'entity_id' => 1,
       'entity_table' => $this->getTableForTag($entity),
     ), ($entity == 'Contacts' ? 1 : 0));
-  }
-
-  /**
-   * All results returned.
-   *
-   * @implements CRM_Utils_Hook::aclWhereClause
-   *
-   * @param string $type
-   * @param array $tables
-   * @param array $whereTables
-   * @param int $contactID
-   * @param string $where
-   */
-  public function aclWhereHookAllResults($type, &$tables, &$whereTables, &$contactID, &$where) {
-    $where = " (1) ";
   }
 
 }

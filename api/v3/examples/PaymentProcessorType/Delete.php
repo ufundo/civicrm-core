@@ -6,9 +6,9 @@
  *   API result array
  */
 function payment_processor_type_delete_example() {
-  $params = array(
-    'id' => 17,
-  );
+  $params = [
+    'id' => 15,
+  ];
 
   try{
     $result = civicrm_api3('PaymentProcessorType', 'delete', $params);
@@ -18,11 +18,12 @@ function payment_processor_type_delete_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,12 +37,12 @@ function payment_processor_type_delete_example() {
  */
 function payment_processor_type_delete_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'values' => TRUE,
-  );
+  ];
 
   return $expectedResult;
 }

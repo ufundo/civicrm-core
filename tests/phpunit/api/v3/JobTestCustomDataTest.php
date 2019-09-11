@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -31,7 +31,7 @@
  * @package CiviCRM_APIv3
  * @subpackage API_Job
  *
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  * @version $Id: Job.php 30879 2010-11-22 15:45:55Z shot $
  *
  */
@@ -218,6 +218,7 @@ class api_v3_JobTestCustomDataTest extends CiviUnitTestCase {
     );
     return $data;
   }
+
   /**
    * Test the batch merge does not bork on custom date fields.
    *
@@ -240,7 +241,8 @@ class api_v3_JobTestCustomDataTest extends CiviUnitTestCase {
    */
   public function testBatchMergeDateCustomFieldHandlingIsView() {
     $this->customFieldCreate(array(
-      'id' => $this->customFieldID,
+      'label' => 'OnlyView',
+      'custom_group_id' => $this->customGroupID,
       'is_view' => 1,
     ));
     $customFieldLabel = 'custom_' . $this->customFieldID;
@@ -249,7 +251,7 @@ class api_v3_JobTestCustomDataTest extends CiviUnitTestCase {
     $result = $this->callAPISuccess('Job', 'process_batch_merge', array());
     $this->assertEquals(1, count($result['values']['merged']));
     $contact = $this->callAPISuccess('Contact', 'getsingle', array('id' => $contactID, 'return' => $customFieldLabel));
-    $this->assertEquals('2012-11-03', $contact[$customFieldLabel]);
+    $this->assertEquals('2012-11-03 00:00:00', $contact[$customFieldLabel]);
   }
 
   /**

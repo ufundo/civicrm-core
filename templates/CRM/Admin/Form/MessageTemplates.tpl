@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -26,19 +26,20 @@
 {* this template is used for adding/editing/deleting Message Templates *}
 {capture assign=tokenDocsRepeated}{docURL page="user/common-workflows/tokens-and-mail-merge" text="token documentation"}{/capture}
 
-<h3>{if $action eq 1}{ts}New Message Template{/ts}{elseif $action eq 2}{ts}Edit Message Template{/ts}{else}{ts}Delete Message Template{/ts}{/if}</h3>
 {if $action neq 8}
 <div class="help">
     {ts}Use this form to add or edit re-usable message templates.{/ts} {help id="id-intro" file="CRM/Admin/Page/MessageTemplates.hlp"}
 </div>
 {/if}
 
+<h3>{if $action eq 1}{ts}New Message Template{/ts}{elseif $action eq 2}{ts}Edit Message Template{/ts}{else}{ts}Delete Message Template{/ts}{/if}</h3>
+
 <div class="crm-block crm-form-block">
 <div class="form-item" id="message_templates">
 {if $action eq 8}
    <div class="messages status no-popup">
        <div class="icon inform-icon"></div>
-       {ts}Do you want to delete this message template?{/ts}
+       {ts 1=$msg_title|escape}Do you want to delete the message template '%1'?{/ts}
    </div>
 {else}
         <div class="crm-submit-buttons">{include file="CRM/common/formButtons.tpl" location="top"}</div>
@@ -84,7 +85,7 @@
         <tr>
   </table>
 
-      <div id="msg_html" class="crm-accordion-wrapper crm-html_email-accordion ">
+      <div id="msg_html_section" class="crm-accordion-wrapper crm-html_email-accordion ">
         <div class="crm-accordion-header">
             {ts}HTML Format{/ts}
             {help id="id-message-text" file="CRM/Contact/Form/Task/Email.hlp"}
@@ -96,13 +97,13 @@
            </div>
                 <div class="clear"></div>
                 <div class='html'>
-                    {$form.msg_html.html}
+                    {$form.msg_html.html|crmAddClass:huge}
                     <div class="description">{ts}An HTML formatted version of this message will be sent to contacts whose Email Format preference is 'HTML' or 'Both'.{/ts} {ts 1=$tokenDocsRepeated}Tokens may be included (%1).{/ts}</div>
                 </div>
         </div><!-- /.crm-accordion-body -->
       </div><!-- /.crm-accordion-wrapper -->
 
-      <div id="msg_text" class="crm-accordion-wrapper crm-plaint_text_email-accordion ">
+      <div id="msg_text_section" class="crm-accordion-wrapper crm-plaint_text_email-accordion ">
         <div class="crm-accordion-header">
                 {ts}Plain-Text Format{/ts}
         </div><!-- /.crm-accordion-header -->
@@ -165,8 +166,7 @@
       });
       function showHideUpload(type) {
         var show = (type == 1) ? false : true;
-        $("#msg_html").toggle(show);
-        $("#msg_text, #pdf_format").toggle(show);
+        $("#msg_html_section, #msg_text_section, #pdf_format").toggle(show);
         $("#file_id").parent().parent().toggle(!show);
 
         // auto file type validation

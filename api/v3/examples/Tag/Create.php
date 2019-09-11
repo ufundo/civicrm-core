@@ -6,10 +6,10 @@
  *   API result array
  */
 function tag_create_example() {
-  $params = array(
+  $params = [
     'name' => 'Super Heros',
     'description' => 'Outside undie-wearers',
-  );
+  ];
 
   try{
     $result = civicrm_api3('Tag', 'create', $params);
@@ -19,11 +19,12 @@ function tag_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -37,13 +38,13 @@ function tag_create_example() {
  */
 function tag_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 12,
-    'values' => array(
-      '12' => array(
+    'values' => [
+      '12' => [
         'id' => '12',
         'name' => 'Super Heros',
         'description' => 'Outside undie-wearers',
@@ -53,10 +54,11 @@ function tag_create_expectedresult() {
         'is_tagset' => '',
         'used_for' => 'civicrm_contact',
         'created_id' => '',
+        'color' => '',
         'created_date' => '2013-07-28 08:49:19',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

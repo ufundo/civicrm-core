@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -84,7 +84,8 @@ class CRM_Contact_Form_Task_PrintDocumentTest extends CiviUnitTestCase {
       $html[] = CRM_Utils_Token::replaceContactTokens($html_message, $contact[$contactId], TRUE, $messageToken);
     }
 
-    $returnContent = CRM_Utils_PDF_Document::printDocuments($formValues['document_file_path'], $html, $type, $zip, TRUE);
+    $fileName = pathinfo($formValues['document_file_path'], PATHINFO_FILENAME) . '.' . $type;
+    $returnContent = CRM_Utils_PDF_Document::printDocuments($html, $fileName, $type, $zip, TRUE);
     $returnContent = strip_tags($returnContent);
 
     $this->assertTrue(strpos($returnContent, 'Hello Antonia D`souza') !== 0);

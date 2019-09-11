@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -47,11 +47,11 @@ class CRM_Financial_BAO_FinancialAccountTest extends CiviUnitTestCase {
       'is_active' => 1,
     );
     $ids = array();
-    $contributionType = CRM_Financial_BAO_FinancialAccount::add($params, $ids);
+    $financialAccount = CRM_Financial_BAO_FinancialAccount::add($params, $ids);
 
     $result = $this->assertDBNotNull(
       'CRM_Financial_BAO_FinancialAccount',
-      $contributionType->id,
+      $financialAccount->id,
       'name',
       'id',
       'Database check on updated financial type record.'
@@ -74,7 +74,7 @@ class CRM_Financial_BAO_FinancialAccountTest extends CiviUnitTestCase {
 
     $result = CRM_Financial_BAO_FinancialAccount::retrieve($params, $defaults);
 
-    $this->assertEquals($result->name, 'Donations', 'Verify financial type name.');
+    $this->assertEquals($result->name, 'Donations', 'Verify financial account name.');
   }
 
   /**
@@ -87,18 +87,18 @@ class CRM_Financial_BAO_FinancialAccountTest extends CiviUnitTestCase {
       'is_active' => 1,
     );
     $ids = array();
-    $contributionType = CRM_Financial_BAO_FinancialAccount::add($params, $ids);
-    $result = CRM_Financial_BAO_FinancialAccount::setIsActive($contributionType->id, 0);
-    $this->assertEquals($result, TRUE, 'Verify financial type record updation for is_active.');
+    $financialAccount = CRM_Financial_BAO_FinancialAccount::add($params, $ids);
+    $result = CRM_Financial_BAO_FinancialAccount::setIsActive($financialAccount->id, 0);
+    $this->assertEquals($result, TRUE, 'Verify financial account record updation for is_active.');
 
     $isActive = $this->assertDBNotNull(
       'CRM_Financial_BAO_FinancialAccount',
-      $contributionType->id,
+      $financialAccount->id,
       'is_active',
       'id',
-      'Database check on updated for financial type is_active.'
+      'Database check on updated for financial account is_active.'
     );
-    $this->assertEquals($isActive, 0, 'Verify financial types is_active.');
+    $this->assertEquals($isActive, 0, 'Verify financial account is_active.');
   }
 
   /**
@@ -111,12 +111,45 @@ class CRM_Financial_BAO_FinancialAccountTest extends CiviUnitTestCase {
       'is_active' => 1,
     );
     $ids = array();
-    $contributionType = CRM_Financial_BAO_FinancialAccount::add($params, $ids);
+    $financialAccount = CRM_Financial_BAO_FinancialAccount::add($params, $ids);
 
-    CRM_Financial_BAO_FinancialAccount::del($contributionType->id);
-    $params = array('id' => $contributionType->id);
+    CRM_Financial_BAO_FinancialAccount::del($financialAccount->id);
+    $params = array('id' => $financialAccount->id);
     $result = CRM_Financial_BAO_FinancialAccount::retrieve($params, $defaults);
-    $this->assertEquals(empty($result), TRUE, 'Verify financial types record deletion.');
+    $this->assertEquals(empty($result), TRUE, 'Verify financial account record deletion.');
+  }
+
+  /**
+   * Check method del()
+   */
+  public function testdelIfHasContribution() {
+    $params = array(
+      'name' => 'Donation Test',
+      'is_active' => 1,
+      'is_deductible' => 1,
+      'is_reserved' => 1,
+    );
+    $financialType = CRM_Financial_BAO_FinancialType::add($params);
+    $defaults = array();
+    $params = array(
+      'name' => 'Donation Test',
+      'is_active' => 1,
+    );
+    $result = CRM_Financial_BAO_FinancialAccount::retrieve($params, $defaults);
+
+    $contactId = $this->individualCreate();
+    $contributionParams = array(
+      'total_amount' => 300,
+      'currency' => 'USD',
+      'contact_id' => $contactId,
+      'financial_type_id' => $financialType->id,
+      'contribution_status_id' => 1,
+    );
+    $this->callAPISuccess('Contribution', 'create', $contributionParams);
+    CRM_Financial_BAO_FinancialAccount::del($result->id);
+    $params = array('id' => $result->id);
+    $result = CRM_Financial_BAO_FinancialAccount::retrieve($params, $defaults);
+    $this->assertEquals(empty($result), FALSE, 'Verify financial account record deletion.');
   }
 
   /**
@@ -298,76 +331,8 @@ class CRM_Financial_BAO_FinancialAccountTest extends CiviUnitTestCase {
       $this->fail("Missed expected exception");
     }
     catch (CRM_Core_Exception $e) {
-      $this->assertEquals('Revenue recognition date can only be specified if the financial type selected has a deferred revenue account configured. Please have an administrator set up the deferred revenue account at Administer > CiviContribute > Financial Accounts, then configure it for financial types at Administer > CiviContribution > Financial Types, Accounts', $e->getMessage());
+      $this->assertEquals('Revenue Recognition Date cannot be processed unless there is a Deferred Revenue account setup for the Financial Type. Please remove Revenue Recognition Date, select a different Financial Type with a Deferred Revenue account setup for it, or setup a Deferred Revenue account for this Financial Type.', $e->getMessage());
     }
-  }
-
-  /**
-   * Test if financial type has Deferred Revenue Account is relationship with Financial Account.
-   *
-   */
-  public function testValidateFinancialType() {
-    Civi::settings()->set('contribution_invoice_settings', array('deferred_revenue_enabled' => '1'));
-    $financialTypes = CRM_Contribute_PseudoConstant::financialType();
-    foreach ($financialTypes as $key => $value) {
-      try {
-        CRM_Financial_BAO_FinancialAccount::validateFinancialType($key);
-        if (!in_array($value, array('Member Dues', 'Event Fee'))) {
-          $this->fail("Missed expected exception");
-        }
-      }
-      catch (CRM_Core_Exception $e) {
-        if (in_array($value, array('Member Dues', 'Event Fees'))) {
-          $this->fail("Should not call exception");
-        }
-        else {
-          $this->assertEquals('Deferred revenue account is not configured for selected financial type. Please have an administrator set up the deferred revenue account at Administer > CiviContribute > Financial Accounts, then configure it for financial types at Administer > CiviContribution > Financial Types, Accounts', $e->getMessage());
-        }
-      }
-    }
-  }
-
-  /**
-   * Test Validate if Deferred Account is set for Financial Type.
-   */
-  public function testValidateTogglingDeferredRevenue() {
-    $orgContactID = $this->organizationCreate();
-
-    //create relationship
-    $params = array(
-      'name_a_b' => 'Relation 1',
-      'name_b_a' => 'Relation 2',
-      'contact_type_a' => 'Individual',
-      'contact_type_b' => 'Organization',
-      'is_reserved' => 1,
-      'is_active' => 1,
-    );
-    $relationshipTypeId = $this->relationshipTypeCreate($params);
-    $ids = array();
-    $params = array(
-      'name' => 'test type',
-      'domain_id' => 1,
-      'description' => NULL,
-      'minimum_fee' => 10,
-      'duration_unit' => 'year',
-      'member_of_contact_id' => $orgContactID,
-      'relationship_type_id' => $relationshipTypeId,
-      'period_type' => 'fixed',
-      'duration_interval' => 1,
-      'financial_type_id' => 1,
-      'visibility' => 'Public',
-      'is_active' => 1,
-    );
-
-    $membershipType = CRM_Member_BAO_MembershipType::add($params, $ids);
-
-    $membership = $this->assertDBNotNull('CRM_Member_BAO_MembershipType', $orgContactID,
-      'name', 'member_of_contact_id',
-      'Database check on updated membership record.'
-    );
-    $error = CRM_Financial_BAO_FinancialAccount::validateTogglingDeferredRevenue();
-    $this->assertTrue(!empty($error), "Error message did not appear");
-    $this->membershipTypeDelete(array('id' => $membershipType->id));
   }
 
   /**
@@ -377,14 +342,38 @@ class CRM_Financial_BAO_FinancialAccountTest extends CiviUnitTestCase {
     $financialAccount = CRM_Financial_BAO_FinancialAccount::getAllDeferredFinancialAccount();
     // The two deferred financial accounts which are created by default.
     $expected = array(
-      "Deferred Revenue - Event Fee",
-      "Deferred Revenue - Member Dues",
+      "Deferred Revenue - Member Dues (2740)",
+      "Deferred Revenue - Event Fee (2730)",
     );
     $this->assertEquals(array_count_values($expected), array_count_values($financialAccount), "The two arrays are not the same");
     $this->_createDeferredFinancialAccount();
     $financialAccount = CRM_Financial_BAO_FinancialAccount::getAllDeferredFinancialAccount();
-    $expected[] = "TestFinancialAccount_1";
+    $expected[] = "TestFinancialAccount_1 (4800)";
     $this->assertEquals(array_count_values($expected), array_count_values($financialAccount), "The two arrays are not the same");
+  }
+
+  /**
+   * CRM-20037: Test balance due amount, if contribution is done using deferred Financial Type
+   */
+  public function testBalanceDueIfDeferredRevenueEnabled() {
+    Civi::settings()->set('contribution_invoice_settings', array('deferred_revenue_enabled' => '1'));
+    $deferredFinancialTypeID = $this->_createDeferredFinancialAccount();
+
+    $totalAmount = 100.00;
+    $contribution = $this->callAPISuccess('Contribution', 'create', array(
+      'contact_id' => $this->individualCreate(),
+      'receive_date' => '20120511',
+      'total_amount' => $totalAmount,
+      'financial_type_id' => $deferredFinancialTypeID,
+      'non_deductible_amount' => 10.00,
+      'fee_amount' => 5.00,
+      'net_amount' => 95.00,
+      'source' => 'SSF',
+      'contribution_status_id' => 1,
+    ));
+    $balance = CRM_Contribute_BAO_Contribution::getContributionBalance($contribution['id'], $totalAmount);
+    $this->assertEquals(0.0, $balance);
+    Civi::settings()->revert('contribution_invoice_settings');
   }
 
   /**

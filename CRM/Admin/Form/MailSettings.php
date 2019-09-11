@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 /**
@@ -66,32 +66,53 @@ class CRM_Admin_Form_MailSettings extends CRM_Admin_Form {
 
     $this->add('select', 'protocol',
       ts('Protocol'),
-      array('' => ts('- select -')) + CRM_Core_PseudoConstant::get('CRM_Core_DAO_MailSettings', 'protocol'),
+      ['' => ts('- select -')] + CRM_Core_PseudoConstant::get('CRM_Core_DAO_MailSettings', 'protocol'),
       TRUE
     );
 
     $this->add('text', 'server', ts('Server'), $attributes['server']);
 
-    $this->add('text', 'username', ts('Username'), array('autocomplete' => 'off'));
+    $this->add('text', 'username', ts('Username'), ['autocomplete' => 'off']);
 
-    $this->add('password', 'password', ts('Password'), array('autocomplete' => 'off'));
+    $this->add('password', 'password', ts('Password'), ['autocomplete' => 'off']);
 
     $this->add('text', 'source', ts('Source'), $attributes['source']);
 
     $this->add('checkbox', 'is_ssl', ts('Use SSL?'));
 
-    $usedfor = array(
+    $usedfor = [
       1 => ts('Bounce Processing'),
       0 => ts('Email-to-Activity Processing'),
-    );
+    ];
     $this->add('select', 'is_default', ts('Used For?'), $usedfor);
+    $this->addField('activity_status', ['placeholder' => FALSE]);
   }
 
   /**
    * Add local and global form rules.
    */
   public function addRules() {
-    $this->addFormRule(array('CRM_Admin_Form_MailSettings', 'formRule'));
+    $this->addFormRule(['CRM_Admin_Form_MailSettings', 'formRule']);
+  }
+
+  public function getDefaultEntity() {
+    return 'MailSettings';
+  }
+
+  /**
+   * Add local and global form rules.
+   */
+  public function setDefaultValues() {
+    $defaults = parent::setDefaultValues();
+
+    // Set activity status to "Completed" by default.
+    if ($this->_action != CRM_Core_Action::DELETE &&
+      (!$this->_id || !CRM_Core_DAO::getFieldValue('CRM_Core_BAO_MailSettings', $this->_id, 'activity_status'))
+    ) {
+      $defaults['activity_status'] = 'Completed';
+    }
+
+    return $defaults;
   }
 
   /**
@@ -104,7 +125,7 @@ class CRM_Admin_Form_MailSettings extends CRM_Admin_Form {
    *   list of errors to be posted back to the form
    */
   public static function formRule($fields) {
-    $errors = array();
+    $errors = [];
     // Check for default from email address and organization (domain) name. Force them to change it.
     if ($fields['domain'] == 'EXAMPLE.ORG') {
       $errors['domain'] = ts('Please enter a valid domain for this mailbox account (the part after @).');
@@ -127,7 +148,7 @@ class CRM_Admin_Form_MailSettings extends CRM_Admin_Form {
     $formValues = $this->controller->exportValues($this->_name);
 
     //form fields.
-    $fields = array(
+    $fields = [
       'name',
       'domain',
       'localpart',
@@ -140,14 +161,15 @@ class CRM_Admin_Form_MailSettings extends CRM_Admin_Form {
       'source',
       'is_ssl',
       'is_default',
-    );
+      'activity_status',
+    ];
 
-    $params = array();
+    $params = [];
     foreach ($fields as $f) {
-      if (in_array($f, array(
+      if (in_array($f, [
         'is_default',
         'is_ssl',
-      ))) {
+      ])) {
         $params[$f] = CRM_Utils_Array::value($f, $formValues, FALSE);
       }
       else {

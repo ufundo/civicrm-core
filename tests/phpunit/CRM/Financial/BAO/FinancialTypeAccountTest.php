@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -70,7 +70,7 @@ class CRM_Financial_BAO_FinancialTypeAccountTest extends CiviUnitTestCase {
   }
 
   /**
-   * Check method getFinancialAccount()
+   * Check method retrieve()
    */
   public function testRetrieve() {
     list($financialAccount, $financialType, $financialAccountType) = $this->createFinancialAccount(
@@ -89,29 +89,6 @@ class CRM_Financial_BAO_FinancialTypeAccountTest extends CiviUnitTestCase {
     $financialAccountType = CRM_Financial_BAO_FinancialTypeAccount::retrieve($financialParams, $defaults);
     $this->assertEquals($financialAccountType['entity_id'], $financialType->id, 'Verify Entity Id.');
     $this->assertEquals($financialAccountType['financial_account_id'], $financialAccount->id, 'Verify Financial Account Id.');
-  }
-
-  /**
-   * Check method getFinancialAccount()
-   */
-  public function testGetFinancialAccount() {
-    list($financialAccount, $financialType, $financialAccountType) = $this->createFinancialAccount(
-      'Asset'
-    );
-    $params = array(
-      'financial_account_id' => $financialAccount->id,
-      'payment_processor_type_id' => 1,
-      'domain_id' => 1,
-      'billing_mode' => 1,
-      'name' => 'paymentProcessor',
-    );
-    $processor = CRM_Financial_BAO_PaymentProcessor::create($params);
-
-    $account = CRM_Financial_BAO_FinancialTypeAccount::getFinancialAccount(
-      $processor->id,
-      'civicrm_payment_processor'
-    );
-    $this->assertEquals($account, $financialAccount->name, 'Verify Financial Account Name');
   }
 
   /**
@@ -195,8 +172,17 @@ class CRM_Financial_BAO_FinancialTypeAccountTest extends CiviUnitTestCase {
         'entity_table' => 'civicrm_financial_type',
         'entity_id' => $financialType->id,
         'account_relationship' => array_search($relationType, $relationTypes),
-        'financial_account_id' => $financialAccount->id,
       );
+
+      //CRM-20313: As per unique index added in civicrm_entity_financial_account table,
+      //  first check if there's any record on basis of unique key (entity_table, account_relationship, entity_id)
+      $dao = new CRM_Financial_DAO_EntityFinancialAccount();
+      $dao->copyValues($financialParams);
+      $dao->find();
+      if ($dao->fetch()) {
+        $financialParams['id'] = $dao->id;
+      }
+      $financialParams['financial_account_id'] = $financialAccount->id;
       $financialAccountType = CRM_Financial_BAO_FinancialTypeAccount::add($financialParams);
     }
     return array($financialAccount, $financialType, $financialAccountType);

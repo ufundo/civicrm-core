@@ -8,10 +8,10 @@
  *   API result array
  */
 function setting_getvalue_example() {
-  $params = array(
+  $params = [
     'name' => 'petition_contacts',
     'group' => 'Campaign Preferences',
-  );
+  ];
 
   try{
     $result = civicrm_api3('Setting', 'getvalue', $params);
@@ -21,11 +21,12 @@ function setting_getvalue_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;

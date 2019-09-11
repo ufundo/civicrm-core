@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Contact_BAO_SearchCustom {
 
@@ -43,7 +43,7 @@ class CRM_Contact_BAO_SearchCustom {
    * @throws Exception
    */
   public static function details($csID, $ssID = NULL, $gID = NULL) {
-    $error = array(NULL, NULL, NULL);
+    $error = [NULL, NULL, NULL];
 
     if (!$csID &&
       !$ssID &&
@@ -53,7 +53,7 @@ class CRM_Contact_BAO_SearchCustom {
     }
 
     $customSearchID = $csID;
-    $formValues = array();
+    $formValues = [];
     if ($ssID || $gID) {
       if ($gID) {
         $ssID = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Group', $gID, 'saved_search_id');
@@ -71,12 +71,11 @@ class CRM_Contact_BAO_SearchCustom {
 
     // check that the csid exists in the db along with the right file
     // and implements the right interface
-    $customSearchClass = CRM_Core_OptionGroup::getLabel('custom_search',
-      $customSearchID
-    );
-    if (!$customSearchClass) {
-      return $error;
-    }
+    $customSearchClass = civicrm_api3('OptionValue', 'getvalue', [
+      'option_group_id' => 'custom_search',
+      'return' => 'name',
+      'value' => $customSearchID,
+    ]);
 
     $ext = CRM_Extension_System::singleton()->getMapper();
 
@@ -96,7 +95,7 @@ class CRM_Contact_BAO_SearchCustom {
       CRM_Core_Error::fatal('Custom search file: ' . $customSearchFile . ' does not exist. Please verify your custom search settings in CiviCRM administrative panel.');
     }
 
-    return array($customSearchID, $customSearchClass, $formValues);
+    return [$customSearchID, $customSearchClass, $formValues];
   }
 
   /**
@@ -139,7 +138,7 @@ class CRM_Contact_BAO_SearchCustom {
     $args = trim($args);
 
     $values = explode("\n", $args);
-    $formValues = array();
+    $formValues = [];
     foreach ($values as $value) {
       list($n, $v) = CRM_Utils_System::explode('=', $value, 2);
       if (!empty($v)) {
@@ -161,7 +160,7 @@ class CRM_Contact_BAO_SearchCustom {
     $from = $customClass->from();
     $where = $customClass->where();
 
-    return array($from, $where);
+    return [$from, $where];
   }
 
 }

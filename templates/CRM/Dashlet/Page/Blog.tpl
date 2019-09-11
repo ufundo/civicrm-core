@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -48,35 +48,36 @@
 {/literal}
 <div id="civicrm-news-feed">
   <ul>
-    {foreach from=$tabs key="key" item="title"}
-      <li class="ui-corner-all crm-tab-button">
-        <a href="#civicrm-news-feed-{$key}">{$title}</a>
+    {foreach from=$feeds item="channel"}
+      <li class="ui-corner-all crm-tab-button" title="{$channel.description|escape}">
+        <a href="#civicrm-news-feed-{$channel.name}">{$channel.title}</a>
       </li>
     {/foreach}
   </ul>
 
-  {foreach from=$feeds key="key" item="feed"}
-    <div id="civicrm-news-feed-{$key}">
-    {foreach from=$feed item=article}
+  {foreach from=$feeds item="channel"}
+    <div id="civicrm-news-feed-{$channel.name}">
+    {foreach from=$channel.items item=article}
       <div class="crm-accordion-wrapper collapsed">
         <div class="crm-accordion-header">
           <span class="crm-news-feed-item-title">{$article.title}</span>
-          <span class="crm-news-feed-item-preview"> - {$article.description|strip_tags|substr:0:100}…</span>
+          <span class="crm-news-feed-item-preview"> - {if function_exists('mb_substr')}{$article.description|strip_tags|mb_substr:0:100}{else}{$article.description|strip_tags}{/if}</span>
         </div>
         <div class="crm-accordion-body">
           <div>{$article.description}</div>
-          <p class="crm-news-feed-item-link"><a target="_blank" href="{$article.link}" title="{$article.title}"><i class="crm-i fa-external-link"></i> {ts}read more{/ts}…</a></p>
+          <p class="crm-news-feed-item-link"><a target="_blank" href="{$article.link}" title="{$article.title|escape}"><i class="crm-i fa-external-link"></i> {ts}read more{/ts}…</a></p>
         </div>
       </div>
     {/foreach}
-    {if !$feed}
-      <div class="messages status no-popup">
-        <div class="icon inform-icon"></div>
-        {ts}Sorry but we are not able to provide this at the moment.{/ts}
-      </div>
-    {/if}
     </div>
   {/foreach}
+  {if !$feeds}
+    <div class="messages status no-popup">
+      <div class="icon inform-icon"></div>
+      {ts}Sorry but we are not able to provide this at the moment.{/ts}
+    </div>
+  {/if}
+</div>
   
 </div>
 {literal}<script type="text/javascript">
@@ -103,12 +104,17 @@
                 $(this).one('crmAccordion:open', function () {
                   $('.crm-news-feed-item-title', this).css('font-weight', '');
                   $('em', $tab).text(--count);
+                  if (!count) {
+                    $('em', $tab).remove();
+                  }
                   opened[key].push(itemKey);
                   localStorage.newsFeed = JSON.stringify(opened);
                 });
               }
             });
-            $tab.html($tab.text() + ' <em>' + count + '</em>');
+            if (count) {
+              $tab.html($tab.text() + ' <em>' + count + '</em>');
+            }
             // Remove items from localstorage that are no longer in the current feed
             $.each(opened[key], function(i, itemKey) {
               if (!$('a[href="' + itemKey + '"]', $content).length) {

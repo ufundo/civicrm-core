@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -30,6 +30,7 @@
  * @group headless
  */
 class CRM_Core_BAO_SettingTest extends CiviUnitTestCase {
+
   public function setUp() {
     parent::setUp();
     global $civicrm_setting;
@@ -143,7 +144,8 @@ class CRM_Core_BAO_SettingTest extends CiviUnitTestCase {
         'is_contact' => 0,
         'description' => NULL,
         'help_text' => NULL,
-        'on_change' => array(// list of callbacks
+        // list of callbacks
+        'on_change' => array(
           array(__CLASS__, '_testOnChange_onChangeExample'),
         ),
       ),
@@ -178,6 +180,21 @@ class CRM_Core_BAO_SettingTest extends CiviUnitTestCase {
     $_testOnChange_hookCalls['oldValue'] = $oldValue;
     $_testOnChange_hookCalls['newValue'] = $newValue;
     $_testOnChange_hookCalls['metadata'] = $metadata;
+  }
+
+  /**
+   * Test to set isProductionEnvironment
+   *
+   */
+  public function testSetCivicrmEnvironment() {
+    CRM_Core_BAO_Setting::setItem('Staging', CRM_Core_BAO_Setting::DEVELOPER_PREFERENCES_NAME, 'environment');
+    $values = CRM_Core_BAO_Setting::getItem(CRM_Core_BAO_Setting::DEVELOPER_PREFERENCES_NAME, 'environment');
+    $this->assertEquals('Staging', $values);
+    global $civicrm_setting;
+    $civicrm_setting[CRM_Core_BAO_Setting::DEVELOPER_PREFERENCES_NAME]['environment'] = 'Development';
+    Civi::service('settings_manager')->useMandatory();
+    $environment = CRM_Core_Config::environment();
+    $this->assertEquals('Development', $environment);
   }
 
 }

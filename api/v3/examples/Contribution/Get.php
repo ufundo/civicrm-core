@@ -6,9 +6,9 @@
  *   API result array
  */
 function contribution_get_example() {
-  $params = array(
+  $params = [
     'contribution_id' => 1,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Contribution', 'get', $params);
@@ -18,11 +18,12 @@ function contribution_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,14 +37,14 @@ function contribution_get_example() {
  */
 function contribution_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
-        'contact_id' => '4',
+    'values' => [
+      '1' => [
+        'contact_id' => '3',
         'contact_type' => 'Individual',
         'contact_sub_type' => '',
         'sort_name' => 'Anderson, Anthony',
@@ -63,10 +64,11 @@ function contribution_get_expectedresult() {
         'thankyou_date' => '',
         'contribution_source' => 'SSF',
         'amount_level' => '',
+        'contribution_recur_id' => '',
         'is_test' => 0,
         'is_pay_later' => 0,
         'contribution_status_id' => '1',
-        'check_number' => '',
+        'contribution_check_number' => '',
         'contribution_campaign_id' => '',
         'financial_type_id' => '1',
         'financial_type' => 'Donation',
@@ -78,28 +80,29 @@ function contribution_get_expectedresult() {
         'fulfilled_date' => '',
         'contribution_start_date' => '',
         'contribution_end_date' => '',
-        'contribution_recur_id' => '',
         'financial_account_id' => '1',
         'accounting_code' => '4200',
+        'campaign_id' => '',
+        'contribution_campaign_title' => '',
         'contribution_note' => '',
         'contribution_batch' => '',
         'contribution_status' => 'Completed',
         'payment_instrument' => 'Check',
         'payment_instrument_id' => '4',
         'instrument_id' => '4',
-        'contribution_check_number' => '',
+        'check_number' => '',
         'id' => '1',
         'contribution_type_id' => '1',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }
 
 /*
 * This example has been generated from the API test suite.
-* The test that created it is called "testGetContributionLegacyBehaviour"
+* The test that created it is called "testGetContribution"
 * and can be found at:
 * https://github.com/civicrm/civicrm-core/blob/master/tests/phpunit/api/v3/ContributionTest.php
 *

@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -34,9 +34,7 @@
   </tr>
   <tr class="crm-case-opencase-form-block-start_date">
     <td class="label">{$form.start_date.label}</td>
-    <td>
-    {include file="CRM/common/jcalendar.tpl" elementName=start_date}
-    </td>
+    <td>{$form.start_date.html}</td>
   </tr>
 
 {* Add fields for attachments *}
@@ -49,4 +47,28 @@
       </td>
     </tr>
   {/if}
+  {crmAPI var='caseTypes' entity='CaseType' action='get' option_limit=0 sequential=0}
+  {crmAPI var='caseStatusLabels' entity='Case' action='getoptions' option_limit=0 field="case_status_id" context='create'}
+  {crmAPI var='caseStatusNames' entity='Case' action='getoptions' option_limit=0 field="case_status_id" context='validate' sequential=0}
+  {literal}
+  <script type="text/javascript">
+    CRM.$(function($) {
+      var $form = $("form.{/literal}{$form.formClass}{literal}");
+      var caseTypes = {/literal}{$caseTypes.values|@json_encode}{literal};
+      var caseStatusLabels = {/literal}{$caseStatusLabels.values|@json_encode}{literal};
+      var caseStatusNames = {/literal}{$caseStatusNames.values|@json_encode}{literal};
+      if ($('#case_type_id, #status_id', $form).length === 2) {
+        $('#case_type_id', $form).change(function() {
+          if ($(this).val()) {
+            var definition = caseTypes[$(this).val()].definition;
+            var newOptions = CRM._.filter(caseStatusLabels, function(opt) {
+              return !definition.statuses || !definition.statuses.length || definition.statuses.indexOf(caseStatusNames[opt.key]) > -1;
+            });
+            CRM.utils.setOptions($('#status_id', $form), newOptions);
+          }
+        })
+      }
+    });
+  </script>
+  {/literal}
 {/if}

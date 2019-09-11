@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -38,7 +38,6 @@ class api_v3_ActivityContactTest extends CiviUnitTestCase {
   protected $_contactID;
   protected $_activityID;
   protected $_params;
-
 
   public function setUp() {
     $this->_apiversion = 3;
@@ -84,7 +83,7 @@ class api_v3_ActivityContactTest extends CiviUnitTestCase {
     $this->callAPISuccess('ActivityContact', 'Get', array('contact_id' => $this->_contactID));
   }
 
-  public function testGetParticipantsByActivity() {
+  public function testGetActivitiesByActivity() {
     $this->callAPISuccess('ActivityContact', 'Get', array('activity_id' => $this->_activityID));
   }
 
@@ -92,7 +91,7 @@ class api_v3_ActivityContactTest extends CiviUnitTestCase {
    * Test civicrm_activity_contact_get with empty params.
    */
   public function testGetEmptyParams() {
-    $result = $this->callAPISuccess('ActivityContact', 'Get', array());
+    $this->callAPISuccess('ActivityContact', 'Get', array());
   }
 
   /**

@@ -6,9 +6,9 @@
  *   API result array
  */
 function contribution_recur_get_example() {
-  $params = array(
+  $params = [
     'amount' => '500',
-  );
+  ];
 
   try{
     $result = civicrm_api3('ContributionRecur', 'get', $params);
@@ -18,11 +18,12 @@ function contribution_recur_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,13 +37,13 @@ function contribution_recur_get_example() {
  */
 function contribution_recur_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 2,
-    'values' => array(
-      '2' => array(
+    'values' => [
+      '2' => [
         'id' => '2',
         'contact_id' => '4',
         'amount' => '500.00',
@@ -52,15 +53,16 @@ function contribution_recur_get_expectedresult() {
         'installments' => '12',
         'start_date' => '2013-07-29 00:00:00',
         'create_date' => '20120130621222105',
+        'modified_date' => '2012-11-14 16:02:35',
         'contribution_status_id' => '1',
         'is_test' => 0,
         'cycle_day' => '1',
         'failure_count' => 0,
         'auto_renew' => 0,
         'is_email_receipt' => '1',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

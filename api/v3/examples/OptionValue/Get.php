@@ -6,9 +6,9 @@
  *   API result array
  */
 function option_value_get_example() {
-  $params = array(
+  $params = [
     'option_group_id' => 1,
-  );
+  ];
 
   try{
     $result = civicrm_api3('OptionValue', 'get', $params);
@@ -18,11 +18,12 @@ function option_value_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,68 +37,73 @@ function option_value_get_example() {
  */
 function option_value_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 5,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
         'option_group_id' => '1',
         'label' => 'Phone',
         'value' => '1',
+        'name' => 'Phone',
         'filter' => 0,
         'weight' => '1',
         'is_optgroup' => 0,
         'is_reserved' => 0,
         'is_active' => '1',
-      ),
-      '2' => array(
+      ],
+      '2' => [
         'id' => '2',
         'option_group_id' => '1',
         'label' => 'Email',
         'value' => '2',
+        'name' => 'Email',
         'filter' => 0,
         'weight' => '2',
         'is_optgroup' => 0,
         'is_reserved' => 0,
         'is_active' => '1',
-      ),
-      '3' => array(
+      ],
+      '3' => [
         'id' => '3',
         'option_group_id' => '1',
         'label' => 'Postal Mail',
         'value' => '3',
+        'name' => 'Postal Mail',
         'filter' => 0,
         'weight' => '3',
         'is_optgroup' => 0,
         'is_reserved' => 0,
         'is_active' => '1',
-      ),
-      '4' => array(
+      ],
+      '4' => [
         'id' => '4',
         'option_group_id' => '1',
         'label' => 'SMS',
         'value' => '4',
+        'name' => 'SMS',
         'filter' => 0,
         'weight' => '4',
         'is_optgroup' => 0,
         'is_reserved' => 0,
         'is_active' => '1',
-      ),
-      '5' => array(
+      ],
+      '5' => [
         'id' => '5',
         'option_group_id' => '1',
         'label' => 'Fax',
         'value' => '5',
+        'name' => 'Fax',
         'filter' => 0,
         'weight' => '5',
         'is_optgroup' => 0,
         'is_reserved' => 0,
         'is_active' => '1',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

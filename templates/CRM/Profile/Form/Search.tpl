@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -65,9 +65,7 @@
             </td>
           {else}
             <td class="description">
-              {if ( $n eq 'birth_date' ) or ( $n eq 'deceased_date' ) }
-                {include file="CRM/common/jcalendar.tpl" elementName=$n}
-              {elseif $n|substr:0:5 eq 'phone'}
+              {if $n|substr:0:5 eq 'phone'}
                 {assign var="phone_ext_field" value=$n|replace:'phone':'phone_ext'}
                 {$form.$n.html}
                 {if $form.$phone_ext_field.html}

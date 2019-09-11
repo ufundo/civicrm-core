@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -191,7 +191,7 @@ class CiviMailUtils extends PHPUnit_Framework_TestCase {
     $msgs = array();
 
     if ($this->_webtest) {
-      throw new Exception("Not implementated: getAllMessages for WebTest");
+      throw new Exception("Not implemented: getAllMessages for WebTest");
     }
     else {
       $dao = CRM_Core_DAO::executeQuery('SELECT headers, body FROM civicrm_mailing_spool ORDER BY id');
@@ -331,15 +331,20 @@ class CiviMailUtils extends PHPUnit_Framework_TestCase {
    * Remove any sent messages from the log.
    *
    * @param int $limit
+   *  How many recent messages to remove, defaults to 0 (all).
    *
    * @throws \Exception
    */
-  public function clearMessages($limit = 1) {
+  public function clearMessages($limit = 0) {
     if ($this->_webtest) {
-      throw new Exception("Not implementated: clearMessages for WebTest");
+      throw new Exception("Not implemented: clearMessages for WebTest");
     }
     else {
-      CRM_Core_DAO::executeQuery('DELETE FROM civicrm_mailing_spool ORDER BY id DESC LIMIT ' . $limit);
+      $sql = 'DELETE FROM civicrm_mailing_spool ORDER BY id DESC';
+      if ($limit) {
+        $sql .= ' LIMIT ' . $limit;
+      }
+      CRM_Core_DAO::executeQuery($sql);
     }
   }
 

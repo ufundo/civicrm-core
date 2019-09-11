@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -131,7 +131,7 @@ class api_v3_GrantTest extends CiviUnitTestCase {
     $result = $this->callAPISuccess($this->_entity, 'create', $this->params);
     $this->ids['grant'][0] = $result['id'];
     $result = $this->callAPIAndDocument($this->_entity, 'get', array('rationale' => 'Just Because'), __FUNCTION__, __FILE__);
-    $this->assertAPISuccess($result);
+    $this->assertEquals($result['id'], $result['values'][$result['id']]['id']);
     $this->assertEquals(1, $result['count']);
   }
 
@@ -141,6 +141,29 @@ class api_v3_GrantTest extends CiviUnitTestCase {
     $this->assertAPISuccess($result);
     $checkDeleted = $this->callAPISuccess($this->_entity, 'get', array());
     $this->assertEquals(0, $checkDeleted['count']);
+  }
+
+  /**
+   * Test Grant status with `0` value.
+   */
+  public function testGrantWithZeroStatus() {
+    $params = array(
+      'action' => 'create',
+      'grant_type_id' => "Emergency",
+      'amount_total' => 100,
+      'contact_id' => "1",
+      'status_id' => 0,
+      'id' => 1,
+    );
+    $validation = $this->callAPISuccess('Grant', 'validate', $params);
+
+    $expectedOut = array(
+      'status_id' => array(
+        'message' => "'0' is not a valid option for field status_id",
+        'code' => "incorrect_value",
+      ),
+    );
+    $this->assertEquals($validation['values'][0], $expectedOut);
   }
 
 }

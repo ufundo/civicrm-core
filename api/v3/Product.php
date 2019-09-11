@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -43,7 +43,7 @@
  * @return array
  */
 function civicrm_api3_product_create($params) {
-  return _civicrm_api3_basic_create(_civicrm_api3_get_BAO(__FUNCTION__), $params);
+  return _civicrm_api3_basic_create(_civicrm_api3_get_BAO(__FUNCTION__), $params, 'Product');
 }
 
 /**
@@ -56,6 +56,7 @@ function civicrm_api3_product_create($params) {
  */
 function _civicrm_api3_product_create_spec(&$params) {
   $params['is_active']['api.default'] = 1;
+  $params['name']['api.required'] = 1;
 }
 
 /**

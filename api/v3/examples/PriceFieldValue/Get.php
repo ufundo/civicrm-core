@@ -6,9 +6,9 @@
  *   API result array
  */
 function price_field_value_get_example() {
-  $params = array(
+  $params = [
     'name' => 'contribution_amount',
-  );
+  ];
 
   try{
     $result = civicrm_api3('PriceFieldValue', 'get', $params);
@@ -18,11 +18,12 @@ function price_field_value_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,13 +37,13 @@ function price_field_value_get_example() {
  */
 function price_field_value_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
         'price_field_id' => '1',
         'name' => 'contribution_amount',
@@ -52,10 +53,11 @@ function price_field_value_get_expectedresult() {
         'is_default' => 0,
         'is_active' => '1',
         'financial_type_id' => '1',
-        'deductible_amount' => '0.00',
-      ),
-    ),
-  );
+        'non_deductible_amount' => '0.00',
+        'contribution_type_id' => '1',
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

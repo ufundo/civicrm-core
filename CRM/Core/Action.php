@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -31,7 +31,7 @@
  * and similar across all objects (thus providing both reuse and standards)
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
@@ -74,10 +74,10 @@ class CRM_Core_Action {
    * bit manipulation operations so we can perform multiple
    * actions on the same object if needed
    *
-   * @var array $_names type of variable name to action constant
+   * @var array
    *
    */
-  static $_names = array(
+  public static $_names = [
     'add' => self::ADD,
     'update' => self::UPDATE,
     'view' => self::VIEW,
@@ -95,14 +95,14 @@ class CRM_Core_Action {
     'revert' => self::REVERT,
     'close' => self::CLOSE,
     'reopen' => self::REOPEN,
-  );
+  ];
 
   /**
    * The flipped version of the names array, initialized when used
    *
    * @var array
    */
-  static $_description;
+  public static $_description;
 
   /**
    * Called by the request object to translate a string into a mask.
@@ -216,7 +216,7 @@ class CRM_Core_Action {
 
     // make links indexed sequentially instead of by bitmask
     // otherwise it's next to impossible to reliably add new ones
-    $seqLinks = array();
+    $seqLinks = [];
     foreach ($links as $bit => $link) {
       $link['bit'] = $bit;
       $seqLinks[] = $link;
@@ -226,7 +226,7 @@ class CRM_Core_Action {
       CRM_Utils_Hook::links($op, $objectName, $objectId, $seqLinks, $mask, $values);
     }
 
-    $url = array();
+    $url = [];
 
     foreach ($seqLinks as $i => $link) {
       if (!$mask || !array_key_exists('bit', $link) || ($mask & $link['bit'])) {
@@ -236,7 +236,7 @@ class CRM_Core_Action {
 
         if (isset($link['qs']) && !CRM_Utils_System::isNull($link['qs'])) {
           $urlPath = CRM_Utils_System::url(self::replace($link['url'], $values),
-            self::replace($link['qs'], $values), TRUE, NULL, TRUE, $frontend
+            self::replace($link['qs'], $values), FALSE, NULL, TRUE, $frontend
           );
         }
         else {

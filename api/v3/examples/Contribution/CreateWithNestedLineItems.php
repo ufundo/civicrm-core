@@ -8,37 +8,35 @@
  *   API result array
  */
 function contribution_create_example() {
-  $params = array(
-    'contact_id' => 1,
+  $params = [
+    'contact_id' => 11,
     'receive_date' => '20120511',
-    'total_amount' => '400',
-    'financial_type_id' => 7,
+    'total_amount' => '100',
+    'financial_type_id' => 1,
+    'payment_instrument_id' => 1,
+    'non_deductible_amount' => '10',
+    'fee_amount' => '50',
+    'net_amount' => '90',
     'trxn_id' => 12345,
     'invoice_id' => 67890,
     'source' => 'SSF',
     'contribution_status_id' => 1,
     'skipLineItem' => 1,
-    'api.line_item.create' => array(
-      '0' => array(
-        'price_field_id' => array(
-          '0' => 3,
-        ),
+    'api.line_item.create' => [
+      '0' => [
+        'price_field_id' => 1,
+        'qty' => 2,
+        'line_total' => '20',
+        'unit_price' => '10',
+      ],
+      '1' => [
+        'price_field_id' => 1,
         'qty' => 1,
-        'line_total' => '100',
-        'unit_price' => '100',
-        'financial_type_id' => 7,
-      ),
-      '1' => array(
-        'price_field_id' => array(
-          '0' => 3,
-        ),
-        'qty' => 1,
-        'line_total' => '300',
-        'unit_price' => '300',
-        'financial_type_id' => 8,
-      ),
-    ),
-  );
+        'line_total' => '80',
+        'unit_price' => '80',
+      ],
+    ],
+  ];
 
   try{
     $result = civicrm_api3('Contribution', 'create', $params);
@@ -48,11 +46,12 @@ function contribution_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -66,23 +65,23 @@ function contribution_create_example() {
  */
 function contribution_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
-        'contact_id' => '1',
-        'financial_type_id' => '7',
+        'contact_id' => '11',
+        'financial_type_id' => '1',
         'contribution_page_id' => '',
-        'payment_instrument_id' => '4',
+        'payment_instrument_id' => '1',
         'receive_date' => '20120511000000',
-        'non_deductible_amount' => '',
-        'total_amount' => '435',
-        'fee_amount' => 0,
-        'net_amount' => '435',
+        'non_deductible_amount' => '10',
+        'total_amount' => '100',
+        'fee_amount' => '50',
+        'net_amount' => '90',
         'trxn_id' => '12345',
         'invoice_id' => '67890',
         'currency' => 'USD',
@@ -100,65 +99,62 @@ function contribution_create_expectedresult() {
         'check_number' => '',
         'campaign_id' => '',
         'creditnote_id' => '',
-        'tax_amount' => '35',
-        'contribution_type_id' => '7',
-        'api.line_item.create' => array(
-          '0' => array(
+        'tax_amount' => 0,
+        'revenue_recognition_date' => '',
+        'contribution_type_id' => '1',
+        'api.line_item.create' => [
+          '0' => [
             'is_error' => 0,
             'version' => 3,
             'count' => 1,
             'id' => 1,
-            'values' => array(
-              '0' => array(
+            'values' => [
+              '0' => [
                 'id' => '1',
                 'entity_table' => 'civicrm_contribution',
                 'entity_id' => '1',
                 'contribution_id' => '1',
-                'price_field_id' => array(
-                  '0' => '3',
-                ),
+                'price_field_id' => '1',
                 'label' => 'line item',
-                'qty' => '1',
-                'unit_price' => '100',
-                'line_total' => '100',
+                'qty' => '2',
+                'unit_price' => '10',
+                'line_total' => '20',
                 'participant_count' => '',
                 'price_field_value_id' => '',
-                'financial_type_id' => '7',
-                'deductible_amount' => '',
-                'tax_amount' => '20',
-              ),
-            ),
-          ),
-          '1' => array(
+                'financial_type_id' => '',
+                'non_deductible_amount' => '',
+                'tax_amount' => '',
+              ],
+            ],
+          ],
+          '1' => [
             'is_error' => 0,
             'version' => 3,
             'count' => 1,
             'id' => 2,
-            'values' => array(
-              '0' => array(
+            'values' => [
+              '0' => [
                 'id' => '2',
                 'entity_table' => 'civicrm_contribution',
                 'entity_id' => '1',
                 'contribution_id' => '1',
-                'price_field_id' => array(
-                  '0' => '3',
-                ),
+                'price_field_id' => '1',
                 'label' => 'line item',
                 'qty' => '1',
-                'unit_price' => '300',
-                'line_total' => '300',
+                'unit_price' => '80',
+                'line_total' => '80',
                 'participant_count' => '',
                 'price_field_value_id' => '',
-                'financial_type_id' => '8',
-                'deductible_amount' => '',
-                'tax_amount' => '15',
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
+                'financial_type_id' => '',
+                'non_deductible_amount' => '',
+                'tax_amount' => '',
+              ],
+            ],
+          ],
+        ],
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }
@@ -167,7 +163,7 @@ function contribution_create_expectedresult() {
 * This example has been generated from the API test suite.
 * The test that created it is called "testCreateContributionChainedLineItems"
 * and can be found at:
-* https://github.com/civicrm/civicrm-core/blob/master/tests/phpunit/api/v3/TaxContributionPageTest.php
+* https://github.com/civicrm/civicrm-core/blob/master/tests/phpunit/api/v3/ContributionTest.php
 *
 * You can see the outcome of the API tests at
 * https://test.civicrm.org/job/CiviCRM-master-git/

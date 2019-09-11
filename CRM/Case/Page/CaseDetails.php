@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Case_Page_CaseDetails extends CRM_Core_Page {
 
@@ -41,7 +41,7 @@ class CRM_Case_Page_CaseDetails extends CRM_Core_Page {
    */
   public function run() {
     $this->_action = CRM_Utils_Request::retrieve('action', 'String', $this, FALSE, 'browse');
-    $this->_context = CRM_Utils_Request::retrieve('context', 'String', $this);
+    $this->_context = CRM_Utils_Request::retrieve('context', 'Alphanumeric', $this);
 
     $this->assign('action', $this->_action);
     $this->assign('context', $this->_context);
@@ -50,7 +50,7 @@ class CRM_Case_Page_CaseDetails extends CRM_Core_Page {
 
     $caseId = CRM_Utils_Request::retrieve('caseId', 'Positive', $this);
 
-    CRM_Case_Page_Tab::setContext();
+    CRM_Case_Page_Tab::setContext($this);
 
     $this->assign('caseID', $caseId);
     $this->assign('contactID', $this->_contactId);

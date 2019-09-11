@@ -65,7 +65,8 @@ class TokenRow {
   public function __construct(TokenProcessor $tokenProcessor, $key) {
     $this->tokenProcessor = $tokenProcessor;
     $this->tokenRow = $key;
-    $this->format('text/plain'); // Set a default.
+    // Set a default.
+    $this->format('text/plain');
     $this->context = new TokenRowContext($tokenProcessor, $key);
   }
 
@@ -127,6 +128,30 @@ class TokenRow {
   }
 
   /**
+   * Update the value of a custom field token.
+   *
+   * @param string $entity
+   * @param int $customFieldID
+   * @param int $entityID
+   * @return TokenRow
+   */
+  public function customToken($entity, $customFieldID, $entityID) {
+    $customFieldName = "custom_" . $customFieldID;
+    $record = civicrm_api3($entity, "getSingle", [
+      'return' => $customFieldName,
+      'id' => $entityID,
+    ]);
+    $fieldValue = \CRM_Utils_Array::value($customFieldName, $record, '');
+
+    // format the raw custom field value into proper display value
+    if (isset($fieldValue)) {
+      $fieldValue = \CRM_Core_BAO_CustomField::displayValue($fieldValue, $customFieldID);
+    }
+
+    return $this->tokens($entity, $customFieldName, $fieldValue);
+  }
+
+  /**
    * Update the value of a token. Apply formatting based on DB schema.
    *
    * @param string $tokenEntity
@@ -134,6 +159,8 @@ class TokenRow {
    * @param string $baoName
    * @param array $baoField
    * @param mixed $fieldValue
+   * @return TokenRow
+   * @throws \CRM_Core_Exception
    */
   public function dbToken($tokenEntity, $tokenField, $baoName, $baoField, $fieldValue) {
     if ($fieldValue === NULL || $fieldValue === '') {
@@ -179,10 +206,10 @@ class TokenRow {
     }
 
     if (!isset($this->tokenProcessor->rowValues[$this->tokenRow]['text/html'])) {
-      $this->tokenProcessor->rowValues[$this->tokenRow]['text/html'] = array();
+      $this->tokenProcessor->rowValues[$this->tokenRow]['text/html'] = [];
     }
     if (!isset($this->tokenProcessor->rowValues[$this->tokenRow]['text/plain'])) {
-      $this->tokenProcessor->rowValues[$this->tokenRow]['text/plain'] = array();
+      $this->tokenProcessor->rowValues[$this->tokenRow]['text/plain'] = [];
     }
 
     $htmlTokens = &$this->tokenProcessor->rowValues[$this->tokenRow]['text/html'];
@@ -192,6 +219,7 @@ class TokenRow {
       case 'text/html':
         // Plain => HTML.
         foreach ($textTokens as $entity => $values) {
+          $entityFields = civicrm_api3($entity, "getFields", ['api_action' => 'get']);
           foreach ($values as $field => $value) {
             if (!isset($htmlTokens[$entity][$field])) {
               // CRM-18420 - Activity Details Field are enclosed within <p>,
@@ -199,6 +227,10 @@ class TokenRow {
               // conversion of these tags resulting in raw HTML.
               if ($entity == 'activity' && $field == 'details') {
                 $htmlTokens[$entity][$field] = $value;
+              }
+              elseif (\CRM_Utils_Array::value('data_type', \CRM_Utils_Array::value($field, $entityFields['values'])) == 'Memo') {
+                // Memo fields aka custom fields of type Note are html.
+                $htmlTokens[$entity][$field] = CRM_Utils_String::purifyHTML($value);
               }
               else {
                 $htmlTokens[$entity][$field] = htmlentities($value);
@@ -274,8 +306,7 @@ class TokenRowContext implements \ArrayAccess, \IteratorAggregate, \Countable {
    * @return bool
    */
   public function offsetExists($offset) {
-    return
-      isset($this->tokenProcessor->rowContexts[$this->tokenRow][$offset])
+    return isset($this->tokenProcessor->rowContexts[$this->tokenRow][$offset])
       || isset($this->tokenProcessor->context[$offset]);
   }
 

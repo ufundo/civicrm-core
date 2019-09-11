@@ -43,6 +43,21 @@
     <length>64</length>
     <comment>Payment Processor Name.</comment>
     <add>1.8</add>
+    <html>
+      <type>Text</type>
+    </html>
+  </field>
+  <field>
+    <name>title</name>
+    <title>Payment Processor Title</title>
+    <type>varchar</type>
+    <length>127</length>
+    <localizable>true</localizable>
+    <html>
+      <type>Text</type>
+    </html>
+    <comment>Payment Processor Descriptive Name.</comment>
+    <add>5.13</add>
   </field>
   <field>
     <name>description</name>
@@ -113,6 +128,9 @@
     <type>varchar</type>
     <length>255</length>
     <add>1.8</add>
+    <html>
+      <type>Text</type>
+    </html>
   </field>
   <field>
     <name>password</name>
@@ -120,12 +138,20 @@
     <type>varchar</type>
     <length>255</length>
     <add>1.8</add>
+    <html>
+      <type>Password</type>
+    </html>
   </field>
   <field>
     <name>signature</name>
     <title>Signature</title>
     <type>text</type>
     <add>1.8</add>
+    <html>
+      <type>TextArea</type>
+      <rows>4</rows>
+      <cols>40</cols>
+    </html>
   </field>
   <field>
     <name>url_site</name>
@@ -133,6 +159,9 @@
     <type>varchar</type>
     <length>255</length>
     <add>1.8</add>
+    <html>
+      <type>Text</type>
+    </html>
   </field>
   <field>
     <name>url_api</name>
@@ -140,6 +169,9 @@
     <type>varchar</type>
     <length>255</length>
     <add>1.8</add>
+    <html>
+      <type>Text</type>
+    </html>
   </field>
   <field>
     <name>url_recur</name>
@@ -147,6 +179,9 @@
     <type>varchar</type>
     <length>255</length>
     <add>1.8</add>
+    <html>
+      <type>Text</type>
+    </html>
   </field>
   <field>
     <name>url_button</name>
@@ -154,6 +189,9 @@
     <type>varchar</type>
     <length>255</length>
     <add>1.8</add>
+    <html>
+      <type>Text</type>
+    </html>
   </field>
   <field>
     <name>subject</name>
@@ -161,6 +199,9 @@
     <type>varchar</type>
     <length>255</length>
     <add>1.8</add>
+    <html>
+      <type>Text</type>
+    </html>
   </field>
   <field>
     <name>class_name</name>
@@ -201,6 +242,15 @@
     <pseudoconstant>
       <optionGroupName>payment_instrument</optionGroupName>
     </pseudoconstant>
+    <add>4.7</add>
+  </field>
+<field>
+    <name>accepted_credit_cards</name>
+    <title>Accepted Credit Cards</title>
+    <type>text</type>
+    <default>NULL</default>
+    <comment>array of accepted credit card types</comment>
+    <serialize>JSON</serialize>
     <add>4.7</add>
   </field>
 </table>

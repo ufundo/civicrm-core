@@ -8,14 +8,14 @@
  *   API result array
  */
 function relationship_get_example() {
-  $params = array(
-    'relationship_type_id' => array(
-      'NOT IN' => array(
-        '0' => 33,
-        '1' => 34,
-      ),
-    ),
-  );
+  $params = [
+    'relationship_type_id' => [
+      'NOT IN' => [
+        '0' => 36,
+        '1' => 37,
+      ],
+    ],
+  ];
 
   try{
     $result = civicrm_api3('Relationship', 'get', $params);
@@ -25,11 +25,12 @@ function relationship_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -43,35 +44,33 @@ function relationship_get_example() {
  */
 function relationship_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 2,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
-        'contact_id_a' => '87',
-        'contact_id_b' => '89',
-        'relationship_type_id' => '32',
-        'start_date' => '2013-07-29 00:00:00',
-        'is_active' => '1',
-        'description' => '',
-        'is_permission_a_b' => 0,
-        'is_permission_b_a' => 0,
-      ),
-      '4' => array(
-        'id' => '4',
-        'contact_id_a' => '87',
-        'contact_id_b' => '89',
+        'contact_id_a' => '99',
+        'contact_id_b' => '101',
         'relationship_type_id' => '35',
         'start_date' => '2013-07-29 00:00:00',
         'is_active' => '1',
-        'description' => '',
         'is_permission_a_b' => 0,
         'is_permission_b_a' => 0,
-      ),
-    ),
-  );
+      ],
+      '4' => [
+        'id' => '4',
+        'contact_id_a' => '99',
+        'contact_id_b' => '101',
+        'relationship_type_id' => '38',
+        'start_date' => '2013-07-29 00:00:00',
+        'is_active' => '1',
+        'is_permission_a_b' => 0,
+        'is_permission_b_a' => 0,
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

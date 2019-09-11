@@ -8,16 +8,16 @@
  *   API result array
  */
 function order_create_example() {
-  $params = array(
-    'contact_id' => 10,
+  $params = [
+    'contact_id' => 11,
     'receive_date' => '2010-01-20',
     'total_amount' => 300,
     'financial_type_id' => 1,
     'contribution_status_id' => 1,
-    'line_items' => array(
-      '0' => array(
-        'line_item' => array(
-          '2' => array(
+    'line_items' => [
+      '0' => [
+        'line_item' => [
+          '2' => [
             'price_field_id' => '2',
             'price_field_value_id' => '2',
             'label' => 'Price Field 1',
@@ -27,8 +27,8 @@ function order_create_example() {
             'line_total' => '100',
             'financial_type_id' => '4',
             'entity_table' => 'civicrm_participant',
-          ),
-          '3' => array(
+          ],
+          '3' => [
             'price_field_id' => '2',
             'price_field_value_id' => '3',
             'label' => 'Price Field 2',
@@ -38,19 +38,19 @@ function order_create_example() {
             'line_total' => '200',
             'financial_type_id' => '4',
             'entity_table' => 'civicrm_participant',
-          ),
-        ),
-        'params' => array(
-          'contact_id' => 10,
+          ],
+        ],
+        'params' => [
+          'contact_id' => 11,
           'event_id' => 1,
           'status_id' => 1,
           'role_id' => 1,
           'register_date' => '2007-07-21 00:00:00',
           'source' => 'Online Event Registration: API Testing',
-        ),
-      ),
-    ),
-  );
+        ],
+      ],
+    ],
+  ];
 
   try{
     $result = civicrm_api3('Order', 'create', $params);
@@ -60,11 +60,12 @@ function order_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -78,15 +79,15 @@ function order_create_example() {
  */
 function order_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
-        'contact_id' => '10',
+        'contact_id' => '11',
         'financial_type_id' => '1',
         'contribution_page_id' => '',
         'payment_instrument_id' => '4',
@@ -113,17 +114,18 @@ function order_create_expectedresult() {
         'campaign_id' => '',
         'creditnote_id' => '',
         'tax_amount' => '',
+        'revenue_recognition_date' => '',
         'contribution_type_id' => '1',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }
 
 /*
 * This example has been generated from the API test suite.
-* The test that created it is called "testAddOrderForPariticipant"
+* The test that created it is called "testAddOrderForParticipant"
 * and can be found at:
 * https://github.com/civicrm/civicrm-core/blob/master/tests/phpunit/api/v3/OrderTest.php
 *

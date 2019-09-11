@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -117,6 +117,9 @@
                     {if $hasPayment or $parentHasPayment}
                         <a class="action-item crm-hover-button" href='{crmURL p="civicrm/event/participant/feeselection" q="reset=1&id=`$participantId`&cid=`$contactId`&action=update"}'><i class="crm-i fa-pencil"></i> {ts}Change Selections{/ts}</a>
                     {/if}
+                    {if $transferOrCancelLink}
+                      <a class="action-item crm-hover-button" href={$transferOrCancelLink}><i class="crm-i fa-times"></i> {ts}Transfer or Cancel{/ts}</a>
+                    {/if}
                 {/if}
                 </td>
             {else}
@@ -132,7 +135,7 @@
     {/foreach}
     </table>
     {if $participantId and $hasPayment}
-      {include file="CRM/Contribute/Page/PaymentInfo.tpl" show='event-payment'}
+      {include file="CRM/Contribute/Page/PaymentInfo.tpl" show='payments'}
     {/if}
     {include file="CRM/Custom/Page/CustomDataView.tpl"}
     {if $accessContribution and $rows.0.contribution_id}

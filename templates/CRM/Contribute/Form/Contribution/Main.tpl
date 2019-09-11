@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -66,6 +66,12 @@
   {include file="CRM/Contribute/Form/Contribution/PreviewHeader.tpl"}
   {/if}
 
+  {if $displayCaptchaWarning}
+  <div class="messages status no-popup">
+      {ts}To display reCAPTCHA on form you must get an API key from<br /> <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>{/ts}
+  </div>
+  {/if}
+
   {include file="CRM/common/TrackingFields.tpl"}
 
   <div class="crm-contribution-page-id-{$contributionPageID} crm-block crm-contribution-main-form-block">
@@ -91,14 +97,14 @@
   {elseif !empty($ccid)}
     {if $lineItem && $priceSetID && !$is_quick_config}
       <div class="header-dark">
-        {ts}Contribution Information{/ts}
+        {ts}Contribution Information{/ts}{if $display_name} &ndash; {$display_name}{/if}
       </div>
       {assign var="totalAmount" value=$pendingAmount}
       {include file="CRM/Price/Page/LineItem.tpl" context="Contribution"}
     {else}
       <div class="display-block">
         <td class="label">{$form.total_amount.label}</td>
-        <td><span>{$form.total_amount.html|crmMoney}</span></td>
+        <td><span>{$form.total_amount.html|crmMoney}&nbsp;&nbsp;{if $taxAmount}{ts 1=$taxTerm 2=$taxAmount|crmMoney}(includes %1 of %2){/ts}{/if}</span></td>
       </div>
     {/if}
   {else}
@@ -162,13 +168,7 @@
           </span>
         {/if}
         <div id="recurHelp" class="description">
-          {ts}Your recurring contribution will be processed automatically.{/ts}
-          {if $is_recur_installments}
-            {ts}You can specify the number of installments, or you can leave the number of installments blank if you want to make an open-ended commitment. In either case, you can choose to cancel at any time.{/ts}
-          {/if}
-          {if $is_email_receipt}
-            {ts}You will receive an email receipt for each recurring contribution.{/ts}
-          {/if}
+          {$recurringHelpText}
         </div>
       </div>
       <div class="clear"></div>
@@ -181,16 +181,18 @@
       <div class="clear"></div>
     </div>
     {/if}
-    {assign var=n value=email-$bltID}
-    <div class="crm-public-form-item crm-section {$form.$n.name}-section">
-      <div class="label">{$form.$n.label}</div>
-      <div class="content">
-        {$form.$n.html}
+    {if $showMainEmail}
+      {assign var=n value=email-$bltID}
+      <div class="crm-public-form-item crm-section {$form.$n.name}-section">
+        <div class="label">{$form.$n.label}</div>
+        <div class="content">
+          {$form.$n.html}
+        </div>
+        <div class="clear"></div>
       </div>
-      <div class="clear"></div>
-    </div>
+    {/if}
 
-    <div class="crm-public-form-item crm-section">
+    <div id='onBehalfOfOrg' class="crm-public-form-item crm-section">
       {include file="CRM/Contribute/Form/Contribution/OnBehalfOf.tpl"}
     </div>
 
@@ -202,7 +204,7 @@
       {include file="CRM/Contribute/Form/Contribution/PremiumBlock.tpl" context="makeContribution"}
     </div>
 
-    {if $honoreeProfileFields|@count}
+    {if $honoreeProfileFields && $honoreeProfileFields|@count}
       <fieldset class="crm-public-form-item crm-group honor_block-group">
         {crmRegion name="contribution-soft-credit-block"}
           <legend>{$honor_block_title}</legend>
@@ -291,10 +293,7 @@
   </fieldset>
   {/if}
 
-  <div id="billing-payment-block">
-    {include file="CRM/Financial/Form/Payment.tpl" snippet=4}
-  </div>
-  {include file="CRM/common/paymentBlock.tpl"}
+  {include file="CRM/Core/BillingBlockWrapper.tpl"}
 
   <div class="crm-public-form-item crm-group custom_post_profile-group">
   {include file="CRM/UF/Form/Block.tpl" fields=$customPost}
@@ -349,16 +348,17 @@
   function toggleRecur( ) {
     var isRecur = cj('input[id="is_recur"]:checked');
     var allowAutoRenew = {/literal}'{$allowAutoRenewMembership}'{literal};
-    if ( allowAutoRenew && cj("#auto_renew") ) {
+    var quickConfig = {/literal}{$quickConfig}{literal};
+    if ( allowAutoRenew && cj("#auto_renew") && quickConfig) {
       showHideAutoRenew( null );
     }
     if (isRecur.val() > 0) {
       cj('#recurHelp').show();
-      cj('#amount_sum_label').text(ts('Regular amount'));
+      cj('#amount_sum_label').text('{/literal}{ts escape='js'}Regular amount{/ts}{literal}');
     }
     else {
       cj('#recurHelp').hide();
-      cj('#amount_sum_label').text(ts('Total amount'));
+      cj('#amount_sum_label').text('{/literal}{ts escape='js'}Total Amount{/ts}{literal}');
     }
   }
 
@@ -415,5 +415,9 @@
 {/if}
 
 {* jQuery validate *}
-{* disabled because more work needs to be done to conditionally require credit card fields *}
-{*include file="CRM/Form/validate.tpl"*}
+{* disabled because originally this caused problems with some credit cards.
+Likely it no longer has an problems but allowing conditional
+ inclusion by extensions / payment processors for now in order to add in a conservative way *}
+{if $isJsValidate}
+  {include file="CRM/Form/validate.tpl"}
+{/if}

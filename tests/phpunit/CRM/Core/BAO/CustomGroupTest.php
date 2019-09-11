@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -101,8 +101,11 @@ class CRM_Core_BAO_CustomGroupTest extends CiviUnitTestCase {
     $this->callAPISuccess('ContactType', 'delete', array('id' => $contactType['id']));
   }
 
+  /**
+   * Test calling GetTree for a custom field extending multiple subTypes.
+   */
   public function testGetTreetContactSubTypeForMultipleSubTypes() {
-    $contactType1 = $this->callApiSuccess('ContactType', 'create', array('name' => 'Big Bank', 'label' => 'biggee', 'parent_id' => 'Organization'));
+    $contactType1 = $this->callAPISuccess('ContactType', 'create', array('name' => 'Big Bank', 'label' => 'biggee', 'parent_id' => 'Organization'));
     $contactType2 = $this->callAPISuccess('ContactType', 'create', array('name' => 'Small Bank', 'label' => 'smallee', 'parent_id' => 'Organization'));
     $customGroup = $this->CustomGroupCreate(array('extends' => 'Organization', 'extends_entity_column_value' => array('Big_Bank', 'Small_Bank')));
     $customField = $this->customFieldCreate(array('custom_group_id' => $customGroup['id']));
@@ -111,6 +114,19 @@ class CRM_Core_BAO_CustomGroupTest extends CiviUnitTestCase {
     $this->customGroupDelete($customGroup['id']);
     $this->callAPISuccess('ContactType', 'delete', array('id' => $contactType1['id']));
     $this->callAPISuccess('ContactType', 'delete', array('id' => $contactType2['id']));
+  }
+
+  /**
+   * Test calling GetTree for a custom field that extends a non numerical Event Type.
+   */
+  public function testGetTreeEventSubTypeAlphabetical() {
+    $eventType = $this->callAPISuccess('OptionValue', 'Create', array('option_group_id' => 'event_type', 'value' => 'meeting', 'label' => 'Meeting'));
+    $customGroup = $this->CustomGroupCreate(array('extends' => 'Event', 'extends_entity_column_value' => array('Meeting')));
+    $customField = $this->customFieldCreate(array('custom_group_id' => $customGroup['id']));
+    $result1 = CRM_Core_BAO_CustomGroup::getTree('Event', NULL, NULL, NULL, CRM_Core_DAO::VALUE_SEPARATOR . 'meeting' . CRM_Core_DAO::VALUE_SEPARATOR);
+    $this->assertEquals('Custom Field', $result1[$customGroup['id']]['fields'][$customField['id']]['label']);
+    $this->customGroupDelete($customGroup['id']);
+    $this->callAPISuccess('OptionValue', 'delete', array('id' => $eventType['id']));
   }
 
   /**
@@ -595,6 +611,49 @@ class CRM_Core_BAO_CustomGroupTest extends CiviUnitTestCase {
 
     $this->assertEquals($groupTitles[$customFieldId]['groupTitle'], 'Test Group', 'Check Group Title.');
     $this->customGroupDelete($customGroup['id']);
+  }
+
+  /**
+   * Test that passed dates are extracted from the url when processing custom data.
+   */
+  public function testExtractGetParamsReturnsDates() {
+    // Create a custom group to contain the custom field.
+    $groupParams = array(
+      'title' => 'My Custom Group',
+      'name' => 'my_custom_group',
+      'extends' => 'Individual',
+      'is_active' => 1,
+      'collapse_display' => 1,
+    );
+    $customGroup = $this->customGroupCreate($groupParams);
+    $customGroupId = $customGroup['id'];
+
+    // Create teh custom field.
+    $fieldParams = array(
+      'custom_group_id' => $customGroupId,
+      'label' => 'My Custom Date Field',
+      'html_type' => 'Select Date',
+      'data_type' => 'Date',
+      'is_required' => 1,
+      'is_searchable' => 0,
+      'is_active' => 1,
+      'default_value' => '',
+    );
+    $customField = $this->customFieldCreate($fieldParams);
+    $customFieldId = $customField['id'];
+
+    // Create a form object. CRM_Core_BAO_CustomGroup::extractGetParams() will
+    // need this, along with the REQUEST_METHOD and controller too.
+    $form = new CRM_Contribute_Form_Contribution();
+    $_SERVER['REQUEST_METHOD'] = 'GET';
+    $form->controller = new CRM_Core_Controller();
+
+    // Set the value in $_GET, then extract query string params with
+    $fieldName = 'custom_' . $customFieldId;
+    $_GET[$fieldName] = '2017-06-13';
+    $extractedGetParams = CRM_Core_BAO_CustomGroup::extractGetParams($form, 'Individual');
+
+    $this->assertEquals($extractedGetParams[$fieldName], '2017-06-13');
   }
 
 }

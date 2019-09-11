@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 /**
@@ -47,8 +47,7 @@ class CRM_Contact_Page_DashBoard extends CRM_Core_Page {
     $this->assign('contactDashlets', CRM_Core_BAO_Dashboard::getContactDashletsForJS());
 
     CRM_Utils_System::setTitle(ts('CiviCRM Home'));
-    $session = CRM_Core_Session::singleton();
-    $contactID = $session->get('userID');
+    $contactID = CRM_Core_Session::getLoggedInContactID();
 
     // call hook to get html from other modules
     // ignored but needed to prevent warnings

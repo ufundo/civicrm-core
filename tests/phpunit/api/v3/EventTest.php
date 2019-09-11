@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -119,6 +119,32 @@ class api_v3_EventTest extends CiviUnitTestCase {
     $this->assertEquals($result['values'][$this->_eventIds[1]]['event_title'], 'Annual CiviCRM meet 2');
   }
 
+  /**
+   * Test getLocationEvents() function invokes selectWhereClause() hook
+   */
+  public function testGetEventWithPermissionHook() {
+    $address = $this->callAPISuccess('address', 'create', array(
+      'contact_id' => 'null',
+      'location_type_id' => 1,
+      'street_address' => '1234567',
+    ));
+    $params = array(
+      'address_id' => $address['id'],
+    );
+    $result = $this->callAPISuccess('loc_block', 'create', $params);
+    $params = array(
+      'id' => $this->_events[1]['id'],
+      'loc_block_id' => $result['id'],
+    );
+    $this->callAPISuccess('Event', 'create', $params);
+    $result = CRM_Event_BAO_Event::getLocationEvents();
+    $this->assertEquals(1, count($result));
+
+    $this->hookClass->setHook('civicrm_selectWhereClause', array($this, 'selectWhereClauseHook'));
+    $result = CRM_Event_BAO_Event::getLocationEvents();
+    $this->assertEquals(0, count($result));
+  }
+
   public function testGetEventByEventTitle() {
 
     $params = array(
@@ -166,6 +192,7 @@ class api_v3_EventTest extends CiviUnitTestCase {
     $this->assertEquals(1, $result['id'], ' in line ' . __LINE__);
 
   }
+
   /*
    * Getting the id back of an event.
    * Does not work yet, bug in API
@@ -180,7 +207,6 @@ class api_v3_EventTest extends CiviUnitTestCase {
   $result = $this->callAPISuccess('Event', 'Get', $params);
   }
    */
-
 
   /**
    * Test 'is.Current' option. Existing event is 'old' so only current should be returned
@@ -248,11 +274,11 @@ class api_v3_EventTest extends CiviUnitTestCase {
     $this->assertEquals(0, $currentEvent['is_full'], ' is full is set in line ' . __LINE__);
     $this->assertEquals(1, $currentEvent['available_places'], 'available places is set in line ' . __LINE__);
     $participant = $this->callAPISuccess('Participant', 'create', array(
-        'participant_status' => 1,
-        'role_id' => 1,
-        'contact_id' => $contactID,
-        'event_id' => $this->_eventIds[0],
-      ));
+      'participant_status' => 1,
+      'role_id' => 1,
+      'contact_id' => $contactID,
+      'event_id' => $this->_eventIds[0],
+    ));
     $currentEvent = $this->callAPIAndDocument('Event', 'getsingle', $getEventParams, __FUNCTION__, __FILE__, $description, $subfile);
     $this->assertEquals(1, $currentEvent['is_full'], ' is full is set in line ' . __LINE__);
     $this->assertEquals(0, $currentEvent['available_places'], 'available places is set in line ' . __LINE__);
@@ -296,9 +322,8 @@ class api_v3_EventTest extends CiviUnitTestCase {
       'api.Event.create' => $eventParams,
       'sequential' => 1,
     );
-    $createResult = $this->callAPIAndDocument('LocBlock', 'create', $locBlockParams, __FUNCTION__, __FILE__);
+    $createResult = $this->callAPISuccess('LocBlock', 'create', $locBlockParams);
     $locBlockId = $createResult['id'];
-    $addressId = $createResult['values'][0]['address_id'];
     $eventId = $createResult['values'][0]['api.Event.create']['id'];
 
     // request the event with its loc block:
@@ -331,7 +356,7 @@ class api_v3_EventTest extends CiviUnitTestCase {
       'id' => $result['id'],
       // this chaining request should not break things:
       'api.LocBlock.get' => array('id' => '$value.loc_block_id'),
-      ));
+    ));
     $this->assertEquals($result['id'], $check['id']);
 
     $this->callAPISuccess($this->_entity, 'Delete', array('id' => $result['id']));
@@ -353,9 +378,9 @@ class api_v3_EventTest extends CiviUnitTestCase {
     $result = $this->callAPIAndDocument($this->_entity, 'create', $params, __FUNCTION__, __FILE__);
 
     $check = $this->callAPISuccess($this->_entity, 'get', array(
-        'return.custom_' . $ids['custom_field_id'] => 1,
-        'id' => $result['id'],
-      ));
+      'return.custom_' . $ids['custom_field_id'] => 1,
+      'id' => $result['id'],
+    ));
     $this->assertEquals("custom string", $check['values'][$check['id']]['custom_' . $ids['custom_field_id']], ' in line ' . __LINE__);
 
     $this->customFieldDelete($ids['custom_field_id']);
@@ -375,10 +400,31 @@ class api_v3_EventTest extends CiviUnitTestCase {
     // Search for events having CRM-16036 as the value for this custom
     // field. This should not return anything.
     $check = $this->callAPISuccess($this->_entity, 'get', array(
-        'custom_' . $ids['custom_field_id'] => 'CRM-16036',
-      ));
+      'custom_' . $ids['custom_field_id'] => 'CRM-16036',
+    ));
 
     $this->assertEquals(0, $check['count']);
+
+    $this->customFieldDelete($ids['custom_field_id']);
+    $this->customGroupDelete($ids['custom_group_id']);
+  }
+
+  /**
+   * Check searching on custom fields with IS NULL.
+   *
+   * https://issues.civicrm.org/jira/browse/CRM-20740
+   */
+  public function testSearchCustomFieldIsNull() {
+    // create custom group with custom field on event
+    $ids = $this->entityCustomGroupWithSingleFieldCreate(__FUNCTION__, __FILE__);
+
+    // Search for events having NULL as the value for this custom
+    // field. This should return all events created in setUp.
+    $check = $this->callAPISuccess($this->_entity, 'get', array(
+      'custom_' . $ids['custom_field_id'] => array('IS NULL' => 1),
+    ));
+
+    $this->assertGreaterThan(0, $check['count']);
 
     $this->customFieldDelete($ids['custom_field_id']);
     $this->customGroupDelete($ids['custom_group_id']);
@@ -426,7 +472,7 @@ class api_v3_EventTest extends CiviUnitTestCase {
     $params['event_type_id'] = 1;
     $params['custom_' . $customField['id']] = "$contact_id";
 
-    $result = $this->callAPIAndDocument($this->_entity, 'create', $params, __FUNCTION__, __FILE__, $description, $subfile);
+    $this->callAPIAndDocument($this->_entity, 'create', $params, __FUNCTION__, __FILE__, $description, $subfile);
 
     // Retrieve the activity, search for the contact.
     $result = $this->callAPIAndDocument($this->_entity, 'get', array(
@@ -519,7 +565,6 @@ class api_v3_EventTest extends CiviUnitTestCase {
     ));
   }
 
-
   /**
    * Test that an event with a price set can be created.
    */
@@ -562,10 +607,10 @@ class api_v3_EventTest extends CiviUnitTestCase {
     $this->assertArrayHasKey('id', $result['values'][$result['id']]);
     $result = $this->callAPISuccess($this->_entity, 'Get', array('id' => $result['id']));
     $this->callAPISuccess($this->_entity, 'Delete', array('id' => $result['id']));
-    $this->assertEquals('2008-10-21 00:00:00', $result['values'][$result['id']]['start_date'], 'start date is not set in line ' . __LINE__);
-    $this->assertEquals('2008-10-23 00:00:00', $result['values'][$result['id']]['end_date'], 'end date is not set in line ' . __LINE__);
-    $this->assertEquals('2008-06-01 00:00:00', $result['values'][$result['id']]['registration_start_date'], 'start date is not set in line ' . __LINE__);
-    $this->assertEquals('2008-10-15 00:00:00', $result['values'][$result['id']]['registration_end_date'], 'end date is not set in line ' . __LINE__);
+    $this->assertEquals('2008-10-21 00:00:00', $result['values'][$result['id']]['start_date'], 'start date is not set');
+    $this->assertEquals('2008-10-23 00:00:00', $result['values'][$result['id']]['end_date'], 'end date is not set');
+    $this->assertEquals('2008-06-01 00:00:00', $result['values'][$result['id']]['registration_start_date'], 'start date is not set');
+    $this->assertEquals('2008-10-15 00:00:00', $result['values'][$result['id']]['registration_end_date'], 'end date is not set');
   }
 
   /**
@@ -603,7 +648,6 @@ class api_v3_EventTest extends CiviUnitTestCase {
     $this->callAPISuccess($this->_entity, 'Delete', array('id' => $result['id']));
   }
 
-
   public function testDeleteEmptyParams() {
     $result = $this->callAPIFailure('Event', 'Delete', array());
   }
@@ -612,7 +656,7 @@ class api_v3_EventTest extends CiviUnitTestCase {
     $params = array(
       'id' => $this->_eventIds[0],
     );
-    $result = $this->callAPIAndDocument('Event', 'Delete', $params, __FUNCTION__, __FILE__);
+    $this->callAPIAndDocument('Event', 'Delete', $params, __FUNCTION__, __FILE__);
   }
 
   /**
@@ -631,13 +675,13 @@ class api_v3_EventTest extends CiviUnitTestCase {
    */
   public function testDeleteWithExistingParticipant() {
     $contactID = $this->individualCreate();
-    $participantID = $this->participantCreate(
+    $this->participantCreate(
       array(
         'contactID' => $contactID,
         'eventID' => $this->_eventIds[0],
       )
     );
-    $result = $this->callAPISuccess('Event', 'Delete', array('id' => $this->_eventIds[0]));
+    $this->callAPISuccess('Event', 'Delete', array('id' => $this->_eventIds[0]));
   }
 
   public function testDeleteWithWrongEventId() {
@@ -647,8 +691,6 @@ class api_v3_EventTest extends CiviUnitTestCase {
     $params = array('event_id' => $this->_eventIds[0]);
     $result = $this->callAPIFailure('Event', 'Delete', $params);
   }
-
-  ///////////////// civicrm_event_search methods
 
   /**
    * Test civicrm_event_search with wrong params type.
@@ -729,7 +771,7 @@ class api_v3_EventTest extends CiviUnitTestCase {
       'title' => 'le cake is a tie',
       'check_permissions' => TRUE,
     );
-    $config = &CRM_Core_Config::singleton();
+    $config = CRM_Core_Config::singleton();
     $config->userPermissionClass->permissions = array('access CiviCRM');
     $result = $this->callAPIFailure('event', 'create', $params);
     $this->assertEquals('API permission check failed for Event/create call; insufficient permission: require access CiviCRM and access CiviEvent and edit all events', $result['error_message'], 'lacking permissions should not be enough to create an event');

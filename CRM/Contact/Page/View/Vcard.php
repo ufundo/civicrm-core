@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 require_once 'Contact/Vcard/Build.php';
@@ -47,16 +47,16 @@ class CRM_Contact_Page_View_Vcard extends CRM_Contact_Page_View {
   public function run() {
     $this->preProcess();
 
-    $params = array();
-    $defaults = array();
-    $ids = array();
+    $params = [];
+    $defaults = [];
+    $ids = [];
 
     $params['id'] = $params['contact_id'] = $this->_contactId;
     $contact = CRM_Contact_BAO_Contact::retrieve($params, $defaults, $ids);
 
     // now that we have the contact's data - let's build the vCard
     // TODO: non-US-ASCII support (requires changes to the Contact_Vcard_Build class)
-    $vcardNames = CRM_Core_PseudoConstant::get('CRM_Core_DAO_Address', 'location_type_id', array('labelColumn' => 'vcard_name'));
+    $vcardNames = CRM_Core_PseudoConstant::get('CRM_Core_DAO_Address', 'location_type_id', ['labelColumn' => 'vcard_name']);
     $vcard = new Contact_Vcard_Build('2.1');
 
     if ($defaults['contact_type'] == 'Individual') {
@@ -88,8 +88,8 @@ class CRM_Contact_Page_View_Vcard extends CRM_Contact_Page_View {
       $vcard->setTitle($defaults['job_title']);
     }
 
-    if (!empty($defaults['birth_date_display'])) {
-      $vcard->setBirthday(CRM_Utils_Array::value('birth_date_display', $defaults));
+    if (!empty($defaults['birth_date'])) {
+      $vcard->setBirthday(CRM_Utils_Array::value('birth_date', $defaults));
     }
 
     if (!empty($defaults['home_URL'])) {
@@ -106,6 +106,9 @@ class CRM_Contact_Page_View_Vcard extends CRM_Contact_Page_View {
         $extend = CRM_Utils_Array::value('supplemental_address_1', $location);
         if (!empty($location['supplemental_address_2'])) {
           $extend .= ', ' . $location['supplemental_address_2'];
+        }
+        if (!empty($location['supplemental_address_3'])) {
+          $extend .= ', ' . $location['supplemental_address_3'];
         }
         $street = CRM_Utils_Array::value('street_address', $location);
         $locality = CRM_Utils_Array::value('city', $location);

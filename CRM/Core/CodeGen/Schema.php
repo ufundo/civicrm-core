@@ -4,7 +4,11 @@
  * Create SQL files to create and populate a new schema.
  */
 class CRM_Core_CodeGen_Schema extends CRM_Core_CodeGen_BaseTask {
+
   /**
+   * CRM_Core_CodeGen_Schema constructor.
+   *
+   * @param \CRM_Core_CodeGen_Main $config
    */
   public function __construct($config) {
     parent::__construct($config);
@@ -71,14 +75,14 @@ class CRM_Core_CodeGen_Schema extends CRM_Core_CodeGen_BaseTask {
       $template->assign('locale', $locale);
       $template->assign('db_version', $this->config->db_version);
 
-      $sections = array(
+      $sections = [
         'civicrm_country.tpl',
         'civicrm_state_province.tpl',
         'civicrm_currency.tpl',
         'civicrm_data.tpl',
         'civicrm_navigation.tpl',
         'civicrm_version_sql.tpl',
-      );
+      ];
 
       $ext = ($locale != 'en_US' ? ".$locale" : '');
       // write the initialize base-data sql script
@@ -92,10 +96,10 @@ class CRM_Core_CodeGen_Schema extends CRM_Core_CodeGen_BaseTask {
 
   public function generateSample() {
     $template = new CRM_Core_CodeGen_Util_Template('sql');
-    $sections = array(
+    $sections = [
       'civicrm_sample.tpl',
       'civicrm_acl.tpl',
-    );
+    ];
     $template->runConcat($sections, $this->config->sqlCodePath . 'civicrm_sample.mysql');
 
     $template->run('case_sample.tpl', $this->config->sqlCodePath . 'case_sample.mysql');
@@ -107,7 +111,7 @@ class CRM_Core_CodeGen_Schema extends CRM_Core_CodeGen_BaseTask {
   public function findLocales() {
     require_once 'CRM/Core/Config.php';
     $config = CRM_Core_Config::singleton(FALSE);
-    $locales = array();
+    $locales = [];
     $localeDir = CRM_Core_I18n::getResourceDir();
     if (file_exists($localeDir)) {
       $locales = preg_grep('/^[a-z][a-z]_[A-Z][A-Z]$/', scandir($localeDir));

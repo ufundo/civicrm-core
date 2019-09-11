@@ -8,10 +8,10 @@
  *   API result array
  */
 function participant_get_example() {
-  $params = array(
+  $params = [
     'id' => 1,
     'api.event.get' => 1,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Participant', 'get', $params);
@@ -21,11 +21,12 @@ function participant_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -39,19 +40,19 @@ function participant_get_example() {
  */
 function participant_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'contact_id' => '2',
         'contact_type' => 'Individual',
         'contact_sub_type' => '',
         'sort_name' => 'Anderson, Anthony',
         'display_name' => 'Mr. Anthony Anderson II',
-        'event_id' => '6',
+        'event_id' => '7',
         'event_title' => 'Annual CiviCRM meet',
         'event_start_date' => '2013-07-29 00:00:00',
         'event_end_date' => '2013-08-04 00:00:00',
@@ -62,8 +63,8 @@ function participant_get_expectedresult() {
         'event_type' => 'Conference',
         'participant_status_id' => '2',
         'participant_status' => 'Attended',
-        'participant_role' => 'Attendee',
         'participant_role_id' => '1',
+        'participant_role' => 'Attendee',
         'participant_register_date' => '2007-02-19 00:00:00',
         'participant_source' => 'Wimbeldon',
         'participant_note' => '',
@@ -73,14 +74,14 @@ function participant_get_expectedresult() {
         'participant_discount_name' => '',
         'participant_campaign_id' => '',
         'id' => '1',
-        'api.event.get' => array(
+        'api.event.get' => [
           'is_error' => 0,
           'version' => 3,
           'count' => 1,
-          'id' => 6,
-          'values' => array(
-            '0' => array(
-              'id' => '6',
+          'id' => 7,
+          'values' => [
+            '0' => [
+              'id' => '7',
               'title' => 'Annual CiviCRM meet',
               'event_title' => 'Annual CiviCRM meet',
               'summary' => 'If you have any CiviCRM related issues or want to track where CiviCRM is heading, Sign up now',
@@ -107,18 +108,21 @@ function participant_get_expectedresult() {
               'is_pay_later' => 0,
               'is_partial_payment' => 0,
               'is_multiple_registrations' => 0,
+              'max_additional_participants' => 0,
               'allow_same_participant_emails' => 0,
+              'allow_selfcancelxfer' => 0,
+              'selfcancelxfer_time' => 0,
               'is_template' => 0,
               'created_date' => '2013-07-28 08:49:19',
               'is_share' => '1',
               'is_confirm_enabled' => '1',
               'is_billing_required' => 0,
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
+            ],
+          ],
+        ],
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

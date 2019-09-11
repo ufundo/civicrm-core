@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
@@ -53,7 +53,7 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
    *
    * @var array
    */
-  static $_sizeMapper = array(
+  public static $_sizeMapper = [
     2 => 'two',
     4 => 'four',
     6 => 'six',
@@ -62,7 +62,7 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
     20 => 'medium',
     30 => 'big',
     45 => 'huge',
-  );
+  ];
 
   /**
    * Constructor.
@@ -120,14 +120,20 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
       if ($element->getAttribute('data-api-entity') && $element->getAttribute('data-entity-value')) {
         $this->renderFrozenEntityRef($el, $element);
       }
+      elseif ($element->getAttribute('type') == 'text' && $element->getAttribute('data-select-params')) {
+        $this->renderFrozenSelect2($el, $element);
+      }
+      elseif ($element->getAttribute('type') == 'text' && $element->getAttribute('data-crm-datepicker')) {
+        $this->renderFrozenDatepicker($el, $element);
+      }
       elseif ($element->getAttribute('type') == 'text' && $element->getAttribute('formatType')) {
         list($date, $time) = CRM_Utils_Date::setDateDefaults($element->getValue(), $element->getAttribute('formatType'), $element->getAttribute('format'), $element->getAttribute('timeformat'));
         $date .= ($element->getAttribute('timeformat')) ? " $time" : '';
         $el['html'] = $date . '<input type="hidden" value="' . $element->getValue() . '" name="' . $element->getAttribute('name') . '">';
       }
-      if ($el['name'] == 'details') {
-        $el['html'] = str_replace('<br />', '', $el['html']);
-        $el['html'] = '<span class="crm-frozen-field">' . html_entity_decode($el['html']) . '</span>';
+      // Render html for wysiwyg textareas
+      if ($el['type'] == 'textarea' && isset($element->_attributes['class']) && strstr($element->_attributes['class'], 'wysiwyg')) {
+        $el['html'] = '<span class="crm-frozen-field">' . $el['value'] . '</span>';
       }
       else {
         $el['html'] = '<span class="crm-frozen-field">' . $el['html'] . '</span>';
@@ -135,11 +141,14 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
     }
     // Active form elements
     else {
-      if ($element->getType() == 'select' && $element->getAttribute('data-option-edit-path')) {
+      $typesToShowEditLink = ['select', 'group'];
+      $hasEditPath = NULL !== $element->getAttribute('data-option-edit-path');
+
+      if (in_array($element->getType(), $typesToShowEditLink) && $hasEditPath) {
         $this->addOptionsEditLink($el, $element);
       }
 
-      if ($element->getType() == 'group' && $element->getAttribute('allowClear')) {
+      if ($element->getAttribute('allowClear')) {
         $this->appendUnselectButton($el, $element);
       }
     }
@@ -162,12 +171,12 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
   public static function updateAttributes(&$element, $required, $error) {
     // lets create an id for all input elements, so we can generate nice label tags
     // to make it nice and clean, we'll just use the elementName if it is non null
-    $attributes = array();
+    $attributes = [];
     if (!$element->getAttribute('id')) {
       $name = $element->getAttribute('name');
       if ($name) {
-        $attributes['id'] = str_replace(array(']', '['),
-          array('', '_'),
+        $attributes['id'] = str_replace([']', '['],
+          ['', '_'],
           $name
         );
       }
@@ -176,7 +185,7 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
     $class = $element->getAttribute('class');
     $type = $element->getType();
     if (!$class) {
-      if ($type == 'text') {
+      if ($type == 'text' || $type == 'password') {
         $size = $element->getAttribute('size');
         if (!empty($size)) {
           $class = CRM_Utils_Array::value($size, self::$_sizeMapper);
@@ -237,8 +246,16 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
       $entity = $field->getAttribute('data-api-entity');
       // Get api params, ensure it is an array
       $params = $field->getAttribute('data-api-params');
-      $params = $params ? json_decode($params, TRUE) : array();
-      $result = civicrm_api3($entity, 'getlist', array('id' => $val) + $params);
+      $params = $params ? json_decode($params, TRUE) : [];
+      $result = civicrm_api3($entity, 'getlist', ['id' => $val] + $params);
+      // Purify label output of entityreference fields
+      if (!empty($result['values'])) {
+        foreach ($result['values'] as &$res) {
+          if (!empty($res['label'])) {
+            $res['label'] = CRM_Utils_String::purifyHTML($res['label']);
+          }
+        }
+      }
       if ($field->isFrozen()) {
         // Prevent js from treating frozen entityRef as a "live" field
         $field->removeAttribute('class');
@@ -254,6 +271,50 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
   }
 
   /**
+   * Render datepicker as text.
+   *
+   * @param array $el
+   * @param HTML_QuickForm_element $field
+   */
+  public function renderFrozenDatepicker(&$el, $field) {
+    $settings = json_decode($field->getAttribute('data-crm-datepicker'), TRUE);
+    $settings += ['date' => TRUE, 'time' => TRUE];
+    $val = $field->getValue();
+    if ($val) {
+      $dateFormat = NULL;
+      if (!$settings['time']) {
+        $val = substr($val, 0, 10);
+      }
+      elseif (!$settings['date']) {
+        $dateFormat = Civi::settings()->get('dateformatTime');
+      }
+      $val = CRM_Utils_Date::customFormat($val, $dateFormat);
+    }
+    $el['html'] = $val . '<input type="hidden" value="' . $field->getValue() . '" name="' . $field->getAttribute('name') . '">';
+  }
+
+  /**
+   * Render select2 as text.
+   *
+   * @param array $el
+   * @param HTML_QuickForm_element $field
+   */
+  public function renderFrozenSelect2(&$el, $field) {
+    $params = json_decode($field->getAttribute('data-select-params'), TRUE);
+    $val = $field->getValue();
+    if ($val && !empty($params['data'])) {
+      $display = [];
+      foreach (explode(',', $val) as $item) {
+        $match = CRM_Utils_Array::findInTree($item, $params['data']);
+        if (isset($match['text']) && strlen($match['text'])) {
+          $display[] = CRM_Utils_String::purifyHTML($match['text']);
+        }
+      }
+      $el['html'] = implode('; ', $display) . '<input type="hidden" value="' . $field->getValue() . '" name="' . $field->getAttribute('name') . '">';
+    }
+  }
+
+  /**
    * Render entity references as text.
    * If user has permission, format as link (for now limited to contacts).
    *
@@ -261,20 +322,20 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
    * @param HTML_QuickForm_element $field
    */
   public function renderFrozenEntityRef(&$el, $field) {
-    $entity = strtolower($field->getAttribute('data-api-entity'));
+    $entity = $field->getAttribute('data-api-entity');
     $vals = json_decode($field->getAttribute('data-entity-value'), TRUE);
-    $display = array();
+    $display = [];
 
     // Custom fields of type contactRef store their data in a slightly different format
-    if ($field->getAttribute('data-crm-custom') && $entity == 'contact') {
-      $vals = array(array('id' => $vals['id'], 'label' => $vals['text']));
+    if ($field->getAttribute('data-crm-custom') && $entity == 'Contact') {
+      $vals = [['id' => $vals['id'], 'label' => $vals['text']]];
     }
 
     foreach ($vals as $val) {
       // Format contact as link
-      if ($entity == 'contact' && CRM_Contact_BAO_Contact_Permission::allow($val['id'], CRM_Core_Permission::VIEW)) {
-        $url = CRM_Utils_System::url("civicrm/contact/view", array('reset' => 1, 'cid' => $val['id']));
-        $val['label'] = '<a class="view-' . $entity . ' no-popup" href="' . $url . '" title="' . ts('View Contact') . '">' . $val['label'] . '</a>';
+      if ($entity == 'Contact' && CRM_Contact_BAO_Contact_Permission::allow($val['id'], CRM_Core_Permission::VIEW)) {
+        $url = CRM_Utils_System::url("civicrm/contact/view", ['reset' => 1, 'cid' => $val['id']]);
+        $val['label'] = '<a class="view-contact no-popup" href="' . $url . '" title="' . ts('View Contact') . '">' . CRM_Utils_String::purifyHTML($val['label']) . '</a>';
       }
       $display[] = $val['label'];
     }
@@ -297,21 +358,21 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
         'contact_reference_options'
       ), '1');
 
-      $return = array_unique(array_merge(array('sort_name'), $list));
+      $return = array_unique(array_merge(['sort_name'], $list));
 
-      $contact = civicrm_api('contact', 'getsingle', array('id' => $val, 'return' => $return, 'version' => 3));
+      $contact = civicrm_api('contact', 'getsingle', ['id' => $val, 'return' => $return, 'version' => 3]);
 
       if (!empty($contact['id'])) {
-        $view = array();
+        $view = [];
         foreach ($return as $fld) {
           if (!empty($contact[$fld])) {
             $view[] = $contact[$fld];
           }
         }
-        $field->setAttribute('data-entity-value', json_encode(array(
-              'id' => $contact['id'],
-              'text' => implode(' :: ', $view),
-            )));
+        $field->setAttribute('data-entity-value', json_encode([
+          'id' => $contact['id'],
+          'text' => implode(' :: ', $view),
+        ]));
       }
     }
   }

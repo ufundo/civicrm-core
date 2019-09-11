@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -27,7 +27,7 @@
 
 /**
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 /**
@@ -43,16 +43,18 @@ class CRM_Utils_Address_USPS {
   protected static $_disabled = FALSE;
 
   /**
-   * @param $disabled
+   * Disable the USPS validation.
    *
-   * @return void
+   * @param bool $disable
    */
   public static function disable($disable = TRUE) {
     self::$_disabled = $disable;
   }
 
   /**
-   * @param $values
+   * Check address against USPS.
+   *
+   * @param array $values
    *
    * @return bool
    */
@@ -97,7 +99,7 @@ class CRM_Utils_Address_USPS {
     $code = $request->getResponseCode();
     if ($code != 200) {
       $session->setStatus(ts('USPS Address Lookup Failed with HTTP status code: %1',
-        array(1 => $code)
+        [1 => $code]
       ));
       return FALSE;
     }

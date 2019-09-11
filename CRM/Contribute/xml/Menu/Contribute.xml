@@ -319,17 +319,20 @@
     <component>CiviContribute</component>
   </item>
   <item>
-    <path>civicrm/admin/contribute/closeaccperiod</path>
-    <title>Close Accounting Period</title>
-    <page_callback>CRM_Contribute_Form_CloseAccPeriod</page_callback>
-    <access_arguments>access CiviContribute,administer CiviCRM,administer Accounting</access_arguments>
-    <page_type>1</page_type>
-    <weight>640</weight>
-    <component>CiviContribute</component>
-  </item>
-  <item>
     <path>civicrm/ajax/softcontributionlist</path>
     <page_callback>CRM_Contribute_Page_AJAX::getSoftContributionRows</page_callback>
     <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/contribute/contributionrecur-payments</path>
+    <title>Recurring Contribution's Payments</title>
+    <page_callback>CRM_Contribute_Page_ContributionRecurPayments</page_callback>
+    <access_arguments>access CiviContribute</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/membership/recurring-contributions</path>
+    <title>Membership Recurring Contributions</title>
+    <page_callback>CRM_Member_Page_RecurringContributions</page_callback>
+    <access_arguments>access CiviContribute</access_arguments>
   </item>
 </menu>

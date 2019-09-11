@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
@@ -87,7 +87,7 @@ class CRM_Event_Import_Form_Preview extends CRM_Import_Form_Preview {
       $this->set('downloadMismatchRecordsUrl', CRM_Utils_System::url('civicrm/export', $urlParams));
     }
 
-    $properties = array(
+    $properties = [
       'mapper',
       'dataValues',
       'columnCount',
@@ -98,7 +98,7 @@ class CRM_Event_Import_Form_Preview extends CRM_Import_Form_Preview {
       'downloadErrorRecordsUrl',
       'downloadConflictRecordsUrl',
       'downloadMismatchRecordsUrl',
-    );
+    ];
 
     foreach ($properties as $property) {
       $this->assign($property, $this->get($property));
@@ -113,16 +113,14 @@ class CRM_Event_Import_Form_Preview extends CRM_Import_Form_Preview {
    */
   public function postProcess() {
     $fileName = $this->controller->exportValue('DataSource', 'uploadFile');
+    $seperator = $this->controller->exportValue('DataSource', 'fieldSeparator');
     $skipColumnHeader = $this->controller->exportValue('DataSource', 'skipColumnHeader');
     $invalidRowCount = $this->get('invalidRowCount');
     $conflictRowCount = $this->get('conflictRowCount');
     $onDuplicate = $this->get('onDuplicate');
 
-    $config = CRM_Core_Config::singleton();
-    $seperator = $config->fieldSeparator;
-
     $mapper = $this->controller->exportValue('MapField', 'mapper');
-    $mapperKeys = array();
+    $mapperKeys = [];
 
     foreach ($mapper as $key => $value) {
       $mapperKeys[$key] = $mapper[$key][0];
@@ -133,7 +131,7 @@ class CRM_Event_Import_Form_Preview extends CRM_Import_Form_Preview {
     $mapFields = $this->get('fields');
 
     foreach ($mapper as $key => $value) {
-      $header = array();
+      $header = [];
       if (isset($mapFields[$mapper[$key][0]])) {
         $header[] = $mapFields[$mapper[$key][0]];
       }
@@ -154,7 +152,7 @@ class CRM_Event_Import_Form_Preview extends CRM_Import_Form_Preview {
 
     $errorStack = CRM_Core_Error::singleton();
     $errors = $errorStack->getErrors();
-    $errorMessage = array();
+    $errorMessage = [];
 
     if (is_array($errors)) {
       foreach ($errors as $key => $value) {

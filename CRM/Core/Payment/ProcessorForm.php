@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -26,10 +26,11 @@
  */
 
 use Civi\Payment\System;
+
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 
@@ -54,6 +55,7 @@ class CRM_Core_Payment_ProcessorForm {
     }
 
     if ($form->_type) {
+      // @todo not sure when this would be true. Never passed in.
       $form->_paymentProcessor = CRM_Financial_BAO_PaymentProcessor::getPayment($form->_type, $form->_mode);
     }
 
@@ -63,10 +65,15 @@ class CRM_Core_Payment_ProcessorForm {
     }
     $form->set('paymentProcessor', $form->_paymentProcessor);
     $form->_paymentObject = System::singleton()->getByProcessor($form->_paymentProcessor);
+    if ($form->paymentInstrumentID) {
+      $form->_paymentObject->setPaymentInstrumentID($form->paymentInstrumentID);
+    }
+    $form->_paymentObject->setBackOffice($form->isBackOffice);
+    $form->assign('isBackOffice', $form->isBackOffice);
 
     $form->assign('suppressSubmitButton', $form->_paymentObject->isSuppressSubmitButtons());
 
-    $form->assign('currency', CRM_Utils_Array::value('currency', $form->_values));
+    $form->assign('currency', $form->getCurrency());
 
     // also set cancel subscription url
     if (!empty($form->_paymentProcessor['is_recur']) && !empty($form->_values['is_recur'])) {
@@ -74,12 +81,12 @@ class CRM_Core_Payment_ProcessorForm {
     }
 
     if (!empty($form->_values['custom_pre_id'])) {
-      $profileAddressFields = array();
+      $profileAddressFields = [];
       $fields = CRM_Core_BAO_UFGroup::getFields($form->_values['custom_pre_id'], FALSE, CRM_Core_Action::ADD, NULL, NULL, FALSE,
         NULL, FALSE, NULL, CRM_Core_Permission::CREATE, NULL);
 
       foreach ((array) $fields as $key => $value) {
-        CRM_Core_BAO_UFField::assignAddressField($key, $profileAddressFields, array('uf_group_id' => $form->_values['custom_pre_id']));
+        CRM_Core_BAO_UFField::assignAddressField($key, $profileAddressFields, ['uf_group_id' => $form->_values['custom_pre_id']]);
       }
       if (count($profileAddressFields)) {
         $form->set('profileAddressFields', $profileAddressFields);
@@ -92,7 +99,9 @@ class CRM_Core_Payment_ProcessorForm {
     CRM_Core_Payment_Form::setPaymentFieldsByProcessor(
       $form,
       $form->_paymentProcessor,
-      CRM_Utils_Request::retrieve('billing_profile_id', 'String')
+      CRM_Utils_Request::retrieve('billing_profile_id', 'String'),
+      $form->isBackOffice,
+      $form->paymentInstrumentID
     );
 
     $form->assign_by_ref('paymentProcessor', $form->_paymentProcessor);
@@ -120,7 +129,7 @@ class CRM_Core_Payment_ProcessorForm {
     ) {
 
       CRM_Core_Error::fatal(ts('This contribution page is configured to support separate contribution and membership payments. This %1 plugin does not currently support multiple simultaneous payments, or the option to "Execute real-time monetary transactions" is disabled. Please contact the site administrator and notify them of this error',
-          array(1 => $form->_paymentProcessor['payment_processor_type'])
+          [1 => $form->_paymentProcessor['payment_processor_type']]
         )
       );
     }
@@ -131,7 +140,7 @@ class CRM_Core_Payment_ProcessorForm {
    *
    * @param CRM_Core_Form $form
    */
-  public static function buildQuickform(&$form) {
+  public static function buildQuickForm(&$form) {
     //@todo document why this addHidden is here
     //CRM-15743 - we should not set/create hidden element for pay later
     // because payment processor is not selected
@@ -143,7 +152,7 @@ class CRM_Core_Payment_ProcessorForm {
     if (!empty($processorId)) {
       $form->addElement('hidden', 'hidden_processor', 1);
     }
-    CRM_Core_Payment_Form::buildPaymentForm($form, $form->_paymentProcessor, $billing_profile_id, FALSE);
+    CRM_Core_Payment_Form::buildPaymentForm($form, $form->_paymentProcessor, $billing_profile_id, $form->isBackOffice, $form->paymentInstrumentID);
   }
 
 }

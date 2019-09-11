@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Report_Form_Contact_Summary extends CRM_Report_Form {
 
@@ -131,7 +131,7 @@ class CRM_Report_Form_Contact_Summary extends CRM_Report_Form {
         ),
         'grouping' => 'contact-fields',
       ),
-    ) + $this->getAddressColumns(array('group_by' => FALSE));
+    ) + $this->getAddressColumns(array('group_bys' => FALSE));
 
     $this->_groupFilter = TRUE;
     $this->_tagFilter = TRUE;
@@ -140,38 +140,6 @@ class CRM_Report_Form_Contact_Summary extends CRM_Report_Form {
 
   public function preProcess() {
     parent::preProcess();
-  }
-
-  public function select() {
-    $select = array();
-    $this->_columnHeaders = array();
-    foreach ($this->_columns as $tableName => $table) {
-      if (array_key_exists('fields', $table)) {
-        foreach ($table['fields'] as $fieldName => $field) {
-          if (!empty($field['required']) ||
-            !empty($this->_params['fields'][$fieldName])
-          ) {
-            if ($tableName == 'civicrm_email') {
-              $this->_emailField = TRUE;
-            }
-            elseif ($tableName == 'civicrm_phone') {
-              $this->_phoneField = TRUE;
-            }
-            elseif ($tableName == 'civicrm_country') {
-              $this->_countryField = TRUE;
-            }
-
-            $alias = "{$tableName}_{$fieldName}";
-            $select[] = "{$field['dbAlias']} as {$alias}";
-            $this->_columnHeaders["{$tableName}_{$fieldName}"]['type'] = CRM_Utils_Array::value('type', $field);
-            $this->_columnHeaders["{$tableName}_{$fieldName}"]['title'] = $field['title'];
-            $this->_selectAliases[] = $alias;
-          }
-        }
-      }
-    }
-
-    $this->_select = "SELECT " . implode(', ', $select) . " ";
   }
 
   /**
@@ -188,31 +156,11 @@ class CRM_Report_Form_Contact_Summary extends CRM_Report_Form {
 
   public function from() {
     $this->_from = "
-        FROM civicrm_contact {$this->_aliases['civicrm_contact']} {$this->_aclFrom}
-            LEFT JOIN civicrm_address {$this->_aliases['civicrm_address']}
-                   ON ({$this->_aliases['civicrm_contact']}.id = {$this->_aliases['civicrm_address']}.contact_id AND
-                      {$this->_aliases['civicrm_address']}.is_primary = 1 ) ";
-
-    if ($this->isTableSelected('civicrm_email')) {
-      $this->_from .= "
-            LEFT JOIN  civicrm_email {$this->_aliases['civicrm_email']}
-                   ON ({$this->_aliases['civicrm_contact']}.id = {$this->_aliases['civicrm_email']}.contact_id AND
-                      {$this->_aliases['civicrm_email']}.is_primary = 1) ";
-    }
-
-    if ($this->_phoneField) {
-      $this->_from .= "
-            LEFT JOIN civicrm_phone {$this->_aliases['civicrm_phone']}
-                   ON {$this->_aliases['civicrm_contact']}.id = {$this->_aliases['civicrm_phone']}.contact_id AND
-                      {$this->_aliases['civicrm_phone']}.is_primary = 1 ";
-    }
-
-    if ($this->isTableSelected('civicrm_country')) {
-      $this->_from .= "
-            LEFT JOIN civicrm_country {$this->_aliases['civicrm_country']}
-                   ON {$this->_aliases['civicrm_address']}.country_id = {$this->_aliases['civicrm_country']}.id AND
-                      {$this->_aliases['civicrm_address']}.is_primary = 1 ";
-    }
+        FROM civicrm_contact {$this->_aliases['civicrm_contact']} {$this->_aclFrom} ";
+    $this->joinAddressFromContact();
+    $this->joinPhoneFromContact();
+    $this->joinEmailFromContact();
+    $this->joinCountryFromAddress();
   }
 
   public function postProcess() {
@@ -230,31 +178,6 @@ class CRM_Report_Form_Contact_Summary extends CRM_Report_Form {
     $this->formatDisplay($rows);
     $this->doTemplateAssignment($rows);
     $this->endPostProcess($rows);
-  }
-
-  /**
-   * Initialise basic row.
-   *
-   * @param array $rows
-   *
-   * @param bool $entryFound
-   * @param array $row
-   * @param int $rowId
-   * @param int $rowNum
-   * @param array $types
-   *
-   * @return bool
-   */
-  private function _initBasicRow(&$rows, &$entryFound, $row, $rowId, $rowNum, $types) {
-    if (!array_key_exists($rowId, $row)) {
-      return FALSE;
-    }
-
-    $value = $row[$rowId];
-    if ($value) {
-      $rows[$rowNum][$rowId] = $types[$value];
-    }
-    $entryFound = TRUE;
   }
 
   /**
@@ -280,35 +203,12 @@ class CRM_Report_Form_Contact_Summary extends CRM_Report_Form {
           $this->_absoluteUrl, $this->_id, $this->_drilldownReport
         );
         $rows[$rowNum]['civicrm_contact_sort_name_link'] = $url;
-        $rows[$rowNum]['civicrm_contact_sort_name_hover'] = ts("View Constituent Detail Report for this contact.");
-        $entryFound = TRUE;
-      }
-
-      if (array_key_exists('civicrm_address_state_province_id', $row)) {
-        if ($value = $row['civicrm_address_state_province_id']) {
-          $rows[$rowNum]['civicrm_address_state_province_id'] = CRM_Core_PseudoConstant::stateProvince($value, FALSE);
-        }
-        $entryFound = TRUE;
-      }
-
-      if (array_key_exists('civicrm_address_country_id', $row)) {
-        if ($value = $row['civicrm_address_country_id']) {
-          $rows[$rowNum]['civicrm_address_country_id'] = CRM_Core_PseudoConstant::country($value, FALSE);
-        }
+        $rows[$rowNum]['civicrm_contact_sort_name_hover'] = ts('View Contact Detail Report for this contact');
         $entryFound = TRUE;
       }
 
       // Handle ID to label conversion for contact fields
       $entryFound = $this->alterDisplayContactFields($row, $rows, $rowNum, 'contact/summary', 'View Contact Summary') ? TRUE : $entryFound;
-
-      // display birthday in the configured custom format
-      if (array_key_exists('civicrm_contact_birth_date', $row)) {
-        $birthDate = $row['civicrm_contact_birth_date'];
-        if ($birthDate) {
-          $rows[$rowNum]['civicrm_contact_birth_date'] = CRM_Utils_Date::customFormat($birthDate, '%Y%m%d');
-        }
-        $entryFound = TRUE;
-      }
 
       // skip looking further in rows, if first row itself doesn't
       // have the column we need

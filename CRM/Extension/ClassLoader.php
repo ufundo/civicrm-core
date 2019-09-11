@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -29,7 +29,7 @@
  *
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
@@ -114,7 +114,7 @@ class CRM_Extension_ClassLoader {
         foreach ($info->classloader as $mapping) {
           switch ($mapping['type']) {
             case 'psr4':
-              $loader->setPsr4($mapping['prefix'], $path . '/' . $mapping['path']);
+              $loader->addPsr4($mapping['prefix'], $path . '/' . $mapping['path']);
               break;
           }
           $result[] = $mapping;

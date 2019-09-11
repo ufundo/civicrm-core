@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,8 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
- * $Id$
+ * @copyright CiviCRM LLC (c) 2004-2019
  *
  */
 
@@ -48,13 +47,13 @@ class CRM_Profile_Form_Edit extends CRM_Profile_Form {
   protected $_context;
   protected $_blockNo;
   protected $_prefix;
+  protected $returnExtra;
 
   /**
    * Pre processing work done here.
    *
    * @param
    *
-   * @return void
    */
   public function preProcess() {
     $this->_mode = CRM_Profile_Form::MODE_CREATE;
@@ -63,13 +62,16 @@ class CRM_Profile_Form_Edit extends CRM_Profile_Form {
     $this->assign('onPopupClose', $this->_onPopupClose);
 
     //set the context for the profile
-    $this->_context = CRM_Utils_Request::retrieve('context', 'String', $this);
+    $this->_context = CRM_Utils_Request::retrieve('context', 'Alphanumeric', $this);
 
     //set the block no
     $this->_blockNo = CRM_Utils_Request::retrieve('blockNo', 'String', $this);
 
     //set the prefix
     $this->_prefix = CRM_Utils_Request::retrieve('prefix', 'String', $this);
+
+    // Fields for the EntityRef widget
+    $this->returnExtra = CRM_Utils_Request::retrieve('returnExtra', 'String', $this);
 
     $this->assign('context', $this->_context);
 
@@ -86,8 +88,7 @@ class CRM_Profile_Form_Edit extends CRM_Profile_Form {
 
     if ($this->get('edit')) {
       // make sure we have right permission to edit this user
-      $session = CRM_Core_Session::singleton();
-      $userID = $session->get('userID');
+      $userID = CRM_Core_Session::getLoggedInContactID();
 
       // Set the ID from the query string, otherwise default to the current user
       $id = CRM_Utils_Request::retrieve('id', 'Positive', $this, FALSE, $userID);
@@ -98,8 +99,9 @@ class CRM_Profile_Form_Edit extends CRM_Profile_Form {
 
         if ($id != $userID) {
           // do not allow edit for anon users in joomla frontend, CRM-4668, unless u have checksum CRM-5228
+          // see also CRM-19079 for modifications to the condition
           $config = CRM_Core_Config::singleton();
-          if ($config->userFrameworkFrontend) {
+          if ($config->userFrameworkFrontend && $config->userSystem->is_joomla) {
             CRM_Contact_BAO_Contact_Permission::validateOnlyChecksum($id, $this);
           }
           else {
@@ -126,7 +128,7 @@ SELECT module,is_reserved
   WHERE civicrm_uf_group.id = %1
 ";
 
-    $params = array(1 => array($this->_gid, 'Integer'));
+    $params = [1 => [$this->_gid, 'Integer']];
     $dao = CRM_Core_DAO::executeQuery($query, $params);
 
     $isProfile = FALSE;
@@ -140,7 +142,7 @@ SELECT module,is_reserved
     //Remove need for Profile module type when using reserved profiles [CRM-14488]
     if (!$dao->N || (!$isProfile && !($dao->is_reserved && $canAdd))) {
       CRM_Core_Error::fatal(ts('The requested Profile (gid=%1) is not configured to be used for \'Profile\' edit and view forms in its Settings. Contact the site administrator if you need assistance.',
-        array(1 => $this->_gid)
+        [1 => $this->_gid]
       ));
     }
   }
@@ -148,7 +150,6 @@ SELECT module,is_reserved
   /**
    * Build the form object.
    *
-   * @return void
    */
   public function buildQuickForm() {
     if (empty($this->_ufGroup['id'])) {
@@ -219,9 +220,12 @@ SELECT module,is_reserved
 
     $this->assign('cancelURL', $this->_cancelURL);
 
+    $cancelButtonValue = !empty($this->_ufGroup['cancel_button_text']) ? $this->_ufGroup['cancel_button_text'] : ts('Cancel');
+    $this->assign('cancelButtonText', $cancelButtonValue);
+    $this->assign('includeCancelButton', CRM_Utils_Array::value('add_cancel_button', $this->_ufGroup));
+
     if (($this->_multiRecord & CRM_Core_Action::DELETE) && $this->_recordExists) {
       $this->_deleteButtonName = $this->getButtonName('upload', 'delete');
-
       $this->addElement('submit', $this->_deleteButtonName, ts('Delete'));
 
       return;
@@ -238,29 +242,35 @@ SELECT module,is_reserved
       $buttonName = 'next';
     }
 
-    $buttons[] = array(
+    $buttons[] = [
       'type' => $buttonName,
-      'name' => ts('Save'),
+      'name' => !empty($this->_ufGroup['submit_button_text']) ? $this->_ufGroup['submit_button_text'] : ts('Save'),
       'isDefault' => TRUE,
-    );
+    ];
 
     $this->addButtons($buttons);
 
-    $this->addFormRule(array('CRM_Profile_Form', 'formRule'), $this);
+    $this->addFormRule(['CRM_Profile_Form', 'formRule'], $this);
   }
 
   /**
    * Process the user submitted custom data values.
    *
-   *
-   * @return void
    */
   public function postProcess() {
     parent::postProcess();
 
-    $displayName = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $this->_id, 'display_name');
-    $sortName = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $this->_id, 'sort_name');
-    $this->ajaxResponse['label'] = $sortName;
+    // Send back data for the EntityRef widget
+    if ($this->returnExtra) {
+      $contact = civicrm_api3('Contact', 'getsingle', [
+        'id' => $this->_id,
+        'return' => $this->returnExtra,
+      ]);
+      foreach (explode(',', $this->returnExtra) as $field) {
+        $field = trim($field);
+        $this->ajaxResponse['extra'][$field] = CRM_Utils_Array::value($field, $contact);
+      }
+    }
 
     // When saving (not deleting) and not in an ajax popup
     if (empty($_POST[$this->_deleteButtonName]) && $this->_context != 'dialog') {
@@ -291,10 +301,10 @@ SELECT module,is_reserved
     }
     else {
       // Replace tokens from post URL
-      $contactParams = array(
+      $contactParams = [
         'contact_id' => $this->_id,
         'version' => 3,
-      );
+      ];
 
       $contact = civicrm_api('contact', 'get', $contactParams);
       $contact = reset($contact['values']);

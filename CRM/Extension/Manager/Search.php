@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -29,12 +29,15 @@
  * This class stores logic for managing CiviCRM extensions.
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Extension_Manager_Search extends CRM_Extension_Manager_Base {
 
   const CUSTOM_SEARCH_GROUP_NAME = 'custom_search';
 
+  /**
+   * CRM_Extension_Manager_Search constructor.
+   */
   public function __construct() {
     parent::__construct(TRUE);
     $this->groupId = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionGroup',
@@ -55,10 +58,10 @@ class CRM_Extension_Manager_Search extends CRM_Extension_Manager_Base {
     }
 
     $weight = CRM_Utils_Weight::getDefaultWeight('CRM_Core_DAO_OptionValue',
-      array('option_group_id' => $this->groupId)
+      ['option_group_id' => $this->groupId]
     );
 
-    $params = array(
+    $params = [
       'option_group_id' => $this->groupId,
       'weight' => $weight,
       'description' => $info->label . ' (' . $info->key . ')',
@@ -66,9 +69,9 @@ class CRM_Extension_Manager_Search extends CRM_Extension_Manager_Base {
       'value' => max($customSearchesByName) + 1,
       'label' => $info->key,
       'is_active' => 1,
-    );
+    ];
 
-    $ids = array();
+    $ids = [];
     $optionValue = CRM_Core_BAO_OptionValue::add($params, $ids);
 
     return $optionValue ? TRUE : FALSE;

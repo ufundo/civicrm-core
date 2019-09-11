@@ -6,9 +6,9 @@
  *   API result array
  */
 function price_set_get_example() {
-  $params = array(
+  $params = [
     'name' => 'default_contribution_amount',
-  );
+  ];
 
   try{
     $result = civicrm_api3('PriceSet', 'get', $params);
@@ -18,11 +18,12 @@ function price_set_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,13 +37,13 @@ function price_set_get_example() {
  */
 function price_set_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
         'name' => 'default_contribution_amount',
         'title' => 'Contribution Amount',
@@ -50,10 +51,11 @@ function price_set_get_expectedresult() {
         'extends' => '2',
         'is_quick_config' => '1',
         'is_reserved' => '1',
-        'entity' => array(),
-      ),
-    ),
-  );
+        'min_amount' => 0,
+        'entity' => [],
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

@@ -8,13 +8,13 @@
  *   API result array
  */
 function website_get_example() {
-  $params = array(
-    'options' => array(
-      'metadata' => array(
+  $params = [
+    'options' => [
+      'metadata' => [
         '0' => 'fields',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   try{
     $result = civicrm_api3('Website', 'get', $params);
@@ -24,11 +24,12 @@ function website_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -42,33 +43,42 @@ function website_get_example() {
  */
 function website_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 0,
-    'values' => array(),
-    'metadata' => array(
-      'fields' => array(
-        'id' => array(
+    'values' => [],
+    'metadata' => [
+      'fields' => [
+        'id' => [
           'name' => 'id',
           'type' => '1',
           'title' => 'Website ID',
+          'description' => 'Unique Website ID',
           'required' => '1',
-          'api.aliases' => array(
+          'table_name' => 'civicrm_website',
+          'entity' => 'Website',
+          'bao' => 'CRM_Core_BAO_Website',
+          'api.aliases' => [
             '0' => 'website_id',
-          ),
-        ),
-        'contact_id' => array(
+          ],
+        ],
+        'contact_id' => [
           'name' => 'contact_id',
           'type' => '1',
           'title' => 'Contact',
+          'description' => 'FK to Contact ID',
+          'table_name' => 'civicrm_website',
+          'entity' => 'Website',
+          'bao' => 'CRM_Core_BAO_Website',
           'FKClassName' => 'CRM_Contact_DAO_Contact',
           'FKApiName' => 'Contact',
-        ),
-        'url' => array(
+        ],
+        'url' => [
           'name' => 'url',
           'type' => '2',
           'title' => 'Website',
+          'description' => 'Website',
           'maxlength' => '128',
           'size' => '30',
           'import' => '1',
@@ -76,24 +86,36 @@ function website_get_expectedresult() {
           'headerPattern' => '/Website/i',
           'dataPattern' => '/^[A-Za-z][0-9A-Za-z]{20,}$/',
           'export' => '1',
-          'html' => array(
+          'table_name' => 'civicrm_website',
+          'entity' => 'Website',
+          'bao' => 'CRM_Core_BAO_Website',
+          'html' => [
             'type' => 'Text',
-          ),
-        ),
-        'website_type_id' => array(
+            'maxlength' => '128',
+            'size' => '30',
+          ],
+        ],
+        'website_type_id' => [
           'name' => 'website_type_id',
           'type' => '1',
           'title' => 'Website Type',
-          'html' => array(
+          'description' => 'Which Website type does this website belong to.',
+          'table_name' => 'civicrm_website',
+          'entity' => 'Website',
+          'bao' => 'CRM_Core_BAO_Website',
+          'html' => [
             'type' => 'Select',
-          ),
-          'pseudoconstant' => array(
+            'size' => '6',
+            'maxlength' => '14',
+          ],
+          'pseudoconstant' => [
             'optionGroupName' => 'website_type',
-          ),
-        ),
-      ),
-    ),
-  );
+            'optionEditPath' => 'civicrm/admin/options/website_type',
+          ],
+        ],
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

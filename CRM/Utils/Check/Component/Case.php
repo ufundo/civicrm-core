@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,9 +28,11 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Utils_Check_Component_Case extends CRM_Utils_Check_Component {
+
+  const DOCTOR_WHEN = 'https://github.com/civicrm/org.civicrm.doctorwhen';
 
   /**
    * @var CRM_Case_XMLRepository
@@ -64,7 +66,7 @@ class CRM_Utils_Check_Component_Case extends CRM_Utils_Check_Component {
    *   An empty array, or a list of warnings
    */
   public function checkCaseTypeNameConsistency() {
-    $messages = array();
+    $messages = [];
 
     foreach ($this->caseTypeNames as $caseTypeName) {
       $normalFile = $this->xmlRepo->findXmlFile($caseTypeName);
@@ -76,11 +78,11 @@ class CRM_Utils_Check_Component_Case extends CRM_Utils_Check_Component {
       elseif ($normalFile && $mungedFile) {
         $messages[] = new CRM_Utils_Check_Message(
           __FUNCTION__ . $caseTypeName,
-          ts('Case type "%1" has duplicate XML files ("%2" and "%3")', array(
+          ts('Case type "%1" has duplicate XML files ("%2" and "%3")', [
             1 => $caseTypeName,
             2 => $normalFile,
             3 => $mungedFile,
-          )) .
+          ]) .
           '<br /><a href="' . CRM_Utils_System::getWikiBaseURL() . __FUNCTION__ . '">' .
           ts('Read more about this warning') .
           '</a>',
@@ -95,11 +97,11 @@ class CRM_Utils_Check_Component_Case extends CRM_Utils_Check_Component {
       elseif (!$normalFile && $mungedFile) {
         $messages[] = new CRM_Utils_Check_Message(
           __FUNCTION__ . $caseTypeName,
-          ts('Case type "%1" corresponds to XML file ("%2") The XML file should be named "%3".', array(
+          ts('Case type "%1" corresponds to XML file ("%2") The XML file should be named "%3".', [
             1 => $caseTypeName,
             2 => $mungedFile,
             3 => "{$caseTypeName}.xml",
-          )) .
+          ]) .
           '<br /><a href="' . CRM_Utils_System::getWikiBaseURL() . __FUNCTION__ . '">' .
           ts('Read more about this warning') .
           '</a>',
@@ -111,6 +113,50 @@ class CRM_Utils_Check_Component_Case extends CRM_Utils_Check_Component {
       elseif (!$normalFile && !$mungedFile) {
         // ok -- probably a new or DB-based CaseType
       }
+    }
+
+    return $messages;
+  }
+
+  /**
+   * Check that the timestamp columns are populated. (CRM-20958)
+   *
+   * @return array<CRM_Utils_Check_Message>
+   *   An empty array, or a list of warnings
+   */
+  public function checkNullTimestamps() {
+    $messages = [];
+
+    $nullCount = 0;
+    $nullCount += CRM_Utils_SQL_Select::from('civicrm_activity')
+      ->where('created_date IS NULL OR modified_date IS NULL')
+      ->select('COUNT(*)')
+      ->execute()
+      ->fetchValue();
+    $nullCount += CRM_Utils_SQL_Select::from('civicrm_case')
+      ->where('created_date IS NULL OR modified_date IS NULL')
+      ->select('COUNT(*)')
+      ->execute()
+      ->fetchValue();
+
+    if ($nullCount > 0) {
+      $messages[] = new CRM_Utils_Check_Message(
+        __FUNCTION__,
+        '<p>' .
+        ts('The tables "<em>civicrm_activity</em>" and "<em>civicrm_case</em>" were updated to support two new fields, "<em>created_date</em>" and "<em>modified_date</em>". For historical data, these fields may appear blank. (%1 records have NULL timestamps.)', [
+          1 => $nullCount,
+        ]) .
+        '</p><p>' .
+        ts('At time of writing, this is not a problem. However, future extensions and improvements could rely on these fields, so it may be useful to back-fill them.') .
+        '</p><p>' .
+        ts('For further discussion, please visit %1', [
+          1 => sprintf('<a href="%s" target="_blank">%s</a>', self::DOCTOR_WHEN, self::DOCTOR_WHEN),
+        ]) .
+        '</p>',
+        ts('Timestamps for Activities and Cases'),
+        \Psr\Log\LogLevel::NOTICE,
+        'fa-clock-o'
+      );
     }
 
     return $messages;

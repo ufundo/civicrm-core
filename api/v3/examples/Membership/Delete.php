@@ -6,9 +6,10 @@
  *   API result array
  */
 function membership_delete_example() {
-  $params = array(
+  $params = [
     'id' => 1,
-  );
+    'preserve_contribution' => 1,
+  ];
 
   try{
     $result = civicrm_api3('Membership', 'delete', $params);
@@ -18,11 +19,12 @@ function membership_delete_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,19 +38,19 @@ function membership_delete_example() {
  */
 function membership_delete_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'values' => TRUE,
-  );
+  ];
 
   return $expectedResult;
 }
 
 /*
 * This example has been generated from the API test suite.
-* The test that created it is called "testMembershipDelete"
+* The test that created it is called "testMembershipDeletePreserveContribution"
 * and can be found at:
 * https://github.com/civicrm/civicrm-core/blob/master/tests/phpunit/api/v3/MembershipTest.php
 *

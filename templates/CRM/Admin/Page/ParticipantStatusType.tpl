@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,11 +28,11 @@
 {else}
   <div class="help">{ts}Manage event participant statuses below. Enable selected statuses to allow event waitlisting and/or participant approval.{/ts} {help id="id-disabled_statuses"}</div>
 
-<div class="crm-section participant-status">
+<div class="crm-block crm-content-block participant-status">
   {strip}
     {* handle enable/disable actions*}
     {include file="CRM/common/enableDisableApi.tpl"}
-    <table cellpadding="0" cellspacing="0" border="0">
+    <table cellpadding="0" cellspacing="0" border="0" class="row-highlight">
       <thead class="sticky">
         <th>{ts}Label{/ts}</th>
         <th>{ts}Name (Status ID){/ts}</th>
@@ -48,7 +48,7 @@
        <tr id="participant_status_type-{$row.id}" class="crm-entity crm-participant_{$row.id} {cycle values="odd-row,even-row"} {$row.class}{if NOT $row.is_active} disabled{/if}">
           <td class="crmf-label crm-editable" data-field="label">{$row.label}</td>
           <td class="crmf-name">{$row.name} ({$row.id})</td>
-          <td class="crmf-class crm-editable" data-type="select">{$row.class}</td>
+          <td class="crmf-class {if !$row.is_reserved} crm-editable {/if}" data-type="select">{$row.class}</td>
           <td class="center crmf-is_reserved">{if $row.is_reserved}<img src="{$config->resourceBase}i/check.gif" alt="{ts}Reserved{/ts}" />{/if}</td>
         <td id="row_{$row.id}_status" class="crmf-is_active">{if $row.is_active eq 1} {ts}Yes{/ts} {else} {ts}No{/ts} {/if}</td>
           <td class="center crmf-is_counted">{if $row.is_counted} <img src="{$config->resourceBase}i/check.gif" alt="{ts}Counted{/ts}" />{/if}</td>

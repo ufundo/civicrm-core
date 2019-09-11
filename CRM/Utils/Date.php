@@ -1,9 +1,9 @@
 <?php
 /*
   +--------------------------------------------------------------------+
-  | CiviCRM version 4.7                                                |
+  | CiviCRM version 5                                                  |
   +--------------------------------------------------------------------+
-  | Copyright CiviCRM LLC (c) 2004-2016                                |
+  | Copyright CiviCRM LLC (c) 2004-2019                                |
   +--------------------------------------------------------------------+
   | This file is a part of CiviCRM.                                    |
   |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 /**
@@ -176,7 +176,7 @@ class CRM_Utils_Date {
    *
    */
   public static function getAbbrWeekdayNames() {
-    static $days = array();
+    static $days = [];
     if (!$days) {
       // First day of the week
       $firstDay = Civi::settings()->get('weekBegins');
@@ -184,7 +184,7 @@ class CRM_Utils_Date {
       // set LC_TIME and build the arrays from locale-provided names
       // June 1st, 1970 was a Monday
       CRM_Core_I18n::setLcTime();
-      for ($i = $firstDay; count($days) < 7; $i = $i > 6 ? 0 : $i + 1) {
+      for ($i = $firstDay; count($days) < 7; $i = $i > 5 ? 0 : $i + 1) {
         $days[$i] = strftime('%a', mktime(0, 0, 0, 6, $i, 1970));
       }
     }
@@ -205,7 +205,7 @@ class CRM_Utils_Date {
    *
    */
   public static function getFullWeekdayNames() {
-    static $days = array();
+    static $days = [];
     if (!$days) {
       // First day of the week
       $firstDay = Civi::settings()->get('weekBegins');
@@ -213,7 +213,7 @@ class CRM_Utils_Date {
       // set LC_TIME and build the arrays from locale-provided names
       // June 1st, 1970 was a Monday
       CRM_Core_I18n::setLcTime();
-      for ($i = $firstDay; count($days) < 7; $i = $i > 6 ? 0 : $i + 1) {
+      for ($i = $firstDay; count($days) < 7; $i = $i > 5 ? 0 : $i + 1) {
         $days[$i] = strftime('%A', mktime(0, 0, 0, 6, $i, 1970));
       }
     }
@@ -322,13 +322,13 @@ class CRM_Utils_Date {
       $config = CRM_Core_Config::singleton();
 
       if ($dateParts) {
-        if (array_intersect(array('h', 'H'), $dateParts)) {
+        if (array_intersect(['h', 'H'], $dateParts)) {
           $format = $config->dateformatDatetime;
         }
-        elseif (array_intersect(array('d', 'j'), $dateParts)) {
+        elseif (array_intersect(['d', 'j'], $dateParts)) {
           $format = $config->dateformatFull;
         }
-        elseif (array_intersect(array('m', 'M'), $dateParts)) {
+        elseif (array_intersect(['m', 'M'], $dateParts)) {
           $format = $config->dateformatPartial;
         }
         else {
@@ -410,7 +410,7 @@ class CRM_Utils_Date {
         $type = 'PM';
       }
 
-      $date = array(
+      $date = [
         '%b' => CRM_Utils_Array::value($month, $abbrMonths),
         '%B' => CRM_Utils_Array::value($month, $fullMonths),
         '%d' => $day > 9 ? $day : '0' . $day,
@@ -429,13 +429,30 @@ class CRM_Utils_Date {
         '%P' => $type,
         '%A' => $type,
         '%Y' => $year,
-      );
+      ];
 
       return strtr($format, $date);
     }
     else {
       return '';
     }
+  }
+
+  /**
+   * Wrapper for customFormat that takes a timestamp
+   *
+   * @param int $timestamp
+   *   Date and time in timestamp format.
+   * @param string $format
+   *   The output format.
+   * @param array $dateParts
+   *   An array with the desired date parts.
+   *
+   * @return string
+   *   the $format-formatted $date
+   */
+  public static function customFormatTs($timestamp, $format = NULL, $dateParts = NULL) {
+    return CRM_Utils_Date::customFormat(date("Y-m-d H:i:s", $timestamp), $format, $dateParts);
   }
 
   /**
@@ -491,7 +508,7 @@ class CRM_Utils_Date {
    *   date/datetime in MySQL format
    */
   public static function isoToMysql($iso) {
-    $dropArray = array('-' => '', ':' => '', ' ' => '');
+    $dropArray = ['-' => '', ':' => '', ' ' => ''];
     return strtr($iso, $dropArray);
   }
 
@@ -696,6 +713,57 @@ class CRM_Utils_Date {
   }
 
   /**
+   * Translate a TTL to a concrete expiration time.
+   *
+   * @param NULL|int|DateInterval $ttl
+   * @param int $default
+   *   The value to use if $ttl is not specified (NULL).
+   * @return int
+   *   Timestamp (seconds since epoch).
+   * @throws \CRM_Utils_Cache_InvalidArgumentException
+   */
+  public static function convertCacheTtlToExpires($ttl, $default) {
+    if ($ttl === NULL) {
+      $ttl = $default;
+    }
+
+    if (is_int($ttl)) {
+      return time() + $ttl;
+    }
+    elseif ($ttl instanceof DateInterval) {
+      return date_add(new DateTime(), $ttl)->getTimestamp();
+    }
+    else {
+      throw new CRM_Utils_Cache_InvalidArgumentException("Invalid cache TTL");
+    }
+  }
+
+  /**
+   * Normalize a TTL.
+   *
+   * @param NULL|int|DateInterval $ttl
+   * @param int $default
+   *   The value to use if $ttl is not specified (NULL).
+   * @return int
+   *   Seconds until expiration.
+   * @throws \CRM_Utils_Cache_InvalidArgumentException
+   */
+  public static function convertCacheTtl($ttl, $default) {
+    if ($ttl === NULL) {
+      return $default;
+    }
+    elseif (is_int($ttl)) {
+      return $ttl;
+    }
+    elseif ($ttl instanceof DateInterval) {
+      return date_add(new DateTime(), $ttl)->getTimestamp() - time();
+    }
+    else {
+      throw new CRM_Utils_Cache_InvalidArgumentException("Invalid cache TTL");
+    }
+  }
+
+  /**
    * @param null $timeStamp
    *
    * @return bool|string
@@ -719,7 +787,7 @@ class CRM_Utils_Date {
       $now = self::isoToMysql($now);
     }
 
-    return ($mysqlDate >= $now) ? FALSE : TRUE;
+    return (strtotime($mysqlDate) >= strtotime($now)) ? FALSE : TRUE;
   }
 
   /**
@@ -791,28 +859,36 @@ class CRM_Utils_Date {
    * Get start date and end from
    * the given relative term and unit
    *
-   * @param date $relative
-   *   Eg: term.unit.
+   * @param string $relative Relative format in the format term.unit.
+   *   Eg: previous.day
    *
-   * @param $from
-   * @param $to
+   * @param string $from
+   * @param string $to
+   * @param string $fromTime
+   * @param string $toTime
    *
    * @return array
    *   start date, end date
    */
-  public static function getFromTo($relative, $from, $to) {
+  public static function getFromTo($relative, $from, $to, $fromTime = NULL, $toTime = '235959') {
     if ($relative) {
-      list($term, $unit) = explode('.', $relative);
+      list($term, $unit) = explode('.', $relative, 2);
       $dateRange = self::relativeToAbsolute($term, $unit);
-      $from = $dateRange['from'];
-      //Take only Date Part, Sometime Time part is also present in 'to'
+      $from = substr($dateRange['from'], 0, 8);
       $to = substr($dateRange['to'], 0, 8);
+      // @todo fix relativeToAbsolute & add tests
+      // relativeToAbsolute returns 8 char date strings
+      // or 14 char date + time strings.
+      // We should use those. However, it turns out to be unreliable.
+      // e.g. this.week does NOT return 235959 for 'from'
+      // so our defaults are more reliable.
+      // Currently relativeToAbsolute only supports 'whole' days so that is ok
     }
 
-    $from = self::processDate($from);
-    $to = self::processDate($to, '235959');
+    $from = self::processDate($from, $fromTime);
+    $to = self::processDate($to, $toTime);
 
-    return array($from, $to);
+    return [$from, $to];
   }
 
   /**
@@ -824,8 +900,8 @@ class CRM_Utils_Date {
    * @return int
    *   array $results contains years or months
    */
-  static public function calculateAge($birthDate) {
-    $results = array();
+  public static function calculateAge($birthDate) {
+    $results = [];
     $formatedBirthDate = CRM_Utils_Date::customFormat($birthDate, '%Y-%m-%d');
 
     $bDate = explode('-', $formatedBirthDate);
@@ -926,7 +1002,7 @@ class CRM_Utils_Date {
 
     $scheduleDate = explode("-", date("n-j-Y-H-i-s", $date));
 
-    $date = array();
+    $date = [];
     $date['M'] = $scheduleDate[0];
     $date['d'] = $scheduleDate[1];
     $date['Y'] = $scheduleDate[2];
@@ -939,42 +1015,88 @@ class CRM_Utils_Date {
   }
 
   /**
-   * Check given format is valid for bith date.
-   * and retrun supportable birth date format w/ qf mapping.
+   * Get the smarty view presentation mapping for the given format.
+   *
+   * Historically it was decided that where the view format is 'dd/mm/yy' or 'mm/dd/yy'
+   * they should be rendered using a longer date format. This is likely as much to
+   * do with the earlier date widget being unable to handle some formats as usablity.
+   * However, we continue to respect this.
    *
    * @param $format
    *   Given format ( eg 'M Y', 'Y M' ).
-   *   return array of qfMapping and date parts for date format.
    *
-   * @return array|null|string
+   * @return string|null
+   *   Smarty translation of the date format. Null is also valid and is translated
+   *   according to the available parts at the smarty layer.
    */
-  public static function &checkBirthDateFormat($format = NULL) {
-    $birthDateFormat = NULL;
-    if (!$format) {
-      $birthDateFormat = self::getDateFormat('birth');
-    }
-
-    $supportableFormats = array(
+  public static function getDateFieldViewFormat($format) {
+    $supportableFormats = [
       'mm/dd' => '%B %E%f',
       'dd-mm' => '%E%f %B',
       'yy-mm' => '%Y %B',
       'M yy' => '%b %Y',
       'yy' => '%Y',
       'dd/mm/yy' => '%E%f %B %Y',
-    );
+    ];
 
-    if (array_key_exists($birthDateFormat, $supportableFormats)) {
-      $birthDateFormat = array('qfMapping' => $supportableFormats[$birthDateFormat]);
+    return array_key_exists($format, $supportableFormats) ? $supportableFormats[$format] : self::pickBestSmartyFormat($format);
+  }
+
+  /**
+   * Pick the smarty format from settings that best matches the time string we have.
+   *
+   * For view purposes we historically use the setting that most closely matches the data
+   * in the format from our settings, as opposed to the setting configured for the field.
+   *
+   * @param $format
+   * @return mixed
+   */
+  public static function pickBestSmartyFormat($format) {
+    if (stristr($format, 'h')) {
+      return Civi::settings()->get('dateformatDatetime');
     }
+    if (stristr($format, 'd') || stristr($format, 'j')) {
+      return Civi::settings()->get('dateformatFull');
+    }
+    if (stristr($format, 'm')) {
+      return Civi::settings()->get('dateformatPartial');
+    }
+    return Civi::settings()->get('dateformatYear');
+  }
 
-    return $birthDateFormat;
+  /**
+   * Map date plugin and actual format that is used by PHP.
+   *
+   * @return array
+   */
+  public static function datePluginToPHPFormats() {
+    $dateInputFormats = [
+      "mm/dd/yy" => 'm/d/Y',
+      "dd/mm/yy" => 'd/m/Y',
+      "yy-mm-dd" => 'Y-m-d',
+      "dd-mm-yy" => 'd-m-Y',
+      "dd.mm.yy" => 'd.m.Y',
+      "M d" => 'M j',
+      "M d, yy" => 'M j, Y',
+      "d M yy" => 'j M Y',
+      "MM d, yy" => 'F j, Y',
+      "d MM yy" => 'j F Y',
+      "DD, d MM yy" => 'l, j F Y',
+      "mm/dd" => 'm/d',
+      "dd-mm" => 'd-m',
+      "yy-mm" => 'Y-m',
+      "M yy" => 'M Y',
+      "M Y" => 'M Y',
+      "yy" => 'Y',
+    ];
+    return $dateInputFormats;
   }
 
   /**
    * Resolves the given relative time interval into finite time limits.
    *
-   * @param array $relativeTerm
-   *   Relative time frame like this, previous, etc.
+   * @param string $relativeTerm
+   *   Relative time frame: this, previous, previous_1.
    * @param int $unit
    *   Frequency unit like year, month, week etc.
    *
@@ -983,8 +1105,11 @@ class CRM_Utils_Date {
    */
   public static function relativeToAbsolute($relativeTerm, $unit) {
     $now = getdate();
-    $from = $to = $dateRange = array();
+    $from = $to = $dateRange = [];
     $from['H'] = $from['i'] = $from['s'] = 0;
+    $relativeTermParts = explode('_', $relativeTerm);
+    $relativeTermPrefix = $relativeTermParts[0];
+    $relativeTermSuffix = isset($relativeTermParts[1]) ? $relativeTermParts[1] : '';
 
     switch ($unit) {
       case 'year':
@@ -1100,6 +1225,17 @@ class CRM_Utils_Date {
             $to['M'] = $now['mon'];
             $to['Y'] = $now['year'] + 1;
             break;
+
+          default:
+            if ($relativeTermPrefix === 'ending') {
+              $to['d'] = $now['mday'];
+              $to['M'] = $now['mon'];
+              $to['Y'] = $now['year'];
+              $to['H'] = 23;
+              $to['i'] = $to['s'] = 59;
+              $from = self::intervalAdd('year', -$relativeTermSuffix, $to);
+              $from = self::intervalAdd('second', 1, $from);
+            }
         }
         break;
 
@@ -1108,7 +1244,7 @@ class CRM_Utils_Date {
         $from['d'] = $config->fiscalYearStart['d'];
         $from['M'] = $config->fiscalYearStart['M'];
         $fYear = self::calculateFiscalYear($from['d'], $from['M']);
-        switch ($relativeTerm) {
+        switch ($relativeTermPrefix) {
           case 'this':
             $from['Y'] = $fYear;
             $fiscalYear = mktime(0, 0, 0, $from['M'], $from['d'] - 1, $from['Y'] + 1);
@@ -1120,12 +1256,22 @@ class CRM_Utils_Date {
             break;
 
           case 'previous':
-            $from['Y'] = $fYear - 1;
-            $fiscalYear = mktime(0, 0, 0, $from['M'], $from['d'] - 1, $from['Y'] + 1);
-            $fiscalEnd = explode('-', date("Y-m-d", $fiscalYear));
-            $to['d'] = $fiscalEnd['2'];
-            $to['M'] = $fiscalEnd['1'];
-            $to['Y'] = $fiscalEnd['0'];
+            if (!is_numeric($relativeTermSuffix)) {
+              $from['Y'] = ($relativeTermSuffix === 'before') ? $fYear - 2 : $fYear - 1;
+              $fiscalYear = mktime(0, 0, 0, $from['M'], $from['d'] - 1, $from['Y'] + 1);
+              $fiscalEnd = explode('-', date("Y-m-d", $fiscalYear));
+              $to['d'] = $fiscalEnd['2'];
+              $to['M'] = $fiscalEnd['1'];
+              $to['Y'] = $fiscalEnd['0'];
+            }
+            else {
+              $from['Y'] = $fYear - $relativeTermSuffix;
+              $fiscalYear = mktime(0, 0, 0, $from['M'], $from['d'] - 1, $from['Y'] + 1);
+              $fiscalEnd = explode('-', date("Y-m-d", $fiscalYear));
+              $to['d'] = $fiscalEnd['2'];
+              $to['M'] = $fiscalEnd['1'];
+              $to['Y'] = $fYear;
+            }
             break;
 
           case 'next':
@@ -1314,6 +1460,17 @@ class CRM_Utils_Date {
             $to = self::intervalAdd('day', 90, $from);
             $to = self::intervalAdd('second', -1, $to);
             break;
+
+          default:
+            if ($relativeTermPrefix === 'ending') {
+              $to['d'] = $now['mday'];
+              $to['M'] = $now['mon'];
+              $to['Y'] = $now['year'];
+              $to['H'] = 23;
+              $to['i'] = $to['s'] = 59;
+              $from = self::intervalAdd('month', -($relativeTermSuffix * 3), $to);
+              $from = self::intervalAdd('second', 1, $from);
+            }
         }
         break;
 
@@ -1483,6 +1640,17 @@ class CRM_Utils_Date {
             $to = self::intervalAdd('day', 60, $from);
             $to = self::intervalAdd('second', -1, $to);
             break;
+
+          default:
+            if ($relativeTermPrefix === 'ending') {
+              $to['d'] = $now['mday'];
+              $to['M'] = $now['mon'];
+              $to['Y'] = $now['year'];
+              $to['H'] = 23;
+              $to['i'] = $to['s'] = 59;
+              $from = self::intervalAdd($unit, -$relativeTermSuffix, $to);
+              $from = self::intervalAdd('second', 1, $from);
+            }
         }
         break;
 
@@ -1600,6 +1768,17 @@ class CRM_Utils_Date {
             $to = self::intervalAdd('day', 7, $from);
             $to = self::intervalAdd('second', -1, $to);
             break;
+
+          default:
+            if ($relativeTermPrefix === 'ending') {
+              $to['d'] = $now['mday'];
+              $to['M'] = $now['mon'];
+              $to['Y'] = $now['year'];
+              $to['H'] = 23;
+              $to['i'] = $to['s'] = 59;
+              $from = self::intervalAdd($unit, -$relativeTermSuffix, $to);
+              $from = self::intervalAdd('second', 1, $from);
+            }
         }
         break;
 
@@ -1663,14 +1842,24 @@ class CRM_Utils_Date {
             $from['Y'] = $to['Y'];
             break;
 
+          default:
+            if ($relativeTermPrefix === 'ending') {
+              $to['d'] = $now['mday'];
+              $to['M'] = $now['mon'];
+              $to['Y'] = $now['year'];
+              $to['H'] = 23;
+              $to['i'] = $to['s'] = 59;
+              $from = self::intervalAdd($unit, -$relativeTermSuffix, $to);
+              $from = self::intervalAdd('second', 1, $from);
+            }
         }
         break;
     }
 
-    foreach (array(
-               'from',
-               'to',
-             ) as $item) {
+    foreach ([
+      'from',
+      'to',
+    ] as $item) {
       if (!empty($$item)) {
         $dateRange[$item] = self::format($$item);
       }
@@ -1691,7 +1880,7 @@ class CRM_Utils_Date {
    *   Fiscal Start Month.
    *
    * @return int
-   *   $fy       Current Fiscl Year
+   *   $fy       Current Fiscal Year
    */
   public static function calculateFiscalYear($fyDate, $fyMonth) {
     $date = date("Y-m-d");
@@ -1742,6 +1931,83 @@ class CRM_Utils_Date {
   }
 
   /**
+   * Add the metadata about a date field to the field.
+   *
+   * This metadata will work with the call $form->add('datepicker', ...
+   *
+   * @param array $fieldMetaData
+   * @param array $field
+   *
+   * @return array
+   */
+  public static function addDateMetadataToField($fieldMetaData, $field) {
+    if (isset($fieldMetaData['html'])) {
+      $field['html_type'] = $fieldMetaData['html']['type'];
+      if ($field['html_type'] === 'Select Date') {
+        if (!isset($field['date_format'])) {
+          $dateAttributes = CRM_Core_SelectValues::date($fieldMetaData['html']['formatType'], NULL, NULL, NULL, 'Input');
+          $field['start_date_years'] = $dateAttributes['minYear'];
+          $field['end_date_years'] = $dateAttributes['maxYear'];
+          $field['date_format'] = $dateAttributes['format'];
+          $field['is_datetime_field'] = TRUE;
+          $field['time_format'] = $dateAttributes['time'];
+          $field['smarty_view_format'] = $dateAttributes['smarty_view_format'];
+        }
+        $field['datepicker']['extra'] = self::getDatePickerExtra($field);
+        $field['datepicker']['attributes'] = self::getDatePickerAttributes($field);
+      }
+    }
+    return $field;
+  }
+
+  /**
+   * Get the fields required for the 'extra' parameter when adding a datepicker.
+   *
+   * @param array $field
+   *
+   * @return array
+   */
+  public static function getDatePickerExtra($field) {
+    $extra = [];
+    if (isset($field['date_format'])) {
+      $extra['date'] = $field['date_format'];
+      $extra['time'] = $field['time_format'];
+    }
+    $thisYear = date('Y');
+    if (isset($field['start_date_years'])) {
+      $extra['minDate'] = date('Y-m-d', strtotime('-' . ($thisYear - $field['start_date_years']) . ' years'));
+    }
+    if (isset($field['end_date_years'])) {
+      $extra['maxDate'] = date('Y-m-d', strtotime('-' . ($thisYear - $field['end_date_years']) . ' years'));
+    }
+    return $extra;
+  }
+
+  /**
+   * Get the attributes parameters required for datepicker.
+   *
+   * @param array $field
+   *   Field metadata
+   *
+   * @return array
+   *   Array ready to pass to $this->addForm('datepicker' as attributes.
+   */
+  public static function getDatePickerAttributes(&$field) {
+    $attributes = [];
+    $dateAttributes = [
+      'start_date_years' => 'minYear',
+      'end_date_years' => 'maxYear',
+      'date_format' => 'format',
+    ];
+    foreach ($dateAttributes as $dateAttribute => $mapTo) {
+      if (isset($field[$dateAttribute])) {
+        $attributes[$mapTo] = $field[$dateAttribute];
+      }
+    }
+    return $attributes;
+  }
+
+  /**
    * Function to convert mysql to date plugin format.
    *
    * @param string $mysqlDate
@@ -1763,8 +2029,8 @@ class CRM_Utils_Date {
     $config = CRM_Core_Config::singleton();
     if ($formatType) {
       // get actual format
-      $params = array('name' => $formatType);
-      $values = array();
+      $params = ['name' => $formatType];
+      $values = [];
       CRM_Core_DAO::commonRetrieve('CRM_Core_DAO_PreferencesDate', $params, $values);
 
       if ($values['date_format']) {
@@ -1810,7 +2076,7 @@ class CRM_Utils_Date {
       $time = '0' . $time;
     }
 
-    return array($date, $time);
+    return [$date, $time];
   }
 
   /**
@@ -1854,13 +2120,13 @@ class CRM_Utils_Date {
     // 4. If date and time then convert to default date time format.
 
     $dateKey = 'date';
-    $dateParams = array($dateKey => $date);
+    $dateParams = [$dateKey => $date];
 
     if (CRM_Utils_Date::convertToDefaultDate($dateParams, $dateType, $dateKey)) {
       $dateVal = $dateParams[$dateKey];
       $ruleName = 'date';
       if ($dateType == 1) {
-        $matches = array();
+        $matches = [];
         if (preg_match("/(\s(([01]\d)|[2][0-3]):([0-5]\d))$/", $date, $matches)) {
           $ruleName = 'dateTime';
           if (strpos($date, '-') !== FALSE) {
@@ -1892,7 +2158,7 @@ class CRM_Utils_Date {
    * @return array
    */
   public static function getCalendarDayOfMonth() {
-    $month = array();
+    $month = [];
     for ($i = 1; $i <= 31; $i++) {
       $month[$i] = $i;
       if ($i == 31) {
@@ -1900,6 +2166,42 @@ class CRM_Utils_Date {
       }
     }
     return $month;
+  }
+
+  /**
+   * Convert a relative date format to an api field.
+   *
+   * @param array $params
+   * @param string $dateField
+   * @param bool $isDatePicker
+   *   Non datepicker fields are deprecated. Exterminate Exterminate.
+   *   (but for now handle them).
+   */
+  public static function convertFormDateToApiFormat(&$params, $dateField, $isDatePicker = TRUE) {
+    if (!empty($params[$dateField . '_relative'])) {
+      $dates = CRM_Utils_Date::getFromTo($params[$dateField . '_relative'], NULL, NULL);
+      unset($params[$dateField . '_relative']);
+    }
+    if (!empty($params[$dateField . '_low'])) {
+      $dates[0] = $isDatePicker ? $params[$dateField . '_low'] : date('Y-m-d H:i:s', strtotime($params[$dateField . '_low']));
+      unset($params[$dateField . '_low']);
+    }
+    if (!empty($params[$dateField . '_high'])) {
+      $dates[1] = $isDatePicker ? $params[$dateField . '_high'] : date('Y-m-d 23:59:59', strtotime($params[$dateField . '_high']));
+      unset($params[$dateField . '_high']);
+    }
+    if (empty($dates)) {
+      return;
+    }
+    if (empty($dates[0])) {
+      $params[$dateField] = ['<=' => $dates[1]];
+    }
+    elseif (empty($dates[1])) {
+      $params[$dateField] = ['>=' => $dates[0]];
+    }
+    else {
+      $params[$dateField] = ['BETWEEN' => $dates];
+    }
   }
 
 }

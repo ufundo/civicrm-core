@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -47,12 +47,8 @@
            <td>{$contactDetails.$activityId.$fName}</td>
         {/foreach}
                 {foreach from=$fields item=field key=fieldName}
-                {assign var=n value=$field.name}
-                {if ( $fields.$n.data_type eq 'Date') or (  $fields.$n.name eq 'activity_date_time' ) }
-                <td class="compressed">{include file="CRM/common/jcalendar.tpl" elementName=$fieldName elementIndex=$activityId batchUpdate=1}</td>
-                {else}
+                  {assign var=n value=$field.name}
                    <td class="compressed">{$form.field.$activityId.$n.html}</td>
-                {/if}
               {/foreach}
              </tr>
               {/foreach}

@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -35,23 +35,28 @@
         <div class="crm-submit-buttons">{include file="CRM/common/formButtons.tpl" location="top"}</div>
         <table class="form-layout-compressed">
           <tr>
-            <td class="font-size12pt" colspan="2">{$form.sort_name.label}&nbsp;&nbsp;{$form.sort_name.html|crmAddClass:'twenty'}</td>
+            <td class="font-size12pt" colspan="2">
+              {$form.sort_name.label}<br>
+              {$form.sort_name.html|crmAddClass:'twenty'}
+            </td>
           </tr>
           <tr>
           {if $form.contact_tags}
-            <td><label>{ts}Contributor Tag(s){/ts}</label>
+            <td>
+              <label>{ts}Contributor Tag(s){/ts}</label><br>
               {$form.contact_tags.html}
             </td>
             {else}
             <td>&nbsp;</td>
           {/if}
           {if $form.group}
-            <td><label>{ts}Contributor Group(s){/ts}</label>
+            <td><label>{ts}Contributor Group(s){/ts}</label><br>
               {$form.group.html}
             </td>
             {else}
             <td>&nbsp;</td>
           {/if}
+          </tr>
           {include file="CRM/Contribute/Form/Search/Common.tpl"}
         </table>
 	<div class="crm-submit-buttons">{include file="CRM/common/formButtons.tpl" location="bottom"}</div>
@@ -74,7 +79,8 @@
         <th class="crm-contact-name">{ts}Name{/ts}</th>
         <th class="crm-amount">{ts}Amount{/ts}</th>
         <th class="crm-trxnID">{ts}Trxn ID{/ts}</th>
-        <th class="crm-received">{ts}Received{/ts}</th>
+        <th class="crm-trxn_date">{ts}Payment/Transaction Date{/ts}</th>
+        <th class="crm-received">{ts}Contribution Date{/ts}</th>
         <th class="crm-payment-method">{ts}Pay Method{/ts}</th>
         <th class="crm-status">{ts}Status{/ts}</th>
         <th class="crm-type">{ts}Financial Type{/ts}</th>
@@ -90,7 +96,7 @@
 {literal}
 <script type="text/javascript">
 CRM.$(function($) {
-  CRM.$('#_qf_BatchTransaction_submit-top, #_qf_BatchTransaction_submit-botttom').click(function() {
+  CRM.$('#_qf_BatchTransaction_submit-top, #_qf_BatchTransaction_submit-bottom').click(function() {
     CRM.$('.crm-batch_transaction_search-accordion:not(.collapsed)').crmAccordionToggle();
   });
   var batchStatus = {/literal}{$statusID}{literal};
@@ -104,7 +110,7 @@ CRM.$(function($) {
       buildTransactionSelectorAssign( false );
     }
     buildTransactionSelectorRemove();
-    CRM.$('#_qf_BatchTransaction_submit-botttom, #_qf_BatchTransaction_submit-top').click( function() {
+    CRM.$('#_qf_BatchTransaction_submit-bottom, #_qf_BatchTransaction_submit-top').click( function() {
       buildTransactionSelectorAssign( true );
       return false;
     });
@@ -143,20 +149,10 @@ CRM.$(function($) {
     });
 
     CRM.$("#crm-transaction-selector-assign-{/literal}{$entityID}{literal} #toggleSelect").click( function() {
-      if (CRM.$("#crm-transaction-selector-assign-{/literal}{$entityID}{literal} #toggleSelect").is(':checked')) {
-        CRM.$("#crm-transaction-selector-assign-{/literal}{$entityID}{literal} input[id^='mark_x_']").prop('checked',true);
-      }
-      else {
-        CRM.$("#crm-transaction-selector-assign-{/literal}{$entityID}{literal} input[id^='mark_x_']").prop('checked',false);
-      }
+      toggleFinancialSelections('#toggleSelect', 'assign');
     });
     CRM.$("#crm-transaction-selector-remove-{/literal}{$entityID}{literal} #toggleSelects").click( function() {
-      if (CRM.$("#crm-transaction-selector-remove-{/literal}{$entityID}{literal} #toggleSelects").is(':checked')) {
-        CRM.$("#crm-transaction-selector-remove-{/literal}{$entityID}{literal} input[id^='mark_y_']").prop('checked',true);
-      }
-      else {
-        CRM.$("#crm-transaction-selector-remove-{/literal}{$entityID}{literal} input[id^='mark_y_']").prop('checked',false);
-      }
+      toggleFinancialSelections('#toggleSelects', 'remove');
     });
   {/literal}{else}{literal}
     buildTransactionSelectorRemove();
@@ -172,6 +168,19 @@ function enableActions( type ) {
   }
 }
 
+function toggleFinancialSelections(toggleID, toggleClass) {
+  var mark = 'x';
+  if (toggleClass == 'remove') {
+    mark = 'y';
+  }
+  if (CRM.$("#crm-transaction-selector-" + toggleClass + "-{/literal}{$entityID}{literal} " +	toggleID).is(':checked')) {
+    CRM.$("#crm-transaction-selector-" + toggleClass + "-{/literal}{$entityID}{literal} input[id^='mark_" + mark + "_']").prop('checked',true);
+  }
+  else {
+    CRM.$("#crm-transaction-selector-" + toggleClass + "-{/literal}{$entityID}{literal} input[id^='mark_" + mark + "_']").prop('checked',false);
+  }
+}
+
 function buildTransactionSelectorAssign(filterSearch) {
   var columns = '';
   var sourceUrl = {/literal}'{crmURL p="civicrm/ajax/rest" h=0 q="className=CRM_Financial_Page_AJAX&fnName=getFinancialTransactionsList&snippet=4&context=financialBatch&entityID=$entityID&notPresent=1&statusID=$statusID"}'{literal};
@@ -184,6 +193,7 @@ function buildTransactionSelectorAssign(filterSearch) {
   "bDestroy"   : true,
   "bFilter"    : false,
   "bAutoWidth" : false,
+  "lengthMenu": [ 10, 25, 50, 100, 250, 500, 1000, 2000 ],
   "aaSorting"  : [[5, 'desc']],
   "aoColumns"  : [
     {sClass:'crm-transaction-checkbox', bSortable:false},
@@ -191,6 +201,7 @@ function buildTransactionSelectorAssign(filterSearch) {
     {sClass:'crm-contact-name'},
     {sClass:'crm-amount'},
     {sClass:'crm-trxnID'},
+    {sClass:'crm-trxn_date'},
     {sClass:'crm-received'},
     {sClass:'crm-payment-method'},
     {sClass:'crm-status'},
@@ -240,10 +251,14 @@ function buildTransactionSelectorAssign(filterSearch) {
       "type": "POST",
       "url": sSource,
       "data": aoData,
-      "success": fnCallback
+      "success": function(b) {
+        fnCallback(b);
+        toggleFinancialSelections('#toggleSelect', 'assign');
+      }
     });
   }
 });
+	
 }
 
 function buildTransactionSelectorRemove( ) {
@@ -261,6 +276,7 @@ function buildTransactionSelectorRemove( ) {
     {sClass:'crm-contact-name'},
     {sClass:'crm-amount'},
     {sClass:'crm-trxnID'},
+    {sClass:'crm-trxn_date'},
     {sClass:'crm-received'},
     {sClass:'crm-payment-method'},
     {sClass:'crm-status'},
@@ -295,7 +311,10 @@ function buildTransactionSelectorRemove( ) {
       "type": "POST",
       "url": sSource,
       "data": aoData,
-      "success": fnCallback
+      "success": function(b) {
+        fnCallback(b);
+        toggleFinancialSelections('#toggleSelects', 'remove');
+      }
     });
   }
 });

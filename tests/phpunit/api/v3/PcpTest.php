@@ -2,9 +2,9 @@
 
 /*
  * +--------------------------------------------------------------------+
- * | CiviCRM version 4.7                                                |
+ * | CiviCRM version 5                                                  |
  * +--------------------------------------------------------------------+
- * | Copyright CiviCRM LLC (c) 2004-2016                                |
+ * | Copyright CiviCRM LLC (c) 2004-2019                                |
  * +--------------------------------------------------------------------+
  * | This file is a part of CiviCRM.                                    |
  * |                                                                    |
@@ -55,7 +55,8 @@ class api_v3_PcpTest extends CiviUnitTestCase {
       'title' => "Pcp title",
       'contact_id' => 1,
       'page_id' => 1,
-      'pcp_block_id' => 1);
+      'pcp_block_id' => 1,
+    );
     parent::setUp();
   }
 
@@ -66,6 +67,15 @@ class api_v3_PcpTest extends CiviUnitTestCase {
     $result = $this->callAPIAndDocument('Pcp', 'create', $this->params,
         __FUNCTION__, __FILE__);
     $this->getAndCheck($this->params, $result['id'], $this->entity);
+  }
+
+  /**
+   * Test disable a PCP succeeds.
+   */
+  public function testDisablePcp() {
+    $result = civicrm_api3('Pcp', 'create', $this->params);
+    civicrm_api3('Pcp', 'create', array('id' => $result['id'], 'is_active' => 0));
+    $this->getAndCheck($this->params + array('is_active' => 0), $result['id'], $this->entity);
   }
 
   /**
@@ -91,7 +101,7 @@ class api_v3_PcpTest extends CiviUnitTestCase {
     $checkCreated = $this->callAPISuccess($this->entity, 'get',
       array('id' => $entity['id']));
     $this->assertEquals(1, $checkCreated['count']);
-    $result = $this->callAPIAndDocument('Pcp', 'delete',
+    $this->callAPIAndDocument('Pcp', 'delete',
         array('id' => $entity['id']), __FUNCTION__, __FILE__);
     $checkDeleted = $this->callAPISuccess($this->entity, 'get',
         array('id' => $entity['id']));
@@ -109,8 +119,8 @@ class api_v3_PcpTest extends CiviUnitTestCase {
     $description = "Demonstrates get + delete in the same call.";
     $subfile = 'ChainedGetDelete';
     $params = array('title' => "Pcp title", 'api.Pcp.delete' => 1);
-    $result = $this->callAPISuccess('Pcp', 'create', $this->params);
-    $result = $this->callAPIAndDocument('Pcp', 'get', $params, __FUNCTION__,
+    $this->callAPISuccess('Pcp', 'create', $this->params);
+    $this->callAPIAndDocument('Pcp', 'get', $params, __FUNCTION__,
         __FILE__, $description, $subfile);
     $this->assertEquals(0, $this->callAPISuccess('Pcp', 'getcount', array()));
   }

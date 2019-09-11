@@ -8,9 +8,9 @@
  *   API result array
  */
 function pledge_get_example() {
-  $params = array(
-    'pledge_start_date_high' => '20150220231942',
-  );
+  $params = [
+    'pledge_start_date_high' => '20170205024740',
+  ];
 
   try{
     $result = civicrm_api3('Pledge', 'get', $params);
@@ -20,11 +20,12 @@ function pledge_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -38,13 +39,13 @@ function pledge_get_example() {
  */
 function pledge_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 2,
-    'values' => array(
-      '2' => array(
+    'values' => [
+      '2' => [
         'contact_id' => '8',
         'contact_type' => 'Individual',
         'contact_sub_type' => '',
@@ -52,10 +53,11 @@ function pledge_get_expectedresult() {
         'display_name' => 'Mr. Anthony Anderson II',
         'pledge_id' => '2',
         'pledge_amount' => '100.00',
-        'pledge_create_date' => '2015-02-22 00:00:00',
+        'pledge_create_date' => '2017-02-07 00:00:00',
+        'pledge_start_date' => '2016-03-04 00:00:00',
         'pledge_status' => 'Overdue',
         'pledge_total_paid' => '',
-        'pledge_next_pay_date' => '2014-03-07 00:00:00',
+        'pledge_next_pay_date' => '2016-03-04 00:00:00',
         'pledge_next_pay_amount' => '20.00',
         'pledge_outstanding_amount' => '20.00',
         'pledge_financial_type' => 'Donation',
@@ -66,9 +68,9 @@ function pledge_get_expectedresult() {
         'pledge_campaign_id' => '',
         'pledge_currency' => 'USD',
         'id' => '2',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

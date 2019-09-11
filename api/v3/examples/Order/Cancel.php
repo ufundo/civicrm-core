@@ -6,9 +6,9 @@
  *   API result array
  */
 function order_cancel_example() {
-  $params = array(
+  $params = [
     'contribution_id' => 1,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Order', 'cancel', $params);
@@ -18,11 +18,12 @@ function order_cancel_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,15 +37,15 @@ function order_cancel_example() {
  */
 function order_cancel_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
-        'contact_id' => '14',
+        'contact_id' => '16',
         'financial_type_id' => '1',
         'contribution_page_id' => '',
         'payment_instrument_id' => '4',
@@ -71,10 +72,11 @@ function order_cancel_expectedresult() {
         'campaign_id' => '',
         'creditnote_id' => 'CN_1',
         'tax_amount' => '',
+        'revenue_recognition_date' => '',
         'contribution_type_id' => '1',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

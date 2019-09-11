@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -25,10 +25,6 @@
 *}
 <style>
   {literal}
-  #mainTabContainer {
-    background: transparent;
-    border: 0 none;
-  }
   #mainTabContainer pre {
     line-height: 14px;
     font-size: 11px;
@@ -50,6 +46,9 @@
     margin-top: 1em;
     overflow: auto;
   }
+  #api-params tr td {
+    padding-top: 13px;
+  }
   #api-params-table th:first-child,
   #api-params-table td:first-child {
     width: 35%;
@@ -68,6 +67,61 @@
   #api-params-table td:first-child + td + td,
   #api-params-table th:first-child + th + th {
     width: 65%
+  }
+  #api-params .api-sort-handle {
+    margin-right: 10px;
+    cursor: move;
+  }
+  #api-params tr td > .crm-i,
+  #api-params tr td > a .crm-i {
+    color: lightgrey;
+  }
+  #api-params tr:hover td > .crm-i,
+  #api-params tr:hover td > a .crm-i {
+    color: grey;
+  }
+  #api-params .api-and-or {
+    margin-left: 1.2em;
+    font-size: .8em;
+    position: relative;
+    top: 5px;
+    width: 10em;
+    margin-bottom: -9px;
+  }
+  #api-params .api-and-or > span {
+    padding: 0 1em;
+    background: white;
+    cursor: pointer;
+  }
+  #api-params .api-or,
+  #api-params tr.or .api-and {
+    color: lightgrey;
+  }
+  #api-params tr.or .api-or {
+    color: inherit;
+  }
+  #api-params .api-and-or .crm-i {
+    transform: rotate(180deg);
+  }
+  #api-params tr.or .api-and-or .crm-i {
+    transform: initial;
+  }
+  #api-params .api-and-or:hover .crm-i {
+    color: #2786c2;
+  }
+  #api-params tr.or {
+    border-top: 3px solid lightgrey;
+    border-left: 3px solid lightgrey;
+    border-right: 3px solid lightgrey;
+  }
+  #api-params tr.or + tr {
+    border-left: 3px solid lightgrey;
+    border-right: 3px solid lightgrey;
+    border-bottom: 3px solid lightgrey;
+  }
+  #api-params tr.or + tr.or {
+    border-top: none;
+    border-bottom: none;
   }
   #api-generated td:first-child {
     width: 60px;
@@ -106,6 +160,9 @@
   }
   #api-join li.join-enabled > i {
     opacity: 1;
+  }
+  #api-join li.join-not-available {
+    font-style: italic;
   }
   #api-generated-wraper,
   #api-result {
@@ -165,21 +222,22 @@
   {/literal}
 </style>
 
+<div class="crm-block crm-content-block">
 <div id="mainTabContainer">
   <ul>
     <li class="ui-corner-all" title="GUI to build and execute API calls">
-      <a href="#explorer-tab">{ts}Explorer{/ts}</a>
+      <a href="#explorer-tab"><i class="crm-i fa-search"></i> {ts}Explorer{/ts}</a>
     </li>
     <li class="ui-corner-all" title="Auto-generated examples from the test suite">
-      <a href="#examples-tab">{ts}Examples{/ts}</a>
+      <a href="#examples-tab"><i class="crm-i fa-book"></i> {ts}Examples{/ts}</a>
     </li>
     <li class="ui-corner-all" title="API source-code and code-level documentation">
-      <a href="#docs-tab">{ts}Code Docs{/ts}</a>
+      <a href="#docs-tab"><i class="crm-i fa-code"></i> {ts}Code Docs{/ts}</a>
     </li>
   </ul>
 
   <div id="explorer-tab">
-
+    <div class="crm-block crm-form-block">
     <form id="api-explorer">
       <label for="api-entity">{ts}Entity{/ts}:</label>
       <select class="crm-form-select big required" id="api-entity" name="entity">
@@ -233,11 +291,12 @@
           <tr><td>Smarty</td><td><pre class="linenums" id="api-smarty" title='smarty syntax (for get actions)'></pre></td></tr>
           <tr><td>Php</td><td><pre class="linenums" id="api-php" title='php syntax'></pre></td></tr>
           <tr><td>Javascript</td><td><pre class="linenums" id="api-json" title='javascript syntax'></pre></td></tr>
+          <tr><td><a href="https://github.com/civicrm/cv" target="_blank">cv</a></td><td><pre id="api-cv" title='cv cli syntax'></pre></td></tr>
           {if $config->userSystem->is_drupal}
-            <tr><td>Drush</td><td><pre id="api-drush" title='drush syntax'></pre></td></tr>
+            <tr><td><a href="http://www.drush.org/" target="_blank">drush</a></td><td><pre id="api-drush" title='drush syntax'></pre></td></tr>
           {/if}
           {if $config->userSystem->is_wordpress}
-            <tr><td>WP-CLI</td><td><pre id="api-wpcli" title='wp-cli syntax'></pre></td></tr>
+            <tr><td><a href="http://wp-cli.org/" target="_blank">wp-cli</a></td><td><pre id="api-wpcli" title='wp-cli syntax'></pre></td></tr>
           {/if}
         </table>
       </div>
@@ -246,13 +305,16 @@
           <i class="crm-i fa-bolt"></i><input type="submit" value="{ts}Execute{/ts}" class="crm-form-submit" accesskey="S" title="{ts}Execute API call and display results{/ts}"/>
         </span>
       </div>
+
 <pre id="api-result" class="linenums">
 {ts}Results are displayed here.{/ts}
 </pre>
     </form>
   </div>
+  </div>
 
   <div id="examples-tab">
+    <div class="crm-block crm-form-block">
     <form id="api-examples">
       <label for="example-entity">{ts}Entity{/ts}:</label>
       <select class="crm-form-select big required" id="example-entity" name="entity">
@@ -273,8 +335,10 @@
 </pre>
     </form>
   </div>
+  </div>
 
   <div id="docs-tab">
+    <div class="crm-block crm-form-block">
     <form id="api-docs">
       <label for="doc-entity">{ts}Entity{/ts}:</label>
       <select class="crm-form-select big required" id="doc-entity" name="entity">
@@ -294,13 +358,18 @@
         {ts}Results are displayed here.{/ts}
       </div>
     </form>
+    </div>
   </div>
 </div>
-
+</div>
 {strip}
 <script type="text/template" id="api-param-tpl">
   <tr class="api-param-row">
-    <td><input style="width: 100%;" class="crm-form-text api-param-name api-input" value="<%= name %>" placeholder="{ts}Parameter{/ts}" /></td>
+    <td>
+      <i class="crm-i api-sort-handle fa-arrows"></i>
+      <input style="width: 90%;" class="crm-form-text api-param-name api-input" value="<%= name %>" placeholder="{ts}Parameter{/ts}" />
+      <div class="api-and-or"><span><span class="api-and">{ts}AND{/ts}</span> <i class="crm-i fa-toggle-on"></i> <span class="api-or">{ts}OR{/ts}</span></span></div>
+    </td>
     <td>
       {literal}
       <% if (noOps) { %>
@@ -354,7 +423,8 @@
 <script type="text/template" id="api-chain-tpl">
   <tr class="api-chain-row">
     <td>
-      <select style="width: 100%;" class="crm-form-select api-chain-entity">
+      <i class="crm-i api-sort-handle fa-arrows"></i>
+      <select style="width: 90%;" class="crm-form-select api-chain-entity">
         <option value=""></option>
         {foreach from=$entities.values item=entity}
           <option value="{$entity}" {if !empty($entities.deprecated) && in_array($entity, $entities.deprecated)}class="strikethrough"{/if}>
@@ -389,10 +459,10 @@
   {literal}
   <ul class="fa-ul">
     <% _.forEach(joins, function(join, name) { %>
-      <li <% if(join.checked) { %>class="join-enabled"<% } %>>
+      <li <% if(join.checked) { %>class="join-enabled"<% } if(join.disabled) { %>class="join-not-available"<% }%>>
         <i class="fa-li crm-i fa-reply fa-rotate-180"></i>
         <label for="select-join-<%= name %>" class="api-checkbox-label">
-          <input type="checkbox" id="select-join-<%= name %>" value="<%= name %>" data-entity="<%= join.entity %>" <% if(join.checked) { %>checked<% } %>/>
+          <input type="checkbox" id="select-join-<%= name %>" value="<%= name %>" data-entity="<%= join.entity %>" <% if(join.checked) { %>checked<% } if(join.disabled) { %>disabled<% } %>/>
           <%- join.title %>
         </label>
       </li>

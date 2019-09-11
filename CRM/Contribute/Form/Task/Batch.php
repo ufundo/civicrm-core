@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 /**
@@ -45,11 +45,13 @@ class CRM_Contribute_Form_Task_Batch extends CRM_Contribute_Form_Task {
 
   /**
    * Maximum profile fields that will be displayed
+   * @var int
    */
   protected $_maxFields = 9;
 
   /**
    * Variable to store redirect path
+   * @var string
    */
   protected $_userContext;
 
@@ -61,7 +63,7 @@ class CRM_Contribute_Form_Task_Batch extends CRM_Contribute_Form_Task {
     parent::preProcess();
 
     //get the contact read only fields to display.
-    $readOnlyFields = array_merge(array('sort_name' => ts('Name')),
+    $readOnlyFields = array_merge(['sort_name' => ts('Name')],
       CRM_Core_BAO_Setting::valueOptions(CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME,
         'contact_autocomplete_options',
         TRUE, NULL, FALSE, 'name', TRUE
@@ -89,12 +91,12 @@ class CRM_Contribute_Form_Task_Batch extends CRM_Contribute_Form_Task {
     CRM_Utils_System::setTitle($this->_title);
 
     $this->addDefaultButtons(ts('Save'));
-    $this->_fields = array();
+    $this->_fields = [];
     $this->_fields = CRM_Core_BAO_UFGroup::getFields($ufGroupId, FALSE, CRM_Core_Action::VIEW);
 
     // remove file type field and then limit fields
     $suppressFields = FALSE;
-    $removehtmlTypes = array('File', 'Autocomplete-Select');
+    $removehtmlTypes = ['File'];
     foreach ($this->_fields as $name => $field) {
       if ($cfID = CRM_Core_BAO_CustomField::getKeyID($name) &&
         in_array($this->_fields[$name]['html_type'], $removehtmlTypes)
@@ -112,25 +114,24 @@ class CRM_Contribute_Form_Task_Batch extends CRM_Contribute_Form_Task {
 
     $this->_fields = array_slice($this->_fields, 0, $this->_maxFields);
 
-    $this->addButtons(array(
-        array(
-          'type' => 'submit',
-          'name' => ts('Update Contribution(s)'),
-          'isDefault' => TRUE,
-        ),
-        array(
-          'type' => 'cancel',
-          'name' => ts('Cancel'),
-        ),
-      )
-    );
+    $this->addButtons([
+      [
+        'type' => 'submit',
+        'name' => ts('Update Contribution(s)'),
+        'isDefault' => TRUE,
+      ],
+      [
+        'type' => 'cancel',
+        'name' => ts('Cancel'),
+      ],
+    ]);
 
     $this->assign('profileTitle', $this->_title);
     $this->assign('componentIds', $this->_contributionIds);
 
     //load all campaigns.
     if (array_key_exists('contribution_campaign_id', $this->_fields)) {
-      $this->_componentCampaigns = array();
+      $this->_componentCampaigns = [];
       CRM_Core_PseudoConstant::populate($this->_componentCampaigns,
         'CRM_Contribute_DAO_Contribution',
         TRUE, 'campaign_id', 'id',
@@ -138,11 +139,17 @@ class CRM_Contribute_Form_Task_Batch extends CRM_Contribute_Form_Task {
       );
     }
 
+    // It is possible to have fields that are required in CiviCRM not be required in the
+    // profile. Overriding that here. Perhaps a better approach would be to
+    // make them required in the schema & read that up through getFields functionality.
+    $requiredFields = ['receive_date'];
+
     //fix for CRM-2752
     $customFields = CRM_Core_BAO_CustomField::getFields('Contribution');
     foreach ($this->_contributionIds as $contributionId) {
       $typeId = CRM_Core_DAO::getFieldValue("CRM_Contribute_DAO_Contribution", $contributionId, 'financial_type_id');
       foreach ($this->_fields as $name => $field) {
+        $entityColumnValue = [];
         if ($customFieldID = CRM_Core_BAO_CustomField::getKeyID($name)) {
           $customValue = CRM_Utils_Array::value($customFieldID, $customFields);
           if (!empty($customValue['extends_entity_column_value'])) {
@@ -152,13 +159,16 @@ class CRM_Contribute_Form_Task_Batch extends CRM_Contribute_Form_Task {
           }
 
           if (!empty($entityColumnValue[$typeId]) ||
-            CRM_Utils_System::isNull($entityColumnValue[$typeId])
+            CRM_Utils_System::isNull(CRM_Utils_Array::value($typeId, $entityColumnValue))
           ) {
             CRM_Core_BAO_UFGroup::buildProfile($this, $field, NULL, $contributionId);
           }
         }
         else {
           // handle non custom fields
+          if (in_array($field['name'], $requiredFields)) {
+            $field['is_required'] = TRUE;
+          }
           CRM_Core_BAO_UFGroup::buildProfile($this, $field, NULL, $contributionId);
         }
       }
@@ -170,7 +180,7 @@ class CRM_Contribute_Form_Task_Batch extends CRM_Contribute_Form_Task {
     $buttonName = $this->controller->getButtonName('submit');
 
     if ($suppressFields && $buttonName != '_qf_Batch_next') {
-      CRM_Core_Session::setStatus(ts("File or Autocomplete-Select type field(s) in the selected profile are not supported for Update multiple contributions."), ts('Unsupported Field Type'), 'error');
+      CRM_Core_Session::setStatus(ts("File type field(s) in the selected profile are not supported for Update multiple contributions."), ts('Unsupported Field Type'), 'error');
     }
 
     $this->addDefaultButtons(ts('Update Contributions'));
@@ -184,9 +194,8 @@ class CRM_Contribute_Form_Task_Batch extends CRM_Contribute_Form_Task {
       return;
     }
 
-    $defaults = array();
+    $defaults = [];
     foreach ($this->_contributionIds as $contributionId) {
-      $details[$contributionId] = array();
       CRM_Core_BAO_UFGroup::setProfileDefaults(NULL, $this->_fields, $defaults, FALSE, $contributionId, 'Contribute');
     }
 
@@ -198,57 +207,31 @@ class CRM_Contribute_Form_Task_Batch extends CRM_Contribute_Form_Task {
    */
   public function postProcess() {
     $params = $this->exportValues();
-    $dates = array(
-      'receive_date',
-      'receipt_date',
-      'thankyou_date',
-      'cancel_date',
-    );
+    // @todo extract submit functions &
+    // extend CRM_Event_Form_Task_BatchTest::testSubmit with a data provider to test
+    // handling of custom data, specifically checkbox fields.
     if (isset($params['field'])) {
-      foreach ($params['field'] as $key => $value) {
+      foreach ($params['field'] as $contributionID => $value) {
 
-        $value['custom'] = CRM_Core_BAO_CustomField::postProcess($value,
-          $key,
-          'Contribution'
-        );
-
-        $ids['contribution'] = $key;
-        foreach ($dates as $val) {
-          if (isset($value[$val])) {
-            $value[$val] = CRM_Utils_Date::processDate($value[$val]);
-          }
-        }
+        $value['id'] = $contributionID;
         if (!empty($value['financial_type'])) {
           $value['financial_type_id'] = $value['financial_type'];
         }
 
-        if (!empty($value['payment_instrument'])) {
-          $value['payment_instrument_id'] = $value['payment_instrument'];
-        }
+        $value['options'] = [
+          'reload' => 1,
+        ];
+        $contribution = civicrm_api3('Contribution', 'create', $value);
+        $contribution = $contribution['values'][$contributionID];
 
-        if (!empty($value['contribution_source'])) {
-          $value['source'] = $value['contribution_source'];
-        }
-
-        unset($value['financial_type']);
-        unset($value['contribution_source']);
-        $contribution = CRM_Contribute_BAO_Contribution::add($value, $ids);
-
+        // @todo add check as to whether the status is updated.
         if (!empty($value['contribution_status_id'])) {
-          CRM_Contribute_BAO_Contribution::transitionComponentWithReturnMessage($contribution->id,
+          // @todo - use completeorder api or make api call do this.
+          CRM_Contribute_BAO_Contribution::transitionComponentWithReturnMessage($contribution['id'],
             $value['contribution_status_id'],
-            CRM_Utils_Array::value("field[{$key}][contribution_status_id]",
-              $this->_defaultValues
-            ),
-            $contribution->receive_date
+            CRM_Utils_Array::value("field[{$contributionID}][contribution_status_id]", $this->_defaultValues),
+            $contribution['receive_date']
           );
-        }
-
-        // add custom field values
-        if (!empty($value['custom']) &&
-          is_array($value['custom'])
-        ) {
-          CRM_Core_BAO_CustomValueTable::store($value['custom'], 'civicrm_contribution', $contribution->id);
         }
       }
       CRM_Core_Session::setStatus(ts("Your updates have been saved."), ts('Saved'), 'success');

@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -49,7 +49,7 @@
     <div class="messages status no-popup" style="width:25%"><span id="event_participant_status"></span></div>
 {/if}
 
-<div class="crm-block crm-event-additionalparticipant-form-block">
+<div class="crm-event-id-{$event.id} crm-block crm-event-additionalparticipant-form-block">
 {if $priceSet}
      <fieldset id="priceset" class="crm-public-form-item crm-group priceset-group"><legend>{$event.fee_label}</legend>
         {include file="CRM/Price/Form/PriceSet.tpl" extends="Event"}
@@ -70,7 +70,7 @@
   {include file="CRM/UF/Form/Block.tpl" fields=$additionalCustomPost}
 </div>
 
-<div id="crm-submit-buttons">
+<div id="crm-submit-buttons" class="crm-submit-buttons">
     {include file="CRM/common/formButtons.tpl"}
 </div>
 </div>

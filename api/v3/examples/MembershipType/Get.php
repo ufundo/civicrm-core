@@ -6,9 +6,9 @@
  *   API result array
  */
 function membership_type_get_example() {
-  $params = array(
+  $params = [
     'id' => 1,
-  );
+  ];
 
   try{
     $result = civicrm_api3('MembershipType', 'get', $params);
@@ -18,11 +18,12 @@ function membership_type_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,18 +37,18 @@ function membership_type_get_example() {
  */
 function membership_type_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
         'domain_id' => '1',
         'name' => 'General',
         'member_of_contact_id' => '4',
-        'financial_type_id' => '1',
+        'financial_type_id' => '2',
         'minimum_fee' => '0.00',
         'duration_unit' => 'year',
         'duration_interval' => '1',
@@ -55,9 +56,10 @@ function membership_type_get_expectedresult() {
         'visibility' => 'Public',
         'auto_renew' => 0,
         'is_active' => '1',
-      ),
-    ),
-  );
+        'contribution_type_id' => '2',
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

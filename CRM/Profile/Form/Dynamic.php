@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,8 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
- * $Id$
+ * @copyright CiviCRM LLC (c) 2004-2019
  *
  */
 
@@ -48,7 +47,6 @@ class CRM_Profile_Form_Dynamic extends CRM_Profile_Form {
    *
    * @param
    *
-   * @return void
    */
   public function preProcess() {
     if ($this->get('register')) {
@@ -71,22 +69,21 @@ class CRM_Profile_Form_Dynamic extends CRM_Profile_Form {
   /**
    * Build the form object.
    *
-   * @return void
    */
   public function buildQuickForm() {
-    $this->addButtons(array(
-      array(
+    $this->addButtons([
+      [
         'type' => 'upload',
         'name' => ts('Save'),
         'isDefault' => TRUE,
-      ),
-    ));
+      ],
+    ]);
 
     // also add a hidden element for to trick drupal
     $this->addElement('hidden', "edit[civicrm_dummy_field]", "CiviCRM Dummy Field for Drupal");
     parent::buildQuickForm();
 
-    $this->addFormRule(array('CRM_Profile_Form_Dynamic', 'formRule'), $this);
+    $this->addFormRule(['CRM_Profile_Form_Dynamic', 'formRule'], $this);
   }
 
   /**
@@ -103,7 +100,7 @@ class CRM_Profile_Form_Dynamic extends CRM_Profile_Form {
    *   true if no errors, else array of errors
    */
   public static function formRule($fields, $files, $form) {
-    $errors = array();
+    $errors = [];
 
     // if no values, return
     if (empty($fields) || empty($fields['edit'])) {
@@ -115,9 +112,6 @@ class CRM_Profile_Form_Dynamic extends CRM_Profile_Form {
 
   /**
    * Process the user submitted custom data values.
-   *
-   *
-   * @return void
    */
   public function postProcess() {
     parent::postProcess();

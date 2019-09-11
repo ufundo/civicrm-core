@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,9 +28,10 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Utils_Migrate_Import {
+
   /**
    * Class constructor.
    */
@@ -48,7 +49,9 @@ class CRM_Utils_Migrate_Import {
   public function run($file) {
     // read xml file
     $dom = new DomDocument();
-    if (!$dom->load($file)) {
+    $xmlString = file_get_contents($file);
+    $load = $dom->loadXML($xmlString);
+    if (!$load) {
       throw new CRM_Core_Exception("Failed to parse XML file \"$file\"");
     }
     $dom->xinclude();
@@ -62,10 +65,10 @@ class CRM_Utils_Migrate_Import {
    * @param SimpleXMLElement $xml
    */
   public function runXmlElement($xml) {
-    $idMap = array(
-      'custom_group' => array(),
-      'option_group' => array(),
-    );
+    $idMap = [
+      'custom_group' => [],
+      'option_group' => [],
+    ];
 
     // first create option groups and values if any
     $this->optionGroups($xml, $idMap);
@@ -104,11 +107,11 @@ class CRM_Utils_Migrate_Import {
         $dao->$keyName = (string ) $xml->$keyName;
         if ($dao->find(TRUE)) {
           CRM_Core_Session::setStatus(ts("Found %1, %2, %3",
-            array(
+            [
               1 => $keyName,
               2 => $dao->$keyName,
               3 => $dao->__table,
-            )
+            ]
           ), '', 'info');
           return FALSE;
         }
@@ -155,6 +158,10 @@ class CRM_Utils_Migrate_Import {
       foreach ($optionValuesXML->OptionValue as $optionValueXML) {
         $optionValue = new CRM_Core_DAO_OptionValue();
         $optionValue->option_group_id = $idMap['option_group'][(string ) $optionValueXML->option_group_name];
+        if (empty($optionValue->option_group_id)) {
+          //CRM-17410 check if option group already exist.
+          $optionValue->option_group_id = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionGroup', $optionValueXML->option_group_name, 'id', 'name');
+        }
         $this->copyData($optionValue, $optionValueXML, FALSE, 'label');
         if (!isset($optionValue->value)) {
           $sql = "
@@ -162,7 +169,7 @@ SELECT     MAX(ROUND(v.value)) + 1
 FROM       civicrm_option_value v
 WHERE      v.option_group_id = %1
 ";
-          $params = array(1 => array($optionValue->option_group_id, 'Integer'));
+          $params = [1 => [$optionValue->option_group_id, 'Integer']];
           $optionValue->value = CRM_Core_DAO::singleValueQuery($sql, $params);
         }
         $optionValue->save();
@@ -223,7 +230,7 @@ WHERE      v.option_group_id = %1
         if (isset($customGroupXML->extends_entity_column_value_option_group) &&
           isset($customGroupXML->extends_entity_column_value)
         ) {
-          $valueIDs = array();
+          $valueIDs = [];
           $optionValues = explode(",", $customGroupXML->extends_entity_column_value);
           $optValues = implode("','", $optionValues);
           if (trim($customGroup->extends) != 'Participant') {
@@ -233,8 +240,17 @@ WHERE      v.option_group_id = %1
                 $valueIDs[] = $relTypeId;
               }
             }
-            elseif (in_array($customGroup->extends, array('Individual', 'Organization', 'Household'))) {
+            elseif (in_array($customGroup->extends, ['Individual', 'Organization', 'Household'])) {
               $valueIDs = $optionValues;
+            }
+            elseif (in_array($customGroup->extends, ['Contribution', 'ContributionRecur'])) {
+              $sql = "SELECT id
+                      FROM civicrm_financial_type
+                      WHERE name IN ('{$optValues}')";
+              $dao = &CRM_Core_DAO::executeQuery($sql);
+              while ($dao->fetch()) {
+                $valueIDs[] = $dao->id;
+              }
             }
             else {
               $sql = "
@@ -244,12 +260,12 @@ INNER JOIN civicrm_option_group g ON g.id = v.option_group_id
 WHERE      g.name = %1
 AND        v.name IN ('$optValues')
 ";
-              $params = array(
-                1 => array(
+              $params = [
+                1 => [
                   (string ) $customGroupXML->extends_entity_column_value_option_group,
                   'String',
-                ),
-              );
+                ],
+              ];
               $dao = &CRM_Core_DAO::executeQuery($sql, $params);
 
               while ($dao->fetch()) {
@@ -277,18 +293,18 @@ INNER JOIN civicrm_option_group g ON g.id = v.option_group_id
 WHERE      g.name = 'custom_data_type'
 AND        v.name = %1
 ";
-            $params = array(
-              1 => array(
+            $params = [
+              1 => [
                 (string ) $customGroupXML->extends_entity_column_value_option_group,
                 'String',
-              ),
-            );
+              ],
+            ];
             $valueID = (int ) CRM_Core_DAO::singleValueQuery($sql, $params);
             if ($valueID) {
               $customGroup->extends_entity_column_id = $valueID;
             }
 
-            $optionIDs = array();
+            $optionIDs = [];
             switch ($valueID) {
               case 1:
                 // ParticipantRole
@@ -338,7 +354,7 @@ AND        v.name = %1
     // at a time, and then rebuild the table triggers at the end, rather than
     // rebuilding the table triggers after each field is added (which is
     // painfully slow).
-    $fields_indexed_by_group_id = array();
+    $fields_indexed_by_group_id = [];
     foreach ($xml->CustomFields as $customFieldsXML) {
       $total = count($customFieldsXML->CustomField);
       foreach ($customFieldsXML->CustomField as $customFieldXML) {
@@ -346,10 +362,10 @@ AND        v.name = %1
         $fields_indexed_by_group_id[$id][] = $customFieldXML;
       }
     }
-    while (list($group_id, $fields) = each($fields_indexed_by_group_id)) {
+    foreach ($fields_indexed_by_group_id as $group_id => $fields) {
       $total = count($fields);
       $count = 0;
-      while (list(, $customFieldXML) = each($fields)) {
+      foreach ($fields as $customFieldXML) {
         $count++;
         $customField = new CRM_Core_DAO_CustomField();
         $customField->custom_group_id = $group_id;
@@ -435,18 +451,18 @@ INNER JOIN civicrm_custom_group g ON f.custom_group_id = g.id
 WHERE      g.table_name  = %1
 AND        f.column_name = %2
 ";
-          $params = array(
-            1 => array($tableName, 'String'),
-            2 => array($columnName, 'String'),
-          );
+          $params = [
+            1 => [$tableName, 'String'],
+            2 => [$columnName, 'String'],
+          ];
           $cfID = CRM_Core_DAO::singleValueQuery($sql, $params);
           if (!$cfID) {
             CRM_Core_Error::fatal(ts("Could not find custom field for %1, %2, %3",
-                array(
+                [
                   1 => $profileField->field_name,
                   2 => $tableName,
                   3 => $columnName,
-                )
+                ]
               ) . "<br />");
           }
           $profileField->field_name = "custom_{$cfID}";

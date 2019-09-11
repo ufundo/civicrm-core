@@ -98,7 +98,8 @@ class api_v3_MailingABTest extends CiviUnitTestCase {
    * @return array
    */
   public function groupPctProvider() {
-    $cases = array(); // array(int $totalSize, int $groupPct, int $expectedCountA, $expectedCountB, $expectedCountC)
+    // array(int $totalSize, int $groupPct, int $expectedCountA, $expectedCountB, $expectedCountC)
+    $cases = array();
     $cases[] = array(400, 7, 28, 28, 344);
     $cases[] = array(100, 10, 10, 10, 80);
     $cases[] = array(50, 20, 10, 10, 30);
@@ -121,8 +122,7 @@ class api_v3_MailingABTest extends CiviUnitTestCase {
    * @dataProvider groupPctProvider
    */
   public function testDistribution($totalGroupContacts, $groupPct, $expectedCountA, $expectedCountB, $expectedCountC) {
-
-    $result = $this->groupContactCreate($this->_groupID, $totalGroupContacts);
+    $result = $this->groupContactCreate($this->_groupID, $totalGroupContacts, TRUE);
     $this->assertEquals($totalGroupContacts, $result['added'], "in line " . __LINE__);
 
     $params = $this->_params;

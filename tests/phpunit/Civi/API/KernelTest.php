@@ -1,27 +1,27 @@
 <?php
 namespace Civi\API;
 
-use \Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  */
 class KernelTest extends \CiviUnitTestCase {
-  const MOCK_VERSION = 99;
+  const MOCK_VERSION = 3;
 
   /**
    * @var array(int => array('name' => string $eventName, 'type' => string $className))
    */
-  var $actualEventSequence;
+  public $actualEventSequence;
 
   /**
-   * @var EventDispatcher
+   * @var \Symfony\Component\EventDispatcher\EventDispatcher
    */
-  var $dispatcher;
+  public $dispatcher;
 
   /**
    * @var Kernel
    */
-  var $kernel;
+  public $kernel;
 
   protected function setUp() {
     parent::setUp();

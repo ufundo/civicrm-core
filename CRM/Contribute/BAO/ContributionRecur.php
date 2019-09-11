@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,9 +28,16 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Contribute_BAO_ContributionRecur extends CRM_Contribute_DAO_ContributionRecur {
+
+  /**
+   * Array with statuses that mark a recurring contribution as inactive.
+   *
+   * @var array
+   */
+  private static $inactiveStatuses = ['Cancelled', 'Chargeback', 'Refunded', 'Completed'];
 
   /**
    * Create recurring contribution.
@@ -55,7 +62,7 @@ class CRM_Contribute_BAO_ContributionRecur extends CRM_Contribute_DAO_Contributi
    * @param array $params
    *   (reference ) an assoc array of name/value pairs.
    *
-   * @return CRM_Contribute_BAO_Contribution
+   * @return \CRM_Contribute_BAO_ContributionRecur|\CRM_Core_Error
    * @todo move hook calls / extended logic to create - requires changing calls to call create not add
    */
   public static function add(&$params) {
@@ -68,13 +75,13 @@ class CRM_Contribute_BAO_ContributionRecur extends CRM_Contribute_DAO_Contributi
 
     // make sure we're not creating a new recurring contribution with the same transaction ID
     // or invoice ID as an existing recurring contribution
-    $duplicates = array();
+    $duplicates = [];
     if (self::checkDuplicate($params, $duplicates)) {
       $error = CRM_Core_Error::singleton();
       $d = implode(', ', $duplicates);
       $error->push(CRM_Core_Error::DUPLICATE_CONTRIBUTION,
         'Fatal',
-        array($d),
+        [$d],
         "Found matching recurring contribution(s): $d"
       );
       return $error;
@@ -89,7 +96,7 @@ class CRM_Contribute_BAO_ContributionRecur extends CRM_Contribute_DAO_Contributi
       $config = CRM_Core_Config::singleton();
       $recurring->currency = $config->defaultCurrency;
     }
-    $result = $recurring->save();
+    $recurring->save();
 
     if (!empty($params['id'])) {
       CRM_Utils_Hook::post('edit', 'ContributionRecur', $recurring->id, $recurring);
@@ -104,7 +111,7 @@ class CRM_Contribute_BAO_ContributionRecur extends CRM_Contribute_DAO_Contributi
       CRM_Core_BAO_CustomValueTable::store($params['custom'], 'civicrm_contribution_recur', $recurring->id);
     }
 
-    return $result;
+    return $recurring;
   }
 
   /**
@@ -123,17 +130,17 @@ class CRM_Contribute_BAO_ContributionRecur extends CRM_Contribute_DAO_Contributi
     $trxn_id = CRM_Utils_Array::value('trxn_id', $params);
     $invoice_id = CRM_Utils_Array::value('invoice_id', $params);
 
-    $clause = array();
-    $params = array();
+    $clause = [];
+    $params = [];
 
     if ($trxn_id) {
       $clause[] = "trxn_id = %1";
-      $params[1] = array($trxn_id, 'String');
+      $params[1] = [$trxn_id, 'String'];
     }
 
     if ($invoice_id) {
       $clause[] = "invoice_id = %2";
-      $params[2] = array($invoice_id, 'String');
+      $params[2] = [$invoice_id, 'String'];
     }
 
     if (empty($clause)) {
@@ -143,7 +150,7 @@ class CRM_Contribute_BAO_ContributionRecur extends CRM_Contribute_DAO_Contributi
     $clause = implode(' OR ', $clause);
     if ($id) {
       $clause = "( $clause ) AND id != %3";
-      $params[3] = array($id, 'Integer');
+      $params[3] = [$id, 'Integer'];
     }
 
     $query = "SELECT id FROM civicrm_contribution_recur WHERE $clause";
@@ -160,25 +167,44 @@ class CRM_Contribute_BAO_ContributionRecur extends CRM_Contribute_DAO_Contributi
    * Get the payment processor (array) for a recurring processor.
    *
    * @param int $id
-   * @param string $mode
-   *   - Test or NULL - all other variants are ignored.
    *
    * @return array|null
    */
-  public static function getPaymentProcessor($id, $mode = NULL) {
-    $sql = "
-SELECT r.payment_processor_id
-  FROM civicrm_contribution_recur r
- WHERE r.id = %1";
-    $params = array(1 => array($id, 'Integer'));
-    $paymentProcessorID = CRM_Core_DAO::singleValueQuery($sql,
-      $params
-    );
-    if (!$paymentProcessorID) {
-      return NULL;
-    }
+  public static function getPaymentProcessor($id) {
+    $paymentProcessorID = self::getPaymentProcessorID($id);
+    return CRM_Financial_BAO_PaymentProcessor::getPayment($paymentProcessorID);
+  }
 
-    return CRM_Financial_BAO_PaymentProcessor::getPayment($paymentProcessorID, $mode);
+  /**
+   * Get the processor object for the recurring contribution record.
+   *
+   * @param int $id
+   *
+   * @return CRM_Core_Payment|NULL
+   *   Returns a processor object or NULL if the processor is disabled.
+   *   Note this returns the 'Manual' processor object if no processor is attached
+   *   (since it still makes sense to update / cancel
+   */
+  public static function getPaymentProcessorObject($id) {
+    $processor = self::getPaymentProcessor($id);
+    return is_array($processor) ? $processor['object'] : NULL;
+  }
+
+  /**
+   * Get the payment processor for the given recurring contribution.
+   *
+   * @param int $recurID
+   *
+   * @return int
+   *   Payment processor id. If none found return 0 which represents the
+   *   pseudo processor used for pay-later.
+   */
+  public static function getPaymentProcessorID($recurID) {
+    $recur = civicrm_api3('ContributionRecur', 'getsingle', [
+      'id' => $recurID,
+      'return' => ['payment_processor_id'],
+    ]);
+    return (int) CRM_Utils_Array::value('payment_processor_id', $recur, 0);
   }
 
   /**
@@ -192,7 +218,7 @@ SELECT r.payment_processor_id
    */
   public static function getCount(&$ids) {
     $recurID = implode(',', $ids);
-    $totalCount = array();
+    $totalCount = [];
 
     $query = "
          SELECT contribution_recur_id, count( contribution_recur_id ) as commpleted
@@ -231,20 +257,24 @@ SELECT r.payment_processor_id
   /**
    * Cancel Recurring contribution.
    *
-   * @param int $recurId
-   *   Recur contribution id.
-   * @param array $objects
-   *   An array of objects that is to be cancelled like.
-   *                          contribution, membership, event. At least contribution object is a must.
-   *
-   * @param array $activityParams
+   * @param array $params
+   *   Recur contribution params
    *
    * @return bool
    */
-  public static function cancelRecurContribution($recurId, $objects, $activityParams = array()) {
+  public static function cancelRecurContribution($params) {
+    if (is_numeric($params)) {
+      CRM_Core_Error::deprecatedFunctionWarning('You are using a BAO function whose signature has changed. Please use the ContributionRecur.cancel api');
+      $params = ['id' => $params];
+    }
+    $recurId = $params['id'];
     if (!$recurId) {
       return FALSE;
     }
+    $activityParams = [
+      'subject' => !empty($params['membership_id']) ? ts('Auto-renewal membership cancelled') : ts('Recurring contribution cancelled'),
+      'details' => CRM_Utils_Array::value('processor_message', $params),
+    ];
 
     $contributionStatus = CRM_Contribute_PseudoConstant::contributionStatus(NULL, 'name');
     $canceledId = array_search('Cancelled', $contributionStatus);
@@ -258,6 +288,7 @@ SELECT r.payment_processor_id
       $recur->start_date = CRM_Utils_Date::isoToMysql($recur->start_date);
       $recur->create_date = CRM_Utils_Date::isoToMysql($recur->create_date);
       $recur->modified_date = CRM_Utils_Date::isoToMysql($recur->modified_date);
+      $recur->cancel_reason = CRM_Utils_Array::value('cancel_reason', $params);
       $recur->cancel_date = date('YmdHis');
       $recur->save();
 
@@ -270,49 +301,34 @@ SELECT r.payment_processor_id
           $membershipType = CRM_Core_DAO::getFieldValue('CRM_Member_DAO_Membership', $dao->membership_id, 'membership_type_id');
           $membershipType = CRM_Utils_Array::value($membershipType, $membershipTypes);
           $details .= '
-<br/>' . ts('Automatic renewal of %1 membership cancelled.', array(1 => $membershipType));
+<br/>' . ts('Automatic renewal of %1 membership cancelled.', [1 => $membershipType]);
         }
         else {
-          $details .= '
-<br/>' . ts('The recurring contribution of %1, every %2 %3 has been cancelled.', array(
-              1 => $dao->amount,
-              2 => $dao->frequency_interval,
-              3 => $dao->frequency_unit,
-            ));
+          $details .= '<br/>' . ts('The recurring contribution of %1, every %2 %3 has been cancelled.', [
+            1 => $dao->amount,
+            2 => $dao->frequency_interval,
+            3 => $dao->frequency_unit,
+          ]);
         }
-        $activityParams = array(
+        $activityParams = [
           'source_contact_id' => $dao->contact_id,
-          'source_record_id' => CRM_Utils_Array::value('source_record_id', $activityParams),
-          'activity_type_id' => CRM_Core_OptionGroup::getValue('activity_type',
-            'Cancel Recurring Contribution',
-            'name'
-          ),
+          'source_record_id' => $dao->recur_id,
+          'activity_type_id' => 'Cancel Recurring Contribution',
           'subject' => CRM_Utils_Array::value('subject', $activityParams, ts('Recurring contribution cancelled')),
           'details' => $details,
-          'activity_date_time' => date('YmdHis'),
-          'status_id' => CRM_Core_OptionGroup::getValue('activity_status',
-            'Completed',
-            'name'
-          ),
-        );
-        $session = CRM_Core_Session::singleton();
-        $cid = $session->get('userID');
+          'status_id' => 'Completed',
+        ];
+
+        $cid = CRM_Core_Session::singleton()->get('userID');
         if ($cid) {
           $activityParams['target_contact_id'][] = $activityParams['source_contact_id'];
           $activityParams['source_contact_id'] = $cid;
         }
-        CRM_Activity_BAO_Activity::create($activityParams);
+        civicrm_api3('Activity', 'create', $activityParams);
       }
 
-      // if there are associated objects, cancel them as well
-      if ($objects == CRM_Core_DAO::$_nullObject) {
-        $transaction->commit();
-        return TRUE;
-      }
-      else {
-        $baseIPN = new CRM_Core_Payment_BaseIPN();
-        return $baseIPN->cancelled($objects, $transaction);
-      }
+      $transaction->commit();
+      return TRUE;
     }
     else {
       // if already cancelled, return true
@@ -327,7 +343,7 @@ SELECT r.payment_processor_id
   }
 
   /**
-   * Get list of recurring contribution of contact Ids.
+   * @deprecated Get list of recurring contribution of contact Ids.
    *
    * @param int $contactId
    *   Contact ID.
@@ -337,7 +353,8 @@ SELECT r.payment_processor_id
    *
    */
   public static function getRecurContributions($contactId) {
-    $params = array();
+    CRM_Core_Error::deprecatedFunctionWarning('ContributionRecur.get API instead');
+    $params = [];
     $recurDAO = new CRM_Contribute_DAO_ContributionRecur();
     $recurDAO->contact_id = $contactId;
     $recurDAO->find();
@@ -395,8 +412,7 @@ SELECT rec.id                   as recur_id,
       FROM civicrm_contribution_recur rec
 LEFT JOIN civicrm_contribution       con ON ( con.contribution_recur_id = rec.id )
 LEFT  JOIN civicrm_membership_payment mp  ON ( mp.contribution_id = con.id )
-     WHERE rec.id = %1
-  GROUP BY rec.id";
+     WHERE rec.id = %1";
     }
     elseif ($entity == 'contribution') {
       $sql .= "
@@ -414,7 +430,7 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
      WHERE mp.membership_id = %1";
     }
 
-    $dao = CRM_Core_DAO::executeQuery($sql, array(1 => array($entityID, 'Integer')));
+    $dao = CRM_Core_DAO::executeQuery($sql, [1 => [$entityID, 'Integer']]);
     if ($dao->fetch()) {
       return $dao;
     }
@@ -456,19 +472,19 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
    * @return array
    * @throws \CiviCRM_API3_Exception
    */
-  public static function getTemplateContribution($id, $overrides = array()) {
-    $templateContribution = civicrm_api3('Contribution', 'get', array(
+  public static function getTemplateContribution($id, $overrides = []) {
+    $templateContribution = civicrm_api3('Contribution', 'get', [
       'contribution_recur_id' => $id,
-      'options' => array('limit' => 1, 'sort' => array('id DESC')),
+      'options' => ['limit' => 1, 'sort' => ['id DESC']],
       'sequential' => 1,
       'contribution_test' => '',
-    ));
+    ]);
     if ($templateContribution['count']) {
       $result = array_merge($templateContribution['values'][0], $overrides);
       $result['line_item'] = CRM_Contribute_BAO_ContributionRecur::calculateRecurLineItems($id, $result['total_amount'], $result['financial_type_id']);
       return $result;
     }
-    return array();
+    return [];
   }
 
   public static function setSubscriptionContext() {
@@ -479,7 +495,7 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
       $cid = CRM_Utils_Request::retrieve('cid', 'Integer');
       $mid = CRM_Utils_Request::retrieve('mid', 'Integer');
       $qfkey = CRM_Utils_Request::retrieve('key', 'String');
-      $context = CRM_Utils_Request::retrieve('context', 'String');
+      $context = CRM_Utils_Request::retrieve('context', 'Alphanumeric');
       if ($cid) {
         switch ($context) {
           case 'contribution':
@@ -569,7 +585,7 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
    * @param int $recurId
    * @param int $targetContributionId
    */
-  static public function copyCustomValues($recurId, $targetContributionId) {
+  public static function copyCustomValues($recurId, $targetContributionId) {
     if ($recurId && $targetContributionId) {
       // get the initial contribution id of recur id
       $sourceContributionId = CRM_Core_DAO::getFieldValue('CRM_Contribute_DAO_Contribution', $recurId, 'id', 'contribution_recur_id');
@@ -585,11 +601,11 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
       }
 
       // copy custom data
-      $extends = array('Contribution');
+      $extends = ['Contribution'];
       $groupTree = CRM_Core_BAO_CustomGroup::getGroupDetail(NULL, NULL, $extends);
       if ($groupTree) {
         foreach ($groupTree as $groupID => $group) {
-          $table[$groupTree[$groupID]['table_name']] = array('entity_id');
+          $table[$groupTree[$groupID]['table_name']] = ['entity_id'];
           foreach ($group['fields'] as $fieldID => $field) {
             $table[$groupTree[$groupID]['table_name']][] = $groupTree[$groupID]['fields'][$fieldID]['column_name'];
           }
@@ -633,7 +649,7 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
    * Add line items for recurring contribution.
    *
    * @param int $recurId
-   * @param $contribution
+   * @param \CRM_Contribute_BAO_Contribution $contribution
    *
    * @return array
    */
@@ -648,10 +664,11 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
             try {
               // @todo this should be done by virtue of editing the line item as this link
               // is deprecated. This may be the case but needs testing.
-              civicrm_api3('membership_payment', 'create', array(
+              civicrm_api3('membership_payment', 'create', [
                 'membership_id' => $value['entity_id'],
                 'contribution_id' => $contribution->id,
-              ));
+                'is_transactional' => FALSE,
+              ]);
             }
             catch (CiviCRM_API3_Exception $e) {
               // we are catching & ignoring errors as an extra precaution since lost IPNs may be more serious that lost membership_payment data
@@ -689,8 +706,8 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
    * @throws \CiviCRM_API3_Exception
    */
   public static function updateRecurLinkedPledge($contributionID, $contributionRecurID, $contributionStatusID, $contributionAmount) {
-    $returnProperties = array('id', 'pledge_id');
-    $paymentDetails = $paymentIDs = array();
+    $returnProperties = ['id', 'pledge_id'];
+    $paymentDetails = $paymentIDs = [];
 
     if (CRM_Core_DAO::commonRetrieveAll('CRM_Pledge_DAO_PledgePayment', 'contribution_id', $contributionID,
       $paymentDetails, $returnProperties
@@ -750,7 +767,7 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
   }
 
   /**
-   * @param $form
+   * @param CRM_Core_Form $form
    */
   public static function recurringContribution(&$form) {
     // Recurring contribution fields
@@ -769,32 +786,40 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
       }
     }
 
+    // If values have been supplied for recurring contribution fields, open the recurring contributions pane.
+    foreach (['contribution_status_id', 'payment_processor_id', 'processor_id', 'trxn_id'] as $fieldName) {
+      if (!empty($form->_formValues['contribution_recur_' . $fieldName])) {
+        $form->assign('contribution_recur_pane_open', TRUE);
+        break;
+      }
+    }
+
     // Add field to check if payment is made for recurring contribution
-    $recurringPaymentOptions = array(
+    $recurringPaymentOptions = [
       1 => ts('All recurring contributions'),
       2 => ts('Recurring contributions with at least one payment'),
-    );
-    $form->addRadio('contribution_recur_payment_made', NULL, $recurringPaymentOptions, array('allowClear' => TRUE));
+    ];
+    $form->addRadio('contribution_recur_payment_made', NULL, $recurringPaymentOptions, ['allowClear' => TRUE]);
     CRM_Core_Form_Date::buildDateRange($form, 'contribution_recur_start_date', 1, '_low', '_high', ts('From'), FALSE, FALSE, 'birth');
     CRM_Core_Form_Date::buildDateRange($form, 'contribution_recur_end_date', 1, '_low', '_high', ts('From'), FALSE, FALSE, 'birth');
     CRM_Core_Form_Date::buildDateRange($form, 'contribution_recur_modified_date', 1, '_low', '_high', ts('From'), FALSE, FALSE, 'birth');
     CRM_Core_Form_Date::buildDateRange($form, 'contribution_recur_next_sched_contribution_date', 1, '_low', '_high', ts('From'), FALSE, FALSE, 'birth');
     CRM_Core_Form_Date::buildDateRange($form, 'contribution_recur_failure_retry_date', 1, '_low', '_high', ts('From'), FALSE, FALSE, 'birth');
     CRM_Core_Form_Date::buildDateRange($form, 'contribution_recur_cancel_date', 1, '_low', '_high', ts('From'), FALSE, FALSE, 'birth');
+
+    // Add field for contribution status
+    $form->addSelect('contribution_recur_contribution_status_id',
+      ['entity' => 'contribution', 'multiple' => 'multiple', 'context' => 'search', 'options' => CRM_Contribute_PseudoConstant::contributionStatus()]
+    );
+
     $form->addElement('text', 'contribution_recur_processor_id', ts('Processor ID'), CRM_Core_DAO::getAttribute('CRM_Contribute_DAO_ContributionRecur', 'processor_id'));
     $form->addElement('text', 'contribution_recur_trxn_id', ts('Transaction ID'), CRM_Core_DAO::getAttribute('CRM_Contribute_DAO_ContributionRecur', 'trxn_id'));
-    $contributionRecur = array('ContributionRecur');
-    $groupDetails = CRM_Core_BAO_CustomGroup::getGroupDetail(NULL, TRUE, $contributionRecur);
-    if ($groupDetails) {
-      $form->assign('contributeRecurGroupTree', $groupDetails);
-      foreach ($groupDetails as $group) {
-        foreach ($group['fields'] as $field) {
-          $fieldId = $field['id'];
-          $elementName = 'custom_' . $fieldId;
-          CRM_Core_BAO_CustomField::addQuickFormElement($form, $elementName, $fieldId, FALSE, TRUE);
-        }
-      }
-    }
+
+    $paymentProcessorOpts = CRM_Contribute_BAO_ContributionRecur::buildOptions('payment_processor_id', 'get');
+    $form->add('select', 'contribution_recur_payment_processor_id', ts('Payment Processor ID'), $paymentProcessorOpts, FALSE, ['class' => 'crm-select2', 'multiple' => 'multiple']);
+
+    CRM_Core_BAO_Query::addCustomFormFields($form, ['ContributionRecur']);
+
   }
 
   /**
@@ -803,7 +828,7 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
    * @return array
    */
   public static function getRecurringFields() {
-    return array(
+    return [
       'contribution_recur_payment_made' => ts(''),
       'contribution_recur_start_date' => ts('Recurring Contribution Start Date'),
       'contribution_recur_next_sched_contribution_date' => ts('Next Scheduled Recurring Contribution'),
@@ -812,7 +837,7 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
       'contribution_recur_create_date' => ('Recurring Contribution Create Date'),
       'contribution_recur_modified_date' => ('Recurring Contribution Modified Date'),
       'contribution_recur_failure_retry_date' => ts('Failed Recurring Contribution Retry Date'),
-    );
+    ];
   }
 
   /**
@@ -825,24 +850,27 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
    *   Payment status - this correlates to the machine name of the contribution status ID ie
    *   - Completed
    *   - Failed
+   * @param string $effectiveDate
    *
    * @throws \CiviCRM_API3_Exception
    */
-  public static function updateOnNewPayment($recurringContributionID, $paymentStatus) {
-    if (!in_array($paymentStatus, array('Completed', 'Failed'))) {
+  public static function updateOnNewPayment($recurringContributionID, $paymentStatus, $effectiveDate) {
+
+    $effectiveDate = $effectiveDate ? date('Y-m-d', strtotime($effectiveDate)) : date('Y-m-d');
+    if (!in_array($paymentStatus, ['Completed', 'Failed'])) {
       return;
     }
-    $params = array(
+    $params = [
       'id' => $recurringContributionID,
-      'return' => array(
+      'return' => [
         'contribution_status_id',
         'next_sched_contribution_date',
         'frequency_unit',
         'frequency_interval',
         'installments',
         'failure_count',
-      ),
-    );
+      ],
+    ];
 
     $existing = civicrm_api3('ContributionRecur', 'getsingle', $params);
 
@@ -862,8 +890,8 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
       // Only update next sched date if it's empty or 'just now' because payment processors may be managing
       // the scheduled date themselves as core did not previously provide any help.
       if (empty($existing['next_sched_contribution_date']) || strtotime($existing['next_sched_contribution_date']) ==
-        strtotime(date('Y-m-d'))) {
-        $params['next_sched_contribution_date'] = date('Y-m-d', strtotime('+' . $existing['frequency_interval'] . ' ' . $existing['frequency_unit']));
+        strtotime($effectiveDate)) {
+        $params['next_sched_contribution_date'] = date('Y-m-d', strtotime('+' . $existing['frequency_interval'] . ' ' . $existing['frequency_unit'], strtotime($effectiveDate)));
       }
     }
     civicrm_api3('ContributionRecur', 'create', $params);
@@ -881,8 +909,10 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
    */
   protected static function isComplete($recurringContributionID, $installments) {
     $paidInstallments = CRM_Core_DAO::singleValueQuery(
-      'SELECT count(*) FROM civicrm_contribution WHERE id = %1',
-      array(1 => array($recurringContributionID, 'Integer'))
+      'SELECT count(*) FROM civicrm_contribution
+        WHERE contribution_recur_id = %1
+        AND contribution_status_id = ' . CRM_Core_PseudoConstant::getKey('CRM_Contribute_BAO_Contribution', 'contribution_status_id', 'Completed'),
+      [1 => [$recurringContributionID, 'Integer']]
     );
     if ($paidInstallments >= $installments) {
       return TRUE;
@@ -900,11 +930,20 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
    * @return array
    */
   public static function calculateRecurLineItems($recurId, $total_amount, $financial_type_id) {
-    $originalContributionID = CRM_Core_DAO::getFieldValue('CRM_Contribute_DAO_Contribution', $recurId, 'id', 'contribution_recur_id');
-    $lineItems = CRM_Price_BAO_LineItem::getLineItemsByContributionID($originalContributionID);
-    $lineSets = array();
+    $originalContribution = civicrm_api3('Contribution', 'getsingle', [
+      'contribution_recur_id' => $recurId,
+      'contribution_test' => '',
+      'options' => ['limit' => 1],
+      'return' => ['id', 'financial_type_id'],
+    ]);
+    $lineItems = CRM_Price_BAO_LineItem::getLineItemsByContributionID($originalContribution['id']);
+    $lineSets = [];
     if (count($lineItems) == 1) {
       foreach ($lineItems as $index => $lineItem) {
+        if ($lineItem['financial_type_id'] != $originalContribution['financial_type_id']) {
+          // CRM-20685, Repeattransaction produces incorrect Financial Type ID (in specific circumstance) - if number of lineItems = 1, So this conditional will set the financial_type_id as the original if line_item and contribution comes with different data.
+          $financial_type_id = $lineItem['financial_type_id'];
+        }
         if ($financial_type_id) {
           // CRM-17718 allow for possibility of changed financial type ID having been set prior to calling this.
           $lineItem['financial_type_id'] = $financial_type_id;
@@ -918,17 +957,71 @@ INNER JOIN civicrm_contribution       con ON ( con.id = mp.contribution_id )
         $priceField = new CRM_Price_DAO_PriceField();
         $priceField->id = $lineItem['price_field_id'];
         $priceField->find(TRUE);
-        $lineSets[$priceField->price_set_id][] = $lineItem;
+        $lineSets[$priceField->price_set_id][$lineItem['price_field_id']] = $lineItem;
       }
     }
     // CRM-19309 if more than one then just pass them through:
     elseif (count($lineItems) > 1) {
       foreach ($lineItems as $index => $lineItem) {
-        $lineSets[$index][] = $lineItem;
+        $lineSets[$index][$lineItem['price_field_id']] = $lineItem;
       }
     }
 
     return $lineSets;
+  }
+
+  /**
+   * Returns array with statuses that are considered to make a recurring
+   * contribution inactive.
+   *
+   * @return array
+   */
+  public static function getInactiveStatuses() {
+    return self::$inactiveStatuses;
+  }
+
+  /**
+   * Get options for the called BAO object's field.
+   *
+   * This function can be overridden by each BAO to add more logic related to context.
+   * The overriding function will generally call the lower-level CRM_Core_PseudoConstant::get
+   *
+   * @param string $fieldName
+   * @param string $context
+   * @see CRM_Core_DAO::buildOptionsContext
+   * @param array $props
+   *   whatever is known about this bao object.
+   *
+   * @return array|bool
+   */
+  public static function buildOptions($fieldName, $context = NULL, $props = []) {
+
+    switch ($fieldName) {
+      case 'payment_processor_id':
+        if (isset(\Civi::$statics[__CLASS__]['buildoptions_payment_processor_id'])) {
+          return \Civi::$statics[__CLASS__]['buildoptions_payment_processor_id'];
+        }
+        $baoName = 'CRM_Contribute_BAO_ContributionRecur';
+        $props['condition']['test'] = "is_test = 0";
+        $liveProcessors = CRM_Core_PseudoConstant::get($baoName, $fieldName, $props, $context);
+        $props['condition']['test'] = "is_test != 0";
+        $testProcessors = CRM_Core_PseudoConstant::get($baoName, $fieldName, $props, $context);
+        foreach ($testProcessors as $key => $value) {
+          if ($context === 'validate') {
+            // @fixme: Ideally the names would be different in the civicrm_payment_processor table but they are not.
+            //     So we append '_test' to the test one so that we can select the correct processor by name using the ContributionRecur.create API.
+            $testProcessors[$key] = $value . '_test';
+          }
+          else {
+            $testProcessors[$key] = CRM_Core_TestEntity::appendTestText($value);
+          }
+        }
+        $allProcessors = $liveProcessors + $testProcessors;
+        ksort($allProcessors);
+        \Civi::$statics[__CLASS__]['buildoptions_payment_processor_id'] = $allProcessors;
+        return $allProcessors;
+    }
+    return parent::buildOptions($fieldName, $context, $props);
   }
 
 }

@@ -1,9 +1,9 @@
 <?php
 /*
   +--------------------------------------------------------------------+
-  | CiviCRM version 4.7                                                |
+  | CiviCRM version 5                                                  |
   +--------------------------------------------------------------------+
-  | Copyright CiviCRM LLC (c) 2004-2016                                |
+  | Copyright CiviCRM LLC (c) 2004-2019                                |
   +--------------------------------------------------------------------+
   | This file is a part of CiviCRM.                                    |
   |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 /**
@@ -84,6 +84,30 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
   }
 
   /**
+   * Build the map of custom field's data types and there respective Util type
+   *
+   * @return array
+   *   Data data-type => CRM_Utils_Type
+   */
+  public static function dataToType() {
+    return [
+      'String' => CRM_Utils_Type::T_STRING,
+      'Int' => CRM_Utils_Type::T_INT,
+      'Money' => CRM_Utils_Type::T_MONEY,
+      'Memo' => CRM_Utils_Type::T_LONGTEXT,
+      'Float' => CRM_Utils_Type::T_FLOAT,
+      'Date' => CRM_Utils_Type::T_DATE,
+      'DateTime' => CRM_Utils_Type::T_DATE + CRM_Utils_Type::T_TIME,
+      'Boolean' => CRM_Utils_Type::T_BOOLEAN,
+      'StateProvince' => CRM_Utils_Type::T_INT,
+      'File' => CRM_Utils_Type::T_STRING,
+      'Link' => CRM_Utils_Type::T_STRING,
+      'ContactReference' => CRM_Utils_Type::T_INT,
+      'Country' => CRM_Utils_Type::T_INT,
+    ];
+  }
+
+  /**
    * Get data to html array.
    *
    * (Does this caching achieve anything?)
@@ -99,7 +123,6 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
           'Radio' => 'Radio',
           'CheckBox' => 'CheckBox',
           'Multi-Select' => 'Multi-Select',
-          'AdvMulti-Select' => 'AdvMulti-Select',
           'Autocomplete-Select' => 'Autocomplete-Select',
         ),
         array('Text' => 'Text', 'Select' => 'Select', 'Radio' => 'Radio'),
@@ -131,7 +154,11 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
   public static function create(&$params) {
     $origParams = array_merge(array(), $params);
 
-    if (!isset($params['id'])) {
+    $op = empty($params['id']) ? 'create' : 'edit';
+
+    CRM_Utils_Hook::pre($op, 'CustomField', CRM_Utils_Array::value('id', $params), $params);
+
+    if ($op == 'create') {
       if (!isset($params['column_name'])) {
         // if add mode & column_name not present, calculate it.
         $params['column_name'] = strtolower(CRM_Utils_String::munge($params['label'], '_', 32));
@@ -163,7 +190,6 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
         break;
 
       case 'CheckBox':
-      case 'AdvMulti-Select':
       case 'Multi-Select':
         if (isset($params['default_checkbox_option'])) {
           $tempArray = array_keys($params['default_checkbox_option']);
@@ -189,21 +215,14 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
     }
 
     $transaction = new CRM_Core_Transaction();
+
+    $htmlType = CRM_Utils_Array::value('html_type', $params);
+    $dataType = CRM_Utils_Array::value('data_type', $params);
+    $allowedOptionTypes = array('String', 'Int', 'Float', 'Money');
+
     // create any option group & values if required
-    if ($params['html_type'] != 'Text' &&
-      in_array($params['data_type'], array(
-        'String',
-        'Int',
-        'Float',
-        'Money',
-      ))
+    if ($htmlType != 'Text' && in_array($dataType, $allowedOptionTypes)
     ) {
-
-      $tableName = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_CustomGroup',
-        $params['custom_group_id'],
-        'table_name'
-      );
-
       //CRM-16659: if option_value then create an option group for this custom field.
       if ($params['option_type'] == 1 && (empty($params['option_group_id']) || !empty($params['option_value']))) {
         // first create an option group for this custom group
@@ -211,7 +230,9 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
         $optionGroup->name = "{$columnName}_" . date('YmdHis');
         $optionGroup->title = $params['label'];
         $optionGroup->is_active = 1;
-        $optionGroup->data_type = $params['data_type'];
+        // Don't set reserved as it's not a built-in option group and may be useful for other custom fields.
+        $optionGroup->is_reserved = 0;
+        $optionGroup->data_type = $dataType;
         $optionGroup->save();
         $params['option_group_id'] = $optionGroup->id;
         if (!empty($params['option_value']) && is_array($params['option_value'])) {
@@ -221,7 +242,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
               $optionValue->option_group_id = $optionGroup->id;
               $optionValue->label = $params['option_label'][$k];
               $optionValue->name = CRM_Utils_String::titleToVar($params['option_label'][$k]);
-              switch ($params['data_type']) {
+              switch ($dataType) {
                 case 'Money':
                   $optionValue->value = CRM_Utils_Rule::cleanMoney($v);
                   break;
@@ -258,7 +279,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
       if (empty($params['default_value'])) {
         //don't insert only value separator as default value, CRM-4579
         $defaultValue = self::getOptionGroupDefault($params['option_group_id'],
-          $params['html_type']
+          $htmlType
         );
 
         if (!CRM_Utils_System::isNull(explode(CRM_Core_DAO::VALUE_SEPARATOR,
@@ -271,19 +292,21 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
     }
 
     // since we need to save option group id :)
-    if (!isset($params['attributes']) && strtolower($params['html_type']) == 'textarea') {
+    if (!isset($params['attributes']) && strtolower($htmlType) == 'textarea') {
       $params['attributes'] = 'rows=4, cols=60';
     }
 
     $customField = new CRM_Core_DAO_CustomField();
     $customField->copyValues($params);
-    $customField->is_required = CRM_Utils_Array::value('is_required', $params, FALSE);
-    $customField->is_searchable = CRM_Utils_Array::value('is_searchable', $params, FALSE);
-    $customField->in_selector = CRM_Utils_Array::value('in_selector', $params, FALSE);
-    $customField->is_search_range = CRM_Utils_Array::value('is_search_range', $params, FALSE);
-    //CRM-15792 - Custom field gets disabled if is_active not set
-    $customField->is_active = CRM_Utils_Array::value('is_active', $params, TRUE);
-    $customField->is_view = CRM_Utils_Array::value('is_view', $params, FALSE);
+    if ($op == 'create') {
+      $customField->is_required = CRM_Utils_Array::value('is_required', $params, FALSE);
+      $customField->is_searchable = CRM_Utils_Array::value('is_searchable', $params, FALSE);
+      $customField->in_selector = CRM_Utils_Array::value('in_selector', $params, FALSE);
+      $customField->is_search_range = CRM_Utils_Array::value('is_search_range', $params, FALSE);
+      //CRM-15792 - Custom field gets disabled if is_active not set
+      $customField->is_active = CRM_Utils_Array::value('is_active', $params, TRUE);
+      $customField->is_view = CRM_Utils_Array::value('is_view', $params, FALSE);
+    }
     $customField->save();
 
     // make sure all values are present in the object for further processing
@@ -291,7 +314,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
 
     $triggerRebuild = CRM_Utils_Array::value('triggerRebuild', $params, TRUE);
     //create/drop the index when we toggle the is_searchable flag
-    if (!empty($params['id'])) {
+    if ($op == 'edit') {
       self::createField($customField, 'modify', $indexExist, $triggerRebuild);
     }
     else {
@@ -310,6 +333,8 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
 
     // complete transaction
     $transaction->commit();
+
+    CRM_Utils_Hook::post($op, 'CustomField', $customField->id, $customField);
 
     CRM_Utils_System::flushCache();
 
@@ -338,8 +363,8 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
    * @param bool $is_active
    *   Value we want to set the is_active field.
    *
-   * @return Object
-   *   DAO object on success, null otherwise
+   * @return bool
+   *   true if we found and updated the object, else false
    */
   public static function setIsActive($id, $is_active) {
 
@@ -377,6 +402,9 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
       $this->find(TRUE);
     }
 
+    // This will hold the list of options in format key => label
+    $options = [];
+
     if (!empty($this->option_group_id)) {
       $options = CRM_Core_OptionGroup::valuesByID(
         $this->option_group_id,
@@ -395,9 +423,6 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
     }
     elseif ($this->data_type === 'Boolean') {
       $options = $context == 'validate' ? array(0, 1) : CRM_Core_SelectValues::boolean();
-    }
-    else {
-      return FALSE;
     }
     CRM_Utils_Hook::customFieldOptions($this->id, $options, FALSE);
     CRM_Utils_Hook::fieldOptions($this->getEntity(), "custom_{$this->id}", $options, array('context' => $context));
@@ -574,7 +599,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
         if (!empty($customDataSubType)) {
           $subtypeClause = array();
           foreach ($customDataSubType as $subtype) {
-            $subtype = CRM_Core_DAO::VALUE_SEPARATOR . $subtype . CRM_Core_DAO::VALUE_SEPARATOR;
+            $subtype = CRM_Core_DAO::VALUE_SEPARATOR . CRM_Utils_Type::escape($subtype, 'String') . CRM_Core_DAO::VALUE_SEPARATOR;
             $subtypeClause[] = "$cgTable.extends_entity_column_value LIKE '%{$subtype}%'";
           }
           if (!$onlySubType) {
@@ -692,6 +717,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
       $regexp = preg_replace('/[.,;:!?]/', '', CRM_Utils_Array::value(0, $values));
       $importableFields[$key] = array(
         'name' => $key,
+        'type' => CRM_Utils_Array::value(CRM_Utils_Array::value('data_type', $values), self::dataToType()),
         'title' => CRM_Utils_Array::value('label', $values),
         'headerPattern' => '/' . preg_quote($regexp, '/') . '/',
         'import' => 1,
@@ -797,6 +823,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
     $field = self::getFieldObject($fieldId);
     $widget = $field->html_type;
     $element = NULL;
+    $customFieldAttributes = array();
 
     // Custom field HTML should indicate group+field name
     $groupName = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_CustomGroup', $field->custom_group_id);
@@ -819,7 +846,6 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
       'Multi-Select State/Province',
       'Select Country',
       'Multi-Select Country',
-      'AdvMulti-Select',
       'CheckBox',
       'Radio',
     )));
@@ -828,28 +854,34 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
       $options = $field->getOptions($search ? 'search' : 'create');
 
       // Consolidate widget types to simplify the below switch statement
-      if ($search || ($widget !== 'AdvMulti-Select' && strpos($widget, 'Select') !== FALSE)) {
+      if ($search || (strpos($widget, 'Select') !== FALSE)) {
         $widget = 'Select';
       }
-      $selectAttributes = array(
-        'data-crm-custom' => $dataCrmCustomVal,
-        'class' => 'crm-select2',
-      );
+
+      $customFieldAttributes['data-crm-custom'] = $dataCrmCustomVal;
+      $selectAttributes = array('class' => 'crm-select2');
+
       // Search field is always multi-select
       if ($search || strpos($field->html_type, 'Multi') !== FALSE) {
         $selectAttributes['class'] .= ' huge';
         $selectAttributes['multiple'] = 'multiple';
         $selectAttributes['placeholder'] = $placeholder;
       }
+
       // Add data for popup link. Normally this is handled by CRM_Core_Form->addSelect
-      if ($field->option_group_id && !$search && $widget == 'Select' && CRM_Core_Permission::check('administer CiviCRM')) {
-        $selectAttributes += array(
+      $isSupportedWidget = in_array($widget, ['Select', 'Radio']);
+      $canEditOptions = CRM_Core_Permission::check('administer CiviCRM');
+      if ($field->option_group_id && !$search && $isSelect && $canEditOptions) {
+        $customFieldAttributes += array(
           'data-api-entity' => $field->getEntity(),
           'data-api-field' => 'custom_' . $field->id,
           'data-option-edit-path' => 'civicrm/admin/options/' . CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionGroup', $field->option_group_id),
         );
+        $selectAttributes += $customFieldAttributes;
       }
     }
+
+    $rangeDataTypes = ['Int', 'Float', 'Money'];
 
     if (!isset($label)) {
       $label = $field->label;
@@ -860,7 +892,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
     switch ($widget) {
       case 'Text':
       case 'Link':
-        if ($field->is_search_range && $search) {
+        if ($field->is_search_range && $search && in_array($field->data_type, $rangeDataTypes)) {
           $qf->add('text', $elementName . '_from', $label . ' ' . ts('From'), $field->attributes);
           $qf->add('text', $elementName . '_to', ts('To'), $field->attributes);
         }
@@ -926,65 +958,70 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
         break;
 
       case 'Radio':
-        $choice = array();
-        foreach ($options as $v => $l) {
-          $choice[] = $qf->createElement('radio', NULL, '', $l, (string) $v, $field->attributes);
-        }
-        $element = $qf->addGroup($choice, $elementName, $label);
-        if ($useRequired && !$search) {
-          $qf->addRule($elementName, ts('%1 is a required field.', array(1 => $label)), 'required');
+        if ($field->is_search_range && $search && in_array($field->data_type, $rangeDataTypes)) {
+          $qf->add('text', $elementName . '_from', $label . ' ' . ts('From'), $field->attributes);
+          $qf->add('text', $elementName . '_to', ts('To'), $field->attributes);
         }
         else {
-          $element->setAttribute('allowClear', TRUE);
+          $choice = array();
+          parse_str($field->attributes, $radioAttributes);
+          $radioAttributes = array_merge($radioAttributes, $customFieldAttributes);
+
+          foreach ($options as $v => $l) {
+            $choice[] = $qf->createElement('radio', NULL, '', $l, (string) $v, $radioAttributes);
+          }
+          $element = $qf->addGroup($choice, $elementName, $label);
+          $optionEditKey = 'data-option-edit-path';
+          if (isset($selectAttributes[$optionEditKey])) {
+            $element->setAttribute($optionEditKey, $selectAttributes[$optionEditKey]);
+          }
+
+          if ($useRequired && !$search) {
+            $qf->addRule($elementName, ts('%1 is a required field.', array(1 => $label)), 'required');
+          }
+          else {
+            $element->setAttribute('allowClear', TRUE);
+          }
         }
         break;
 
       // For all select elements
       case 'Select':
-        if (empty($selectAttributes['multiple'])) {
-          $options = array('' => $placeholder) + $options;
+        if ($field->is_search_range && $search && in_array($field->data_type, $rangeDataTypes)) {
+          $qf->add('text', $elementName . '_from', $label . ' ' . ts('From'), $field->attributes);
+          $qf->add('text', $elementName . '_to', ts('To'), $field->attributes);
         }
-        $element = $qf->add('select', $elementName, $label, $options, $useRequired && !$search, $selectAttributes);
+        else {
+          if (empty($selectAttributes['multiple'])) {
+            $options = array('' => $placeholder) + $options;
+          }
+          $element = $qf->add('select', $elementName, $label, $options, $useRequired && !$search, $selectAttributes);
 
-        // Add and/or option for fields that store multiple values
-        if ($search && self::isSerialized($field)) {
+          // Add and/or option for fields that store multiple values
+          if ($search && self::isSerialized($field)) {
 
-          $operators = array(
-            $qf->createElement('radio', NULL, '', ts('Any'), 'or', array('title' => ts('Results may contain any of the selected options'))),
-            $qf->createElement('radio', NULL, '', ts('All'), 'and', array('title' => ts('Results must have all of the selected options'))),
-          );
-          $qf->addGroup($operators, $elementName . '_operator');
-          $qf->setDefaults(array($elementName . '_operator' => 'or'));
-        }
-        break;
-
-      case 'AdvMulti-Select':
-        $element = $qf->addElement(
-          'advmultiselect',
-          $elementName,
-          $label, $options,
-          array(
-            'size' => 5,
-            'style' => '',
-            'class' => 'advmultiselect',
-            'data-crm-custom' => $dataCrmCustomVal,
-          )
-        );
-
-        $element->setButtonAttributes('add', array('value' => ts('Add >>')));
-        $element->setButtonAttributes('remove', array('value' => ts('<< Remove')));
-
-        if ($useRequired && !$search) {
-          $qf->addRule($elementName, ts('%1 is a required field.', array(1 => $label)), 'required');
+            $operators = array(
+              $qf->createElement('radio', NULL, '', ts('Any'), 'or', array('title' => ts('Results may contain any of the selected options'))),
+              $qf->createElement('radio', NULL, '', ts('All'), 'and', array('title' => ts('Results must have all of the selected options'))),
+            );
+            $qf->addGroup($operators, $elementName . '_operator');
+            $qf->setDefaults(array($elementName . '_operator' => 'or'));
+          }
         }
         break;
 
       case 'CheckBox':
         $check = array();
         foreach ($options as $v => $l) {
-          $check[] = &$qf->addElement('advcheckbox', $v, NULL, $l, array('data-crm-custom' => $dataCrmCustomVal));
+          $check[] = &$qf->addElement('advcheckbox', $v, NULL, $l, $customFieldAttributes);
         }
-        $element = $qf->addGroup($check, $elementName, $label);
+
+        $group = $element = $qf->addGroup($check, $elementName, $label);
+        $optionEditKey = 'data-option-edit-path';
+        if (isset($customFieldAttributes[$optionEditKey])) {
+          $group->setAttribute($optionEditKey, $customFieldAttributes[$optionEditKey]);
+        }
+
         if ($useRequired && !$search) {
           $qf->addRule($elementName, ts('%1 is a required field.', array(1 => $label)), 'required');
         }
@@ -1039,8 +1076,15 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
           $element = $qf->add('text', $elementName, $label, $attributes, $useRequired && !$search);
 
           $urlParams = "context=customfield&id={$field->id}";
-
-          $customUrls[$elementName] = CRM_Utils_System::url('civicrm/ajax/contactref',
+          $idOfelement = $elementName;
+          // dev/core#362 if in an onbehalf profile clean up the name to get rid of square brackets that break the select 2 js
+          // However this caused regression https://lab.civicrm.org/dev/core/issues/619 so it has been hacked back to
+          // only affecting on behalf - next time someone looks at this code it should be with a view to overhauling it
+          // rather than layering on more hacks.
+          if (substr($elementName, 0, 8) === 'onbehalf' && strpos($elementName, '[') && strpos($elementName, ']')) {
+            $idOfelement = substr(substr($elementName, (strpos($elementName, '[') + 1)), 0, -1);
+          }
+          $customUrls[$idOfelement] = CRM_Utils_System::url('civicrm/ajax/contactref',
             $urlParams,
             FALSE, NULL, FALSE
           );
@@ -1049,11 +1093,11 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
         else {
           // FIXME: This won't work with customFieldOptions hook
           $attributes += array(
-            'entity' => 'option_value',
+            'entity' => 'OptionValue',
             'placeholder' => $placeholder,
             'multiple' => $search,
             'api' => array(
-              'params' => array('option_group_id' => $field->option_group_id),
+              'params' => array('option_group_id' => $field->option_group_id, 'is_active' => 1),
             ),
           );
           $element = $qf->addEntityRef($elementName, $label, $attributes, $useRequired && !$search);
@@ -1128,17 +1172,19 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
     $field->delete();
     CRM_Core_BAO_UFField::delUFField($field->id);
     CRM_Utils_Weight::correctDuplicateWeights('CRM_Core_DAO_CustomField');
+
+    CRM_Utils_Hook::post('delete', 'CustomField', $field->id, $field);
   }
 
   /**
    * @param string|int|array|null $value
    * @param CRM_Core_BAO_CustomField|int|array|string $field
-   * @param $contactId
+   * @param int $entityId
    *
    * @return string
    * @throws \Exception
    */
-  public static function displayValue($value, $field, $contactId = NULL) {
+  public static function displayValue($value, $field, $entityId = NULL) {
     $field = is_array($field) ? $field['id'] : $field;
     $fieldId = is_object($field) ? $field->id : (int) str_replace('custom_', '', $field);
 
@@ -1152,7 +1198,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
 
     $fieldInfo = array('options' => $field->getOptions()) + (array) $field;
 
-    return self::formatDisplayValue($value, $fieldInfo, $contactId);
+    return self::formatDisplayValue($value, $fieldInfo, $entityId);
   }
 
   /**
@@ -1170,8 +1216,8 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
       $value = CRM_Utils_Array::explodePadded($value);
     }
     // CRM-12989 fix
-    if ($field['html_type'] == 'CheckBox') {
-      CRM_Utils_Array::formatArrayKeys($value);
+    if ($field['html_type'] == 'CheckBox' && $value) {
+      $value = CRM_Utils_Array::convertCheckboxFormatToArray($value);
     }
 
     $display = is_array($value) ? implode(', ', $value) : (string) $value;
@@ -1184,12 +1230,16 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
       case 'Select Country':
       case 'Select State/Province':
       case 'CheckBox':
-      case 'AdvMulti-Select':
       case 'Multi-Select':
       case 'Multi-Select State/Province':
       case 'Multi-Select Country':
         if ($field['data_type'] == 'ContactReference' && $value) {
-          $display = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $value, 'display_name');
+          if (is_numeric($value)) {
+            $display = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $value, 'display_name');
+          }
+          else {
+            $display = $value;
+          }
         }
         elseif (is_array($value)) {
           $v = array();
@@ -1210,7 +1260,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
         // Or should we throw an exception here if it is?
         $value = is_array($value) ? CRM_Utils_Array::first($value) : $value;
 
-        $actualPHPFormats = CRM_Core_SelectValues::datePluginToPHPFormats();
+        $actualPHPFormats = CRM_Utils_Date::datePluginToPHPFormats();
         $format = CRM_Utils_Array::value('date_format', $field);
 
         if ($format) {
@@ -1226,8 +1276,8 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
                 break;
 
               default:
-                // if time is not selected remove time from value
-                $value = substr($value, 0, 10);
+                //If time is not selected remove time from value.
+                $value = $value ? date('Y-m-d', strtotime($value)) : '';
             }
             $customFormat = implode(" ", $customTimeFormat);
           }
@@ -1239,7 +1289,13 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
         // In the context of displaying a profile, show file/image
         if ($value) {
           if ($entityId) {
-            $url = self::getFileURL($entityId, $field['id']);
+            if (CRM_Utils_Rule::positiveInteger($value)) {
+              $fileId = $value;
+            }
+            else {
+              $fileId = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_File', $value, 'id', 'uri');
+            }
+            $url = self::getFileURL($entityId, $field['id'], $fileId);
             if ($url) {
               $display = $url['file_url'];
             }
@@ -1258,13 +1314,17 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
         }
         break;
 
+      case 'Link':
+        $display = $display ? "<a href=\"$display\" target=\"_blank\">$display</a>" : $display;
+        break;
+
       case 'TextArea':
         $display = nl2br($display);
         break;
 
       case 'Text':
         if ($field['data_type'] == 'Money' && isset($value)) {
-          //$value can also be an array(while using IN operator from search builder or api).
+          // $value can also be an array(while using IN operator from search builder or api).
           foreach ((array) $value as $val) {
             $disp[] = CRM_Utils_Money::format($val, NULL, NULL, TRUE);
           }
@@ -1343,7 +1403,6 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
     }
     switch ($customField->html_type) {
       case 'CheckBox':
-      case 'AdvMulti-Select':
       case 'Multi-Select':
         $customOption = CRM_Core_BAO_CustomOption::getCustomOption($customFieldId, FALSE);
         $defaults[$elementName] = array();
@@ -1355,9 +1414,7 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
             if ($customField->html_type == 'CheckBox') {
               $defaults[$elementName][$val['value']] = 1;
             }
-            elseif ($customField->html_type == 'Multi-Select' ||
-              $customField->html_type == 'AdvMulti-Select'
-            ) {
+            elseif ($customField->html_type == 'Multi-Select') {
               $defaults[$elementName][$val['value']] = $val['value'];
             }
           }
@@ -1435,31 +1492,28 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField {
           $entityId = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_EntityFile',
             $fileID,
             'entity_id',
-            'id'
+            'file_id'
           );
-          list($path) = CRM_Core_BAO_File::path($fileID, $entityId, NULL, NULL);
-          list($imageWidth, $imageHeight) = getimagesize($path);
-          list($imageThumbWidth, $imageThumbHeight) = CRM_Contact_BAO_Contact::getThumbSize($imageWidth, $imageHeight);
+          list($path) = CRM_Core_BAO_File::path($fileID, $entityId);
+          $fileHash = CRM_Core_BAO_File::generateFileHash($entityId, $fileID);
           $url = CRM_Utils_System::url('civicrm/file',
-            "reset=1&id=$fileID&eid=$contactID",
+            "reset=1&id=$fileID&eid=$entityId&fcs=$fileHash",
             $absolute, NULL, TRUE, TRUE
           );
-          $result['file_url'] = "
-          <a href=\"$url\" class='crm-image-popup'>
-          <img src=\"$url\" width=$imageThumbWidth height=$imageThumbHeight/>
-          </a>";
-          // for non image files
+          $result['file_url'] = CRM_Utils_File::getFileURL($path, $fileType, $url);
         }
+        // for non image files
         else {
           $uri = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_File',
             $fileID,
             'uri'
           );
+          $fileHash = CRM_Core_BAO_File::generateFileHash($contactID, $fileID);
           $url = CRM_Utils_System::url('civicrm/file',
-            "reset=1&id=$fileID&eid=$contactID",
+            "reset=1&id=$fileID&eid=$contactID&fcs=$fileHash",
             $absolute, NULL, TRUE, TRUE
           );
-          $result['file_url'] = "<a href=\"$url\">{$uri}</a>";
+          $result['file_url'] = CRM_Utils_File::getFileURL($uri, $fileType, $url);
         }
       }
       return $result;
@@ -1572,9 +1626,7 @@ SELECT id
       }
     }
 
-    if ($customFields[$customFieldId]['html_type'] == 'Multi-Select' ||
-      $customFields[$customFieldId]['html_type'] == 'AdvMulti-Select'
-    ) {
+    if ($customFields[$customFieldId]['html_type'] == 'Multi-Select') {
       if ($value) {
         $value = CRM_Utils_Array::implodePadded($value);
       }
@@ -1584,7 +1636,6 @@ SELECT id
     }
 
     if (($customFields[$customFieldId]['html_type'] == 'Multi-Select' ||
-        $customFields[$customFieldId]['html_type'] == 'AdvMulti-Select' ||
         $customFields[$customFieldId]['html_type'] == 'CheckBox'
       ) &&
       $customFields[$customFieldId]['data_type'] == 'String' &&
@@ -1639,7 +1690,7 @@ SELECT id
       $value = 0;
     }
 
-    $fileId = NULL;
+    $fileID = NULL;
 
     if ($customFields[$customFieldId]['data_type'] == 'File') {
       if (empty($value)) {
@@ -1647,9 +1698,6 @@ SELECT id
       }
 
       $config = CRM_Core_Config::singleton();
-
-      $fName = $value['name'];
-      $mimeType = $value['type'];
 
       // If we are already passing the file id as a value then retrieve and set the file data
       if (CRM_Utils_Rule::integer($value)) {
@@ -1661,6 +1709,10 @@ SELECT id
           $fName = $fileDAO->uri;
           $mimeType = $fileDAO->mime_type;
         }
+      }
+      else {
+        $fName = $value['name'];
+        $mimeType = $value['type'];
       }
 
       $filename = pathinfo($fName, PATHINFO_BASENAME);
@@ -1677,20 +1729,20 @@ SELECT $columnName
   FROM $tableName
  WHERE id = %1";
         $params = array(1 => array($customValueId, 'Integer'));
-        $fileId = CRM_Core_DAO::singleValueQuery($query, $params);
+        $fileID = CRM_Core_DAO::singleValueQuery($query, $params);
       }
 
       $fileDAO = new CRM_Core_DAO_File();
 
-      if ($fileId) {
-        $fileDAO->id = $fileId;
+      if ($fileID) {
+        $fileDAO->id = $fileID;
       }
 
       $fileDAO->uri = $filename;
       $fileDAO->mime_type = $mimeType;
       $fileDAO->upload_date = date('YmdHis');
       $fileDAO->save();
-      $fileId = $fileDAO->id;
+      $fileID = $fileDAO->id;
       $value = $filename;
     }
 
@@ -1718,7 +1770,7 @@ SELECT $columnName
       'custom_group_id' => $groupID,
       'table_name' => $tableName,
       'column_name' => $columnName,
-      'file_id' => $fileId,
+      'file_id' => $fileID,
       'is_multiple' => $customFields[$customFieldId]['is_multiple'],
     );
 
@@ -2008,6 +2060,8 @@ AND    cf.id = %1";
   /**
    * Get custom option groups.
    *
+   * @deprecated Use the API OptionGroup.get
+   *
    * @param array $includeFieldIds
    *   Ids of custom fields for which option groups must be included.
    *
@@ -2192,46 +2246,46 @@ ORDER BY html_type";
   }
 
   /**
+   * Get custom field ID from field/group name/title.
    *
+   * @param string $fieldName Field name or label
+   * @param string|null $groupName (Optional) Group name or label
+   * @param bool $fullString Whether to return "custom_123" or "123"
+   *
+   * @return string|int|null
+   * @throws \CiviCRM_API3_Exception
    */
+  public static function getCustomFieldID($fieldName, $groupName = NULL, $fullString = FALSE) {
+    $cacheKey = $groupName . '.' . $fieldName;
+    if (!isset(Civi::$statics['CRM_Core_BAO_CustomField'][$cacheKey])) {
+      $customFieldParams = [
+        'name' => $fieldName,
+        'label' => $fieldName,
+        'options' => ['or' => [["name", "label"]]],
+      ];
 
-  /**
-   * Get custom field ID.
-   *
-   * @param string $fieldLabel
-   * @param null $groupTitle
-   *
-   * @return int|null
-   */
-  public static function getCustomFieldID($fieldLabel, $groupTitle = NULL) {
-    $params = array(1 => array($fieldLabel, 'String'));
-    if ($groupTitle) {
-      $params[2] = array($groupTitle, 'String');
-      $sql = "
-SELECT     f.id
-FROM       civicrm_custom_field f
-INNER JOIN civicrm_custom_group g ON f.custom_group_id = g.id
-WHERE      ( f.label = %1 OR f.name  = %1 )
-AND        ( g.title = %2 OR g.name = %2 )
-";
-    }
-    else {
-      $sql = "
-SELECT     f.id
-FROM       civicrm_custom_field f
-WHERE      ( f.label = %1 OR f.name = %1 )
-";
+      if ($groupName) {
+        $customFieldParams['custom_group_id.name'] = $groupName;
+        $customFieldParams['custom_group_id.title'] = $groupName;
+        $customFieldParams['options'] = ['or' => [["name", "label"], ["custom_group_id.name", "custom_group_id.title"]]];
+      }
+
+      $field = civicrm_api3('CustomField', 'get', $customFieldParams);
+
+      if (empty($field['id'])) {
+        Civi::$statics['CRM_Core_BAO_CustomField'][$cacheKey]['id'] = NULL;
+        Civi::$statics['CRM_Core_BAO_CustomField'][$cacheKey]['string'] = NULL;
+      }
+      else {
+        Civi::$statics['CRM_Core_BAO_CustomField'][$cacheKey]['id'] = $field['id'];
+        Civi::$statics['CRM_Core_BAO_CustomField'][$cacheKey]['string'] = 'custom_' . $field['id'];
+      }
     }
 
-    $dao = CRM_Core_DAO::executeQuery($sql, $params);
-    if ($dao->fetch() &&
-      $dao->N == 1
-    ) {
-      return $dao->id;
+    if ($fullString) {
+      return Civi::$statics['CRM_Core_BAO_CustomField'][$cacheKey]['string'];
     }
-    else {
-      return NULL;
-    }
+    return Civi::$statics['CRM_Core_BAO_CustomField'][$cacheKey]['id'];
   }
 
   /**
@@ -2398,6 +2452,31 @@ WHERE cf.id = %1 AND cg.is_multiple = 1";
     }
 
     return $isMultipleWithGid;
+  }
+
+  /**
+   * Does this field type have any select options?
+   *
+   * @param array $field
+   *
+   * @return bool
+   */
+  public static function hasOptions($field) {
+    // Fields retrieved via api are an array, or from the dao are an object. We'll accept either.
+    $field = (array) $field;
+    // This will include boolean fields with Yes/No options.
+    if (in_array($field['html_type'], ['Radio', 'CheckBox'])) {
+      return TRUE;
+    }
+    // Do this before the "Select" string search because date fields have a "Select Date" html_type
+    // and contactRef fields have an "Autocomplete-Select" html_type - contacts are an FK not an option list.
+    if (in_array($field['data_type'], ['ContactReference', 'Date'])) {
+      return FALSE;
+    }
+    if (strpos($field['html_type'], 'Select') !== FALSE) {
+      return TRUE;
+    }
+    return !empty($field['option_group_id']);
   }
 
   /**

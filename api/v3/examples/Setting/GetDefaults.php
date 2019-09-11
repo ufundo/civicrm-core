@@ -8,9 +8,9 @@
  *   API result array
  */
 function setting_getdefaults_example() {
-  $params = array(
+  $params = [
     'name' => 'address_format',
-  );
+  ];
 
   try{
     $result = civicrm_api3('Setting', 'getdefaults', $params);
@@ -20,11 +20,12 @@ function setting_getdefaults_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -38,22 +39,23 @@ function setting_getdefaults_example() {
  */
 function setting_getdefaults_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'address_format' => '{contact.address_name}
 {contact.street_address}
 {contact.supplemental_address_1}
 {contact.supplemental_address_2}
+{contact.supplemental_address_3}
 {contact.city}{, }{contact.state_province}{ }{contact.postal_code}
 {contact.country}',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

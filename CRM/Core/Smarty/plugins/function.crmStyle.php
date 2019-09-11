@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -55,6 +55,9 @@ function smarty_function_crmStyle($params, &$smarty) {
   }
   if (empty($params['region'])) {
     $params['region'] = CRM_Core_Resources::DEFAULT_REGION;
+  }
+  if (empty($params['ext'])) {
+    $params['ext'] = 'civicrm';
   }
 
   if (array_key_exists('file', $params)) {

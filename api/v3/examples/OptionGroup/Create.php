@@ -6,19 +6,19 @@
  *   API result array
  */
 function option_group_create_example() {
-  $params = array(
+  $params = [
     'sequential' => 1,
     'name' => 'civicrm_event.amount.560',
     'is_reserved' => 1,
     'is_active' => 1,
-    'api.OptionValue.create' => array(
+    'api.OptionValue.create' => [
       'label' => 'workshop',
       'value' => 35,
       'is_default' => 1,
       'is_active' => 1,
       'format.only_id' => 1,
-    ),
-  );
+    ],
+  ];
 
   try{
     $result = civicrm_api3('OptionGroup', 'create', $params);
@@ -28,11 +28,12 @@ function option_group_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -46,24 +47,25 @@ function option_group_create_example() {
  */
 function option_group_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
-    'id' => 93,
-    'values' => array(
-      '0' => array(
-        'id' => '93',
+    'id' => 92,
+    'values' => [
+      '0' => [
+        'id' => '92',
         'name' => 'civicrm_event.amount.560',
         'title' => '',
         'description' => '',
+        'data_type' => '',
         'is_reserved' => '1',
         'is_active' => '1',
         'is_locked' => '',
-        'api.OptionValue.create' => 784,
-      ),
-    ),
-  );
+        'api.OptionValue.create' => 849,
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

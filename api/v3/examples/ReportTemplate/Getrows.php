@@ -8,15 +8,15 @@
  *   API result array
  */
 function report_template_getrows_example() {
-  $params = array(
+  $params = [
     'report_id' => 'contact/summary',
-    'options' => array(
-      'metadata' => array(
+    'options' => [
+      'metadata' => [
         '0' => 'labels',
         '1' => 'title',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   try{
     $result = civicrm_api3('ReportTemplate', 'getrows', $params);
@@ -26,11 +26,12 @@ function report_template_getrows_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -44,31 +45,31 @@ function report_template_getrows_example() {
  */
 function report_template_getrows_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 2,
-    'values' => array(
-      '0' => array(
-        'civicrm_contact_sort_name' => 'Default Organization',
-        'civicrm_contact_id' => '1',
-        'civicrm_contact_sort_name_link' => '/index.php?q=civicrm/report/contact/detail&amp;reset=1&amp;force=1&amp;id_op=eq&amp;id_value=1',
-        'civicrm_contact_sort_name_hover' => 'View Constituent Detail Report for this contact.',
-      ),
-      '1' => array(
+    'values' => [
+      '0' => [
         'civicrm_contact_sort_name' => 'Second Domain',
         'civicrm_contact_id' => '2',
         'civicrm_contact_sort_name_link' => '/index.php?q=civicrm/report/contact/detail&amp;reset=1&amp;force=1&amp;id_op=eq&amp;id_value=2',
-        'civicrm_contact_sort_name_hover' => 'View Constituent Detail Report for this contact.',
-      ),
-    ),
-    'metadata' => array(
+        'civicrm_contact_sort_name_hover' => 'View Contact Detail Report for this contact',
+      ],
+      '1' => [
+        'civicrm_contact_sort_name' => 'Unit Test Organization',
+        'civicrm_contact_id' => '1',
+        'civicrm_contact_sort_name_link' => '/index.php?q=civicrm/report/contact/detail&amp;reset=1&amp;force=1&amp;id_op=eq&amp;id_value=1',
+        'civicrm_contact_sort_name_hover' => 'View Contact Detail Report for this contact',
+      ],
+    ],
+    'metadata' => [
       'title' => 'ERROR: Title is not Set',
-      'labels' => array(
+      'labels' => [
         'civicrm_contact_sort_name' => 'Contact Name',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

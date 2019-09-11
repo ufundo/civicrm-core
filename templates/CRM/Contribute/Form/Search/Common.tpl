@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -39,13 +39,33 @@
 </tr>
 <tr>
   <td>
+    <label>{ts}Currency{/ts}</label> <br />
+    {$form.contribution_currency_type.html|crmAddClass:twenty}
+  </td>
+  {if $form.contribution_batch_id.html }
+    <td>
+      {$form.contribution_batch_id.label}<br />
+      {$form.contribution_batch_id.html}
+    </td>
+  {/if}
+</tr>
+<tr>
+  <td>
     <div class="float-left">
-      <label>{$form.payment_instrument_id.label}</label> <br />
-      {$form.payment_instrument_id.html|crmAddClass:twenty}
+      <label>{$form.contribution_payment_instrument_id.label}</label> <br />
+      {$form.contribution_payment_instrument_id.html|crmAddClass:twenty}
     </div>
     <div class="float-left" id="contribution_check_number_wrapper">
       {$form.contribution_check_number.label} <br />
       {$form.contribution_check_number.html}
+    </div>
+    <div class="float-left" id="financial_trxn_card_type_id_wrapper">
+      {$form.financial_trxn_card_type_id.label} <br />
+      {$form.financial_trxn_card_type_id.html}
+    </div>
+    <div class="float-left" id="pan_truncation_wrapper">
+      {$form.financial_trxn_pan_truncation.label} <br />
+      {$form.financial_trxn_pan_truncation.html}
     </div>
   </td>
   <td>
@@ -63,8 +83,8 @@
     </div>
   </td>
   <td>
-    {$form.invoice_id.label} <br />
-    {$form.invoice_id.html}
+    {$form.invoice_number.label} <br />
+    {$form.invoice_number.html}
   </td>
 </tr>
 <tr>
@@ -138,22 +158,27 @@
     {include file="CRM/Contribute/Form/PCP.js.tpl"}
   </td>
   <td>
+    {$form.cancel_reason.label}<br />
+    {$form.cancel_reason.html}
+  </td>
+</tr>
+<tr>
+  <td>
     {$form.contribution_pcp_display_in_roll.label}
     {$form.contribution_pcp_display_in_roll.html}
   </td>
-</tr>
-
-<tr>
   <td>
-    <label>{ts}Currency{/ts}</label> <br />
-    {$form.contribution_currency_type.html|crmAddClass:twenty}
+    <table style="width:auto">
+      <tr>
+        <td>
+          <label>{ts}Cancelled / Refunded Date{/ts}</label>
+        </td>
+      </tr>
+      <tr>
+        {include file="CRM/Core/DateRange.tpl" fieldName="contribution_cancel_date" from='_low' to='_high'}
+      </tr>
+    </table>
   </td>
-  {if $form.contribution_batch_id.html }
-    <td>
-      {$form.contribution_batch_id.label}<br />
-      {$form.contribution_batch_id.html}
-    </td>
-  {/if}
 </tr>
 
 {* campaign in contribution search *}
@@ -167,10 +192,10 @@ campaignTrClass='' campaignTdClass=''}
   </td>
 </tr>
 
-{if $contributeGroupTree}
+{if $contributionGroupTree}
 <tr>
   <td colspan="2">
-  {include file="CRM/Custom/Form/Search.tpl" groupTree=$contributeGroupTree showHideLinks=false}</td>
+  {include file="CRM/Custom/Form/Search.tpl" groupTree=$contributionGroupTree showHideLinks=false}</td>
 </tr>
 {/if}
 

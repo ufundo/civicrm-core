@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -50,6 +50,10 @@
       <tr class="crm-price-option-form-block-amount">
         <td class="label">{$form.amount.label}</td>
         <td>{$form.amount.html}</td>
+      </tr>
+      <tr class="crm-price-option-form-block-non-deductible-amount">
+        <td class="label">{$form.non_deductible_amount.label}</td>
+        <td>{$form.non_deductible_amount.html}</td>
       </tr>
       <tr class="crm-price-option-form-block-description">
         <td class="label">{$form.description.label}</td>
@@ -102,6 +106,10 @@
         <td>{$form.is_default.html}</td>
       </tr>
       {/if}
+      <tr class="crm-price-field-form-block-visibility_id">
+        <td class="label">{$form.visibility_id.label}</td>
+        <td>&nbsp;{$form.visibility_id.html} {help id="id-visibility-options" file="CRM/Price/Page/Field.hlp"}</td>
+      </tr>
     </table>
 
   {literal}
@@ -126,4 +134,3 @@
   </div>
 
 </div>
-

@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,10 +28,10 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CiviContributeProcessor {
-  static $_paypalParamsMapper = array(
+  public static $_paypalParamsMapper = array(
     //category    => array(paypal_param    => civicrm_field);
     'contact' => array(
       'salutation' => 'prefix_id',
@@ -72,10 +72,13 @@ class CiviContributeProcessor {
     ),
   );
 
-  static $_csvParamsMapper = array(
-    // Note: if csv header is not present in the mapper, header itself
-    // is considered as a civicrm field.
-    //category    => array(csv_header      => civicrm_field);
+  /**
+   * Note: if csv header is not present in the mapper, header itself
+   * is considered as a civicrm field.
+   * category    => array(csv_header      => civicrm_field);
+   * @var array
+   */
+  public static $_csvParamsMapper = array(
     'contact' => array(
       'first_name' => 'first_name',
       'last_name' => 'last_name',
@@ -188,10 +191,15 @@ class CiviContributeProcessor {
             $params['transaction']['is_test'] = 0;
           }
 
-          if (self::processAPIContribution($params)) {
-            CRM_Core_Error::debug_log_message("Processed - {$trxnDetails['email']}, {$trxnDetails['amt']}, {$value} ..<p>", TRUE);
+          try {
+            if (self::processAPIContribution($params)) {
+              CRM_Core_Error::debug_log_message("Processed - {$trxnDetails['email']}, {$trxnDetails['amt']}, {$value} ..<p>", TRUE);
+            }
+            else {
+              CRM_Core_Error::debug_log_message("Skipped - {$trxnDetails['email']}, {$trxnDetails['amt']}, {$value} ..<p>", TRUE);
+            }
           }
-          else {
+          catch (CiviCRM_API3_Exception $e) {
             CRM_Core_Error::debug_log_message("Skipped - {$trxnDetails['email']}, {$trxnDetails['amt']}, {$value} ..<p>", TRUE);
           }
         }
@@ -399,6 +407,10 @@ class CiviContributeProcessor {
   }
 
   /**
+   * @deprecated function.
+   *
+   * This function has probably been defunct for quite a long time.
+   *
    * @param array $params
    *
    * @return bool
@@ -408,33 +420,16 @@ class CiviContributeProcessor {
       return FALSE;
     }
 
-    // add contact using dedupe rule
-    $dedupeParams = CRM_Dedupe_Finder::formatParams($params, 'Individual');
-    $dedupeParams['check_permission'] = FALSE;
-    $dupeIds = CRM_Dedupe_Finder::dupesByParams($dedupeParams, 'Individual');
-    // if we find more than one contact, use the first one
-    if (!empty($dupeIds[0])) {
-      $params['contact_id'] = $dupeIds[0];
-    }
-    $contact = CRM_Contact_BAO_Contact::create($params);
-    if (!$contact->id) {
-      return FALSE;
-    }
+    $params['contact_id'] = CRM_Contact_BAO_Contact::getFirstDuplicateContact($params, 'Individual', 'Unsupervised', array(), FALSE);
+
+    $contact = civicrm_api3('Contact', 'create', $params);
 
     // only pass transaction params to contribution::create, if available
     if (array_key_exists('transaction', $params)) {
       $params = $params['transaction'];
-      $params['contact_id'] = $contact->id;
+      $params['contact_id'] = $contact['id'];
     }
 
-    // handle contribution custom data
-    $customFields = CRM_Core_BAO_CustomField::getFields('Contribution',
-      FALSE,
-      FALSE,
-      CRM_Utils_Array::value('financial_type_id',
-        $params
-      )
-    );
     $params['custom'] = CRM_Core_BAO_CustomField::postProcess($params,
       CRM_Utils_Array::value('id', $params, NULL),
       'Contribution'

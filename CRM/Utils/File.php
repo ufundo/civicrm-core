@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 /**
@@ -139,8 +139,8 @@ class CRM_Utils_File {
    * @throws Exception
    */
   public static function cleanDir($target, $rmdir = TRUE, $verbose = TRUE) {
-    static $exceptions = array('.', '..');
-    if ($target == '' || $target == '/') {
+    static $exceptions = ['.', '..'];
+    if ($target == '' || $target == '/' || !$target) {
       throw new Exception("Overly broad deletion");
     }
 
@@ -154,7 +154,7 @@ class CRM_Utils_File {
           }
           elseif (is_file($object)) {
             if (!unlink($object)) {
-              CRM_Core_Session::setStatus(ts('Unable to remove file %1', array(1 => $object)), ts('Warning'), 'error');
+              CRM_Core_Session::setStatus(ts('Unable to remove file %1', [1 => $object]), ts('Warning'), 'error');
             }
           }
         }
@@ -164,12 +164,12 @@ class CRM_Utils_File {
       if ($rmdir) {
         if (rmdir($target)) {
           if ($verbose) {
-            CRM_Core_Session::setStatus(ts('Removed directory %1', array(1 => $target)), '', 'success');
+            CRM_Core_Session::setStatus(ts('Removed directory %1', [1 => $target]), '', 'success');
           }
           return TRUE;
         }
         else {
-          CRM_Core_Session::setStatus(ts('Unable to remove directory %1', array(1 => $target)), ts('Warning'), 'error');
+          CRM_Core_Session::setStatus(ts('Unable to remove directory %1', [1 => $target]), ts('Warning'), 'error');
         }
       }
     }
@@ -280,10 +280,32 @@ class CRM_Utils_File {
       // I think this fn should default to forward-slash instead.
       $slash = DIRECTORY_SEPARATOR;
     }
-    if (!in_array(substr($path, -1, 1), array('/', '\\'))) {
+    if (!in_array(substr($path, -1, 1), ['/', '\\'])) {
       $path .= $slash;
     }
     return $path;
+  }
+
+  /**
+   * Save a fake file somewhere
+   *
+   * @param string $dir
+   *   The directory where the file should be saved.
+   * @param string $contents
+   *   Optional: the contents of the file.
+   * @param string $fileName
+   *
+   * @return string
+   *   The filename saved, or FALSE on failure.
+   */
+  public static function createFakeFile($dir, $contents = 'delete me', $fileName = NULL) {
+    $dir = self::addTrailingSlash($dir);
+    if (!$fileName) {
+      $fileName = 'delete-this-' . CRM_Utils_String::createRandom(10, CRM_Utils_String::ALPHANUMERIC);
+    }
+    $success = @file_put_contents($dir . $fileName, $contents);
+
+    return ($success === FALSE) ? FALSE : $fileName;
   }
 
   /**
@@ -291,11 +313,29 @@ class CRM_Utils_File {
    *   Use NULL to load the default/active connection from CRM_Core_DAO.
    *   Otherwise, give a full DSN string.
    * @param string $fileName
-   * @param null $prefix
-   * @param bool $isQueryString
+   * @param string $prefix
    * @param bool $dieOnErrors
    */
-  public static function sourceSQLFile($dsn, $fileName, $prefix = NULL, $isQueryString = FALSE, $dieOnErrors = TRUE) {
+  public static function sourceSQLFile($dsn, $fileName, $prefix = NULL, $dieOnErrors = TRUE) {
+    if (FALSE === file_get_contents($fileName)) {
+      // Our file cannot be found.
+      // Using 'die' here breaks this on extension upgrade.
+      throw new CRM_Exception('Could not find the SQL file.');
+    }
+
+    self::runSqlQuery($dsn, file_get_contents($fileName), $prefix, $dieOnErrors);
+  }
+
+  /**
+   *
+   * @param string|NULL $dsn
+   * @param string $queryString
+   * @param string $prefix
+   * @param bool $dieOnErrors
+   */
+  public static function runSqlQuery($dsn, $queryString, $prefix = NULL, $dieOnErrors = TRUE) {
+    $string = $prefix . $queryString;
+
     if ($dsn === NULL) {
       $db = CRM_Core_DAO::getConnection();
     }
@@ -314,18 +354,9 @@ class CRM_Utils_File {
     $transactionId = CRM_Utils_Type::escape(CRM_Utils_Request::id(), 'String');
     $db->query('SET @uniqueID = ' . "'$transactionId'");
 
-    if (!$isQueryString) {
-      $string = $prefix . file_get_contents($fileName);
-    }
-    else {
-      // use filename as query string
-      $string = $prefix . $fileName;
-    }
-
     // get rid of comments starting with # and --
 
-    $string = preg_replace("/^#[^\n]*$/m", "\n", $string);
-    $string = preg_replace("/^(--[^-]).*/m", "\n", $string);
+    $string = self::stripComments($string);
 
     $queries = preg_split('/;\s*$/m', $string);
     foreach ($queries as $query) {
@@ -343,6 +374,19 @@ class CRM_Utils_File {
         }
       }
     }
+  }
+
+  /**
+   *
+   * Strips comment from a possibly multiline SQL string
+   *
+   * @param string $string
+   *
+   * @return string
+   *   stripped string
+   */
+  public static function stripComments($string) {
+    return preg_replace("/^(#|--).*\R*/m", "", $string);
   }
 
   /**
@@ -408,6 +452,8 @@ class CRM_Utils_File {
   }
 
   /**
+   * Make a valid file name.
+   *
    * @param string $name
    *
    * @return string
@@ -430,14 +476,31 @@ class CRM_Utils_File {
   }
 
   /**
-   * @param $path
-   * @param $ext
+   * Copies a file
+   *
+   * @param $filePath
+   * @return mixed
+   */
+  public static function duplicate($filePath) {
+    $oldName = pathinfo($filePath, PATHINFO_FILENAME);
+    $uniqID = md5(uniqid(rand(), TRUE));
+    $newName = preg_replace('/(_[\w]{32})$/', '', $oldName) . '_' . $uniqID;
+    $newPath = str_replace($oldName, $newName, $filePath);
+    copy($filePath, $newPath);
+    return $newPath;
+  }
+
+  /**
+   * Get files for the extension.
+   *
+   * @param string $path
+   * @param string $ext
    *
    * @return array
    */
   public static function getFilesByExtension($path, $ext) {
     $path = self::addTrailingSlash($path);
-    $files = array();
+    $files = [];
     if ($dh = opendir($path)) {
       while (FALSE !== ($elem = readdir($dh))) {
         if (substr($elem, -(strlen($ext) + 1)) == '.' . $ext) {
@@ -604,6 +667,8 @@ HTACCESS;
     // make everything absolute from the baseFilePath
     $basePath = ($basePath === NULL) ? self::baseFilePath() : $basePath;
 
+    // ensure that $basePath has a trailing slash
+    $basePath = self::addTrailingSlash($basePath);
     return $basePath . $directory;
   }
 
@@ -678,11 +743,11 @@ HTACCESS;
    */
   public static function findFiles($dir, $pattern, $relative = FALSE) {
     if (!is_dir($dir)) {
-      return array();
+      return [];
     }
     $dir = rtrim($dir, '/');
-    $todos = array($dir);
-    $result = array();
+    $todos = [$dir];
+    $result = [];
     while (!empty($todos)) {
       $subdir = array_shift($todos);
       $matches = glob("$subdir/$pattern");
@@ -732,7 +797,8 @@ HTACCESS;
       }
     }
     if (empty($childParts)) {
-      return FALSE; // same directory
+      // same directory
+      return FALSE;
     }
     else {
       return TRUE;
@@ -763,25 +829,266 @@ HTACCESS;
 
     CRM_Utils_File::copyDir($fromDir, $toDir);
     if (!CRM_Utils_File::cleanDir($fromDir, TRUE, FALSE)) {
-      CRM_Core_Session::setStatus(ts('Failed to clean temp dir: %1', array(1 => $fromDir)), '', 'alert');
+      CRM_Core_Session::setStatus(ts('Failed to clean temp dir: %1', [1 => $fromDir]), '', 'alert');
       return FALSE;
     }
     return TRUE;
   }
 
-  public static function formatFile(&$param, $fileName, $extraParams = array()) {
+  /**
+   * Format file.
+   *
+   * @param array $param
+   * @param string $fileName
+   * @param array $extraParams
+   */
+  public static function formatFile(&$param, $fileName, $extraParams = []) {
     if (empty($param[$fileName])) {
       return;
     }
 
-    $fileParams = array(
+    $fileParams = [
       'uri' => $param[$fileName]['name'],
       'type' => $param[$fileName]['type'],
       'location' => $param[$fileName]['name'],
       'upload_date' => date('YmdHis'),
-    ) + $extraParams;
+    ] + $extraParams;
 
     $param[$fileName] = $fileParams;
+  }
+
+  /**
+   * Return formatted file URL, like for image file return image url with image icon
+   *
+   * @param string $path
+   *   Absoulte file path
+   * @param string $fileType
+   * @param string $url
+   *   File preview link e.g. https://example.com/civicrm/file?reset=1&filename=image.png&mime-type=image/png
+   *
+   * @return string $url
+   */
+  public static function getFileURL($path, $fileType, $url = NULL) {
+    if (empty($path) || empty($fileType)) {
+      return '';
+    }
+    elseif (empty($url)) {
+      $fileName = basename($path);
+      $url = CRM_Utils_System::url('civicrm/file', "reset=1&filename={$fileName}&mime-type={$fileType}");
+    }
+    switch ($fileType) {
+      case 'image/jpeg':
+      case 'image/pjpeg':
+      case 'image/gif':
+      case 'image/x-png':
+      case 'image/png':
+      case 'image/jpg':
+        list($imageWidth, $imageHeight) = getimagesize($path);
+        list($imageThumbWidth, $imageThumbHeight) = CRM_Contact_BAO_Contact::getThumbSize($imageWidth, $imageHeight);
+        $url = "<a href=\"$url\" class='crm-image-popup'>
+          <img src=\"$url\" width=$imageThumbWidth height=$imageThumbHeight/>
+          </a>";
+        break;
+
+      default:
+        $url = sprintf('<a href="%s">%s</a>', $url, self::cleanFileName(basename($path)));
+        break;
+    }
+
+    return $url;
+  }
+
+  /**
+   * Return formatted image icon
+   *
+   * @param string $imageURL
+   *   Contact's image url
+   *
+   * @return string $url
+   */
+  public static function getImageURL($imageURL) {
+    // retrieve image name from $imageURL
+    $imageURL = CRM_Utils_String::unstupifyUrl($imageURL);
+    parse_str(parse_url($imageURL, PHP_URL_QUERY), $query);
+
+    $url = NULL;
+    if (!empty($query['photo'])) {
+      $path = CRM_Core_Config::singleton()->customFileUploadDir . $query['photo'];
+    }
+    else {
+      $path = $url = $imageURL;
+    }
+    $fileExtension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    //According to (https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types),
+    // there are some extensions that would need translating.:
+    $translateMimeTypes = [
+      'tif' => 'tiff',
+      'jpg' => 'jpeg',
+      'svg' => 'svg+xml',
+    ];
+    $mimeType = 'image/' . CRM_Utils_Array::value(
+      $fileExtension,
+      $translateMimeTypes,
+      $fileExtension
+    );
+
+    return self::getFileURL($path, $mimeType, $url);
+  }
+
+  /**
+   * Resize an image.
+   *
+   * @param string $sourceFile
+   *   Filesystem path to existing image on server
+   * @param int $targetWidth
+   *   New width desired, in pixels
+   * @param int $targetHeight
+   *   New height desired, in pixels
+   * @param string $suffix = ""
+   *   If supplied, the image will be renamed to include this suffix. For
+   *   example if the original file name is "foo.png" and $suffix = "_bar",
+   *   then the final file name will be "foo_bar.png".
+   * @param bool $preserveAspect = TRUE
+   *   When TRUE $width and $height will be used as a bounding box, outside of
+   *   which the resized image will not extend.
+   *   When FALSE, the image will be resized exactly to $width and $height, even
+   *   if it means stretching it.
+   *
+   * @return string
+   *   Path to image
+   * @throws \CRM_Core_Exception
+   *   Under the following conditions
+   *   - When GD is not available.
+   *   - When the source file is not an image.
+   */
+  public static function resizeImage($sourceFile, $targetWidth, $targetHeight, $suffix = "", $preserveAspect = TRUE) {
+
+    // Check if GD is installed
+    $gdSupport = CRM_Utils_System::getModuleSetting('gd', 'GD Support');
+    if (!$gdSupport) {
+      throw new CRM_Core_Exception(ts('Unable to resize image because the GD image library is not currently compiled in your PHP installation.'));
+    }
+
+    $sourceMime = mime_content_type($sourceFile);
+    if ($sourceMime == 'image/gif') {
+      $sourceData = imagecreatefromgif($sourceFile);
+    }
+    elseif ($sourceMime == 'image/png') {
+      $sourceData = imagecreatefrompng($sourceFile);
+    }
+    elseif ($sourceMime == 'image/jpeg') {
+      $sourceData = imagecreatefromjpeg($sourceFile);
+    }
+    else {
+      throw new CRM_Core_Exception(ts('Unable to resize image because the file supplied was not an image.'));
+    }
+
+    // get image about original image
+    $sourceInfo = getimagesize($sourceFile);
+    $sourceWidth = $sourceInfo[0];
+    $sourceHeight = $sourceInfo[1];
+
+    // Adjust target width/height if preserving aspect ratio
+    if ($preserveAspect) {
+      $sourceAspect = $sourceWidth / $sourceHeight;
+      $targetAspect = $targetWidth / $targetHeight;
+      if ($sourceAspect > $targetAspect) {
+        $targetHeight = $targetWidth / $sourceAspect;
+      }
+      if ($sourceAspect < $targetAspect) {
+        $targetWidth = $targetHeight * $sourceAspect;
+      }
+    }
+
+    // figure out the new filename
+    $pathParts = pathinfo($sourceFile);
+    $targetFile = $pathParts['dirname'] . DIRECTORY_SEPARATOR
+      . $pathParts['filename'] . $suffix . "." . $pathParts['extension'];
+
+    $targetData = imagecreatetruecolor($targetWidth, $targetHeight);
+
+    // resize
+    imagecopyresized($targetData, $sourceData,
+      0, 0, 0, 0,
+      $targetWidth, $targetHeight, $sourceWidth, $sourceHeight);
+
+    // save the resized image
+    $fp = fopen($targetFile, 'w+');
+    ob_start();
+    imagejpeg($targetData);
+    $image_buffer = ob_get_contents();
+    ob_end_clean();
+    imagedestroy($targetData);
+    fwrite($fp, $image_buffer);
+    rewind($fp);
+    fclose($fp);
+
+    // return the URL to link to
+    $config = CRM_Core_Config::singleton();
+    return $config->imageUploadURL . basename($targetFile);
+  }
+
+  /**
+   * Get file icon class for specific MIME Type
+   *
+   * @param string $mimeType
+   * @return string
+   */
+  public static function getIconFromMimeType($mimeType) {
+    if (!isset(Civi::$statics[__CLASS__]['mimeIcons'])) {
+      Civi::$statics[__CLASS__]['mimeIcons'] = json_decode(file_get_contents(__DIR__ . '/File/mimeIcons.json'), TRUE);
+    }
+    $iconClasses = Civi::$statics[__CLASS__]['mimeIcons'];
+    foreach ($iconClasses as $text => $icon) {
+      if (strpos($mimeType, $text) === 0) {
+        return $icon;
+      }
+    }
+    return $iconClasses['*'];
+  }
+
+  /**
+   * Is the filename a safe and valid filename passed in from URL
+   *
+   * @param string $fileName
+   * @return bool
+   */
+  public static function isValidFileName($fileName = NULL) {
+    if ($fileName) {
+      $check = $fileName !== basename($fileName) ? FALSE : TRUE;
+      if ($check) {
+        if (substr($fileName, 0, 1) == '/' || substr($fileName, 0, 1) == '.' || substr($fileName, 0, 1) == DIRECTORY_SEPARATOR) {
+          $check = FALSE;
+        }
+      }
+      return $check;
+    }
+    return FALSE;
+  }
+
+  /**
+   * Get the extensions that this MimeTpe is for
+   * @param string $mimeType the mime-type we want extensions for
+   * @return array
+   */
+  public static function getAcceptableExtensionsForMimeType($mimeType = NULL) {
+    $mapping = \MimeType\Mapping::$types;
+    $extensions = [];
+    foreach ($mapping as $extension => $type) {
+      if ($mimeType == $type) {
+        $extensions[] = $extension;
+      }
+    }
+    return $extensions;
+  }
+
+  /**
+   * Get the extension of a file based on its path
+   * @param string $path path of the file to query
+   * @return string
+   */
+  public static function getExtensionFromPath($path) {
+    return pathinfo($path, PATHINFO_EXTENSION);
   }
 
 }

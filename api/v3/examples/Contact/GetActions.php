@@ -8,7 +8,7 @@
  *   API result array
  */
 function contact_getactions_example() {
-  $params = array();
+  $params = [];
 
   try{
     $result = civicrm_api3('Contact', 'getactions', $params);
@@ -18,11 +18,12 @@ function contact_getactions_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,41 +37,38 @@ function contact_getactions_example() {
  */
 function contact_getactions_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
-    'count' => 23,
-    'values' => array(
+    'count' => 20,
+    'values' => [
       '0' => 'create',
       '1' => 'delete',
-      '2' => 'example_action1',
-      '3' => 'example_action2',
-      '4' => 'get',
-      '5' => 'getactions',
-      '6' => 'getcount',
+      '2' => 'duplicatecheck',
+      '3' => 'get',
+      '4' => 'getactions',
+      '5' => 'getcount',
+      '6' => 'getfield',
       '7' => 'getfields',
       '8' => 'getlist',
       '9' => 'getoptions',
       '10' => 'getquick',
       '11' => 'getrefcount',
       '12' => 'getsingle',
-      '13' => 'getstat',
-      '14' => 'getvalue',
-      '15' => 'merge',
-      '16' => 'proximity',
-      '17' => 'replace',
-      '18' => 'setvalue',
-      '19' => 'type_create',
-      '20' => 'type_delete',
-      '21' => 'type_get',
-      '22' => 'update',
-    ),
-    'deprecated' => array(
+      '13' => 'getvalue',
+      '14' => 'merge',
+      '15' => 'proximity',
+      '16' => 'replace',
+      '17' => 'setvalue',
+      '18' => 'update',
+      '19' => 'validate',
+    ],
+    'deprecated' => [
       'getquick' => 'The "getquick" action is deprecated in favor of "getlist".',
       'setvalue' => 'The "setvalue" action is deprecated. Use "create" with an id instead.',
       'update' => 'The "update" action is deprecated. Use "create" with an id instead.',
-    ),
-  );
+    ],
+  ];
 
   return $expectedResult;
 }

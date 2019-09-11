@@ -6,9 +6,9 @@
  *   API result array
  */
 function line_item_get_example() {
-  $params = array(
+  $params = [
     'entity_table' => 'civicrm_contribution',
-  );
+  ];
 
   try{
     $result = civicrm_api3('LineItem', 'get', $params);
@@ -18,11 +18,12 @@ function line_item_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -36,13 +37,13 @@ function line_item_get_example() {
  */
 function line_item_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 3,
-    'values' => array(
-      '3' => array(
+    'values' => [
+      '3' => [
         'id' => '3',
         'entity_table' => 'civicrm_contribution',
         'entity_id' => '2',
@@ -54,10 +55,11 @@ function line_item_get_expectedresult() {
         'line_total' => '100.00',
         'price_field_value_id' => '1',
         'financial_type_id' => '1',
-        'deductible_amount' => '0.00',
-      ),
-    ),
-  );
+        'non_deductible_amount' => '0.00',
+        'contribution_type_id' => '1',
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

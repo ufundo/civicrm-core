@@ -12,7 +12,6 @@
 {capture assign=emptyBlockStyle }style="padding: 10px; border-bottom: 1px solid #999;background-color: #f7f7f7;"{/capture}
 {capture assign=emptyBlockValueStyle }style="padding: 10px; border-bottom: 1px solid #999;"{/capture}
 
-<p>Dear {$contactDisplayName}</p>
 <center>
  <table width="620" border="0" cellpadding="0" cellspacing="0" id="crm-event_receipt" style="font-family: Arial, Verdana, sans-serif; text-align: left;">
 
@@ -21,17 +20,14 @@
   <!-- END HEADER -->
 
   <!-- BEGIN CONTENT -->
-
+   {if $emailGreeting}<tr><td>{$emailGreeting},</td></tr>{/if}
   <tr>
     <td>
-      {if $paymentConfig.confirm_email_text}
-      <p>{$paymentConfig.confirm_email_text|htmlize}</p>
-      {elseif $isRefund}
+      {if $isRefund}
       <p>{ts}A refund has been issued based on changes in your registration selections.{/ts}</p>
       {else}
       <p>{ts}A payment has been received.{/ts}</p>
       {/if}
-      <p>{ts}Please print this confirmation for your records.{/ts}</p>
     </td>
   </tr>
   <tr>
@@ -43,7 +39,7 @@
   </tr>
   <tr>
     <td {$labelStyle}>
-      {ts}Total Fees{/ts}
+      {ts}Total Amount{/ts}
     </td>
     <td {$valueStyle}>
       {$totalAmount|crmMoney}
@@ -71,26 +67,26 @@
     </tr>
     <tr>
       <td {$labelStyle}>
-  {ts}{if $component eq 'event'}Total Fees{/if}{/ts}
+        {ts}Total Amount{/ts}
       </td>
       <td {$valueStyle}>
-  {$totalAmount|crmMoney}
+        {$totalAmount|crmMoney}
       </td>
       </tr>
       <tr>
       <td {$labelStyle}>
-  {ts}This Payment Amount{/ts}
+        {ts}This Payment Amount{/ts}
       </td>
       <td {$valueStyle}>
-  {$paymentAmount|crmMoney}
+        {$paymentAmount|crmMoney}
       </td>
       </tr>
      <tr>
       <td {$labelStyle}>
-  {ts}Balance Owed{/ts}
+        {ts}Balance Owed{/ts}
       </td>
        <td {$valueStyle}>
-  {$amountOwed|crmMoney}
+         {$amountOwed|crmMoney}
       </td> {* This will be zero after final payment. *}
      </tr>
      <tr> <td {$emptyBlockStyle}></td>
@@ -98,7 +94,7 @@
       {if $paymentsComplete}
       <tr>
       <td colspan='2' {$valueStyle}>
-  {ts}Thank-you. This completes your payment for {if $component eq 'event'}{$event.event_title}{/if}.{/ts}
+        {ts}Thank you for completing payment.{/ts}
       </td>
      </tr>
       {/if}
@@ -106,10 +102,10 @@
   {if $receive_date}
     <tr>
       <td {$labelStyle}>
-  {ts}Transaction Date{/ts}
+        {ts}Transaction Date{/ts}
       </td>
       <td {$valueStyle}>
-  {$receive_date|crmDate}
+        {$receive_date|crmDate}
       </td>
     </tr>
   {/if}
@@ -149,7 +145,7 @@
     <tr>
       <td>
   <table style="border: 1px solid #999; margin: 1em 0em 1em; border-collapse: collapse; width:100%;">
-    {if $contributeMode eq 'direct' and !$isAmountzero}
+    {if $billingName || $address}
           <tr>
             <th {$headerStyle}>
         {ts}Billing Name and Address{/ts}
@@ -162,7 +158,7 @@
             </td>
           </tr>
     {/if}
-    {if $contributeMode eq'direct' and !$isAmountzero}
+    {if $credit_card_number}
           <tr>
             <th {$headerStyle}>
         {ts}Credit Card Information{/ts}
@@ -189,7 +185,7 @@
       </td>
     </tr>
 
-    {if $event.participant_role neq 'Attendee' and $defaultRole}
+    {if $event.participant_role}
     <tr>
       <td {$labelStyle}>
         {ts}Participant Role{/ts}

@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
@@ -76,20 +76,20 @@ class CRM_Tag_Form_Tag extends CRM_Core_Form {
     $this->assign('tagged', $entityTag);
 
     // get the list of all the categories
-    $allTag = CRM_Core_BAO_Tag::getTagsUsedFor($this->_entityTable);
+    $allTags = CRM_Core_BAO_Tag::getTagsUsedFor($this->_entityTable, FALSE);
 
     // need to append the array with the " checked " if contact is tagged with the tag
-    foreach ($allTag as $tagID => $varValue) {
+    foreach ($allTags as $tagID => $varValue) {
       if (in_array($tagID, $entityTag)) {
-        $tagAttribute = array(
+        $tagAttribute = [
           'checked' => 'checked',
           'id' => "tag_{$tagID}",
-        );
+        ];
       }
       else {
-        $tagAttribute = array(
+        $tagAttribute = [
           'id' => "tag_{$tagID}",
-        );
+        ];
       }
 
       $tagChk[$tagID] = $this->createElement('checkbox', $tagID, '', '', $tagAttribute);
@@ -99,20 +99,9 @@ class CRM_Tag_Form_Tag extends CRM_Core_Form {
 
     $tags = new CRM_Core_BAO_Tag();
     $tree = $tags->getTree($this->_entityTable, TRUE);
-
-    // let's not load jstree if there are not children. This also fixes blank
-    // display at the beginning of checkboxes
-    $loadJsTree = CRM_Utils_Array::retrieveValueRecursive($tree, 'children');
-    $this->assign('loadjsTree', FALSE);
-    if (!empty($loadJsTree)) {
-      CRM_Core_Resources::singleton()
-        ->addScriptFile('civicrm', 'packages/jquery/plugins/jstree/jquery.jstree.js', 0, 'html-header', FALSE)
-        ->addStyleFile('civicrm', 'packages/jquery/plugins/jstree/themes/default/style.css', 0, 'html-header');
-      $this->assign('loadjsTree', TRUE);
-    }
     $this->assign('tree', $tree);
 
-    $this->assign('tag', $allTag);
+    $this->assign('allTags', $allTags);
 
     //build tag widget
     $parentNames = CRM_Core_BAO_Tag::getTagSet('civicrm_contact');
@@ -124,7 +113,7 @@ class CRM_Tag_Form_Tag extends CRM_Core_Form {
    * @return void
    */
   public function postProcess() {
-    CRM_Utils_System::flushCache('CRM_Core_DAO_Tag');
+    CRM_Utils_System::flushCache();
 
     // array contains the posted values
     // exportvalues is not used because its give value 1 of the checkbox which were checked by default,

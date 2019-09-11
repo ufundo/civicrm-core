@@ -1,3 +1,4 @@
+{assign var="greeting" value="{contact.email_greeting}"}{if $greeting}{$greeting},{/if}
 {if $receipt_text}
 {$receipt_text}
 {/if}
@@ -30,15 +31,11 @@
 ===========================================================
 {if !$useForMember && $membership_amount && $is_quick_config}
 {ts 1=$membership_name}%1 Membership{/ts}: {$membership_amount|crmMoney}
-{if $amount}
-{if ! $is_separate_payment }
+{if $amount && !$is_separate_payment }
 {ts}Contribution Amount{/ts}: {$amount|crmMoney}
-{else}
-{ts}Additional Contribution{/ts}: {$amount|crmMoney}
-{/if}
-{/if}
 -------------------------------------------
 {ts}Total{/ts}: {$amount+$membership_amount|crmMoney}
+{/if}
 {elseif !$useForMember && $lineItem and $priceSetID & !$is_quick_config}
 {foreach from=$lineItem item=value key=priceset}
 ---------------------------------------------------------
@@ -116,8 +113,14 @@
 
 {/if}
 {if $is_recur}
-{if $contributeMode eq 'notify' or $contributeMode eq 'directIPN'}
-{ts 1=$cancelSubscriptionUrl}This membership will be renewed automatically. You can cancel the auto-renewal option by visiting this web page: %1.{/ts}
+{ts}This membership will be renewed automatically.{/ts}
+{if $cancelSubscriptionUrl}
+
+{ts 1=$cancelSubscriptionUrl}You can cancel the auto-renewal option by visiting this web page: %1.{/ts}
+
+{/if}
+
+{if $updateSubscriptionBillingUrl}
 
 {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this automatically renewed membership by <a href="%1">visiting this web page</a>.{/ts}
 {/if}

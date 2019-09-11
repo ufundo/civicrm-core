@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -39,7 +39,7 @@
       </ul>
     </div>
     {/if}
-    <p>{docURL page='user/current/organising-your-data/smart-groups/'}</p>
+    <p>{docURL page='user/organising-your-data/smart-groups/'}</p>
   </div>
   <table class="form-layout-compressed">
     <tr class="crm-contact-task-createsmartgroup-form-block-title">
@@ -59,7 +59,7 @@
   </table>
 
   {*CRM-14190*}
-  {include file="CRM/Group/Form/ParentGroups.tpl"}
+  {include file="CRM/Group/Form/GroupsCommon.tpl"}
 
   <div class="crm-submit-buttons">{include file="CRM/common/formButtons.tpl" location="bottom"}</div>
 </div>

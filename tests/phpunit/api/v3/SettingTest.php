@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -158,7 +158,8 @@ class api_v3_SettingTest extends CiviUnitTestCase {
         'is_contact' => 0,
         'description' => NULL,
         'help_text' => NULL,
-        'on_change' => array(// list of callbacks
+        // list of callbacks
+        'on_change' => array(
           array(__CLASS__, '_testOnChange_onChangeExample'),
         ),
       ),
@@ -351,9 +352,6 @@ class api_v3_SettingTest extends CiviUnitTestCase {
   public function testGetExtensionSetting() {
     $this->hookClass->setHook('civicrm_alterSettingsFolders', array($this, 'setExtensionMetadata'));
     $data = NULL;
-    // the caching of data to all duplicates the caching of data to the empty string
-    CRM_Core_BAO_Cache::setItem($data, 'CiviCRM setting Spec', 'All');
-    CRM_Core_BAO_Cache::setItem($data, 'CiviCRM setting Specs', 'settingsMetadata__');
     Civi::cache('settings')->flush();
     $fields = $this->callAPISuccess('setting', 'getfields', array('filters' => array('group_name' => 'Test Settings')));
     $this->assertArrayHasKey('test_key', $fields['values']);
@@ -366,33 +364,11 @@ class api_v3_SettingTest extends CiviUnitTestCase {
   /**
    * Setting api should set & fetch settings stored in config as well as those in settings table
    */
-  public function testSetConfigSetting() {
-    $config = CRM_Core_Config::singleton();
-    $this->assertFalse($config->debug == 1);
-
-    $params = array(
-      'domain_id' => $this->_domainID2,
-      'debug_enabled' => 1,
-    );
-    $result = $this->callAPISuccess('setting', 'create', $params);
-
-    $this->assertEquals(1, Civi::settings($this->_domainID2)->get('debug_enabled'));
-
-    CRM_Core_BAO_Domain::setDomain($this->_domainID2);
-    $config = CRM_Core_Config::singleton(TRUE, TRUE);
-    CRM_Core_BAO_Domain::resetDomain();
-    $this->assertEquals(1, $config->debug);
-  }
-
-  /**
-   * Setting api should set & fetch settings stored in config as well as those in settings table
-   */
   public function testGetConfigSetting() {
     $settings = $this->callAPISuccess('setting', 'get', array(
-        'name' => 'defaultCurrency',
-        'sequential' => 1,
-      )
-    );
+      'name' => 'defaultCurrency',
+      'sequential' => 1,
+    ));
     $this->assertEquals('USD', $settings['values'][0]['defaultCurrency']);
   }
 
@@ -401,20 +377,17 @@ class api_v3_SettingTest extends CiviUnitTestCase {
    */
   public function testGetSetConfigSettingMultipleDomains() {
     $settings = $this->callAPISuccess('setting', 'create', array(
-        'defaultCurrency' => 'USD',
-        'domain_id' => $this->_currentDomain,
-      )
-    );
+      'defaultCurrency' => 'USD',
+      'domain_id' => $this->_currentDomain,
+    ));
     $settings = $this->callAPISuccess('setting', 'create', array(
-        'defaultCurrency' => 'CAD',
-        'domain_id' => $this->_domainID2,
-      )
-    );
+      'defaultCurrency' => 'CAD',
+      'domain_id' => $this->_domainID2,
+    ));
     $settings = $this->callAPISuccess('setting', 'get', array(
-        'return' => 'defaultCurrency',
-        'domain_id' => 'all',
-      )
-    );
+      'return' => 'defaultCurrency',
+      'domain_id' => 'all',
+    ));
     $this->assertEquals('USD', $settings['values'][$this->_currentDomain]['defaultCurrency']);
     $this->assertEquals('CAD', $settings['values'][$this->_domainID2]['defaultCurrency'],
       "second domain (id {$this->_domainID2} ) should be set to CAD. First dom was {$this->_currentDomain} & was USD");
@@ -451,10 +424,10 @@ class api_v3_SettingTest extends CiviUnitTestCase {
       'name' => 'address_format',
     );
     $result = $this->callAPIAndDocument('setting', 'getdefaults', $params, __FUNCTION__, __FILE__, $description, 'GetDefaults');
-    $this->assertEquals("{contact.address_name}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['address_format']);
+    $this->assertEquals("{contact.address_name}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.supplemental_address_3}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['address_format']);
     $params = array('name' => 'mailing_format');
     $result = $this->callAPISuccess('setting', 'getdefaults', $params);
-    $this->assertEquals("{contact.addressee}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['mailing_format']);
+    $this->assertEquals("{contact.addressee}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.supplemental_address_3}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['mailing_format']);
     $this->assertArrayHasKey(CRM_Core_Config::domainID(), $result['values']);
   }
 
@@ -478,7 +451,7 @@ class api_v3_SettingTest extends CiviUnitTestCase {
     $result = $this->callAPIAndDocument('setting', 'revert', $revertParams, __FUNCTION__, __FILE__, $description, '');
     //make sure it's reverted
     $result = $this->callAPISuccess('setting', 'get', $params);
-    $this->assertEquals("{contact.address_name}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['address_format']);
+    $this->assertEquals("{contact.address_name}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.supplemental_address_3}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['address_format']);
     $params = array(
       'return' => array('mailing_format'),
     );
@@ -504,8 +477,8 @@ class api_v3_SettingTest extends CiviUnitTestCase {
     $this->callAPISuccess('setting', 'revert', $revertParams);
     //make sure it's reverted
     $result = $this->callAPISuccess('setting', 'get', array('group' => 'core'));
-    $this->assertEquals("{contact.address_name}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['address_format']);
-    $this->assertEquals("{contact.addressee}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['mailing_format']);
+    $this->assertEquals("{contact.address_name}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.supplemental_address_3}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['address_format']);
+    $this->assertEquals("{contact.addressee}\n{contact.street_address}\n{contact.supplemental_address_1}\n{contact.supplemental_address_2}\n{contact.supplemental_address_3}\n{contact.city}{, }{contact.state_province}{ }{contact.postal_code}\n{contact.country}", $result['values'][CRM_Core_Config::domainID()]['mailing_format']);
   }
 
   /**
@@ -546,6 +519,29 @@ class api_v3_SettingTest extends CiviUnitTestCase {
     //$this->assertArrayHasKey('extensionsDir', $result['values'][$dom['id']]);
 
     $this->assertEquals('Unconfirmed', $result['values'][$dom['id']]['tag_unconfirmed']);
+  }
+
+  /**
+   * Test to set isProductionEnvironment
+   *
+   */
+  public function testSetCivicrmEnvironment() {
+    $params = array(
+      'environment' => 'Staging',
+    );
+    $result = $this->callAPISuccess('Setting', 'create', $params);
+    $params = array(
+      'name' => 'environment',
+      'group' => 'Developer Preferences',
+    );
+    $result = $this->callAPISuccess('Setting', 'getvalue', $params);
+    $this->assertEquals('Staging', $result);
+
+    global $civicrm_setting;
+    $civicrm_setting[CRM_Core_BAO_Setting::DEVELOPER_PREFERENCES_NAME]['environment'] = 'Production';
+    Civi::service('settings_manager')->useMandatory();
+    $result = $this->callAPISuccess('Setting', 'getvalue', $params);
+    $this->assertEquals('Production', $result);
   }
 
 }

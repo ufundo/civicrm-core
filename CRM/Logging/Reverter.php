@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Logging_Reverter {
   private $db;
@@ -40,7 +40,7 @@ class CRM_Logging_Reverter {
    *
    * @var array
    */
-  private $diffs = array();
+  private $diffs = [];
 
   /**
    * Class constructor.
@@ -66,6 +66,11 @@ class CRM_Logging_Reverter {
     $this->diffs = $differ->diffsInTables($tables);
   }
 
+  /**
+   * Setter for diffs.
+   *
+   * @param array $diffs
+   */
   public function setDiffs($diffs) {
     $this->diffs = $diffs;
   }
@@ -76,24 +81,24 @@ class CRM_Logging_Reverter {
   public function revert() {
 
     // get custom data tables, columns and types
-    $ctypes = array();
+    $ctypes = [];
     $dao = CRM_Core_DAO::executeQuery('SELECT table_name, column_name, data_type FROM civicrm_custom_group cg JOIN civicrm_custom_field cf ON (cf.custom_group_id = cg.id)');
     while ($dao->fetch()) {
       if (!isset($ctypes[$dao->table_name])) {
-        $ctypes[$dao->table_name] = array('entity_id' => 'Integer');
+        $ctypes[$dao->table_name] = ['entity_id' => 'Integer'];
       }
       $ctypes[$dao->table_name][$dao->column_name] = $dao->data_type;
     }
 
     $diffs = $this->diffs;
-    $deletes = array();
-    $reverts = array();
+    $deletes = [];
+    $reverts = [];
     foreach ($diffs as $table => $changes) {
       foreach ($changes as $change) {
         switch ($change['action']) {
           case 'Insert':
             if (!isset($deletes[$table])) {
-              $deletes[$table] = array();
+              $deletes[$table] = [];
             }
             $deletes[$table][] = $change['id'];
             break;
@@ -101,10 +106,10 @@ class CRM_Logging_Reverter {
           case 'Delete':
           case 'Update':
             if (!isset($reverts[$table])) {
-              $reverts[$table] = array();
+              $reverts[$table] = [];
             }
             if (!isset($reverts[$table][$change['id']])) {
-              $reverts[$table][$change['id']] = array('log_action' => $change['action']);
+              $reverts[$table][$change['id']] = ['log_action' => $change['action']];
             }
             $reverts[$table][$change['id']][$change['field']] = $change['from'];
             break;
@@ -123,7 +128,7 @@ class CRM_Logging_Reverter {
         // DAO-based tables
 
         case (($tableDAO = CRM_Core_DAO_AllCoreTables::getClassForTable($table)) != FALSE):
-          $dao = new $tableDAO ();
+          $dao = new $tableDAO();
           foreach ($row as $id => $changes) {
             $dao->id = $id;
             foreach ($changes as $field => $value) {
@@ -152,9 +157,9 @@ class CRM_Logging_Reverter {
 
         case in_array($table, array_keys($ctypes)):
           foreach ($row as $id => $changes) {
-            $inserts = array('id' => '%1');
-            $updates = array();
-            $params = array(1 => array($id, 'Integer'));
+            $inserts = ['id' => '%1'];
+            $updates = [];
+            $params = [1 => [$id, 'Integer']];
             $counter = 2;
             foreach ($changes as $field => $value) {
               // don’t try reverting a field that’s no longer there
@@ -179,7 +184,7 @@ class CRM_Logging_Reverter {
               $inserts[$field] = "%$counter";
               $updates[] = "{$field} = {$fldVal}";
               if ($fldVal != 'DEFAULT') {
-                $params[$counter] = array($value, $ctypes[$table][$field]);
+                $params[$counter] = [$value, $ctypes[$table][$field]];
               }
               $counter++;
             }
@@ -195,32 +200,6 @@ class CRM_Logging_Reverter {
       }
     }
 
-    // CRM-7353: if nothing altered civicrm_contact, touch it; this will
-    // make sure there’s an entry in log_civicrm_contact for this revert
-    if (empty($diffs['civicrm_contact'])) {
-      $query = "
-                SELECT id FROM `{$this->db}`.log_civicrm_contact
-                WHERE log_conn_id = %1 AND log_date BETWEEN DATE_SUB(%2, INTERVAL 10 SECOND) AND DATE_ADD(%2, INTERVAL 10 SECOND)
-                ORDER BY log_date DESC LIMIT 1
-            ";
-      $params = array(
-        1 => array($this->log_conn_id, 'String'),
-        2 => array($this->log_date, 'String'),
-      );
-      $cid = CRM_Core_DAO::singleValueQuery($query, $params);
-      if (!$cid) {
-        return;
-      }
-
-      $dao = new CRM_Contact_DAO_Contact();
-      $dao->id = $cid;
-      if ($dao->find(TRUE)) {
-        // CRM-8102: MySQL can’t parse its own dates
-        $dao->birth_date = CRM_Utils_Date::isoToMysql($dao->birth_date);
-        $dao->deceased_date = CRM_Utils_Date::isoToMysql($dao->deceased_date);
-        $dao->save();
-      }
-    }
   }
 
 }

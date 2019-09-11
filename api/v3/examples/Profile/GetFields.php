@@ -8,10 +8,10 @@
  *   API result array
  */
 function profile_getfields_example() {
-  $params = array(
+  $params = [
     'action' => 'submit',
     'profile_id' => 27,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Profile', 'getfields', $params);
@@ -21,11 +21,12 @@ function profile_getfields_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -39,12 +40,12 @@ function profile_getfields_example() {
  */
 function profile_getfields_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 9,
-    'values' => array(
-      'custom_1' => array(
+    'values' => [
+      'custom_1' => [
         'label' => '_addCustomFieldToProfile',
         'groupTitle' => '_addCustomFie',
         'data_type' => 'String',
@@ -63,6 +64,8 @@ function profile_getfields_expectedresult() {
         'date_format' => '',
         'time_format' => '',
         'is_required' => 0,
+        'table_name' => 'civicrm_value__addcustomfie_1',
+        'column_name' => '_addcustomfieldtoprofile_1',
         'name' => 'custom_1',
         'title' => 'first_name',
         'type' => 2,
@@ -71,73 +74,92 @@ function profile_getfields_expectedresult() {
         'help_post' => '',
         'entity' => 'contact',
         'weight' => '1',
-        'api.aliases' => array(),
-      ),
-      'postal_code-1' => array(
+        'api.aliases' => [],
+      ],
+      'postal_code-1' => [
         'name' => 'postal_code',
         'type' => 2,
         'title' => 'State Province',
-        'maxlength' => 12,
-        'size' => 12,
+        'description' => 'Store both US (zip5) AND international postal codes. App is responsible for country/region appropriate validation.',
+        'maxlength' => 64,
+        'size' => 6,
         'import' => TRUE,
         'where' => 'civicrm_address.postal_code',
         'headerPattern' => '/postal|zip/i',
         'dataPattern' => '/\\d?\\d{4}(-\\d{4})?/',
         'export' => TRUE,
+        'table_name' => 'civicrm_address',
+        'entity' => 'address',
+        'bao' => 'CRM_Core_BAO_Address',
+        'html' => [
+          'type' => 'Text',
+          'maxlength' => 64,
+          'size' => 6,
+        ],
         'api.required' => 0,
         'help_pre' => '',
         'help_post' => '',
-        'entity' => 'address',
         'weight' => '2',
-        'api.aliases' => array(),
-      ),
-      'state_province-1' => array(
+        'api.aliases' => [],
+      ],
+      'state_province-1' => [
         'name' => 'state_province_id',
         'type' => 1,
         'title' => 'State Province',
+        'description' => 'Which State_Province does this address belong to.',
+        'table_name' => 'civicrm_address',
+        'entity' => 'address',
+        'bao' => 'CRM_Core_BAO_Address',
         'FKClassName' => 'CRM_Core_DAO_StateProvince',
-        'html' => array(
-          'type' => 'Select',
-        ),
-        'pseudoconstant' => array(
+        'html' => [
+          'type' => 'ChainSelect',
+          'size' => 6,
+          'maxlength' => 14,
+        ],
+        'pseudoconstant' => [
           'table' => 'civicrm_state_province',
           'keyColumn' => 'id',
           'labelColumn' => 'name',
-        ),
+        ],
         'FKApiName' => 'StateProvince',
         'api.required' => '1',
         'help_pre' => '',
         'help_post' => '',
-        'entity' => 'address',
         'weight' => '3',
-        'api.aliases' => array(),
-      ),
-      'country-1' => array(
+        'api.aliases' => [],
+      ],
+      'country-1' => [
         'name' => 'country_id',
         'type' => 1,
         'title' => 'Country',
+        'description' => 'Which Country does this address belong to.',
+        'table_name' => 'civicrm_address',
+        'entity' => 'address',
+        'bao' => 'CRM_Core_BAO_Address',
         'FKClassName' => 'CRM_Core_DAO_Country',
-        'html' => array(
+        'html' => [
           'type' => 'Select',
-        ),
-        'pseudoconstant' => array(
+          'size' => 6,
+          'maxlength' => 14,
+        ],
+        'pseudoconstant' => [
           'table' => 'civicrm_country',
           'keyColumn' => 'id',
           'labelColumn' => 'name',
           'nameColumn' => 'iso_code',
-        ),
+        ],
         'FKApiName' => 'Country',
         'api.required' => '1',
         'help_pre' => '',
         'help_post' => '',
-        'entity' => 'address',
         'weight' => '4',
-        'api.aliases' => array(),
-      ),
-      'phone-1-1' => array(
+        'api.aliases' => [],
+      ],
+      'phone-1-1' => [
         'name' => 'phone',
         'type' => 2,
         'title' => 'Phone',
+        'description' => 'Complete phone number.',
         'maxlength' => 32,
         'size' => 20,
         'import' => TRUE,
@@ -145,41 +167,54 @@ function profile_getfields_expectedresult() {
         'headerPattern' => '/phone/i',
         'dataPattern' => '/^[\\d\\(\\)\\-\\.\\s]+$/',
         'export' => TRUE,
+        'table_name' => 'civicrm_phone',
+        'entity' => 'phone',
+        'bao' => 'CRM_Core_BAO_Phone',
+        'html' => [
+          'type' => 'Text',
+          'maxlength' => 32,
+          'size' => 20,
+        ],
         'api.required' => '1',
         'help_pre' => '',
         'help_post' => '',
-        'entity' => 'phone',
         'weight' => '5',
-        'api.aliases' => array(),
-      ),
-      'email-primary' => array(
+        'api.aliases' => [],
+      ],
+      'email-primary' => [
         'name' => 'email',
         'type' => 2,
         'title' => 'Email',
+        'description' => 'Email address',
         'maxlength' => 254,
-        'size' => 20,
+        'size' => 30,
         'import' => TRUE,
         'where' => 'civicrm_email.email',
         'headerPattern' => '/e.?mail/i',
         'dataPattern' => '/^[a-zA-Z][\\w\\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$/',
         'export' => TRUE,
         'rule' => 'email',
-        'html' => array(
+        'table_name' => 'civicrm_email',
+        'entity' => 'email',
+        'bao' => 'CRM_Core_BAO_Email',
+        'html' => [
           'type' => 'Text',
-        ),
+          'maxlength' => 254,
+          'size' => 30,
+        ],
         'api.required' => '1',
         'help_pre' => '',
         'help_post' => '',
-        'entity' => 'email',
         'weight' => '6',
-        'api.aliases' => array(
+        'api.aliases' => [
           '0' => 'email-Primary',
-        ),
-      ),
-      'last_name' => array(
+        ],
+      ],
+      'last_name' => [
         'name' => 'last_name',
         'type' => 2,
         'title' => 'Last Name',
+        'description' => 'Last Name.',
         'maxlength' => 64,
         'size' => 30,
         'import' => TRUE,
@@ -187,20 +222,25 @@ function profile_getfields_expectedresult() {
         'headerPattern' => '/^last|(l(ast\\s)?name)$/i',
         'dataPattern' => '/^\\w+(\\s\\w+)?+$/',
         'export' => TRUE,
-        'html' => array(
+        'table_name' => 'civicrm_contact',
+        'entity' => 'contact',
+        'bao' => 'CRM_Contact_BAO_Contact',
+        'html' => [
           'type' => 'Text',
-        ),
+          'maxlength' => 64,
+          'size' => 30,
+        ],
         'api.required' => '1',
         'help_pre' => '',
         'help_post' => '',
-        'entity' => 'contact',
         'weight' => '7',
-        'api.aliases' => array(),
-      ),
-      'first_name' => array(
+        'api.aliases' => [],
+      ],
+      'first_name' => [
         'name' => 'first_name',
         'type' => 2,
         'title' => 'First Name',
+        'description' => 'First Name.',
         'maxlength' => 64,
         'size' => 30,
         'import' => TRUE,
@@ -208,23 +248,27 @@ function profile_getfields_expectedresult() {
         'headerPattern' => '/^first|(f(irst\\s)?name)$/i',
         'dataPattern' => '/^\\w+$/',
         'export' => TRUE,
-        'html' => array(
+        'table_name' => 'civicrm_contact',
+        'entity' => 'contact',
+        'bao' => 'CRM_Contact_BAO_Contact',
+        'html' => [
           'type' => 'Text',
-        ),
+          'maxlength' => 64,
+          'size' => 30,
+        ],
         'api.required' => '1',
         'help_pre' => '',
         'help_post' => '',
-        'entity' => 'contact',
         'weight' => '8',
-        'api.aliases' => array(),
-      ),
-      'profile_id' => array(
+        'api.aliases' => [],
+      ],
+      'profile_id' => [
         'api.required' => TRUE,
         'title' => 'Profile ID',
         'name' => 'profile_id',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

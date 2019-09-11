@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -59,6 +59,12 @@
                 <p class="description">{ts}If enabled, CiviCRM sends PDF receipt as an attachment during event signup or online contribution.{/ts}</p>
             </td>
         </tr>
+        <tr class="crm-miscellaneous-form-block-recordGeneratedLetters">
+            <td class="label">{$form.recordGeneratedLetters.label}</td>
+            <td>{$form.recordGeneratedLetters.html}<br />
+                <p class="description">{ts}When generating a letter (PDF/Word) via mail-merge, how should the letter be recorded?{/ts}</p>
+            </td>
+        </tr>
         <tr class="crm-miscellaneous-form-block-wkhtmltopdfPath">
             <td class="label">{$form.wkhtmltopdfPath.label}</td>
             <td>{$form.wkhtmltopdfPath.html}<br />
@@ -78,6 +84,12 @@
           <td>{$form.remote_profile_submissions.html}<br />
             <p class="description">{ts}If enabled, CiviCRM will allow users to submit profiles from external sites. This is disabled by default to limit abuse.{/ts}</p>
           </td>
+        </tr>
+        <tr class="crm-miscellaneous-form-block-allow_alert_autodismissal">
+            <td class="label">{$form.allow_alert_autodismissal.label}</td>
+            <td>{$form.allow_alert_autodismissal.html}<br />
+                <p class="description">{ts}If disabled, CiviCRM will not automatically dismiss any alerts after 10 seconds.{/ts}</p>
+            </td>
         </tr>
     </table>
 
@@ -103,6 +115,13 @@
                 <br />
                 {ts 1='href="https://developers.google.com/recaptcha/docs/display#config" target="_blank"'}Check the available options at <a %1>Customizing the Look and Feel of reCAPTCHA</a>.{/ts}
               </span>
+            </td>
+        </tr>
+        <tr class="crm-miscellaneous-form-block-recaptchaPrivateKey">
+            <td class="label">{$form.forceRecaptcha.label}</td>
+            <td>
+              {$form.forceRecaptcha.html}
+              <p class="description">{ts}If enabled, reCAPTCHA will show on all contribution pages.{/ts}</p>
             </td>
         </tr>
         </table>

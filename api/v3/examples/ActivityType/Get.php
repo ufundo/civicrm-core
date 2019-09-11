@@ -9,7 +9,7 @@
  *   API result array
  */
 function activity_type_get_example() {
-  $params = array();
+  $params = [];
 
   try{
     $result = civicrm_api3('ActivityType', 'get', $params);
@@ -19,11 +19,12 @@ function activity_type_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -37,11 +38,11 @@ function activity_type_get_example() {
  */
 function activity_type_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
-    'count' => 50,
-    'values' => array(
+    'count' => 54,
+    'values' => [
       '1' => 'Meeting',
       '2' => 'Phone Call',
       '3' => 'Email',
@@ -63,7 +64,7 @@ function activity_type_get_expectedresult() {
       '19' => 'Bulk Email',
       '20' => 'Assign Case Role',
       '21' => 'Remove Case Role',
-      '22' => 'Print PDF Letter',
+      '22' => 'Print/Merge Document',
       '23' => 'Merge Case',
       '24' => 'Reassigned Case',
       '25' => 'Link Cases',
@@ -92,9 +93,13 @@ function activity_type_get_expectedresult() {
       '48' => 'Change Registration',
       '49' => 'Downloaded Invoice',
       '50' => 'Emailed Invoice',
-    ),
+      '51' => 'Contact Merged',
+      '52' => 'Contact Deleted by Merge',
+      '53' => 'Failed Payment',
+      '54' => 'Close Accounting Period',
+    ],
     'deprecated' => 'The ActivityType api is deprecated. Please use the OptionValue api instead.',
-  );
+  ];
 
   return $expectedResult;
 }

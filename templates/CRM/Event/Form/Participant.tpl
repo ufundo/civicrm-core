@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -138,13 +138,13 @@
    .focus(
      function() {
        feeAmount = cj(this).val();
-       feeAmount = parseInt(feeAmount);
+       feeAmount = Number(feeAmount.replace(/[^0-9\.]+/g,""));
      }
    )
    .change(
     function() {
       userModifiedAmount = cj(this).val();
-      userModifiedAmount = parseInt(userModifiedAmount);
+      userModifiedAmount = Number(userModifiedAmount.replace(/[^0-9\.]+/g,""));
       if (userModifiedAmount < feeAmount) {
         cj('#status_id').val(partiallyPaidStatusId).change();
       }
@@ -153,6 +153,12 @@
 
   cj('form[name=Participant]').on("click", '.validate',
     function(e) {
+      if (CRM.$('#total_amount').length == 0) {
+        var $balance = CRM.$('#payment-info-balance');
+        if ($balance.length > 0 && parseFloat($balance.attr('data-balance')) == 0) {
+          return true;
+        }
+      }
       var userSubmittedStatus = cj('#status_id').val();
       var statusLabel = cj('#status_id option:selected').text();
       if (userModifiedAmount < feeAmount && userSubmittedStatus != partiallyPaidStatusId) {
@@ -243,12 +249,6 @@
               </tr>
             {/if}
           {/if}
-          {if $participantMode}
-            <tr class="crm-participant-form-block-payment_processor_id">
-              <td class="label nowrap">{$form.payment_processor_id.label}</td>
-              <td>{$form.payment_processor_id.html}</td>
-            </tr>
-          {/if}
           <tr class="crm-participant-form-block-event_id">
             <td class="label">{$form.event_id.label}</td>
             <td class="view-value">
@@ -268,13 +268,7 @@
           </tr>
           <tr class="crm-participant-form-block-register_date">
             <td class="label">{$form.register_date.label}</td>
-            <td>
-              {if $hideCalendar neq true}
-                    {include file="CRM/common/jcalendar.tpl" elementName=register_date}
-                  {else}
-                    {$form.register_date.value|crmDate}
-                  {/if}
-            </td>
+            <td>{$form.register_date.html}</td>
           </tr>
           <tr class="crm-participant-form-block-status_id">
             <td class="label">{$form.status_id.label}</td>
@@ -286,6 +280,12 @@
             <td class="label">{$form.source.label}</td><td>{$form.source.html|crmAddClass:huge}<br />
             <span class="description">{ts}Source for this registration (if applicable).{/ts}</span></td>
           </tr>
+          {if $participantMode}
+            <tr class="crm-participant-form-block-payment_processor_id">
+              <td class="label nowrap">{$form.payment_processor_id.label}</td>
+              <td>{$form.payment_processor_id.html}</td>
+            </tr>
+          {/if}
         </table>
        {if $participantId and $hasPayment}
         <table class='form-layout'>
@@ -324,7 +324,7 @@
   {* JS block for ADD or UPDATE actions only *}
   {if $action eq 1 or $action eq 2}
     {if $participantId and $hasPayment}
-      {include file="CRM/Contribute/Page/PaymentInfo.tpl" show='event-payment'}
+      {include file="CRM/Contribute/Page/PaymentInfo.tpl" show='payments'}
     {/if}
 
     {*include custom data js file*}
@@ -351,8 +351,8 @@
           $('#campaign_id', $form).select2('val', info.campaign_id);
 
           // Event and event-type custom data
-          CRM.buildCustomData('Participant', eventId, {/literal}{$eventNameCustomDataTypeID}{literal});
-          CRM.buildCustomData('Participant', info.event_type_id, {/literal}{$eventTypeCustomDataTypeID}{literal});
+          CRM.buildCustomData('Participant', eventId, {/literal}{$eventNameCustomDataTypeID}{literal}, null, null, null, true);
+          CRM.buildCustomData('Participant', info.event_type_id, {/literal}{$eventTypeCustomDataTypeID}{literal}, null, null, null, true);
 
           buildFeeBlock();
         });
@@ -398,7 +398,7 @@
             return;
           }
 
-          var participantId  = "{/literal}{$participantId}{literal}";
+          var participantId  = {/literal}{$participantId|@json_encode}{literal};
 
           if (participantId) {
             dataUrl += '&participantId=' + participantId;

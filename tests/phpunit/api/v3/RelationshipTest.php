@@ -1,9 +1,9 @@
 <?php
 /**
  * +--------------------------------------------------------------------+
- * | CiviCRM version 4.7                                                |
+ * | CiviCRM version 5                                                  |
  * +--------------------------------------------------------------------+
- * | Copyright CiviCRM LLC (c) 2004-2016                                |
+ * | Copyright CiviCRM LLC (c) 2004-2019                                |
  * +--------------------------------------------------------------------+
  * | This file is a part of CiviCRM.                                    |
  * |                                                                    |
@@ -107,6 +107,46 @@ class api_v3_RelationshipTest extends CiviUnitTestCase {
    */
   public function testRelationshipCreateEmpty() {
     $this->callAPIFailure('relationship', 'create', array());
+  }
+
+  /**
+   * Test Current Employer is correctly set.
+   */
+  public function testCurrentEmployerRelationship() {
+    $employerRelationshipID = $this->callAPISuccessGetValue('RelationshipType', array(
+      'return' => "id",
+      'name_b_a' => "Employer Of",
+    ));
+    $employerRelationship = $this->callAPISuccess('Relationship', 'create', array(
+      'contact_id_a' => $this->_cId_a,
+      'contact_id_b' => $this->_cId_b,
+      'relationship_type_id' => $employerRelationshipID,
+    ));
+    $params = array($this->_cId_a => $this->_cId_b);
+    CRM_Contact_BAO_Contact_Utils::setCurrentEmployer($params);
+
+    //Check if current employer is correctly set.
+    $employer = $this->callAPISuccessGetValue('Contact', array(
+      'return' => "current_employer",
+      'id' => $this->_cId_a,
+    ));
+    $organisation = $this->callAPISuccessGetValue('Contact', array(
+      'return' => "sort_name",
+      'id' => $this->_cId_b,
+    ));
+    $this->assertEquals($employer, $organisation);
+
+    //Update relationship type
+    $update = $this->callAPISuccess('Relationship', 'create', array(
+      'id' => $employerRelationship['id'],
+      'relationship_type_id' => $this->_relTypeID,
+    ));
+    $employeeContact = $this->callAPISuccessGetSingle('Contact', array(
+      'return' => array("current_employer"),
+      'id' => $this->_cId_a,
+    ));
+    //current employer should be removed.
+    $this->assertEmpty($employeeContact['current_employer']);
   }
 
   /**
@@ -260,7 +300,6 @@ class api_v3_RelationshipTest extends CiviUnitTestCase {
 
   }
 
-
   /**
    * Check relationship creation.
    */
@@ -356,7 +395,7 @@ class api_v3_RelationshipTest extends CiviUnitTestCase {
   /**
    * Check relationship creation with custom data.
    */
-  public function testRelationshipCreateWithCustomData() {
+  public function testRelationshipCreateEditWithCustomData() {
     $this->createCustomGroup();
     $this->_ids = $this->createCustomField();
     //few custom Values for comparing
@@ -381,6 +420,21 @@ class api_v3_RelationshipTest extends CiviUnitTestCase {
       'id' => $result['id'],
     );
     $this->assertDBState('CRM_Contact_DAO_Relationship', $result['id'], $relationParams);
+
+    //Test Edit of custom field from the form.
+    $getParams = array('id' => $result['id']);
+    $updateParams = array_merge($getParams, array(
+      "custom_{$this->_ids[0]}" => 'Edited Text Value',
+      'relationship_type_id' => $this->_relTypeID . '_b_a',
+      'related_contact_id' => $this->_cId_a,
+    ));
+    $reln = new CRM_Contact_Form_Relationship();
+    $reln->_action = CRM_Core_Action::UPDATE;
+    $reln->_relationshipId = $result['id'];
+    $reln->submit($updateParams);
+
+    $check = $this->callAPISuccess('relationship', 'get', $getParams);
+    $this->assertEquals("Edited Text Value", $check['values'][$check['id']]["custom_{$this->_ids[0]}"]);
 
     $params['id'] = $result['id'];
     $this->callAPISuccess('relationship', 'delete', $params);
@@ -444,10 +498,8 @@ class api_v3_RelationshipTest extends CiviUnitTestCase {
       'is_active' => 1,
     );
 
-    $this->callAPISuccess('CustomField', 'create', $params);
-
-    $customField = NULL;
-    $ids[] = $customField['result']['customFieldId'];
+    $customField = $this->callAPISuccess('CustomField', 'create', $params);
+    $ids[] = $customField['id'];
 
     $optionValue[] = array(
       'label' => 'Red',
@@ -766,6 +818,61 @@ class api_v3_RelationshipTest extends CiviUnitTestCase {
   }
 
   /**
+   * Chain Relationship.get and to Contact.get.
+   */
+  public function testRelationshipGetWithChainedCall() {
+    // Create a relationship.
+    $createResult = $this->callAPISuccess('relationship', 'create', $this->_params);
+    $id = $createResult['id'];
+
+    // Try to retrieve it using chaining.
+    $params = array(
+      'relationship_type_id' => $this->_relTypeID,
+      'id' => $id,
+      'api.Contact.get' => array(
+        'id' => '$value.contact_id_b',
+      ),
+    );
+
+    $result = $this->callAPISuccess('relationship', 'get', $params);
+
+    $this->assertEquals(1, $result['count']);
+    $relationship = CRM_Utils_Array::first($result['values']);
+    $this->assertEquals(1, $relationship['api.Contact.get']['count']);
+    $contact = CRM_Utils_Array::first($relationship['api.Contact.get']['values']);
+    $this->assertEquals($this->_cId_b, $contact['id']);
+  }
+
+  /**
+   * Chain Contact.get to Relationship.get and again to Contact.get.
+   */
+  public function testRelationshipGetInChainedCall() {
+    // Create a relationship.
+    $this->callAPISuccess('relationship', 'create', $this->_params);
+
+    // Try to retrieve it using chaining.
+    $params = array(
+      'id' => $this->_cId_a,
+      'api.Relationship.get' => array(
+        'relationship_type_id' => $this->_relTypeID,
+        'contact_id_a' => '$value.id',
+        'api.Contact.get' => array(
+          'id' => '$value.contact_id_b',
+        ),
+      ),
+    );
+
+    $result = $this->callAPISuccess('contact', 'get', $params);
+    $this->assertEquals(1, $result['count']);
+    $contact = CRM_Utils_Array::first($result['values']);
+    $this->assertEquals(1, $contact['api.Relationship.get']['count']);
+    $relationship = CRM_Utils_Array::first($contact['api.Relationship.get']['values']);
+    $this->assertEquals(1, $relationship['api.Contact.get']['count']);
+    $contact = CRM_Utils_Array::first($relationship['api.Contact.get']['values']);
+    $this->assertEquals($this->_cId_b, $contact['id']);
+  }
+
+  /**
    * Check with valid params array.
    * (The get function will behave differently without 'contact_id' passed
    */
@@ -1015,9 +1122,8 @@ class api_v3_RelationshipTest extends CiviUnitTestCase {
     $this->_ids['relationship'] = $this->callAPISuccess($this->_entity, 'create', array('format.only_id' => TRUE) +
       $this->_params);
     $this->callAPISuccess($this->_entity, 'getcount', array(
-        'contact_id_a' => $this->_cId_a,
-      ),
-      1);
+      'contact_id_a' => $this->_cId_a,
+    ), 1);
     $result = $this->callAPISuccess($this->_entity, 'get', array(
       'contact_id_a' => $this->_cId_a,
       'relationship_type_id' => $this->_relTypeID,
@@ -1040,8 +1146,10 @@ class api_v3_RelationshipTest extends CiviUnitTestCase {
   public function testGetRelationshipByTypeArrayDAO() {
     $this->callAPISuccess($this->_entity, 'create', $this->_params);
     $org3 = $this->organizationCreate();
-    $relType2 = 5; // lets just assume built in ones aren't being messed with!
-    $relType3 = 6; // lets just assume built in ones aren't being messed with!
+    // lets just assume built in ones aren't being messed with!
+    $relType2 = 5;
+    // lets just assume built in ones aren't being messed with!
+    $relType3 = 6;
 
     // Relationship 2.
     $this->callAPISuccess($this->_entity, 'create',
@@ -1124,8 +1232,10 @@ class api_v3_RelationshipTest extends CiviUnitTestCase {
     $this->callAPISuccess($this->_entity, 'create', $this->_params);
     $org3 = $this->organizationCreate();
 
-    $relType2 = 5; // lets just assume built in ones aren't being messed with!
-    $relType3 = 6; // lets just assume built in ones aren't being messed with!
+    // lets just assume built in ones aren't being messed with!
+    $relType2 = 5;
+    // lets just assume built in ones aren't being messed with!
+    $relType3 = 6;
     $relType1 = 1;
     $memberType = $this->membershipTypeCreate(array(
       'relationship_type_id' => CRM_Core_DAO::VALUE_SEPARATOR . $relType1 . CRM_Core_DAO::VALUE_SEPARATOR . $relType3 . CRM_Core_DAO::VALUE_SEPARATOR,

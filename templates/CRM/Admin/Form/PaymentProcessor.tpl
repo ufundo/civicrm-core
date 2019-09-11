@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -64,6 +64,10 @@
     </tr>
     <tr class="crm-paymentProcessor-form-block-is_default">
         <td></td><td>{$form.is_default.html}&nbsp;{$form.is_default.label}</td>
+    </tr>
+    <tr class="crm-paymentProcessor-form-block-accept_credit_cards">
+        <td class="label">{$form.accept_credit_cards.label}</td><td>{$form.accept_credit_cards.html}<br />
+        <span class="description">{ts}Select Credit Card Types that this payment processor can accept{/ts}</span></td>
     </tr>
   </table>
 <fieldset>

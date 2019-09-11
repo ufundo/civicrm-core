@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -144,10 +144,10 @@ class api_v3_UtilsTest extends CiviUnitTestCase {
       'version' => $this->_apiversion,
     );
     try {
-      $result = civicrm_api3_verify_mandatory($params, 'CRM_Core_BAO_Note', array('note', 'subject'));
+      civicrm_api3_verify_mandatory($params, 'CRM_Core_BAO_Note', array('note', 'subject'));
     }
     catch (Exception $expected) {
-      $this->assertEquals('Mandatory key(s) missing from params array: entity_id, note, subject', $expected->getMessage());
+      $this->assertEquals('Mandatory key(s) missing from params array: note, subject', $expected->getMessage());
       return;
     }
 
@@ -169,10 +169,10 @@ class api_v3_UtilsTest extends CiviUnitTestCase {
     );
 
     try {
-      $result = civicrm_api3_verify_one_mandatory($params, 'CRM_Core_BAO_Note', array('note', 'subject'));
+      civicrm_api3_verify_one_mandatory($params, 'CRM_Core_BAO_Note', array('note', 'subject'));
     }
     catch (Exception $expected) {
-      $this->assertEquals('Mandatory key(s) missing from params array: entity_id, one of (note, subject)', $expected->getMessage());
+      $this->assertEquals('Mandatory key(s) missing from params array: one of (note, subject)', $expected->getMessage());
       return;
     }
 
@@ -324,14 +324,18 @@ class api_v3_UtilsTest extends CiviUnitTestCase {
 
     $cases[] = array(
       $records,
-      array('version' => 3), // params
-      array('a', 'b', 'c', 'd', 'e'), // expected results
+      // params
+      array('version' => 3),
+      // expected results
+      array('a', 'b', 'c', 'd', 'e'),
     );
 
     $cases[] = array(
       $records,
-      array('version' => 3, 'fruit' => 'apple'), // params
-      array('a', 'c', 'd', 'e'), // expected results
+      // params
+      array('version' => 3, 'fruit' => 'apple'),
+      // expected results
+      array('a', 'c', 'd', 'e'),
     );
 
     $cases[] = array(
@@ -430,6 +434,17 @@ class api_v3_UtilsTest extends CiviUnitTestCase {
       'b' => array('id' => 'b', 'fruit' => 'grape'),
       'c' => array('id' => 'c', 'fruit' => 'apple'),
     ), $r3['values']);
+  }
+
+  /**
+   * CRM-20892 Add Tests of new timestamp checking function
+   */
+  public function testTimeStampChecking() {
+    CRM_Core_DAO::executeQuery("INSERT INTO civicrm_mailing (id, modified_date) VALUES (25, '2016-06-30 12:52:52')");
+    $this->assertTrue(_civicrm_api3_compare_timestamps('2017-02-15 16:00:00', 25, 'Mailing'));
+    $this->callAPISuccess('Mailing', 'create', array('id' => 25, 'subject' => 'Test Subject'));
+    $this->assertFalse(_civicrm_api3_compare_timestamps('2017-02-15 16:00:00', 25, 'Mailing'));
+    $this->callAPISuccess('Mailing', 'delete', array('id' => 25));
   }
 
 }

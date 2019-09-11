@@ -8,12 +8,12 @@
  *   API result array
  */
 function contact_create_example() {
-  $params = array(
+  $params = [
     'first_name' => 'abc3',
     'last_name' => 'xyz3',
     'contact_type' => 'Individual',
     'email' => 'man3@yahoo.com',
-    'api.contribution.create' => array(
+    'api.contribution.create' => [
       'receive_date' => '2010-01-01',
       'total_amount' => '100',
       'financial_type_id' => 1,
@@ -25,17 +25,17 @@ function contact_create_example() {
       'invoice_id' => 67890,
       'source' => 'SSF',
       'contribution_status_id' => 1,
-    ),
-    'api.website.create' => array(
-      '0' => array(
+    ],
+    'api.website.create' => [
+      '0' => [
         'url' => 'http://civicrm.org',
-      ),
-      '1' => array(
+      ],
+      '1' => [
         'url' => 'http://chained.org',
         'website_type_id' => 2,
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   try{
     $result = civicrm_api3('Contact', 'create', $params);
@@ -45,11 +45,12 @@ function contact_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -63,14 +64,14 @@ function contact_create_example() {
  */
 function contact_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
-    'id' => 1,
-    'values' => array(
-      '1' => array(
-        'id' => '1',
+    'id' => 3,
+    'values' => [
+      '3' => [
+        'id' => '3',
         'contact_type' => 'Individual',
         'contact_sub_type' => '',
         'do_not_email' => 0,
@@ -119,15 +120,15 @@ function contact_create_expectedresult() {
         'user_unique_id' => '',
         'created_date' => '2013-07-28 08:49:19',
         'modified_date' => '2012-11-14 16:02:35',
-        'api.contribution.create' => array(
+        'api.contribution.create' => [
           'is_error' => 0,
           'version' => 3,
           'count' => 1,
           'id' => 1,
-          'values' => array(
-            '0' => array(
+          'values' => [
+            '0' => [
               'id' => '1',
-              'contact_id' => '1',
+              'contact_id' => '3',
               'financial_type_id' => '1',
               'contribution_page_id' => '',
               'payment_instrument_id' => '1',
@@ -154,43 +155,44 @@ function contact_create_expectedresult() {
               'campaign_id' => '',
               'creditnote_id' => '',
               'tax_amount' => '',
+              'revenue_recognition_date' => '',
               'contribution_type_id' => '1',
-            ),
-          ),
-        ),
-        'api.website.create' => array(
-          '0' => array(
+            ],
+          ],
+        ],
+        'api.website.create' => [
+          '0' => [
             'is_error' => 0,
             'version' => 3,
             'count' => 1,
             'id' => 1,
-            'values' => array(
-              '0' => array(
+            'values' => [
+              '0' => [
                 'id' => '1',
-                'contact_id' => '1',
+                'contact_id' => '3',
                 'url' => 'http://civicrm.org',
                 'website_type_id' => '',
-              ),
-            ),
-          ),
-          '1' => array(
+              ],
+            ],
+          ],
+          '1' => [
             'is_error' => 0,
             'version' => 3,
             'count' => 1,
             'id' => 2,
-            'values' => array(
-              '0' => array(
+            'values' => [
+              '0' => [
                 'id' => '2',
-                'contact_id' => '1',
+                'contact_id' => '3',
                 'url' => 'http://chained.org',
                 'website_type_id' => '2',
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
+              ],
+            ],
+          ],
+        ],
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

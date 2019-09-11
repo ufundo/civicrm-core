@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -25,7 +25,6 @@
  +--------------------------------------------------------------------+
  */
 
-
 /**
  * This api exposes CiviCRM LocBlock records.
  *
@@ -36,7 +35,7 @@
  * Create or update a LocBlock.
  *
  * @param array $params
- *   name/value pairs to insert in new 'LocBlock'
+ *   Name/value pairs to insert in new 'LocBlock'.
  *
  * @return array
  *   API result array.
@@ -44,22 +43,32 @@
  * @throws \API_Exception
  */
 function civicrm_api3_loc_block_create($params) {
-  $entities = array();
-  civicrm_api3_verify_one_mandatory($params, NULL, array('address', 'address_id', 'phone', 'phone_id', 'im', 'im_id', 'email', 'email_id'));
-  // Call the appropriate api to create entities if any are passed in the params
+  $entities = [];
+  $any_mandatory = [
+    'address',
+    'address_id',
+    'phone',
+    'phone_id',
+    'im',
+    'im_id',
+    'email',
+    'email_id',
+  ];
+  civicrm_api3_verify_one_mandatory($params, NULL, $any_mandatory);
+  // Call the appropriate api to create entities if any are passed in the params.
   // This is basically chaining but in reverse - we create the sub-entities first
-  // This exists because chainging does not work in reverse, or with keys like 'email_2'
-  $items = array('address', 'email', 'phone', 'im');
+  // because chaining does not work in reverse, or with keys like 'email_2'.
+  $items = ['address', 'email', 'phone', 'im'];
   foreach ($items as $item) {
-    foreach (array('', '_2') as $suf) {
+    foreach (['', '_2'] as $suf) {
       $key = $item . $suf;
       if (!empty($params[$key]) && is_array($params[$key])) {
         $info = $params[$key];
-        // If all we get is an id don't bother calling the api
+        // If all we get is an id don't bother calling the api.
         if (count($info) == 1 && !empty($info['id'])) {
           $params[$key . '_id'] = $info['id'];
         }
-        // Bother calling the api
+        // Bother calling the api.
         else {
           $info['contact_id'] = CRM_Utils_Array::value('contact_id', $info, 'null');
           $result = civicrm_api3($item, 'create', $info);
@@ -73,11 +82,11 @@ function civicrm_api3_loc_block_create($params) {
   $dao->copyValues($params);
   $dao->save();
   if (!empty($dao->id)) {
-    $values = array($dao->id => $entities);
+    $values = [$dao->id => $entities];
     _civicrm_api3_object_to_array($dao, $values[$dao->id]);
     return civicrm_api3_create_success($values, $params, 'LocBlock', 'create', $dao);
   }
-  throw New API_Exception('Unable to create LocBlock. Please check your params.');
+  throw new API_Exception('Unable to create LocBlock. Please check your params.');
 }
 
 /**
@@ -85,7 +94,7 @@ function civicrm_api3_loc_block_create($params) {
  *
  * @param array $params
  *   Array of one or more valid property_name=>value pairs. If $params is set.
- *   as null, all loc_blocks will be returned (default limit is 25)
+ *   as null, all loc_blocks will be returned (default limit is 25).
  *
  * @return array
  *   API result array.
@@ -93,18 +102,18 @@ function civicrm_api3_loc_block_create($params) {
 function civicrm_api3_loc_block_get($params) {
   $options = _civicrm_api3_get_options_from_params($params);
   // If a return param has been set then fetch the appropriate fk objects
-  // This is a helper because api chaining does not work with a key like 'email_2'
+  // This is a helper because api chaining does not work with a key like 'email_2'.
   if (!empty($options['return'])) {
     unset($params['return']);
-    $values = array();
-    $items = array('address', 'email', 'phone', 'im');
+    $values = [];
+    $items = ['address', 'email', 'phone', 'im'];
     $returnAll = !empty($options['return']['all']);
     foreach (_civicrm_api3_basic_get('CRM_Core_DAO_LocBlock', $params, FALSE) as $val) {
       foreach ($items as $item) {
-        foreach (array('', '_2') as $suf) {
+        foreach (['', '_2'] as $suf) {
           $key = $item . $suf;
           if (!empty($val[$key . '_id']) && ($returnAll || !empty($options['return'][$key]))) {
-            $val[$key] = civicrm_api($item, 'getsingle', array('version' => 3, 'id' => $val[$key . '_id']));
+            $val[$key] = civicrm_api($item, 'getsingle', ['version' => 3, 'id' => $val[$key . '_id']]);
           }
         }
       }

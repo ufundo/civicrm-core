@@ -2,9 +2,9 @@
 
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -41,7 +41,7 @@ class CRM_Contribute_Tokens extends \Civi\Token\AbstractTokenSubscriber {
    * @return array
    */
   protected function getPassthruTokens() {
-    return array(
+    return [
       'contribution_page_id',
       'receive_date',
       'total_amount',
@@ -54,7 +54,7 @@ class CRM_Contribute_Tokens extends \Civi\Token\AbstractTokenSubscriber {
       'receipt_date',
       'thankyou_date',
       'tax_amount',
-    );
+    ];
   }
 
   /**
@@ -63,13 +63,13 @@ class CRM_Contribute_Tokens extends \Civi\Token\AbstractTokenSubscriber {
    * @return array
    */
   protected function getAliasTokens() {
-    return array(
+    return [
       'id' => 'contribution_id',
       'payment_instrument' => 'payment_instrument_id',
       'source' => 'contribution_source',
       'status' => 'contribution_status_id',
       'type' => 'financial_type_id',
-    );
+    ];
   }
 
   /**
@@ -85,15 +85,27 @@ class CRM_Contribute_Tokens extends \Civi\Token\AbstractTokenSubscriber {
     $tokens['source'] = ts('Contribution Source');
     $tokens['status'] = ts('Contribution Status');
     $tokens['type'] = ts('Financial Type');
+    $tokens = array_merge($tokens, CRM_Utils_Token::getCustomFieldTokens('Contribution'));
     parent::__construct('contribution', $tokens);
   }
 
+  /**
+   * Check if the token processor is active.
+   *
+   * @param \Civi\Token\TokenProcessor $processor
+   *
+   * @return bool
+   */
   public function checkActive(\Civi\Token\TokenProcessor $processor) {
-    return
-      !empty($processor->context['actionMapping'])
+    return !empty($processor->context['actionMapping'])
       && $processor->context['actionMapping']->getEntity() === 'civicrm_contribution';
   }
 
+  /**
+   * Alter action schedule query.
+   *
+   * @param \Civi\ActionSchedule\Event\MailingQueryEvent $e
+   */
   public function alterActionScheduleQuery(\Civi\ActionSchedule\Event\MailingQueryEvent $e) {
     if ($e->mapping->getEntity() !== 'civicrm_contribution') {
       return;
@@ -109,30 +121,22 @@ class CRM_Contribute_Tokens extends \Civi\Token\AbstractTokenSubscriber {
   }
 
   /**
-   * Evaluate the content of a single token.
-   *
-   * @param \Civi\Token\TokenRow $row
-   *   The record for which we want token values.
-   * @param string $entity
-   * @param string $field
-   *   The name of the token field.
-   * @param mixed $prefetch
-   *   Any data that was returned by the prefetch().
-   *
-   * @return mixed
-   * @throws \CRM_Core_Exception
+   * @inheritDoc
    */
   public function evaluateToken(\Civi\Token\TokenRow $row, $entity, $field, $prefetch = NULL) {
     $actionSearchResult = $row->context['actionSearchResult'];
     $fieldValue = isset($actionSearchResult->{"contrib_$field"}) ? $actionSearchResult->{"contrib_$field"} : NULL;
 
     $aliasTokens = $this->getAliasTokens();
-    if (in_array($field, array('total_amount', 'fee_amount', 'net_amount'))) {
+    if (in_array($field, ['total_amount', 'fee_amount', 'net_amount'])) {
       return $row->format('text/plain')->tokens($entity, $field,
         \CRM_Utils_Money::format($fieldValue, $actionSearchResult->contrib_currency));
     }
     elseif (isset($aliasTokens[$field])) {
       $row->dbToken($entity, $field, 'CRM_Contribute_BAO_Contribution', $aliasTokens[$field], $fieldValue);
+    }
+    elseif ($cfID = \CRM_Core_BAO_CustomField::getKeyID($field)) {
+      $row->customToken($entity, $cfID, $actionSearchResult->entity_id);
     }
     else {
       $row->dbToken($entity, $field, 'CRM_Contribute_BAO_Contribution', $field, $fieldValue);

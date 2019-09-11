@@ -6,16 +6,16 @@
  *   API result array
  */
 function membership_create_example() {
-  $params = array(
-    'contact_id' => 76,
-    'membership_type_id' => 45,
+  $params = [
+    'contact_id' => 79,
+    'membership_type_id' => 47,
     'join_date' => '2006-01-21',
     'start_date' => '2006-01-21',
     'end_date' => '2006-12-21',
     'source' => 'Payment',
     'is_override' => 1,
-    'status_id' => 29,
-  );
+    'status_id' => 30,
+  ];
 
   try{
     $result = civicrm_api3('Membership', 'create', $params);
@@ -25,11 +25,12 @@ function membership_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -43,21 +44,21 @@ function membership_create_example() {
  */
 function membership_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
-        'contact_id' => '76',
-        'membership_type_id' => '45',
+        'contact_id' => '79',
+        'membership_type_id' => '47',
         'join_date' => '20060121000000',
         'start_date' => '2013-07-29 00:00:00',
         'end_date' => '2013-08-04 00:00:00',
         'source' => 'Payment',
-        'status_id' => '29',
+        'status_id' => '30',
         'is_override' => '1',
         'owner_membership_id' => '',
         'max_related' => '',
@@ -65,9 +66,9 @@ function membership_create_expectedresult() {
         'is_pay_later' => '',
         'contribution_recur_id' => '',
         'campaign_id' => '',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

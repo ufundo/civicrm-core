@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -31,12 +31,13 @@
  * abstract class.
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2016
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Case_Info extends CRM_Core_Component_Info {
 
 
   /**
+   * @var string
    * @inheritDoc
    */
   protected $keyword = 'case';
@@ -46,32 +47,23 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
    * @return array
    */
   public function getInfo() {
-    return array(
+    return [
       'name' => 'CiviCase',
       'translatedName' => ts('CiviCase'),
       'title' => ts('CiviCase Engine'),
       'search' => 1,
       'showActivitiesInCore' => 0,
-    );
+    ];
   }
 
   /**
    * @inheritDoc
    */
   public function getAngularModules() {
-    $result = array();
-    $result['crmCaseType'] = array(
-      'ext' => 'civicrm',
-      'js' => array('ang/crmCaseType.js'),
-      'css' => array('ang/crmCaseType.css'),
-      'partials' => array('ang/crmCaseType'),
-    );
+    global $civicrm_root;
 
-    CRM_Core_Resources::singleton()->addSetting(array(
-      'crmCaseType' => array(
-        'REL_TYPE_CNAME' => CRM_Case_XMLProcessor::REL_TYPE_CNAME,
-      ),
-    ));
+    $result = [];
+    $result['crmCaseType'] = include "$civicrm_root/ang/crmCaseType.ang.php";
     return $result;
   }
 
@@ -98,28 +90,28 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
    * @return array
    */
   public function getPermissions($getAllUnconditionally = FALSE, $descriptions = FALSE) {
-    $permissions = array(
-      'delete in CiviCase' => array(
+    $permissions = [
+      'delete in CiviCase' => [
         ts('delete in CiviCase'),
         ts('Delete cases'),
-      ),
-      'administer CiviCase' => array(
+      ],
+      'administer CiviCase' => [
         ts('administer CiviCase'),
         ts('Define case types, access deleted cases'),
-      ),
-      'access my cases and activities' => array(
+      ],
+      'access my cases and activities' => [
         ts('access my cases and activities'),
         ts('View and edit only those cases managed by this user'),
-      ),
-      'access all cases and activities' => array(
+      ],
+      'access all cases and activities' => [
         ts('access all cases and activities'),
         ts('View and edit all cases (for visible contacts)'),
-      ),
-      'add cases' => array(
+      ],
+      'add cases' => [
         ts('add cases'),
         ts('Open a new case'),
-      ),
-    );
+      ],
+    ];
 
     if (!$descriptions) {
       foreach ($permissions as $name => $attr) {
@@ -134,7 +126,7 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
    * @inheritDoc
    */
   public function getReferenceCounts($dao) {
-    $result = array();
+    $result = [];
     if ($dao instanceof CRM_Core_DAO_OptionValue) {
       /** @var $dao CRM_Core_DAO_OptionValue */
       $activity_type_gid = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_OptionGroup', 'activity_type', 'id', 'name');
@@ -142,11 +134,11 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
         $count = CRM_Case_XMLRepository::singleton()
           ->getActivityReferenceCount($dao->name);
         if ($count > 0) {
-          $result[] = array(
+          $result[] = [
             'name' => 'casetypexml:activities',
             'type' => 'casetypexml',
             'count' => $count,
-          );
+          ];
         }
       }
     }
@@ -155,11 +147,11 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
       $count = CRM_Case_XMLRepository::singleton()
         ->getRelationshipReferenceCount($dao->{CRM_Case_XMLProcessor::REL_TYPE_CNAME});
       if ($count > 0) {
-        $result[] = array(
+        $result[] = [
           'name' => 'casetypexml:relationships',
           'type' => 'casetypexml',
           'count' => $count,
-        );
+        ];
       }
     }
     return $result;
@@ -170,7 +162,7 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
    * @return array
    */
   public function getUserDashboardElement() {
-    return array();
+    return [];
   }
 
   /**
@@ -178,11 +170,19 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
    * @return array
    */
   public function registerTab() {
-    return array(
+    return [
       'title' => ts('Cases'),
       'url' => 'case',
       'weight' => 50,
-    );
+    ];
+  }
+
+  /**
+   * @inheritDoc
+   * @return string
+   */
+  public function getIcon() {
+    return 'crm-i fa-folder-open-o';
   }
 
   /**
@@ -190,10 +190,10 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
    * @return array
    */
   public function registerAdvancedSearchPane() {
-    return array(
+    return [
       'title' => ts('Cases'),
       'weight' => 50,
-    );
+    ];
   }
 
   /**
@@ -212,19 +212,16 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
     if (CRM_Core_Permission::check('access all cases and activities') ||
       CRM_Core_Permission::check('add cases')
     ) {
-      $atype = CRM_Core_OptionGroup::getValue('activity_type',
-        'Open Case',
-        'name'
-      );
-      if ($atype) {
-        $shortCuts = array_merge($shortCuts, array(
-          array(
+      $activityType = CRM_Core_PseudoConstant::getKey('CRM_Activity_BAO_Activity', 'activity_type_id', 'Open Case');
+      if ($activityType) {
+        $shortCuts = array_merge($shortCuts, [
+          [
             'path' => 'civicrm/case/add',
-            'query' => "reset=1&action=add&atype=$atype&context=standalone",
+            'query' => "reset=1&action=add&atype={$activityType}&context=standalone",
             'ref' => 'new-case',
             'title' => ts('Case'),
-          ),
-        ));
+          ],
+        ]);
       }
     }
   }
@@ -255,6 +252,42 @@ class CRM_Case_Info extends CRM_Core_Component_Info {
         CRM_Core_Error::fatal($msg);
       }
     }
+  }
+
+  /**
+   * @return array
+   *   Array(string $value => string $label).
+   */
+  public static function getRedactOptions() {
+    return [
+      'default' => ts('Default'),
+      '0' => ts('Do not redact emails'),
+      '1' => ts('Redact emails'),
+    ];
+  }
+
+  /**
+   * @return array
+   *   Array(string $value => string $label).
+   */
+  public static function getMultiClientOptions() {
+    return [
+      'default' => ts('Default'),
+      '0' => ts('Single client per case'),
+      '1' => ts('Multiple client per case'),
+    ];
+  }
+
+  /**
+   * @return array
+   *   Array(string $value => string $label).
+   */
+  public static function getSortOptions() {
+    return [
+      'default' => ts('Default'),
+      '0' => ts('Definition order'),
+      '1' => ts('Alphabetical order'),
+    ];
   }
 
 }

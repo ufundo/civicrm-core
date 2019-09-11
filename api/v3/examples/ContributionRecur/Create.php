@@ -6,7 +6,7 @@
  *   API result array
  */
 function contribution_recur_create_example() {
-  $params = array(
+  $params = [
     'contact_id' => 3,
     'installments' => '12',
     'frequency_interval' => '1',
@@ -15,7 +15,7 @@ function contribution_recur_create_example() {
     'start_date' => '2012-01-01 00:00:00',
     'currency' => 'USD',
     'frequency_unit' => 'day',
-  );
+  ];
 
   try{
     $result = civicrm_api3('ContributionRecur', 'create', $params);
@@ -25,11 +25,12 @@ function contribution_recur_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -43,13 +44,13 @@ function contribution_recur_create_example() {
  */
 function contribution_recur_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '1' => array(
+    'values' => [
+      '1' => [
         'id' => '1',
         'contact_id' => '3',
         'amount' => '500',
@@ -59,10 +60,11 @@ function contribution_recur_create_expectedresult() {
         'installments' => '12',
         'start_date' => '2013-07-29 00:00:00',
         'create_date' => '20120130621222105',
-        'modified_date' => '',
+        'modified_date' => '2012-11-14 16:02:35',
         'cancel_date' => '',
         'end_date' => '',
         'processor_id' => '',
+        'payment_token_id' => '',
         'trxn_id' => '',
         'invoice_id' => '',
         'contribution_status_id' => '1',
@@ -77,9 +79,9 @@ function contribution_recur_create_expectedresult() {
         'payment_instrument_id' => '',
         'campaign_id' => '',
         'is_email_receipt' => '',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

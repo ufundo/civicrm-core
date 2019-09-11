@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -52,7 +52,8 @@ function civicrm_api3_custom_group_create($params) {
     unset($params['extends']);
     $params['extends'] = $extends;
   }
-  if (!isset($params['extends'][0]) || !trim($params['extends'][0])) {
+  if (!isset($params['id']) && (!isset($params['extends'][0]) || !trim($params['extends'][0]))) {
+
     return civicrm_api3_create_error("First item in params['extends'] must be a class name (e.g. 'Contact').");
   }
   if (isset($params['extends_entity_column_value']) && !is_array($params['extends_entity_column_value'])) {
@@ -60,7 +61,7 @@ function civicrm_api3_custom_group_create($params) {
     $params['extends_entity_column_value'] = CRM_Utils_Array::explodePadded($params['extends_entity_column_value']);
   }
 
-  return _civicrm_api3_basic_create(_civicrm_api3_get_BAO(__FUNCTION__), $params);
+  return _civicrm_api3_basic_create(_civicrm_api3_get_BAO(__FUNCTION__), $params, 'CustomGroup');
 }
 
 /**
@@ -114,7 +115,7 @@ function civicrm_api3_custom_group_get($params) {
  */
 function civicrm_api3_custom_group_setvalue($params) {
   require_once 'api/v3/Generic/Setvalue.php';
-  $result = civicrm_api3_generic_setValue(array("entity" => 'CustomGroup', 'params' => $params));
+  $result = civicrm_api3_generic_setValue(["entity" => 'CustomGroup', 'params' => $params]);
   if (empty($result['is_error'])) {
     CRM_Utils_System::flushCache();
   }

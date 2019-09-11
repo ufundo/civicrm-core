@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -37,6 +37,12 @@
             <td>{$form.includeEmailInName.html}<br />
                 <span class="description">{ts}If enabled, email addresses are automatically included when users search by Name. Disabling this feature will speed up search significantly for larger databases, but users will need to use the Email search fields (from Advanced Search, Search Builder, or Profiles) to find contacts by email address.{/ts}</span></td>
         </tr>
+        <tr class="crm-search-setting-form-block-searchPrimaryDetailsOnly">
+            <td class="label">{$form.searchPrimaryDetailsOnly.label}</td>
+            <td>{$form.searchPrimaryDetailsOnly.html}<br />
+                <span class="description">{ts}If enabled, only primary details (eg contact's primary email, phone, etc) will be included in Basic and Advanced Search results. Disabling this feature will allow users to match contacts using any email, phone etc detail.{/ts}</span>
+            </td>
+        </tr>
         <tr  class="crm-search-setting-form-block-includeNickNameInName">
             <td class="label">{$form.includeNickNameInName.label}</td>
             <td>{$form.includeNickNameInName.html}<br />
@@ -61,6 +67,13 @@
             <td class="label">{$form.smartGroupCacheTimeout.label}</td>
             <td>{$form.smartGroupCacheTimeout.html}<br />
                 <span class="description">{ts}The number of minutes to cache smart group contacts. We strongly recommend that this value be greater than zero, since a value of zero means no caching at all. If your contact data changes frequently, you should set this value to at least 5 minutes.{/ts}</span></td>
+        </tr>
+        <tr class="crm-search-setting-form-block-quicksearch_options">
+            <td class="label">{$form.quicksearch_options.label}</td>
+            <td>
+                {$form.quicksearch_options.html}
+                <p class="description">{$setting_descriptions.quicksearch_options}</p>
+            </td>
         </tr>
         <tr class="crm-search-setting-form-block-autocompleteContactSearch">
             <td class="label">{$form.contact_autocomplete_options.label}</td>

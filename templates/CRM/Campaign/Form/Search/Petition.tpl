@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -198,8 +198,7 @@ function loadPetitionList( )
              "oLanguage":{"sEmptyTable"  : noRecordFoundMsg,
                  "sZeroRecords" : noRecordFoundMsg },
              "fnDrawCallback": function() {
-               // FIXME: trigger crmLoad and crmEditable would happen automatically
-               CRM.$('.crm-editable').crmEditable();
+               CRM.$(this).trigger('crmLoad');
              },
              "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
 

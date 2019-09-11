@@ -47,7 +47,7 @@
         <tr>
           <td style = "padding-left:17px;"><font size = "1" align = "center">{$supplemental_address_2}  {$stateProvinceAbbreviation}</font></td>
           <td colspan="1"></td>
-          <td style = "padding-left:70px;"><font size = "1" align = "right">{$invoice_id}</font></td>
+          <td style = "padding-left:70px;"><font size = "1" align = "right">{$invoice_number}</font></td>
           <td>
             <font size = "1" align = "right">
               {if $domain_city}{$domain_city}{/if}
@@ -101,7 +101,7 @@
                       {$value.label}
                     {else}
                       {$value.field_title} - {$value.label}
-                    {/if} 
+                    {/if}
                     {if $value.description}
                       <div>{$value.description|truncate:30:"..."}</div>
                     {/if}
@@ -143,6 +143,7 @@
                 <td colspan = "3"></td>
                 <td style = "padding-left:20px;text-align:right;"><b><font size = "1">{ts 1=$defaultCurrency}TOTAL %1{/ts}</font></b></td>
                 <td style = "padding-left:34px;text-align:right;"><font size = "1">{$amount|crmMoney:$currency}</font></td>
+                <td style = "padding-left:34px;"><font size = "1" align = "right"></font></td>
               </tr>
               {if $is_pay_later == 0}
                 <tr>
@@ -155,7 +156,7 @@
                     {/if}
                     </font>
                   </td>
-                  <td style = "padding-left:34px;text-align:right;"><font size = "1">{$amount|crmMoney:$currency}</font></td>
+                  <td style = "padding-left:34px;text-align:right;"><font size = "1">{$amountPaid|crmMoney:$currency}</font></td>
                 </tr>
                 <tr>
                   <td colspan = "3"></td>
@@ -165,7 +166,7 @@
                   <td colspan = "3"></td>
                   <td style = "padding-left:20px;text-align:right;"><b><font size = "1">{ts}AMOUNT DUE:{/ts} </font></b></td>
                   <td style = "padding-left:34px;text-align:right;"><b><font size = "1">{$amountDue|crmMoney:$currency}</font></b></td>
-                  <td style = "padding-left:34px;"><font size = "1" align = "right"></fonts></td>
+                  <td style = "padding-left:34px;"><font size = "1" align = "right"></font></td>
                 </tr>
               {/if}
               <br/><br/><br/>
@@ -210,7 +211,7 @@
                 <tr>
                   <td colspan = "2"></td>
                   <td><font size = "1" align = "right" style="font-weight:bold;">{ts}Invoice Number: {/ts}</font></td>
-                  <td><font size = "1" align = "right">{$invoice_id}</font></td>
+                  <td><font size = "1" align = "right">{$invoice_number}</font></td>
                 </tr>
                 <tr><td colspan = "5"style = "color:#F5F5F5;"><hr></hr></td></tr>
                 {if $is_pay_later == 1}
@@ -307,7 +308,7 @@
           <td></td>
           <td style = "padding-left:70px;"><font size = "1"align = "right">{$source}</font></td>
           <td>
-            <font size = "1" align = "right"> 
+            <font size = "1" align = "right">
               {if $domain_phone}{$domain_phone}{/if}
             </font>
           </td>
@@ -317,9 +318,9 @@
           <td></td>
           <td></td>
           <td>
-            <font size = "1" align = "right"> 
+            <font size = "1" align = "right">
               {if $domain_email}{$domain_email}{/if}
-            </font> 
+            </font>
           </td>
         </tr>
       </table>
@@ -348,7 +349,7 @@
                         {$value.label}
                       {else}
                         {$value.field_title} - {$value.label}
-                      {/if} 
+                      {/if}
                       {if $value.description}
                         <div>{$value.description|truncate:30:"..."}</div>
                       {/if}
@@ -405,7 +406,7 @@
                   <td colspan = "3"></td>
                   <td style = "padding-left:28px;text-align:right;"><b><font size = "1">{ts}REMAINING CREDIT{/ts}</font></b></td>
                   <td style = "padding-left:28px;text-align:right;"><b><font size = "1">{$amountDue|crmMoney:$currency}</font></b></td>
-                  <td style = "padding-left:28px;"><font size = "1" align = "right"></fonts></td>
+                  <td style = "padding-left:28px;"><font size = "1" align = "right"></font></td>
                 </tr>
               {/if}
               <br/><br/><br/>

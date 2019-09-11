@@ -6,14 +6,14 @@
  *   API result array
  */
 function payment_processor_type_create_example() {
-  $params = array(
+  $params = [
     'sequential' => 1,
     'name' => 'API_Test_PP',
     'title' => 'API Test Payment Processor',
     'class_name' => 'CRM_Core_Payment_APITest',
     'billing_mode' => 'form',
     'is_recur' => 0,
-  );
+  ];
 
   try{
     $result = civicrm_api3('PaymentProcessorType', 'create', $params);
@@ -23,11 +23,12 @@ function payment_processor_type_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -41,14 +42,14 @@ function payment_processor_type_create_example() {
  */
 function payment_processor_type_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
-    'id' => 15,
-    'values' => array(
-      '0' => array(
-        'id' => '15',
+    'id' => 13,
+    'values' => [
+      '0' => [
+        'id' => '13',
         'name' => 'API_Test_PP',
         'title' => 'API Test Payment Processor',
         'description' => '',
@@ -70,9 +71,10 @@ function payment_processor_type_create_expectedresult() {
         'billing_mode' => '1',
         'is_recur' => 0,
         'payment_type' => '',
-      ),
-    ),
-  );
+        'payment_instrument_id' => '1',
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

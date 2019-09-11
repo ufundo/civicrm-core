@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2016                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -36,32 +36,37 @@ class CRM_Financial_BAO_FinancialItemTest extends CiviUnitTestCase {
   }
 
   /**
+   * Clean up after each test.
+   */
+  public function tearDown() {
+    $this->quickCleanUpFinancialEntities();
+    parent::tearDown();
+  }
+
+  /**
    * Check method add()
    */
   public function testAdd() {
-    $firstName = 'Shane';
-    $lastName = 'Whatson';
-    $params = array(
-      'first_name' => $firstName,
-      'last_name' => $lastName,
+    $params = [
+      'first_name' => 'Shane',
+      'last_name' => 'Whatson',
       'contact_type' => 'Individual',
-    );
+    ];
 
-    $contact = CRM_Contact_BAO_Contact::add($params);
+    $contact = $this->callAPISuccess('Contact', 'create', $params);
 
     $price = 100;
-    $cParams = array(
-      'contact_id' => $contact->id,
+    $cParams = [
+      'contact_id' => $contact['id'],
       'total_amount' => $price,
       'financial_type_id' => 1,
       'is_active' => 1,
       'skipLineItem' => 1,
-    );
+    ];
 
-    $defaults = array();
-    $contribution = CRM_Contribute_BAO_Contribution::add($cParams, $defaults);
+    $contribution = $this->callAPISuccess('Contribution', 'create', $cParams);
     $lParams = array(
-      'entity_id' => $contribution->id,
+      'entity_id' => $contribution['id'],
       'entity_table' => 'civicrm_contribution',
       'price_field_id' => 1,
       'qty' => 1,
@@ -73,7 +78,9 @@ class CRM_Financial_BAO_FinancialItemTest extends CiviUnitTestCase {
     );
 
     $lineItem = CRM_Price_BAO_LineItem::create($lParams);
-    CRM_Financial_BAO_FinancialItem::add($lineItem, $contribution);
+    $contributionObj = $this->getContributionObject($contribution['id']);
+
+    CRM_Financial_BAO_FinancialItem::add($lineItem, $contributionObj);
     $result = $this->assertDBNotNull(
       'CRM_Financial_DAO_FinancialItem',
       $lineItem->id,
@@ -88,28 +95,25 @@ class CRM_Financial_BAO_FinancialItemTest extends CiviUnitTestCase {
    * Check method retrive()
    */
   public function testRetrieve() {
-    $firstName = 'Shane';
-    $lastName = 'Whatson';
-    $params = array(
-      'first_name' => $firstName,
-      'last_name' => $lastName,
+    $params = [
+      'first_name' => 'Shane',
+      'last_name' => 'Whatson',
       'contact_type' => 'Individual',
-    );
+    ];
 
-    $contact = CRM_Contact_BAO_Contact::add($params);
+    $contact = $this->callAPISuccess('Contact', 'create', $params);
     $price = 100.00;
-    $cParams = array(
-      'contact_id' => $contact->id,
+    $cParams = [
+      'contact_id' => $contact['id'],
       'total_amount' => $price,
       'financial_type_id' => 1,
       'is_active' => 1,
       'skipLineItem' => 1,
-    );
+    ];
 
-    $defaults = array();
-    $contribution = CRM_Contribute_BAO_Contribution::add($cParams, $defaults);
+    $contribution = $this->callAPISuccess('Contribution', 'create', $cParams);
     $lParams = array(
-      'entity_id' => $contribution->id,
+      'entity_id' => $contribution['id'],
       'entity_table' => 'civicrm_contribution',
       'price_field_id' => 1,
       'qty' => 1,
@@ -120,8 +124,9 @@ class CRM_Financial_BAO_FinancialItemTest extends CiviUnitTestCase {
       'financial_type_id' => 1,
     );
 
+    $contributionObj = $this->getContributionObject($contribution['id']);
     $lineItem = CRM_Price_BAO_LineItem::create($lParams);
-    CRM_Financial_BAO_FinancialItem::add($lineItem, $contribution);
+    CRM_Financial_BAO_FinancialItem::add($lineItem, $contributionObj);
     $values = array();
     $fParams = array(
       'entity_id' => $lineItem->id,
@@ -135,28 +140,25 @@ class CRM_Financial_BAO_FinancialItemTest extends CiviUnitTestCase {
    * Check method create()
    */
   public function testCreate() {
-    $firstName = 'Shane';
-    $lastName = 'Whatson';
-    $params = array(
-      'first_name' => $firstName,
-      'last_name' => $lastName,
+    $params = [
+      'first_name' => 'Shane',
+      'last_name' => 'Whatson',
       'contact_type' => 'Individual',
-    );
+    ];
 
-    $contact = CRM_Contact_BAO_Contact::add($params);
+    $contact = $this->callAPISuccess('Contact', 'create', $params);
     $price = 100.00;
     $cParams = array(
-      'contact_id' => $contact->id,
+      'contact_id' => $contact['id'],
       'total_amount' => $price,
       'financial_type_id' => 1,
       'is_active' => 1,
       'skipLineItem' => 1,
     );
 
-    $defaults = array();
-    $contribution = CRM_Contribute_BAO_Contribution::add($cParams, $defaults);
+    $contribution = $this->callAPISuccess('Contribution', 'create', $cParams);
     $lParams = array(
-      'entity_id' => $contribution->id,
+      'entity_id' => $contribution['id'],
       'entity_table' => 'civicrm_contribution',
       'price_field_id' => 1,
       'qty' => 1,
@@ -169,7 +171,7 @@ class CRM_Financial_BAO_FinancialItemTest extends CiviUnitTestCase {
 
     $lineItem = CRM_Price_BAO_LineItem::create($lParams);
     $fParams = array(
-      'contact_id' => $contact->id,
+      'contact_id' => $contact['id'],
       'description' => 'Contribution Amount',
       'amount' => $price,
       'financial_account_id' => 1,
@@ -182,7 +184,7 @@ class CRM_Financial_BAO_FinancialItemTest extends CiviUnitTestCase {
     CRM_Financial_BAO_FinancialItem::create($fParams);
     $entityTrxn = new CRM_Financial_DAO_EntityFinancialTrxn();
     $entityTrxn->entity_table = 'civicrm_contribution';
-    $entityTrxn->entity_id = $contribution->id;
+    $entityTrxn->entity_id = $contribution['id'];
     $entityTrxn->amount = $price;
     if ($entityTrxn->find(TRUE)) {
       $entityId = $entityTrxn->entity_id;
@@ -287,18 +289,65 @@ class CRM_Financial_BAO_FinancialItemTest extends CiviUnitTestCase {
       'invoice_id' => '86ed39c9e9ee6ef6031621ce0eafe7eb81',
     );
 
-    $contribution = CRM_Contribute_BAO_Contribution::create($params);
+    $contribution = $this->callAPISuccess('Contribution', 'create', $params);
 
     $params = array(
-      'id' => $contribution->id,
+      'id' => $contribution['id'],
       'total_amount' => 300.00,
     );
 
-    $contribution = CRM_Contribute_BAO_Contribution::create($params);
-    $financialItem = CRM_Financial_BAO_FinancialItem::getPreviousFinancialItem($contribution->id);
-    $params = array('id' => $financialItem->id);
+    $contribution = $this->callAPISuccess('Contribution', 'create', $params);
+    $financialItem = CRM_Financial_BAO_FinancialItem::getPreviousFinancialItem($contribution['id']);
+    $params = array('id' => $financialItem['id']);
     $financialItem = $this->callAPISuccess('FinancialItem', 'get', $params);
-    $this->assertEquals($financialItem['values'][$financialItem['id']]['amount'], 200.00, "The amounts do not match.");
+    $this->assertEquals(200.00, $financialItem['values'][$financialItem['id']]['amount'], "The amounts do not match.");
+  }
+
+  /**
+   * Check method getPreviousFinancialItem() with tax entry.
+   *
+   * @param string $thousandSeparator
+   *   punctuation used to refer to thousands.
+   *
+   * @dataProvider getThousandSeparators
+   */
+  public function testGetPreviousFinancialItemHavingTax($thousandSeparator) {
+    $this->setCurrencySeparators($thousandSeparator);
+    $contactId = $this->individualCreate();
+    $this->enableTaxAndInvoicing();
+    $this->relationForFinancialTypeWithFinancialAccount(1);
+    $form = new CRM_Contribute_Form_Contribution();
+    $form->testSubmit(array(
+      'total_amount' => 100,
+      'financial_type_id' => 1,
+      'contact_id' => $contactId,
+      'contribution_status_id' => 1,
+      'price_set_id' => 0,
+    ), CRM_Core_Action::ADD);
+    $contribution = $this->callAPISuccessGetSingle('Contribution',
+      array(
+        'contact_id' => $contactId,
+        'return' => array('id'),
+      )
+    );
+    $financialItem = CRM_Financial_BAO_FinancialItem::getPreviousFinancialItem($contribution['id']);
+    $params = array(
+      'id' => $financialItem['id'],
+      'return' => array(
+        'description',
+        'status_id',
+        'amount',
+        'financial_account_id',
+      ),
+    );
+    $checkAgainst = array(
+      'id' => $financialItem['id'],
+      'description' => 'Contribution Amount',
+      'status_id' => '1',
+      'amount' => '100.00',
+      'financial_account_id' => '1',
+    );
+    $this->callAPISuccessGetSingle('FinancialItem', $params, $checkAgainst);
   }
 
 }

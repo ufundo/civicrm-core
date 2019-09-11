@@ -6,11 +6,11 @@
  *   API result array
  */
 function pledge_create_example() {
-  $params = array(
+  $params = [
     'contact_id' => 11,
-    'pledge_create_date' => '20150222',
-    'start_date' => '20150222',
-    'scheduled_date' => '20150224',
+    'pledge_create_date' => '20170207',
+    'start_date' => '20170207',
+    'scheduled_date' => '20170209',
     'amount' => '100',
     'pledge_status_id' => '2',
     'pledge_financial_type_id' => '1',
@@ -20,7 +20,7 @@ function pledge_create_example() {
     'frequency_day' => 15,
     'installments' => 5,
     'sequential' => 1,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Pledge', 'create', $params);
@@ -30,11 +30,12 @@ function pledge_create_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -48,13 +49,13 @@ function pledge_create_example() {
  */
 function pledge_create_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '0' => array(
+    'values' => [
+      '0' => [
         'id' => '1',
         'contact_id' => '11',
         'financial_type_id' => '1',
@@ -78,9 +79,9 @@ function pledge_create_expectedresult() {
         'status_id' => '2',
         'is_test' => '',
         'campaign_id' => '',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

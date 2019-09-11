@@ -8,14 +8,14 @@
  *   API result array
  */
 function activity_get_example() {
-  $params = array(
+  $params = [
     'activity_id' => 1,
     'sequential' => 1,
     'return.assignee_contact_id' => 1,
-    'api.contact.get' => array(
+    'api.contact.get' => [
       'id' => '$value.source_contact_id',
-    ),
-  );
+    ],
+  ];
 
   try{
     $result = civicrm_api3('Activity', 'get', $params);
@@ -25,11 +25,12 @@ function activity_get_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -43,15 +44,15 @@ function activity_get_example() {
  */
 function activity_get_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 1,
-    'values' => array(
-      '0' => array(
+    'values' => [
+      '0' => [
         'id' => '1',
-        'activity_type_id' => '51',
+        'activity_type_id' => '9999',
         'subject' => 'test activity type id',
         'activity_date_time' => '2011-06-02 14:36:13',
         'duration' => '120',
@@ -63,17 +64,18 @@ function activity_get_expectedresult() {
         'is_auto' => 0,
         'is_current_revision' => '1',
         'is_deleted' => 0,
-        'assignee_contact_id' => array(
+        'is_star' => 0,
+        'assignee_contact_id' => [
           '0' => '3',
-        ),
+        ],
         'source_contact_id' => '1',
-        'api.contact.get' => array(
+        'api.contact.get' => [
           'is_error' => 0,
           'version' => 3,
           'count' => 1,
           'id' => 1,
-          'values' => array(
-            '0' => array(
+          'values' => [
+            '0' => [
               'contact_id' => '1',
               'contact_type' => 'Individual',
               'contact_sub_type' => '',
@@ -114,6 +116,7 @@ function activity_get_expectedresult() {
               'street_address' => '',
               'supplemental_address_1' => '',
               'supplemental_address_2' => '',
+              'supplemental_address_3' => '',
               'city' => '',
               'postal_code_suffix' => '',
               'postal_code' => '',
@@ -132,6 +135,7 @@ function activity_get_expectedresult() {
               'im' => '',
               'worldregion_id' => '',
               'world_region' => '',
+              'languages' => 'English (United States)',
               'individual_prefix' => 'Mr.',
               'individual_suffix' => 'II',
               'communication_style' => '',
@@ -140,12 +144,12 @@ function activity_get_expectedresult() {
               'state_province' => '',
               'country' => '',
               'id' => '1',
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
+            ],
+          ],
+        ],
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }

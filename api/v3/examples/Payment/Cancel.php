@@ -6,10 +6,10 @@
  *   API result array
  */
 function payment_cancel_example() {
-  $params = array(
+  $params = [
     'id' => 2,
     'check_permissions' => TRUE,
-  );
+  ];
 
   try{
     $result = civicrm_api3('Payment', 'cancel', $params);
@@ -19,11 +19,12 @@ function payment_cancel_example() {
     $errorMessage = $e->getMessage();
     $errorCode = $e->getErrorCode();
     $errorData = $e->getExtraParams();
-    return array(
-      'error' => $errorMessage,
+    return [
+      'is_error' => 1,
+      'error_message' => $errorMessage,
       'error_code' => $errorCode,
       'error_data' => $errorData,
-    );
+    ];
   }
 
   return $result;
@@ -37,17 +38,17 @@ function payment_cancel_example() {
  */
 function payment_cancel_expectedresult() {
 
-  $expectedResult = array(
+  $expectedResult = [
     'is_error' => 0,
     'version' => 3,
     'count' => 1,
     'id' => 3,
-    'values' => array(
-      '3' => array(
+    'values' => [
+      '3' => [
         'id' => 3,
         'from_financial_account_id' => '7',
         'to_financial_account_id' => '6',
-        'trxn_date' => '20160217204840',
+        'trxn_date' => '20170207024650',
         'total_amount' => '-150',
         'fee_amount' => '0.00',
         'net_amount' => '150.00',
@@ -57,9 +58,9 @@ function payment_cancel_expectedresult() {
         'trxn_result_code' => '',
         'status_id' => '7',
         'payment_processor_id' => '',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
 
   return $expectedResult;
 }
