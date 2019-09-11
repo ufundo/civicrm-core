@@ -69,6 +69,9 @@ class CRM_Report_Form_Member_Detail extends CRM_Report_Form {
           'source' => [
             'title' => ts('Contact Source'),
           ],
+          'created_date' => [
+            'title' => ts('Contact Created Date'),
+          ],
         ],
         'filters' => [
           'sort_name' => [
