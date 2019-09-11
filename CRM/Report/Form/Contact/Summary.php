@@ -75,6 +75,14 @@ class CRM_Report_Form_Contact_Summary extends CRM_Report_Form {
               'title' => ts('Modified Date'),
               'default' => FALSE,
             ),
+            'created_date' => array(
+              'title' => ts('Created Date'),
+              'default' => FALSE,
+            ),
+            'source' => array(
+              'title' => ts('Contact Source'),
+              'default' => FALSE,
+            ),
           )
         ),
         'filters' => $this->getBasicContactFilters(),
