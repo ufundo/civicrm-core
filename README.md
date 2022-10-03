@@ -38,18 +38,7 @@ There may be a tension between accessibility and design here. e.g. if you are st
 
 Example: I'm styling a 'big' button. I would like text and padding to be relative to the general font-size (let's say we envisage short text content), but the border I want in px.
 
-If you think in px, then you can work with `px()` as follows
-
-```sass
-button {                        
-  font-size: px(16);
-  padding: px(8) px(32);
-  border: solid 1px red;
-  border-radius: px(8);
-}
-```
-
-If you think in rems, then you can work with `rem()` as follows
+If you think in rems, then you can work with `rem()`, where `rem(1)` would be a typically readable font size, e.g.
 
 ```sass
 button {                        
@@ -60,4 +49,40 @@ button {
 }
 ```
 
+If you think in px, then you can work with `px()`, where `px(16)` would be a typically readable font size. `px()` is sometimes cleaner to reason about, e.g. `px(14)` is clearly a bit smaller, whereas `rem(0.875)` is a bit more taxing to read! (Both result in the same output here.)
+
+```sass
+button {                        
+  font-size: 1.6rem;
+  padding: 0.8rem 3.2rem;
+  border: solid 1px red;
+  border-radius: 0.8rem;
+}
+```
+
+Both the above snippets will output the following identical CSS
+
+The `size10.css` will be:
+
+```
+button {
+  font-size: 1.6rem;
+  padding: rem(0.5) rem(2);
+  border: solid 1px red;
+  border-radius: rem(0.5);
+}
+```
+
+Whereas `size16.css` will be:
+
+```
+button {
+  font-size: 1rem;
+  padding: 0.5rem 2rem;
+  border: solid 1px red;
+  border-radius: 0.5rem;
+}
+```
+
+You should be able to use these functions anywhere you'd use a normal `rem` unit, including things like `margin-left: calc(10% + rem(1));` which will compile to `margin-left: calc(10% + 1rem);` for the 16px size and `margin-left: calc(10% + 1.6rem);` for the 10px size.
 

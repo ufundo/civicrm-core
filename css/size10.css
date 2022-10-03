@@ -1,0 +1,3 @@
+.crm-container *, .crm-container *::before, .crm-container *::after {
+  box-sizing: border-box;
+}
