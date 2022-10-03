@@ -4,12 +4,12 @@
 // \https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_angularModules/n
 return [
   'js' => [
-    'ang/brunswickStyleGuide.js',
+    // 'ang/brunswickStyleGuide.js',
     'ang/brunswickStyleGuide/*.js',
     'ang/brunswickStyleGuide/*/*.js',
   ],
   'css' => [
-    'ang/brunswickStyleGuide.css',
+    // 'ang/brunswickStyleGuide.css',
   ],
   'partials' => [
     'ang/brunswickStyleGuide',
@@ -17,7 +17,8 @@ return [
   'requires' => [
     'crmUi',
     'crmUtil',
-    'ngRoute',
+    'api4',
+    // 'ngRoute',
   ],
   'settings' => [],
 ];
