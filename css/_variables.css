@@ -1,0 +1,6 @@
+/* User customisation layer. A set of CSS Variables to let users
+   quickly modify aspects of the UI. */
+
+:root {
+    --default-font-size: 1rem;
+}

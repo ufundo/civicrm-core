@@ -15,6 +15,43 @@ function brunswick_civicrm_config(&$config) {
 }
 
 /**
+ * Implements hook_civicrm_alterBundle(). Add Bootstrap.
+ */
+
+ function brunswick_civicrm_alterBundle(CRM_Core_Resources_Bundle $bundle) {
+  $theme = Civi::service('themes')->getActiveThemeKey();
+  if ($theme !== 'brunswick') {
+    return;
+  }
+
+  switch ($theme . ':' . $bundle->name) {
+    case 'brunswick:bootstrap3':
+      $bundle->clear();
+      $bundle->addStyleFile('brunswick', 'css/bootstrap.css');
+      $bundle->addScriptFile('brunswick', 'js/bootstrap.min.js', [
+        'translate' => FALSE,
+      ]);
+      $bundle->addScriptFile('brunswick', 'js/noConflict.js', [
+        'translate' => FALSE,
+      ]);
+      break;
+  }
+  if ($bundle->name == 'coreStyles') {
+    $bundle->filter(function($snippet) {
+      if ($snippet['name'] == 'civicrm:css/civicrm.css') {
+        $snippet['weight'] = 290;
+        return $snippet;
+      }
+      elseif (($snippet['name'] == 'civicrm:css/custom.css') or (strpos($snippet['name'], 'custom.css') !== false)) {
+        $snippet['weight'] = 300;
+        return $snippet;
+      }
+      return TRUE;
+    });
+  }
+}
+
+/**
  * Implements hook_civicrm_xmlMenu().
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_xmlMenu

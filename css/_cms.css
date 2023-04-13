@@ -1,0 +1,37 @@
+/* NB: CMS-specific changes should be name-spaced to the CMS *and* .crm-container, with exception of default font-size resets */
+
+/******************
+   BACKDROP
+*******************/
+
+/* Backdrop - html.admin-bar */
+
+/******************
+   DRUPAL
+*******************/
+
+/* Drupal 7 - body.crm-menubar */
+
+/* Drupal 8+ -  */
+
+/* D9 Claro */
+
+/******************
+   JOOMLA
+*******************/
+
+/* Joomla 3 - body.com_civicrm */
+
+body.com_civicrm {
+    font-size: 100%;
+}
+
+/* Joomla 4 - body.com_civicrm.layout-default */
+
+/******************
+   WORDPRESS
+*******************/
+
+body.wp-admin {
+    font-size: 100%;
+}
