@@ -1,6 +1,11 @@
+/* Variables - quick user customisations */
+
+:root {
+    --default-font-size: 1rem;
+}
+
 @import url(_base.css);
+@import url(_cms.css);
 @import url(_bootstrap.css);
 @import url(_core.css);
 @import url(_workarounds.css);
-@import url(_cms.css);
-@import url(_variables.css);

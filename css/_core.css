@@ -6,5 +6,5 @@
 #crm-container tr, 
 #crm-container tr td,
 #crm-container p {
-    font-size: var(--body-size);
+    font-size: var(--default-font-size);
 }

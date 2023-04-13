@@ -2,5 +2,5 @@
    quickly modify aspects of the UI. */
 
 :root {
-    --body-size: 1rem;
+    --default-font-size: 1rem;
 }
