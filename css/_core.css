@@ -1,0 +1,6 @@
+.crm-container table,
+#crm-container tr, 
+#crm-container tr td,
+#crm-container p {
+    font-size: var(--body-size);
+}

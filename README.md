@@ -1,88 +1,21 @@
 # Brunswick
 
-The extension is licensed under [AGPL-3.0](LICENSE.txt).
+A mostly empty theme. The extension is licensed under [AGPL-3.0](LICENSE.txt).
+
+## Changelog
+
+0.1 - proof of concept empty theme structure doing just two things: for older CMS interfaces enforces a 100% font-size default to cascade the browser default font-size, and demonstrates a 1rem variable on top of that for Civi body text size.
 
 ## Requirements
 
 * PHP v7.4+
 * CiviCRM 5.49+
 
-## How to compile
+## Setting up a testing/developoment environment
 
-This project uses [SASS](https://sass-lang.com/) which is a superset of CSS (all CSS is valid SASS) that gets compiled down to CSS. It is used because it makes the source files tidier and also saves on repetition. The project currently uses [Laravel Mix](https://laravel-mix.com/) to make compiling super simple - see below.
+If you want to test and work on this this across multiple CMS+Civi instances on on machine, you can use [SymLinks](https://en.wikipedia.org/wiki/Symbolic_link) between Civi's extension folders to point to the same instance of Brunswick.
 
-- The *first time* you come to do this on your machine/vps/container you'll
-  need Node installed, then run:  `npm i -g yarn; yarn install; npx mix` which
-  will install `yarn` globally on your machine; install the javascript required
-  to compile the project; do the initial compile.
+E.g. after downloading the theme to `~/Sites/localhost/drupal/web/sites/default/files/civicrm/ext` you could make an alias from, say,  `~/Sites/localhost/wordpress/wp-content/uploads/civicrm` with `ln -s /Users/admin/Sites/localhost/dru9civi/web/sites/default/files/civicrm/ext/brunswick brunswick`
 
-- Edit the sass files in src/sass/
 
-- From the extension's main dir, run `npx mix` to do a quick build,
-  `npx mix -p` to do a production build (minified, takes longer), or alternatively run
-  `npx mix watch` which will recompile whenever the source files are modified.
-
-In development you'll want to disable CiviCRM asset caching (on the development admin screen).
-
-## Why are there many sets of CSS files output?
-
-The output is sets of CSS files suitable for different CMS-theme contexts. Accessible themes should NOT set a `rem` size on the `HTML` element, however most do. `1rem` as a `font-size` should be a readable size for the human. Browsers typically set this at 16 CSS px, and allow users to change this meaning that they can make all well-behaved web pages accessible from just one browser config setting. However when themes fix this (e.g. Bootstrap 3 sets it to 10px - not readable!) we have no way to re-un-set it, and no way of knowing how big the rem unit is. To get around this always-unknown and out of our control situation, when the SASS is compiled we get multiple sets of output CSS files, each based on a different rem size. The idea is that the admin who configures this theme can specify the rem size used in theme, and that therefore the theme should be able to be renderable in each environment.
-
-### Writing accessible sizes.
-
-Ask yourself: *Does it make sense for this size to be linked to the font size?*
-
-For many margins and paddings and border-radii it might make sense to answer yes. For borders, you prefer a set px size, so the answer is No.
-
-There may be a tension between accessibility and design here. e.g. if you are styling a button, with standard size text in it, you might think that typographically it ought to have 2× the font size as horizontal padding. This means however big the screen, your button's aspect ratio remains constant; everything is in proportion. This is probably sensible for small buttons like "Save". However if you were to apply this to a button likely to have a long description, "Yes, I’m sure I want to delete this" then keep in mind that this text could end up wrapping for a user who has ramped up their font size for accessibility reasons because (a) there's a lot of text to fit at a large font-size and (b) because you've added 4× that size as padding.
-
-Example: I'm styling a 'big' button. I would like text and padding to be relative to the general font-size (let's say we envisage short text content), but the border I want in px.
-
-If you think in rems, then you can work with `rem()`, where `rem(1)` would be a typically readable font size, e.g.
-
-```sass
-button {                        
-  font-size: rem(1);
-  padding: rem(0.5) rem(2);
-  border: solid 1px red;
-  border-radius: rem(0.5);
-}
-```
-
-If you think in px, then you can work with `px()`, where `px(16)` would be a typically readable font size. `px()` is sometimes cleaner to reason about, e.g. `px(14)` is clearly a bit smaller, whereas `rem(0.875)` is a bit more taxing to read! (Both result in the same output here.)
-
-```sass
-button {                        
-  font-size: 1.6rem;
-  padding: 0.8rem 3.2rem;
-  border: solid 1px red;
-  border-radius: 0.8rem;
-}
-```
-
-Both the above snippets will output the following identical CSS
-
-The `size10.css` will be:
-
-```
-button {
-  font-size: 1.6rem;
-  padding: rem(0.5) rem(2);
-  border: solid 1px red;
-  border-radius: rem(0.5);
-}
-```
-
-Whereas `size16.css` will be:
-
-```
-button {
-  font-size: 1rem;
-  padding: 0.5rem 2rem;
-  border: solid 1px red;
-  border-radius: 0.5rem;
-}
-```
-
-You should be able to use these functions anywhere you'd use a normal `rem` unit, including things like `margin-left: calc(10% + rem(1));` which will compile to `margin-left: calc(10% + 1rem);` for the 16px size and `margin-left: calc(10% + 1.6rem);` for the 10px size.
 
