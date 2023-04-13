@@ -1,3 +1,7 @@
+/* Civi CSS Framework (civicrm.css), the core CSS to make Civi UI behave
+   coherently in a neutral, clean, responsive and accessible way with as little
+   css as possible. */
+
 .crm-container table,
 #crm-container tr, 
 #crm-container tr td,
