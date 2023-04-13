@@ -1,5 +1,5 @@
 /* Reset CSS inherited from the parent CMS/admin theme to create a unified base. */
 
-*, *::before, *::after {
+.crm-container *, .crm-container *::before, .crm-container *::after {
     box-sizing: border-box;
 }
