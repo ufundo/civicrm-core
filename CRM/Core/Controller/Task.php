@@ -83,4 +83,18 @@ abstract class CRM_Core_Controller_Task extends CRM_Core_Controller {
     throw new CRM_Core_Exception(ts('Invalid task'));
   }
 
+
+  /**
+   * Use the Task class for the qfKey
+   *
+   * @param ?string $scope
+   *   specific scope to use
+   *
+   * @return string
+   */
+  protected function getQfKeyName($scope): string
+  {
+    return CRM_Utils_Array::first($this->getTaskClass());
+  }
+
 }

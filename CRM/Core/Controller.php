@@ -184,12 +184,8 @@ class CRM_Core_Controller extends HTML_QuickForm_Controller {
       = CRM_Utils_Request::retrieve('entryURL', 'String', $this);
 
     // add a unique validable key to the name
-    $name = CRM_Utils_System::getClassName($this);
-    if ($name == 'CRM_Core_Controller_Simple' && !empty($scope)) {
-      // use form name if we have, since its a lot better and
-      // definitely different for different forms
-      $name = $scope;
-    }
+    $name = $this->getQfKeyName($scope);
+
     $name = $name . '_' . $this->key($name, $addSequence, $ignoreKey);
     $this->_title = $title;
     if ($scope) {
@@ -879,6 +875,27 @@ class CRM_Core_Controller extends HTML_QuickForm_Controller {
       }
     }
     self::invalidKeyCommon();
+  }
+
+  /**
+   * Get the class name to use in qfKey
+   *
+   * @param ?string $scope
+   *   specific scope to use
+   *
+   * @return string
+   */
+  protected function getQfKeyName(string $scope = NULL): string
+  {
+    $name = CRM_Utils_System::getClassName($this);
+
+    if ($name == 'CRM_Core_Controller_Simple' && !empty($scope)) {
+      // use form name if we have, since its a lot better and
+      // definitely different for different forms
+      $name = $scope;
+    }
+
+    return $name;
   }
 
 }
