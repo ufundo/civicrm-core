@@ -3,3 +3,17 @@
 .crm-container *, .crm-container *::before, .crm-container *::after {
     box-sizing: border-box;
 }
+
+/* Set Default Type */
+
+html {
+    font-family: var(--default-font-fam);
+}
+
+.crm-container table,
+#crm-container tr, 
+#crm-container tr td,
+#crm-container p,
+#crm-container ul {
+    font-size: var(--default-font-size);
+}

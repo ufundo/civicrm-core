@@ -1,10 +1,6 @@
 /* Civi CSS Framework (civicrm.css), the core CSS to make Civi UI behave
    coherently in a neutral, clean, responsive and accessible way with as little
-   css as possible. */
+   css as possible. For dev purposes each components is its own file, these 
+   can be merged later. */
 
-.crm-container table,
-#crm-container tr, 
-#crm-container tr td,
-#crm-container p {
-    font-size: var(--default-font-size);
-}
+@import url(components/_accordion.css);

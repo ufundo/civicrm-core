@@ -1,6 +1,82 @@
-/* User customisation layer. A set of CSS Variables to let users
-   quickly modify aspects of the UI. */
+/* Quickfix set used for test/build purposes. Q - should these all be crm-* prefixed? */
 
 :root {
-    --default-font-size: 1rem;
+
+/* COLOURS */
+--text: #444;
+--primary: #43757A; 
+--secondary: #B24B4F;
+--vvv-dark-gray: #3e3e3e;
+--vv-dark-gray: #555;
+--v-dark-gray: #888;
+--dark-gray: #262626;
+--mid-gray: #ccc;
+--light-gray: #dedede;
+--v-light-gray: #e6e6e6;
+--vv-light-gray: #f0f0f0;
+--vvv-light-gray: #f9f9f9;
+--transparent-gray: rgba(0, 0, 0, 0.05);
+--green-success: #58a458;
+--light-green: #CFF0BE;
+--blue-info: #2C99A4 /* #43757A */;
+--light-blue: #dff0f4;
+--red-alert: #B24B4F;
+--light-red: #ffdddd;
+--amber: #c67605;
+--yellow: #ffffcc;
+--dark-yellow: #f8e80b;
+--teal: #399389;
+--dark-teal: #3e8079;
+
+/* SIZES */
+--roundness: 0.75rem;
+--s: 0.25rem;
+--m: 0.5rem;
+--ms: 0.75rem;
+--mms: 0.875rem;
+--r: 1rem;
+--rs: 1.25rem;
+--rm: 1.5rem;
+--l: 2rem;
+--xl: 3rem;
+--xxl: 4rem;
+
+/* TYPE */
+--default-font-fam: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans, Ubuntu,Cantarell,"Helvetica Neue",Helvetica,Arial,sans-serif; 
+--default-font-size: var(--r);
+/* both defaults could  be left blank to inherit the CMS admin theme font / size (don't use 'inherit') */
+--font-size-s: var(--mms);   
+
+/* BUTTONS */
+--btn-txt-primary: #fff;
+--btn-txt-secondary: #fff;
+--btn-box-shadow: none;
+--btn-border: 0 solid transparent;
+--btn-txt-transform: inherit;
+--btn-radius: 10rem;
+--btn-padding: 0.4rem 0.8rem;
+
+/* TABLES */
+--table-row-line: 1px dotted var(--dark-gray);
+--table-column-line: 0 solid transparent;
+--table-font-size: calc(1 * var(--r));
+--table-header-line: 1px solid var(--dark-gray);
+--table-outside-border: 0 solid transparent;
+--table-header-bg: #fff;
+--table-header-txt: inherit;
+--table-even-row: var(--vvv-light-gray);
+--table-odd-row: transparent;
+
+/* FORMS */
+--input-width: 250px;
+
+/* ACCORDIONS */
+--expand-icon: "\f0da";
+--expand-transform: rotate(90deg);
+--expand-transition: transform .3s; 
+--expand-header-bg: var(--vv-light-gray);
+--expand-header-bg-active: var(--light-gray);
+--expand-header-color: var(--vvv-dark-gray);
+--expand-body-bg: var(--vvv-light-gray);
+ 
 }
