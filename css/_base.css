@@ -6,8 +6,10 @@
 
 /* Set Default Type */
 
-html {
+.crm-container *, 
+#crm-container * {
     font-family: var(--default-font-fam);
+    font-size: var(--default-font-size);
 }
 
 .crm-container table,
