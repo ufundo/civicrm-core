@@ -6,8 +6,8 @@
 
 /* Set Default Type */
 
-.crm-container *, 
-#crm-container * {
+.crm-container *:not(.ui-icon[class*=" fa-"], .crm-i, pre, code),
+#crm-container *:not(.ui-icon[class*=" fa-"], .crm-i, pre, code) {
     font-family: var(--default-font-fam);
     font-size: var(--default-font-size);
 }
