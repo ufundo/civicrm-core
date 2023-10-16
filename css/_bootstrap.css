@@ -1445,8 +1445,6 @@
 }
 
 #bootstrap-theme h1, #bootstrap-theme h2, #bootstrap-theme h3, #bootstrap-theme h4, #bootstrap-theme h5, #bootstrap-theme h6, #bootstrap-theme .h1, #bootstrap-theme .h2, #bootstrap-theme .h3, #bootstrap-theme .h4, #bootstrap-theme .h5, #bootstrap-theme .h6 {
-	font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-weight: 500;
 	line-height: 1.2;
 	color: black;
 }
@@ -6445,7 +6443,6 @@
 	position: absolute;
 	z-index: 1070;
 	display: block;
-	font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-style: normal;
 	font-weight: 400;
 	line-height: 1.428571429;
@@ -6582,9 +6579,7 @@
 	display: none;
 	max-width: 276px;
 	padding: 1px;
-	font-family: "Verdana", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-style: normal;
-	font-weight: 400;
 	line-height: 1.428571429;
 	line-break: auto;
 	text-align: left;

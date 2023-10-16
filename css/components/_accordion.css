@@ -1,6 +1,6 @@
 /* Reset */
 
-#crm-container .widget-content .crm-accordion-wrapper.collapsed .crm-accordion-header,
+.crm-container .widget-content .crm-accordion-wrapper.collapsed .crm-accordion-header,
 #crm-container .widget-content .crm-accordion-header,
 .crm-container .crm-accordion-inner .crm-accordion-header, 
 .crm-container .crm-accordion-wrapper .crm-master-accordion-header, 
@@ -26,25 +26,16 @@
 .crm-container .crm-master-accordion-header:before,
 .crm-container .expanded::before,
 .crm-container a.collapsed::before {
+	font-size: var(--default-font-size);
 	font-style: normal;
 	line-height: 1.35;
-	font-size: var(--default-font-size);
 	text-rendering: auto;
 	text-indent: inherit;
 	font-family: FontAwesome;
-	color: var(--vvv-dark-gray);
+	color: var(--expand-icon-color);
 	width: 1ch;
 	margin-right: var(--m);
 	display: inline-block;
-}
-.crm-container .collapsed .collapsible-title::before,
-.crm-container .collapsed .crm-accordion-header::before, 
-.crm-accordion-wrapper.collapsed .crm-master-accordion-header:before,
-.crm-dashlet-header .crm-dashlet-collapse.fa-caret-right::before,
-.af-collapsible.af-collapsed > .af-title::before,
-.crm-container a.collapsed:not(.expanded)::before {
-    transform: none;
-	transition: var(--expand-transition);
 }
 .crm-container .crm-accordion-header::before, 
 .crm-container .collapsible-title::before, 
@@ -55,6 +46,15 @@
 .crm-container a.expanded::before  {
 	content: var(--expand-icon);
 	transform: var(--expand-transform);
+	transition: var(--expand-transition);
+}
+.crm-container .collapsed .collapsible-title::before,
+.crm-container .collapsed .crm-accordion-header::before, 
+.crm-accordion-wrapper.collapsed .crm-master-accordion-header:before,
+.crm-dashlet-header .crm-dashlet-collapse.fa-caret-right::before,
+.af-collapsible.af-collapsed > .af-title::before,
+.crm-container a.collapsed:not(.expanded)::before {
+    transform: none;
 	transition: var(--expand-transition);
 }
 
@@ -94,7 +94,6 @@
 	font-weight: normal;
 	padding: var(--btn-padding);
 	border-radius: var(--roundness);
-	background-image: unset !important; 
 }
 .crm-accordion-wrapper .crm-accordion-header.active,
 .crm-accordion-wrapper .crm-accordion-wrapper.collapsed:hover,

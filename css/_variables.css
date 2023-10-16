@@ -1,11 +1,16 @@
-/* Quickfix set used for test/build purposes. Q - should these all be crm-* prefixed? */
+/* Quickfix set used for test/build purposes. Neither the names nor the values are designed to be final. */
 
 :root {
 
-/* COLOURS */
+/* COLOUR DESCRIPTIONS */
 --text: #444;
 --primary: #43757A; 
 --secondary: #B24B4F;
+--green-success: #58a458;
+--red-alert: #B24B4F;
+--blue-info: #2C99A4;
+
+/* COLOUR NAMES */
 --vvv-dark-gray: #3e3e3e;
 --vv-dark-gray: #555;
 --v-dark-gray: #888;
@@ -15,12 +20,9 @@
 --v-light-gray: #e6e6e6;
 --vv-light-gray: #f0f0f0;
 --vvv-light-gray: #f9f9f9;
---transparent-gray: rgba(0, 0, 0, 0.05);
---green-success: #58a458;
+--transparent-black: rgba(0, 0, 0, 0.05);
 --light-green: #CFF0BE;
---blue-info: #2C99A4 /* #43757A */;
 --light-blue: #dff0f4;
---red-alert: #B24B4F;
 --light-red: #ffdddd;
 --amber: #c67605;
 --yellow: #ffffcc;
@@ -28,7 +30,7 @@
 --teal: #399389;
 --dark-teal: #3e8079;
 
-/* SIZES */
+/* SIZES - temporary */
 --roundness: 0.75rem;
 --s: 0.25rem;
 --m: 0.5rem;
@@ -41,8 +43,8 @@
 --xl: 3rem;
 --xxl: 4rem;
 
-/* TYPE */
---default-font-fam: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans, Ubuntu,Cantarell,"Helvetica Neue",Helvetica,Arial,sans-serif; 
+/* TYPE - temporary */
+--default-font-fam: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, Lato, "helvetica neue", helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif; 
 --default-font-size: var(--r);
 /* both defaults could  be left blank to inherit the CMS admin theme font / size (don't use 'inherit') */
 --font-size-s: var(--mms);   
@@ -59,7 +61,7 @@
 /* TABLES */
 --table-row-line: 1px dotted var(--dark-gray);
 --table-column-line: 0 solid transparent;
---table-font-size: calc(1 * var(--r));
+--table-font-size: var(--r);
 --table-header-line: 1px solid var(--dark-gray);
 --table-outside-border: 0 solid transparent;
 --table-header-bg: #fff;
@@ -68,15 +70,15 @@
 --table-odd-row: transparent;
 
 /* FORMS */
---input-width: 250px;
+--input-width: 21ch; /* uses character width to make input width propotional to font-size */
 
 /* ACCORDIONS */
---expand-icon: "\f0da";
+--expand-icon: "\f0da"; /* unicode value for FontAwesome icon */
+--expand-icon-color: var(--vvv-dark-gray);
 --expand-transform: rotate(90deg);
 --expand-transition: transform .3s; 
 --expand-header-bg: var(--vv-light-gray);
 --expand-header-bg-active: var(--light-gray);
 --expand-header-color: var(--vvv-dark-gray);
 --expand-body-bg: var(--vvv-light-gray);
- 
 }
