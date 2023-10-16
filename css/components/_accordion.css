@@ -33,8 +33,8 @@
 	text-indent: inherit;
 	font-family: FontAwesome;
 	color: var(--expand-icon-color);
-	width: 1ch;
-	margin-right: var(--m);
+	width: var(--m3);
+	margin-right: var(--m2);
 	display: inline-block;
 }
 .crm-container .crm-accordion-header::before, 
@@ -46,6 +46,7 @@
 .crm-container a.expanded::before  {
 	content: var(--expand-icon);
 	transform: var(--expand-transform);
+	transform-origin: center center;
 	transition: var(--expand-transition);
 }
 .crm-container .collapsed .collapsible-title::before,
@@ -92,7 +93,7 @@
 	background-color: var(--expand-header-bg);
 	text-shadow: none;
 	font-weight: normal;
-	padding: var(--btn-padding);
+	padding: var(--m2) var(--m3);
 	border-radius: var(--roundness);
 }
 .crm-accordion-wrapper .crm-accordion-header.active,
@@ -108,10 +109,11 @@
 .crm-container .crm-accordion-body {
 	border-radius: 0 0 var(--roundness) var(--roundness);
 	border: 0 solid transparent;
-	padding: var(--r);
+	padding: var(--m3);
+	/* padding-left: var(--expand-body-indent); */
 }
 .crm-container .ui-tabs-panel .crm-accordion-body > div,
 #crm-container .widget-content .crm-accordion-body,
 .crm-container .crm-collapsible .crm-summary-block {
-	padding: var(--r);
+	padding: var(--m3);
 }
