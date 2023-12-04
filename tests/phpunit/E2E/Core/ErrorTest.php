@@ -60,7 +60,7 @@ class ErrorTest extends \CiviEndToEndTestCase {
     $messages = [
       'fatal' => '/This is a fake problem \(fatal\)/',
       'exception' => '/This is a fake problem \(exception\)/',
-      'permission' => '/(You do not have permission|You are not authorized to access)/',
+      'permission' => '/(You do not have permission|You are not authorized to access|You may need to login to access that)/',
     ];
     $response = $this->provokeError($url, $errorType);
     $this->assertBodyRegexp($messages[$errorType] ?? 'Test error: Invalid error type', $response);
