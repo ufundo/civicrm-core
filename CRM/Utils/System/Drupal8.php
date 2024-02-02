@@ -282,7 +282,7 @@ class CRM_Utils_System_Drupal8 extends CRM_Utils_System_DrupalBase {
     $frontend = FALSE,
     $forceBackend = FALSE
   ) {
-    $query = html_entity_decode($query);
+    $query = html_entity_decode($query ?? '');
 
     $config = CRM_Core_Config::singleton();
     $base = $absolute ? $config->userFrameworkBaseURL : 'internal:/';
