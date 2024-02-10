@@ -3,27 +3,22 @@ body {
 }
 /* Header */
 .civicrm-setup-header {
-  height: 300px;
-  width: 100%;
-  display: block;
+  margin: 5rem 0;
+  display: flex;
+  flex-flow: row-reverse wrap;
+  justify-content: space-evenly;
+  gap: 2rem;
 }
 
 .civicrm-setup-header .title {
-  width: 25%;
-  position: absolute;
+  min-width: 20rem;
+  flex-basis: 30rem;
   overflow: hidden;
-  float: left;
-  margin-left: 10%;
-  margin-top: 50px;
-  margin-right: 20%;
-  display: inline-flex;
 }
 
 .civicrm-setup-header h1 {
-  line-height: 35px;
+  margin: 0;
   color: #ddd;
-  position: relative;
-  left: 400px;
   -webkit-animation: slide 1s forwards;
   -webkit-animation-delay: 0.5s;
   animation: slide 1s forwards;
@@ -51,11 +46,8 @@ body {
 }
 
 .civicrm-setup-body .civicrm-logo {
-  float: right;
-  width: 30%;
-  display: grid;
-  margin-top: 50px;
-  margin-right: 10%;
+  flex-basis: 30rem;
+  min-width: 10rem;
 }
 
 .civicrm-setup-body .civicrm-logo img {
@@ -294,12 +286,6 @@ body {
 }
 
 @media only screen and (max-width: 635px) {
-  .civicrm-setup-header .title {
-    width: 45%;
-    margin-left: 5%;
-    margin-top: 30px;
-  }
-
   .civicrm-setup-body .settingsTable {
     display: block;
     overflow-x: auto;
