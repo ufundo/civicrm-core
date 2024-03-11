@@ -1,14 +1,58 @@
-/* Reset CSS inherited from the parent CMS/admin theme to create a unified base. */
+/*
+      R E S E T S
+                    */
 
-.crm-container *, .crm-container *::before, .crm-container *::after {
+.crm-container *,
+.crm-container *::before,
+.crm-container *::after {
     box-sizing: border-box;
 }
+#crm-container .hiddenElement,
+.crm-container .hiddenElement {
+	display: none;
+}
+#crm-container .clear,
+.crm-container .clear {
+	clear: both;
+}
+#crm-container table th {
+	background-color: transparent;
+}
+#crm-container td {
+	height: auto;
+}
+.crm-container details {
+	border: 0 solid transparent;
+	padding: 0; 
+}
+
+/*
+      A C C E S S I B I L I T Y
+                                    */
+
+/* text exclusively for screen readers */
+
+.sr-only {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+}	
+
+/*
+      T Y P E
+                */
 
 /* Set Default Type */
 
 .crm-container, #crm-container {
-    font-family: var(--default-font-fam);
-    font-size: var(--default-font-size);
+    font-family: var(--crm-font);
+    font-size: var(--crm-font-size);
 }
 
 .crm-container table,
@@ -16,5 +60,21 @@
 #crm-container tr td,
 #crm-container p,
 #crm-container ul {
-    font-size: var(--default-font-size);
+    font-size: var(--crm-font-size);
+}
+
+/* Core type */
+
+strong, b {
+    font-family: var(--crm-font-bold);
+    font-weight: var(--crm-bold-weight);
+}
+em {
+    font-family: var(--crm-font-italic);
+    font-style: var(--crm-italic-style);
+}
+strong em, em strong {
+    font-family: var(--crm-font-bold-italic);
+    font-weight: var(--crm-bold-weight);
+    font-style: var(--crm-italic-style);
 }

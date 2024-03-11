@@ -1,5 +1,5 @@
-@import url(_variables.css);
-@import url(_base.css);
-@import url(_cms.css);
-@import url(_core.css);
-@import url(_workarounds.css);
+@import url(_variables.css); /* quick customisable values used across the theme */
+@import url(_base.css); /* resets and civi wide styles */
+@import url(_core.css); /* components and utility classes */
+@import url(_cms.css); /* CMS-specific hacks/workarounds */
+@import url(_fixes.css); /* deprecated-Civi handling, hacks/workarounds. one day this will go. */

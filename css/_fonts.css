@@ -1,0 +1,24 @@
+@font-face {
+    font-family: Civitype;
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/SourceSansPro-Regular.otf") format("opentype");
+}
+@font-face {
+    font-family: Civitype-italic;
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/SourceSansPro-It.otf") format("opentype");
+}
+@font-face {
+    font-family: Civitype-bold;
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/SourceSansPro-Semibold.otf") format("opentype");
+}
+@font-face {
+    font-family: Civitype-bolditalic;
+    font-style: normal;
+    font-weight: 300;
+    src: url("fonts/SourceSansPro-SemiboldIt.otf") format("opentype");
+}

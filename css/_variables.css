@@ -1,6 +1,13 @@
-/* Quickfix set used for test/build purposes. Neither the names nor the values are designed to be final. */
 
-:root {
+/* FONTS - comment out two of the three following patterns, as needed. 
+
+/* OPTION 1: custom fonts, edit in _fonts.css */
+@import url('_fonts.css'); 
+:root{--crm-font:  "Civitype", serif; --crm-font-bold:  "Civitype-bold", serif;--crm-bold-weight: normal;--crm-font-italic:  "Civitype-italic", serif;--crm-italic-style: normal;--crm-font-bold-italic:  "Civitype", serif;
+/* OPTION 2: fast - use CMS parent theme font/styles 
+:root { --crm-font:;--crm-font-bold:;--crm-bold-weight: bold;--crm-font-italic:;--crm-italic-style: italic;--crm-font-bold-italic:;
+/* OPTION 3: fastest - use system fonts/styles 
+:root {--crm-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",sans-serif;--crm-font-bold: var(--crm-font);--crm-bold-weight: bold;--crm-font-italic: var(--crm-font);--crm-italic-style: italic;--crm-font-bold-italic: var(--crm-font);
 
 /* COLOUR DESCRIPTIONS */
 --text: #444;
@@ -44,11 +51,9 @@
 --xl: 3rem;
 --xxl: 4rem;
 
-/* TYPE - temporary */
---default-font-fam: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, Lato, "helvetica neue", helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif; 
---default-font-size: var(--r);
-/* both defaults could  be left blank to inherit the CMS admin theme font / size (don't use 'inherit') */
---font-size-s: var(--mms);   
+/* MOUSE EVENTS */
+
+--hover-clickable: pointer;
 
 /* BUTTONS */
 --btn-txt-primary: #fff;
@@ -58,6 +63,10 @@
 --btn-txt-transform: inherit;
 --btn-radius: 10rem;
 --btn-padding: 0.5rem 0.875rem;
+
+/* TYPE */
+
+--crm-font-size: var(var(--r));
 
 /* TABLES */
 --table-row-line: 1px dotted var(--dark-gray);
@@ -81,6 +90,14 @@
 --expand-header-bg: var(--vv-light-gray);
 --expand-header-bg-active: var(--light-gray);
 --expand-header-color: var(--vvv-dark-gray);
+--expand-header2-bg: transparent;
 --expand-body-bg: var(--vvv-light-gray);
+--expand-body2-bg: transparent;
+--expand-body-border: ;
+--expand-body2-border: ;
+--expand-body-padding: var(--m3);
+
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }
+
+

@@ -8,7 +8,7 @@
 #bootstrap-theme {}
 
 #bootstrap-theme html {
-	font-family: var(--default-font-fam);
+	font-family: var(--crm-font-fam);
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
 }
@@ -50,11 +50,13 @@
 }
 
 #bootstrap-theme b, #bootstrap-theme strong {
-	font-weight: bold;
+	font-family: var(--crm-font-bold);
+    font-weight: var(--crm-bold-weight);
 }
 
 #bootstrap-theme dfn {
-	font-style: italic;
+	font-family: var(--crm-font-italic);
+    font-style: var(--crm-italic-style);
 }
 
 #bootstrap-theme h1 {
