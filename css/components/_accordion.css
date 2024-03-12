@@ -36,7 +36,7 @@
 	border-radius: var(--roundness) var(--roundness) 0 0; 
 }
 .crm-container .crm-accordion-bold > summary.active { /* active version of that */
-	background-color: var(--expand-header-active);
+	background-color: var(--expand-header-bg-active);
 }
 .crm-container .crm-accordion-bold > summary:hover,
 .crm-container .crm-accordion-bold > summary:focus { /* hover version of that */
@@ -57,7 +57,7 @@
 }
 /* Expand/collapse icons */
 
-.crm-container details summary::before {
+.crm-container details > summary::before {
 	font-size: var(--default-font-size);
 	content: var(--expand-icon);
 	color: var(--expand-icon-color);
@@ -71,7 +71,7 @@
 	transform-origin: center center;
 	transition: var(--expand-transition);
 }
-.crm-container details[open] summary::before {
+.crm-container details[open] > summary::before {
 	transform: var(--expand-transform);
 	transition: var(--expand-transition);
 }
