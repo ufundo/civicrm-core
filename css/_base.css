@@ -53,6 +53,8 @@
 .crm-container, #crm-container {
     font-family: var(--crm-font);
     font-size: var(--crm-font-size);
+    color: var(--text);
+    background: var(--background);
 }
 
 .crm-container table,
@@ -61,6 +63,7 @@
 #crm-container p,
 #crm-container ul {
     font-size: var(--crm-font-size);
+    color: var(--text);
 }
 
 /* Core type */
@@ -77,4 +80,12 @@ strong em, em strong {
     font-family: var(--crm-font-bold-italic);
     font-weight: var(--crm-bold-weight);
     font-style: var(--crm-italic-style);
+}
+
+/*
+      P O S I T I O N
+                        */
+
+.css_right {
+    float: right;
 }

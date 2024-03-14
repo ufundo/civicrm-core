@@ -1,12 +1,7 @@
 
 
-.crm-container details details {
-	padding: 0 0.25rem; /* adds padding for nested accordions */
-	margin: 0;
-}
-.crm-container details .crm-accordion-body {
-	border: none;
-	display: block; 
+.crm-container details + details {
+	margin: 0.5rem 0 0;
 }
 .crm-container summary { /* default summary setting*/
 	display: list-item;
@@ -16,7 +11,7 @@
 	padding: var(--m2) var(--m3);
 	font-family: var(--crm-font-bold);
 	font-weight: var(--crm-bold-weight);
-	color: var(--vvv-dark-gray);
+	color: var(--expand-header-color);
 }
 .crm-container table summary { /* Makes summary match the size of the rest of the table it's in */
 	font-size: inherit;
@@ -26,6 +21,7 @@
 }
 .crm-container .crm-accordion-bold {
 	background-color: var(--expand-body-bg);
+	border: var(--expand-border);
 	border-radius: var(--roundness);
 }
 .crm-container .crm-accordion-bold > summary {
@@ -43,8 +39,13 @@
 	background-color: var(--expand-header-bg-active);
 }
 .crm-container details.crm-accordion-bold > .crm-accordion-body {
-	border: var(--expand-body-border);
 	padding: var(--expand-body-padding);
+	animation: crm-details-show .3s ease-in-out;
+}
+.crm-container .crm-accordion-light {
+	border: var(--expand-2-border);
+	border-radius: var(--roundness);
+	padding: var(--m);
 }
 .crm-container .crm-accordion-light > summary {
 	font-family: var(--crm-font);

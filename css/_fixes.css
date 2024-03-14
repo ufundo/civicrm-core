@@ -1,7 +1,8 @@
+
+
 /* CSS hacks to accommodate quirks and inconsistencies in the markup.
    The end goal (Civi 7.0?) would be to remove these once the markup is
    consistent, and another  */
-
 
 /*
       A C C O R D I O N S
@@ -21,8 +22,8 @@
 	background-image: none;
 	text-indent: 0;
 }
-.crm-container .collapsed .crm-accordion-body,
-.crm-container .crm-collapsible.collapsed .collapsible-title+*,
+.crm-container div.collapsed .crm-accordion-body,
+.crm-container div.crm-collapsible.collapsed .collapsible-title+*,
 .crm-container tr.hiddenElement {
 	display: none;
 }
@@ -76,15 +77,14 @@
 .crm-container .crm-accordion-header,
 .crm-container .crm-collapsible .collapsible-title,
 .crm-container span.collapsed,
-.crm-container a.collapsed,
 .crm-container .crm-expand-row,
 .af-collapsible > .af-title{
 	cursor: var(--hover-clickable);
 	padding: var(--m2) var(--m3);
 	border-radius: var(--roundness) var(--roundness) 0 0;
 	background-color: var(--expand-header-bg);
-   font-weight: var(--crm-bold-weight);
-   font-family: var(--crm-font-bold);
+	font-weight: var(--crm-bold-weight);
+	font-family: var(--crm-font-bold);
 }
 .crm-container .crm-accordion-wrapper.collapsed .crm-accordion-header,
 .crm-container .crm-collapsible.collapsed .collapsible-title,
@@ -111,7 +111,8 @@
 
 /* Body */
 
-.crm-container .crm-accordion-wrapper .crm-accordion-body {
+.crm-container .crm-accordion-wrapper .crm-accordion-body,
+.crm-container .crm-collapsible .crm-summary-block {
 	border-radius: 0 0 var(--roundness) var(--roundness);
 	border: var(--expand-body-border);
 	padding: var(--expand-body-padding);
@@ -125,4 +126,18 @@
 .crm-container .crm-master-accordion-header + .crm-accordion-body {
 	border: var(--expand-body2-border);
 	background-color: var(--expand-body2-bg);
+}
+
+/* Temp CSS to facilitate the build and testing, place for things lacking a home */
+
+#crm-container {
+	position: absolute;
+	width: calc(100% - 4rem);
+	left: 0;
+	padding: 2rem;
+}
+.crm-container table,
+.crm-container tr,
+.crm-container .panel {
+	background: var(--background);
 }
