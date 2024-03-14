@@ -26,6 +26,12 @@
 	padding: 0; 
 }
 
+/* JQueryUI resets */
+
+.ui-tabs .ui-tabs-panel {
+    padding: inherit;
+}
+
 /*
       A C C E S S I B I L I T Y
                                     */
@@ -85,6 +91,11 @@ strong em, em strong {
 /*
       P O S I T I O N
                         */
+
+.crm-flex-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
 
 .css_right {
     float: right;

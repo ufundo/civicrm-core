@@ -38,7 +38,7 @@
 .crm-container .crm-master-accordion-header:before,
 .crm-container .expanded::before,
 .crm-container a.collapsed::before {
-	font-size: var(--default-font-size);
+	font-size: var(--crm-font-size);
 	font-style: normal;
 	line-height: 1.35;
 	text-rendering: auto;
@@ -72,30 +72,40 @@
 }
 
 
-/* Header */
+/* Header  - NB: use of #crm-container is typically used to override external css files, e.g. dashboard.css */
 
 .crm-container .crm-accordion-header,
 .crm-container .crm-collapsible .collapsible-title,
 .crm-container span.collapsed,
 .crm-container .crm-expand-row,
-.af-collapsible > .af-title{
+.af-collapsible > .af-title,
+#crm-container .crm-dashlet-header {
 	cursor: var(--hover-clickable);
 	padding: var(--m2) var(--m3);
 	border-radius: var(--roundness) var(--roundness) 0 0;
 	background-color: var(--expand-header-bg);
 	font-weight: var(--crm-bold-weight);
 	font-family: var(--crm-font-bold);
-}
+	color: var(--expand-header-color);
+} 
 .crm-container .crm-accordion-wrapper.collapsed .crm-accordion-header,
 .crm-container .crm-collapsible.collapsed .collapsible-title,
-.af-collapsible.af-collapsed > .af-title {
+.af-collapsible.af-collapsed > .af-title,
+#crm-container .crm-dashlet,
+.crm-container .crm-dashlet-header {
 	border-radius: var(--roundness);
 }
 #crm-container .widget-content .crm-accordion-header,
 .crm-container .crm-accordion-inner .crm-accordion-header
-.crm-container .crm-collapsible .collapsible-title {
+.crm-container .crm-collapsible .collapsible-title,
+#crm-container .crm-dashlet-header h3 {
 	background-color: transparent;
 	color: var(--expand-header-color);
+	font-size: var(--crm-font-size);
+}
+#crm-container .crm-dashlet-header a {
+	color: var(--expand-header-color);
+	text-decoration: none;
 }
 .crm-container .crm-accordion-wrapper .crm-master-accordion-header,
 .crm-container .crm-collapsible legend.collapsible-title {
@@ -123,7 +133,8 @@
 .crm-container .crm-collapsible .crm-summary-block {
 	padding: var(--expand-body-padding);
 }
-.crm-container .crm-master-accordion-header + .crm-accordion-body {
+.crm-container .crm-master-accordion-header + .crm-accordion-body,
+.crm-container .crm-dashlet {
 	border: var(--expand-body2-border);
 	background-color: var(--expand-body2-bg);
 }

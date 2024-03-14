@@ -3797,7 +3797,7 @@
 #bootstrap-theme .fade.in {
 	opacity: 1;
 }
-
+/*
 #bootstrap-theme .collapse {
 	display: none;
 }
@@ -3825,7 +3825,7 @@
 	-webkit-transition-timing-function: ease;
 	transition-timing-function: ease;
 }
-
+*/
 #bootstrap-theme .caret {
 	display: inline-block;
 	width: 0;

@@ -59,7 +59,7 @@
 /* Expand/collapse icons */
 
 .crm-container details > summary::before {
-	font-size: var(--default-font-size);
+	font-size: var(--crm-font-size);
 	content: var(--expand-icon);
 	color: var(--expand-icon-color);
 	font-style: normal;
