@@ -29,8 +29,12 @@ function invoke() {
   print CRM_Core_Invoke::invoke($args);
 }
 
-function findStandaloneSettings(): string {
-  return dirname($_SERVER['DOCUMENT_ROOT']) . '/data/civicrm.settings.php';
+function findStandaloneSettings(): ?string {
+  $pathSettingsHelper = \Civi\Setup\StandalonePathSettings::defaultSetup();
+
+  $settingsPath = $pathSettingsHelper->getPath('settings');
+
+  return file_exists($settingsPath) ? $settingsPath : NULL;
 }
 
 function findStandaloneCore(): ?string {
@@ -48,8 +52,8 @@ function findStandaloneCore(): ?string {
 
 function findStandaloneAutoload(): ?string {
   $candidates = [
-    implode(DIRECTORY_SEPARATOR, [dirname($_SERVER['DOCUMENT_ROOT']), 'vendor', 'autoload.php']),
     implode(DIRECTORY_SEPARATOR, [$_SERVER['DOCUMENT_ROOT'], 'core', 'vendor', 'autoload.php']),
+    implode(DIRECTORY_SEPARATOR, [dirname($_SERVER['DOCUMENT_ROOT']), 'vendor', 'autoload.php']),
   ];
   foreach ($candidates as $candidate) {
     if (file_exists($candidate)) {
@@ -113,8 +117,10 @@ function standaloneErrorHandler(
   $handlingError = FALSE;
 }
 
-if (file_exists(findStandaloneSettings())) {
-  require_once findStandaloneSettings();
+// check for settings file (indicating site is installed)
+$siteSettingsFile = findStandaloneSettings();
+if ($siteSettingsFile) {
+  require_once $siteSettingsFile;
   set_error_handler('standaloneErrorHandler', E_ALL);
   invoke();
 }
