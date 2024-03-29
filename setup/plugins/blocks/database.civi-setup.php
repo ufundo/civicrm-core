@@ -22,7 +22,15 @@ if (!defined('CIVI_SETUP')) {
       return;
     }
 
-    $webDefault = ['server' => '127.0.0.1:3306', 'database' => 'civicrm', 'username' => '', 'password' => ''];
+    $dbHost  = getenv('CIVICRM_DB_HOST') ?: '127.0.0.1';
+    $dbPort  = getenv('CIVICRM_DB_PORT') ?: '3306';
+    $webDefault = [
+      'server' => $dbHost . ':' . $dbPort,
+      'username' => getenv('CIVICRM_DB_USER') ?: '',
+      'database' => getenv('CIVICRM_DB_NAME') ?: '',
+      // should we expose the env var through the web installer ui? 'password' => getenv('CIVICRM_DB_PASS') ?: '',
+      'password' => '',
+    ];
 
     if ($e->getMethod() === 'GET') {
       $e->getModel()->db = $webDefault;

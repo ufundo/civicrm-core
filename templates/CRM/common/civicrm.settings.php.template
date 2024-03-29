@@ -73,6 +73,27 @@ if (!defined('CIVICRM_UF_DSN') && CIVICRM_UF !== 'UnitTests') {
   define( 'CIVICRM_UF_DSN'           , 'mysql://%%CMSdbUser%%:%%CMSdbPass%%@%%CMSdbHost%%/%%CMSdbName%%?new_link=true%%CMSdbSSL%%');
 }
 
+/**
+ * By default, Standalone uses a helper to set paths, which provides some standalone-appropriate defaults
+ * and allows for overriding paths using env vars.
+ *
+ * If you don't like this, you can remove it, or override any individual settings further down this file
+ *
+ */
+
+if (CIVICRM_UF === 'Standalone') {
+  $pathSettingsHelper = \Civi\Setup\StandalonePathSettings::defaultSetup();
+  $civicrm_paths = array_merge($civicrm_paths ?? [], $pathSettingsHelper->getCorePathConfig());
+  $civicrm_setting['domain'] = array_merge($civicrm_setting['domain'] ?? [], $pathSettingsHelper->getDomainLevelPathSettings());
+  $civicrm_root = $pathSettingsHelper->getPath('core');
+  if (!defined('CIVICRM_TEMPLATE_COMPILEDIR')) {
+    define('CIVICRM_TEMPLATE_COMPILEDIR', $pathSettingsHelper->getPath('compile'));
+  }
+  if (!defined('CIVICRM_UF_BASEURL')) {
+    define( 'CIVICRM_UF_BASEURL'      ,  $pathSettingsHelper->getUrl('web_root'));
+  }
+}
+
 // %%extraSettings%%
 
 /**
@@ -181,7 +202,8 @@ if (!defined('CIVICRM_LOGGING_DSN')) {
  *
  */
 
-$civicrm_root = '%%crmRoot%%';
+$civicrm_root = $civicrm_root ?: '%%crmRoot%%';
+
 if (!defined('CIVICRM_TEMPLATE_COMPILEDIR')) {
   define( 'CIVICRM_TEMPLATE_COMPILEDIR', '%%templateCompileDir%%');
 }
