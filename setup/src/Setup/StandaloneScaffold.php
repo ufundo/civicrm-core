@@ -52,7 +52,9 @@ class StandaloneScaffold {
     $dirs = [
       "$destDir",
       "$destDir/web",
-      "$destDir/data",
+      "$destDir/web/public",
+      "$destDir/web/private",
+      "$destDir/web/extensions",
     ];
 
     foreach ($dirs as $dir) {
@@ -62,7 +64,6 @@ class StandaloneScaffold {
     }
 
     $files = [
-      'civicrm.config.php.standalone.txt' => 'civicrm.config.php.standalone',
       'index.php.txt' => 'web/index.php',
       'htaccess.txt' => 'web/.htaccess',
     ];
