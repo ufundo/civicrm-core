@@ -22,7 +22,7 @@ namespace Civi\Setup;
 
  class StandalonePathSettings {
 
-  public const DEFAULT_PATHS = [
+  public const DEFAULT_PATHS_WITHOUT_URLS = [
     // default from PHP SERVER VARS
     'project_root' => null,
 
@@ -37,11 +37,11 @@ namespace Civi\Setup;
     'l10n'         => '[private]/translations',
   ];
 
-  public const DEFAULT_WEB_PATHS = [
+  public const DEFAULT_PATHS_WITH_URLS = [
     // default from PHP SERVER VARS
     'web_root'    => null,
 
-    // public (note: "files" in $m->paths)
+    // public (note: corresponds to civicrm.files)
     'public'      => '[web_root]/public',
     // public subdirs
     'public_uploads'     => '[public]/uploads',
@@ -57,14 +57,45 @@ namespace Civi\Setup;
     'setup'       => '[core]/setup',
   ];
 
-  protected array $paths = [];
+  protected array $defaultPathsWithoutUrls;
+  protected array $defaultPathsWithUrls;
 
-//  public function __construct(string $projectRootPath, ?string $webRootPath, string $webRootUrl)
-//  {
-//    $this->projectRootPath = $projectRootPath;
-//    $this->webRootUrl = $webRootUrl;
-//    $this->webRootPath = $webRootPath ?? $projectRootPath;
-//  }
+  protected array $configuredPaths = [];
+
+
+  public function __construct(array $defaultPathsWithoutUrls = [], array $defaultPathsWithUrls = [])
+  {
+    $this->defaultPathsWithoutUrls = $defaultPathsWithoutUrls ?: self::DEFAULT_PATHS_WITHOUT_URLS;
+    $this->defaultPathsWithUrls = $defaultPathsWithUrls ?: self::DEFAULT_PATHS_WITH_URLS;
+  }
+
+  public function setKeys(array $pathKeysToSetInOrder, array $urlKeysToSetInOrder)
+  {
+    foreach ($pathKeysToSetInOrder as $key) {
+      $this->setPathFromEnvVarOrDefault($key);
+    }
+
+    foreach ($urlKeysToSetInOrder as $key) {
+      $this->setUrlFromEnvVarOrDerive($key);
+    }
+  }
+
+  public function setAllKeys()
+  {
+    $this->setKeys(
+      array_keys($this->defaultPathsWithoutUrls + $this->defaultPathsWithUrls),
+      array_keys($this->defaultPathsWithUrls)
+    );
+  }
+
+  public static function defaultSetup(): StandalonePathSettings
+  {
+    $settings = new self();
+
+    $settings->setAllKeys();
+
+    return $settings;
+  }
 
   protected function setPath(string $key, string $value)
   {
@@ -79,13 +110,13 @@ namespace Civi\Setup;
       throw new \ValueError('Cannot set empty string path for key: ' . $key);
     }
 
-    $this->paths[$key] = $this->paths[$key] ?? [];
-    $this->paths[$key]['path'] = $value;
+    $this->configuredPaths[$key] = $this->configuredPaths[$key] ?? [];
+    $this->configuredPaths[$key]['path'] = $value;
   }
 
   public function getPath(string $key): string
   {
-    $path = $this->paths[$key]['path'] ?? null;
+    $path = $this->configuredPaths[$key]['path'] ?? null;
     if (!$path) {
       throw new \Exception('No path set for key: ' . $key);
     }
@@ -102,7 +133,7 @@ namespace Civi\Setup;
   protected function replacePathTokens(string $path): string
   {
     // replace any parts which are already set tokens
-    foreach (array_keys($this->paths) as $key) {
+    foreach (array_keys($this->configuredPaths) as $key) {
       $token = '[' . $key . ']';
       $tokenValue = $this->getPath($key);
 
@@ -133,7 +164,7 @@ namespace Civi\Setup;
       $path = $_SERVER['DOCUMENT_ROOT'] ?? $this->getPath('project_root');
     }
     else {
-      $path = self::DEFAULT_PATHS[$key] ?? self::DEFAULT_WEB_PATHS[$key] ?? null;
+      $path = $this->defaultPathsWithoutUrls[$key] ?? $this->defaultPathsWithUrls[$key] ?? null;
     }
 
     return $path ?: null;
@@ -165,13 +196,13 @@ namespace Civi\Setup;
     if (!$value) {
       throw new \ValueError('Cannot set empty string url for key: ' . $key);
     }
-    $this->paths[$key] = $this->paths[$key] ?? [];
-    $this->paths[$key]['url'] = $value;
+    $this->configuredPaths[$key] = $this->configuredPaths[$key] ?? [];
+    $this->configuredPaths[$key]['url'] = $value;
   }
 
   public function getUrl(string $key): string
   {
-    $url = $this->paths[$key]['url'] ?? null;
+    $url = $this->configuredPaths[$key]['url'] ?? null;
     if (!$url) {
       throw new \Exception('No url set for key: ' . $key);
     }
@@ -240,28 +271,6 @@ namespace Civi\Setup;
     $this->setUrl($key, $url);
   }
 
-  public static function setup(array $pathKeysToSetInOrder, array $urlKeysToSetInOrder): StandalonePathSettings
-  {
-    $settings = new self();
-
-    foreach ($pathKeysToSetInOrder as $key) {
-      $settings->setPathFromEnvVarOrDefault($key);
-    }
-
-    foreach ($urlKeysToSetInOrder as $key) {
-      $settings->setUrlFromEnvVarOrDerive($key);
-    }
-
-    return $settings;
-  }
-
-  public static function defaultSetup(): StandalonePathSettings
-  {
-    $pathKeys = array_keys(self::DEFAULT_PATHS + self::DEFAULT_WEB_PATHS);
-    $urlKeys = array_keys(self::DEFAULT_WEB_PATHS);
-
-    return self::setup($pathKeys, $urlKeys);
-  }
 
   public function getCorePathConfig()
   {
@@ -278,7 +287,7 @@ namespace Civi\Setup;
     $mapped = [];
 
     foreach ($keyMap as $theirKey => $ourKey) {
-      $mapped[$theirKey] = $this->paths[$ourKey];
+      $mapped[$theirKey] = $this->configuredPaths[$ourKey];
     }
 
     return $mapped;
