@@ -18,12 +18,9 @@
 #crm-container table th {
 	background-color: transparent;
 }
-#crm-container td {
-	height: auto;
-}
-.crm-container details {
-	border: 0 solid transparent;
-	padding: 0; 
+.crm-container ul#actions {
+    list-style: none;
+    margin: 0;
 }
 
 /* JQueryUI resets */
@@ -59,8 +56,8 @@
 .crm-container, #crm-container {
     font-family: var(--crm-font);
     font-size: var(--crm-font-size);
-    color: var(--text);
-    background: var(--background);
+    color: var(--crm-text);
+    background: var(--crm-background);
 }
 
 .crm-container table,
@@ -69,7 +66,7 @@
 #crm-container p,
 #crm-container ul {
     font-size: var(--crm-font-size);
-    color: var(--text);
+    color: var(--crm-text);
 }
 
 /* Core type */
@@ -87,6 +84,24 @@ strong em, em strong {
     font-weight: var(--crm-bold-weight);
     font-style: var(--crm-italic-style);
 }
+
+/* 
+      L I N K 
+                 */
+
+.crm-container a {
+	color: var(--crm-link);
+	text-decoration: none;
+}
+.crm-container a:hover, 
+.crm-container a:focus {
+	color: var(--crm-link-hover);
+	text-decoration: var(--crm-link-decoration);
+}
+.crm-container a:focus {
+	outline: 5px auto -webkit-focus-ring-color;
+	outline-offset: -2px;
+} */
 
 /*
       P O S I T I O N

@@ -1,0 +1,5 @@
+/* Common page styling */
+
+.crm-container .crm-form-block {
+    box-shadow: var(--crm-block-shadow);
+}

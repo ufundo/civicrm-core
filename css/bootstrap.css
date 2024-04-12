@@ -1,1 +1,30 @@
 @import url(_bootstrap.css);
+
+/*
+      B U T T O N S
+                              */
+
+/* Namespaced attributes (deprecate?) */
+
+#bootstrap-theme .btn-link {
+	font-weight: 400;
+	color: var(--crm-link);
+	border-radius: 0;
+}
+#bootstrap-theme .btn-link, #bootstrap-theme .btn-link:active, #bootstrap-theme .btn-link.active, #bootstrap-theme .btn-link[disabled], fieldset[disabled] #bootstrap-theme .btn-link {
+	background-color: transparent;
+	box-shadow: none;
+}
+#bootstrap-theme .btn-link, #bootstrap-theme .btn-link:hover, #bootstrap-theme .btn-link:focus, #bootstrap-theme .btn-link:active {
+	border-color: transparent;
+}
+#bootstrap-theme .btn-link:hover, #bootstrap-theme .btn-link:focus {
+	color: var(--crm-link-hover);
+	text-decoration: var(--crm-link-decoration);
+	background-color: transparent;
+}
+#bootstrap-theme .btn-link[disabled]:hover, #bootstrap-theme .btn-link[disabled]:focus, fieldset[disabled] #bootstrap-theme .btn-link:hover, fieldset[disabled] #bootstrap-theme .btn-link:focus {
+	color: var(--crm-gray-800);
+	text-decoration: none;
+}
+

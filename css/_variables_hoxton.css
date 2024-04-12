@@ -1,0 +1,180 @@
+/* River Lee branch: Hoxton Square (aka Shoreditch 2.0) */
+
+@import url('_fonts.css'); 
+:root{
+    
+/* FONTS */
+
+--crm-system-fonts: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",sans-serif;
+--crm-font: "Civitype", "Open Sans", var(--crm-system-fonts);
+--crm-font-bold:  "Civitype-bold", var(--crm-system-fonts);
+--crm-bold-weight: normal;
+--crm-font-italic:  "Civitype-italic", var(--crm-system-fonts);
+--crm-italic-style: normal;--crm-font-bold-italic:  "Civitype", var(--crm-system-fonts);
+
+/* COLOUR */
+
+color-scheme: light dark;
+
+/* COLOUR NAMES */
+--crm-darkest: #0a0a0a;
+--crm-gray-900: #393a3f;
+--crm-gray-800: #55565b;
+--crm-gray-700: #75767b;
+--crm-gray-600: #828388;
+--crm-gray-500: #919297;
+--crm-gray-400: #adaeb3;
+--crm-gray-300: #d3dee2;
+--crm-gray-200: #cad5d7;
+--crm-gray-100: #ebeff0;
+--crm-gray-050: #f3f6f7;
+--crm-gray-025: #f9faff;
+--transparent-black: rgba(0, 0, 0, 0.05);
+--crm-blue: #0071bd;
+--crm-blue-light: #dff0f4;
+--crm-blue-dark: #005c99;
+--crm-purple: #4d4d69;
+--crm-purple-dark: #3e3e54;
+--crm-green: #44cb7e;
+--crm-green-light: #bcecd1;
+--crm-red: #cf3458;
+--crm-red-light: #ecb0be;
+--crm-amber: #e6ab5e;
+--crn-amber-light: #fbf0e2;
+--crm-yellow: #f8e80b;
+--crm-yellow-light: #ffffcc;
+--crm-teal: #399389;
+--crm-dark-teal: #3e8079;
+
+/* PRACTICAL COLOURS */
+
+--crm-text: #464354;
+--crm-light-text: #fff;
+--crm-dark-text: var(--crm-text);
+--crm-link: var(--crm-blue);
+--crm-link-hover: var(--crm-blue-dark);
+--crm-background: #fff;
+--crm-background2: var(--crm-gray-050);
+--crm-background3: var(--crm-gray-100);
+--crm-background4: var(--crm-gray-200);
+--crm-primary: var(--crm-blue); 
+--crm-primary-hover: var(--crm-blue-dark);
+--crm-primary-text: var(--crm-light-text);
+--crm-secondary: var(--crm-purple);
+--crm-secondary-hover: var(--crm-purple-dark);
+--crm-secondary-text: var(--crm-light-text);
+--crm-success: var(--crm-green);
+--crm-success-text: var(--crm-dark-text);
+--crm-alert: var(--crm-red);
+--crm-alert-text: var(--crm-light-text);
+--crm-warning: var(--crm-amber);
+--crm-warning-text: var(--crm-dark-text);
+--crm-info: var(--crm-blue);
+--crm-info-text: var(--crm-light-text);
+
+/* SHADOWS */
+
+--crm-block-shadow: 0 3px 18px 0 rgba(48,40,40,.25);
+--crm-body-inset: inset 0 10px 8px -10px rgba(0,0,0,.15),inset 0 -11px 8px -9px rgba(0,0,0,.15);
+
+/* SIZES - temporary */
+--roundness: 0;
+--xs: 0.1rem;
+--xs1: 0.125rem;
+--xs2: 0.15rem;
+--s: 0.25rem;
+--s1: 0.275rem;
+--s2: 0.325rem;
+--s3: 0.375rem;
+--m: 0.5rem;
+--m1: 0.625rem;
+--m2: 0.75rem;
+--m3: 0.875rem;
+--r: 1rem;
+--r1: 1.125rem;
+--r2: 1.25rem;
+--r3: 1.375rem;
+--r4: 1.5rem;
+--l: 2rem;
+--xl: 3rem;
+--xxl: 4rem;
+
+/* MOUSE EVENTS */
+--hover-clickable: pointer;
+
+/* BUTTONS */
+--btn-box-shadow: none;
+--btn-border: 0 solid transparent;
+--btn-txt-transform: inherit;
+--btn-radius: 2px;
+--btn-padding: var(--m) var(--r2);
+--btn-align: center;
+--btn-icon-spacing: var(--s);
+
+/* TYPE */
+
+--crm-font-size: var(--r);
+--crm-link-decoration: none;
+
+/* TABLES */
+--table-row-line: 1px dotted var(--dark-gray);
+--table-column-line: 0 solid transparent;
+--table-font-size: var(--crm-font-size);
+--table-header-line: 1px solid var(--dark-gray);
+--table-outside-border: 0 solid transparent;
+--table-header-bg: #fff;
+--table-header-txt: inherit;
+--table-even-row: var(--vvv-light-gray);
+--table-odd-row: transparent;
+
+/* FORMS */
+--input-width: 21ch; /* uses character width to make input width propotional to font-size */
+
+/* ACCORDIONS */
+--expand-icon: "\f105"; /* unicode value for FontAwesome icon */
+--expand-icon-color: ;
+--expand-icon-spacing: var(--m3);
+--expand-transform: rotate(90deg);
+--expand-transition: transform .3s; 
+--expand-header-bg: var(--crm-background2);
+--expand-header-bg-active: var(--crm-background3);
+--expand-header-color: var(--crm-text);
+--expand-header-padding: var(--m2) var(--m3);
+--expand-header-weight: bold;
+--expand-header-border: 1px solid var(--crm-gray-300);
+--expand-header-border-width: 0 0 1px 0;
+--expand-body-bg: var(--crm-background);
+--expand-body-box-shadow: var(--crm-body-inset);
+--expand-body-border:;
+--expand-border-width:;
+--expand-body-padding: var(--r);
+--expand-body2-bg: transparent;
+--expand-header2-bg: var(--crm-primary);
+--expand-header2-color: var(--crm-light-text);
+--expand-header2-weight: bold;
+--expand-2-border: 1px solid var(--crm-background3);
+--expand-2-body-padding: 0;
+--expand-gap: 0;
+
+/* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
+}
+
+/* light/dark mode settings */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --crm-text: #fff;
+        --crm-background: #0a0a0a;
+        --crm-background2: #222;
+        --crm-background3: #555;
+        --crm-background4: #262626;
+        --crm-primary: #43757A; 
+        --crm-secondary: #B24B4F;
+        --crm-success: #58a458;
+        --crm-red-alert: #B24B4F;
+        --crm-blue-info: #2C99A4;
+
+        /* And others */
+        --expand-border: 1px solid #fff;
+    }
+}

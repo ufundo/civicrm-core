@@ -1,0 +1,180 @@
+/* River Lee branch: Washington Square (aka Greenwich 2.0) */
+
+:root { 
+
+/* FONTS */
+
+--crm-font:;
+--crm-font-bold:;
+--crm-bold-weight: bold;
+--crm-font-italic:;
+--crm-italic-style: italic;
+--crm-font-bold-italic:;
+    
+/* COLOUR */
+
+color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Safari)
+
+/* COLOUR NAMES */
+--crm-darkest: #0a0a0a;
+--crm-gray-900: #2f2f2e;
+--crm-gray-800: #55565b;
+--crm-gray-700: #70716b;
+--crm-gray-600: #828388;
+--crm-gray-500: #919297;
+--crm-gray-400: #adaeb3;
+--crm-gray-300: #d3dee2;
+--crm-gray-200: #c2c0c0;
+--crm-gray-100: #e2e1e1;
+--crm-gray-050: #f3f6f7;
+--crm-gray-025: #f0f0f0;
+--transparent-black: rgba(0, 0, 0, 0.05);
+--crm-blue: #2C99A4;
+--crm-blue-light: #dff0f4;
+--crm-blue-dark: #005c99;
+--crm-purple: #4d4d69;
+--crm-purple-dark: #3e3e54;
+--crm-green: #58a458;
+--crm-green-light: #CFF0BE;
+--crm-red: #B24B4F;
+--crm-red-light: #ffdddd;
+--crm-amber: #c67605;
+--crn-amber-light: #fbf0e2;
+--crm-yellow: #f8e80b;
+--crm-yellow-light: #ffffcc;
+--crm-teal: #399389;
+--crm-dark-teal: #3e8079;
+
+/* PRACTICAL COLOURS */
+
+--crm-text: #464354;
+--crm-light-text: #fff;
+--crm-dark-text: var(--crm-text);
+--crm-link: var(--crm-blue);
+--crm-link-hover: var(--crm-blue-dark);
+--crm-background: #efefe5;
+--crm-background2: var(--crm-gray-050);
+--crm-background3: var(--crm-gray-100);
+--crm-background4: var(--crm-gray-200);
+--crm-primary: #5d677b; 
+--crm-primary-hover: #3e485b;
+--crm-primary-text: var(--crm-light-text);
+--crm-secondary: var(--crm-purple);
+--crm-secondary-hover: var(--crm-purple-dark);
+--crm-secondary-text: var(--crm-light-text);
+--crm-success: var(--crm-green);
+--crm-success-text: var(--crm-dark-text);
+--crm-alert: var(--crm-red);
+--crm-alert-text: var(--crm-light-text);
+--crm-warning: var(--crm-amber);
+--crm-warning-text: var(--crm-dark-text);
+--crm-info: var(--crm-blue);
+--crm-info-text: var(--crm-light-text);
+
+/* SHADOWS */
+
+--crm-block-shadow:;
+--crm-body-inset:;
+
+/* SIZES - temporary */
+--roundness: 0.25rem;
+--xs: 0.1rem;
+--xs1: 0.125rem;
+--xs2: 0.15rem;
+--s: 0.25rem;
+--s1: 0.275rem;
+--s2: 0.325rem;
+--s3: 0.375rem;
+--m: 0.5rem;
+--m1: 0.625rem;
+--m2: 0.75rem;
+--m3: 0.875rem;
+--r: 1rem;
+--r1: 1.125rem;
+--r2: 1.25rem;
+--r3: 1.375rem;
+--r4: 1.5rem;
+--l: 2rem;
+--xl: 3rem;
+--xxl: 4rem;
+
+/* MOUSE EVENTS */
+
+--hover-clickable: pointer;
+
+/* BUTTONS */
+--btn-box-shadow: none;
+--btn-border: 0 solid transparent;
+--btn-txt-transform: inherit;
+--btn-radius: 2px;
+--btn-padding: var(--m) var(--r2);
+--btn-align: center;
+--btn-icon-spacing: var(--s);
+
+/* TYPE */
+
+--crm-font-size: var(--r);
+--crm-link-decoration: none;
+
+/* TABLES */
+--table-row-line: 1px dotted var(--dark-gray);
+--table-column-line: 0 solid transparent;
+--table-font-size: var(--r);
+--table-header-line: 1px solid var(--dark-gray);
+--table-outside-border: 0 solid transparent;
+--table-header-bg: #fff;
+--table-header-txt: inherit;
+--table-even-row: var(--vvv-light-gray);
+--table-odd-row: transparent;
+
+/* FORMS */
+--input-width: 21ch; /* uses character width to make input width propotional to font-size */
+
+/* ACCORDIONS */
+--expand-icon: "\f0da"; /* unicode value for FontAwesome icon */
+--expand-icon-color: var(--text);
+--expand-icon-spacing: var(--m3);
+--expand-transform: rotate(90deg);
+--expand-transition: transform .3s; 
+--expand-header-bg: var(--crm-primary);
+--expand-header-bg-active: var(--crm-gray-900);
+--expand-header-color: var(--crm-light-text);
+--expand-header-padding: var(--s) var(--m);
+--expand-header-weight: bold;
+--expand-header-border: 1px solid var(--crm-gray-300);
+--expand-header-border-width: 0 0 1px 0;
+--expand-body-bg: var(--crm-background);
+--expand-body-box-shadow:;
+--expand-body-border: 1px solid var(--crm-gray-700);
+--expand-border-width: 0 1px 1px 1px;
+--expand-body-padding: var(--s);
+--expand-body2-bg:;
+--expand-header2-bg:;
+--expand-header2-color: var(--crm-text);
+--expand-header2-weight: normal;
+--expand-2-border:;
+--expand-2-body-padding: 0;
+--expand-gap: var(--xs2) 0 0;
+
+/* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
+}
+
+/* light/dark mode settings */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #fff;
+        --background: var(--crm-blackish);
+        --background2: var(--crm-gray-900);
+        --background3: var(--crm-gray-800);
+        --background4: var(--crm-gray-700);
+
+        /* Not yet changing: */
+        --primary: var(--crm-dark-teal); 
+        --secondary: var(--crm-red);
+        --green-success: var(--crm-green);
+        --red-alert: var(--crm-red);
+        --blue-info: var(--crm-blue);
+
+    }
+}

@@ -40,18 +40,18 @@
 .crm-container a.collapsed::before {
 	font-size: var(--crm-font-size);
 	font-style: normal;
-	line-height: 1.35;
 	text-rendering: auto;
 	text-indent: inherit;
 	font-family: FontAwesome;
 	color: var(--expand-icon-color);
-	width: var(--m3);
-	margin-right: var(--m2);
+    margin-right: var(--expand-icon-spacing);
 	display: inline-block;
+	transform-origin: center center;
 }
 .crm-container .crm-accordion-header::before, 
 .crm-container .collapsible-title::before, 
 .af-collapsible > .af-title::before,
+.crm-dashlet-header .crm-dashlet-collapse.fa-caret-right::before,
 .crm-dashlet-header .crm-dashlet-collapse.fa-caret-down::before,
 .crm-container .crm-master-accordion-header:before,
 .crm-container a.collapsed::before,
@@ -68,9 +68,9 @@
 .af-collapsible.af-collapsed > .af-title::before,
 .crm-container a.collapsed:not(.expanded)::before {
     transform: none;
+	transform-origin: center center;
 	transition: var(--expand-transition);
 }
-
 
 /* Header  - NB: use of #crm-container is typically used to override external css files, e.g. dashboard.css */
 
@@ -81,11 +81,10 @@
 .af-collapsible > .af-title,
 #crm-container .crm-dashlet-header {
 	cursor: var(--hover-clickable);
-	padding: var(--m2) var(--m3);
+	padding: var(--expand-header-padding);
 	border-radius: var(--roundness) var(--roundness) 0 0;
 	background-color: var(--expand-header-bg);
-	font-weight: var(--crm-bold-weight);
-	font-family: var(--crm-font-bold);
+	font-weight: var(--expand-header-weight);
 	color: var(--expand-header-color);
 } 
 .crm-container .crm-accordion-wrapper.collapsed .crm-accordion-header,
@@ -96,7 +95,7 @@
 	border-radius: var(--roundness);
 }
 #crm-container .widget-content .crm-accordion-header,
-.crm-container .crm-accordion-inner .crm-accordion-header
+.crm-container .crm-accordion-inner .crm-accordion-header,
 .crm-container .crm-collapsible .collapsible-title,
 #crm-container .crm-dashlet-header h3 {
 	background-color: transparent;
@@ -107,16 +106,21 @@
 	color: var(--expand-header-color);
 	text-decoration: none;
 }
-.crm-container .crm-accordion-wrapper .crm-master-accordion-header,
-.crm-container .crm-collapsible legend.collapsible-title {
-	background-color: var(--expand-header2-bg);
-}
 .crm-accordion-wrapper .crm-accordion-header.active,
 .crm-accordion-wrapper .crm-accordion-wrapper.collapsed:hover,
 .crm-accordion-wrapper .crm-accordion-wrapper.collapsed:focus,
 .crm-accordion-wrapper .crm-accordion-header:hover,
 .crm-accordion-wrapper .crm-accordion-header.active:hover {
 	background-color: var(--expand-header-bg-active);
+}
+.crm-container .crm-accordion-wrapper .crm-master-accordion-header {
+	background-color: var(--expand-header2-bg);
+	font-weight: var(--expand-header2-weight);
+	color: var(--expand-header2-color);
+}
+.crm-container .crm-accordion-wrapper .crm-master-accordion-header:hover,
+.crm-container .crm-accordion-wrapper .crm-master-accordion-header:focus {
+	background-color: var(--expand-header2-bg);
 }
 
 /* Body */
@@ -127,6 +131,8 @@
 	border: var(--expand-body-border);
 	padding: var(--expand-body-padding);
 	background-color: var(--expand-body-bg);
+	box-shadow: var(--expand-body-box-shadow);
+	animation: crm-details-show .3s ease-in-out;
 }
 .crm-container .ui-tabs-panel .crm-accordion-body > div,
 #crm-container .widget-content .crm-accordion-body,
@@ -138,6 +144,55 @@
 	border: var(--expand-body2-border);
 	background-color: var(--expand-body2-bg);
 }
+
+/*
+      B U T T O N S
+	  For buttons not using .crm-button or .btn or <button>
+                              */
+
+.crm-container a.button,
+.crm-container button,
+.crm-container .ui-button {
+	display: inline-block;
+	text-align: var(--btn-align);
+	white-space: nowrap;
+	vertical-align: middle;
+	touch-action: manipulation;
+	cursor: pointer;
+	background-image: none;
+	border: var(--btn-border);
+	padding: var(--btn-padding);
+	font-size: var(--r);
+	line-height: 1.5;
+	border-radius: var(--btn-radius);
+	user-select: none;
+	margin-bottom: 0;
+}	
+.crm-container .ui-button{
+    background: var(--crm-gray-100);
+    color: var(--crm-dark-text);
+}
+.crm-container .ui-button:hover,
+.crm-container .ui-button:focus,
+[type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover,
+[type="button"]:focus, [type="reset"]:focus, [type="submit"]:focus {
+    background: var(--crm-gray-200);
+}
+.crm-button > input[type="button"],
+.crm-button > input[type="submit"] {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+}
+.crm-container a.button {
+    background: var(--crm-secondary);
+    color: var(--crm-light-text);
+    font-weight: normal;
+}
+.crm-container a.button:hover,
+.crm-container a.button:focus {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-secondary);
+}						  
 
 /* Temp CSS to facilitate the build and testing, place for things lacking a home */
 

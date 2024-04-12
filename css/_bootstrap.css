@@ -5,8 +5,6 @@
 
 /* Needed Bootstrap 3 */
 
-#bootstrap-theme {}
-
 #bootstrap-theme html {
 	font-family: var(--crm-font-fam);
 	-ms-text-size-adjust: 100%;
@@ -34,14 +32,14 @@
 #bootstrap-theme [hidden], #bootstrap-theme template {
 	display: none;
 }
-
+/* 
 #bootstrap-theme a {
 	background-color: transparent;
 }
 
 #bootstrap-theme a:active, #bootstrap-theme a:hover {
 	outline: 0;
-}
+} */
 
 #bootstrap-theme abbr[title] {
 	border-bottom: none;
@@ -113,12 +111,12 @@
 	font-family: monospace, monospace;
 	font-size: 1em;
 }
-
+/* 
 #bootstrap-theme button, #bootstrap-theme input, #bootstrap-theme optgroup, #bootstrap-theme select, #bootstrap-theme textarea {
 	color: inherit;
 	font: inherit;
 	margin: 0;
-}
+} */
 
 #bootstrap-theme button {
 	overflow: visible;
@@ -1363,7 +1361,7 @@
 	font-size: inherit;
 	line-height: inherit;
 }
-
+/* 
 #bootstrap-theme a {
 	color: #2786c2;
 	text-decoration: none;
@@ -1377,7 +1375,7 @@
 #bootstrap-theme a:focus {
 	outline: 5px auto -webkit-focus-ring-color;
 	outline-offset: -2px;
-}
+} */
 
 #bootstrap-theme figure {
 	margin: 0;
@@ -3428,7 +3426,7 @@
 		font-size: 12px;
 	}
 }
-
+/*
 #bootstrap-theme .btn {
 	display: inline-block;
 	margin-bottom: 0;
@@ -3726,33 +3724,6 @@
 	background-color: white;
 }
 
-#bootstrap-theme .btn-link {
-	font-weight: 400;
-	color: #2786c2;
-	border-radius: 0;
-}
-
-#bootstrap-theme .btn-link, #bootstrap-theme .btn-link:active, #bootstrap-theme .btn-link.active, #bootstrap-theme .btn-link[disabled], fieldset[disabled] #bootstrap-theme .btn-link {
-	background-color: transparent;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-}
-
-#bootstrap-theme .btn-link, #bootstrap-theme .btn-link:hover, #bootstrap-theme .btn-link:focus, #bootstrap-theme .btn-link:active {
-	border-color: transparent;
-}
-
-#bootstrap-theme .btn-link:hover, #bootstrap-theme .btn-link:focus {
-	color: #1a5a82;
-	text-decoration: underline;
-	background-color: transparent;
-}
-
-#bootstrap-theme .btn-link[disabled]:hover, #bootstrap-theme .btn-link[disabled]:focus, fieldset[disabled] #bootstrap-theme .btn-link:hover, fieldset[disabled] #bootstrap-theme .btn-link:focus {
-	color: #999;
-	text-decoration: none;
-}
-
 #bootstrap-theme .btn-lg, #bootstrap-theme .btn-group-lg > .btn {
 	padding: 14px 16px;
 	font-size: 18px;
@@ -3785,7 +3756,7 @@
 
 #bootstrap-theme input[type="submit"].btn-block, #bootstrap-theme input[type="reset"].btn-block, #bootstrap-theme input[type="button"].btn-block {
 	width: 100%;
-}
+}*/
 
 #bootstrap-theme .fade {
 	opacity: 0;

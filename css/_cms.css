@@ -16,6 +16,28 @@
 
 /* D9 Claro */
 
+#crm-container td {
+	height: auto;
+}
+.crm-container details {
+	border: 0 solid transparent;
+	padding: 0; 
+}
+.crm-container p {
+    margin: inherit;
+}
+.button:not(:focus) {
+    box-shadow: none;
+}
+header.content-header {
+    margin-bottom: 0;
+    background-color: var(--crm-background);
+}
+main.page-content {
+    margin-top: 0;
+}
+
+
 /******************
    JOOMLA
 *******************/
