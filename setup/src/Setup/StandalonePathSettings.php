@@ -271,8 +271,15 @@ namespace Civi\Setup;
     $this->setUrl($key, $url);
   }
 
+  protected function getPathAndUrlIfSet(string $key): array
+  {
+    return array_filter([
+      'path' => $this->getPath($key),
+      'url' => array_key_exists($key, $this->defaultPathsWithUrls) ? $this->getUrl($key) : null,
+    ]);
+  }
 
-  public function getCorePathConfig()
+  public function getCorePathConfig(): array
   {
     $keyMap = [
       'cms.root' => 'web_root',
@@ -287,16 +294,20 @@ namespace Civi\Setup;
     $mapped = [];
 
     foreach ($keyMap as $theirKey => $ourKey) {
-      $mapped[$theirKey] = $this->configuredPaths[$ourKey];
+      $mapped[$theirKey] = $this->getPathAndUrlIfSet($ourKey);
     }
 
     return $mapped;
   }
 
-  public function getDomainLevelPathSettings()
+  public function getUserFrameworkResourceUrl(): string
   {
-    $userFrameworkResourceUrl = (\Composer\InstalledVersions::isInstalled('civicrm/civicrm-asset-plugin'))
+    return (\Composer\InstalledVersions::isInstalled('civicrm/civicrm-asset-plugin'))
       ? $this->getUrl('public') . '/assets/civicrm/core' : $this->getUrl('core');
+  }
+
+  public function getDomainLevelPathSettings(): array
+  {
 
     return [
       'extensionsDir' => $this->getPath('extensions'),
@@ -305,7 +316,7 @@ namespace Civi\Setup;
       'imageUploadURL' => $this->getUrl('public_uploads'),
       'uploadDir' => $this->getPath('tmp'),
       'customFileUploadDir' => $this->getPath('private_uploads'),
-      'userFrameworkResourceURL' => $userFrameworkResourceUrl,
+      'userFrameworkResourceURL' => $this->getUserFrameworkResourceUrl(),
     ];
   }
 
@@ -315,9 +326,16 @@ namespace Civi\Setup;
    */
   public function setPathsOnInstallerModel(&$model)
   {
-    $model->paths = $this->getCorePathConfig();
+  //  $model->paths = $this->getCorePathConfig();
 
-    $model->mandatorySettings = $this->getDomainLevelPathSettings();
+  //  $model->mandatorySettings = $this->getDomainLevelPathSettings();
+
+    $model->paths = [
+      'civicrm.files' => $this->getPathAndUrlIfSet('public_uploads'),
+    ];
+    $model->mandatorySettings = [
+      'userFrameworkResourceURL' => $this->getUserFrameworkResourceUrl(),
+    ];
 
     // set old style settings on the model as well
     $model->cmsBaseUrl = $this->getUrl('web_root');
