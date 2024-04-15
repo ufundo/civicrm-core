@@ -1,0 +1,43 @@
+.crm-container .help, 
+.crm-container #help,
+.crm-container .status,
+.crm-container .alert,
+.crm-container .alert-success {
+    background-color: var(--crm-alert-background-help);
+    border: var(--crm-alert-border-width) solid var(--crm-alert-border-help);
+    color: var(--crm-alert-text-help);
+    margin: var(--crm-alert-margin);
+    padding: var(--crm-alert-padding);
+    border-radius: var(--crm-roundness);
+}
+.crm-container .status,
+.crm-container .alert-warning {
+    background-color: var(--crm-alert-background-warning);
+    border-color: var(--crm-alert-border-warning);
+    color: var(--crm-alert-text-warning);
+}
+.crm-container .alert-info {
+    background-color: var(--crm-alert-background-info);
+    border-color: var(--crm-alert-border-info);
+    color: var(--crm-alert-text-info);
+}
+.crm-container .alert-danger {
+    background-color: var(--crm-alert-background-danger);
+    border-color: var(--crm-alert-border-danger);
+    color: var(--crm-alert-text-danger);
+}
+.crm-container .help a, 
+.crm-container .messages a,
+.crm-container .btn {
+    color: var(--crm-link);
+    text-decoration: var(--crm-link-decoration);
+}
+.crm-container .help a:hover,
+.crm-container .messages a:hover, 
+.crm-container .help a:focus,
+.crm-container .messages a:focus,
+.crm-container .btn:hover,
+.crm-container .btn:focus {
+	color: var(--crm-link-hover) !important; 
+	text-decoration: var(--crm-link-decoration-hover); /* important used for Drupal Claro */
+}

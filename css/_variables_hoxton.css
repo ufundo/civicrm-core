@@ -40,7 +40,7 @@ color-scheme: light dark;
 --crm-red: #cf3458;
 --crm-red-light: #ecb0be;
 --crm-amber: #e6ab5e;
---crn-amber-light: #fbf0e2;
+--crm-amber-light: #fbf0e2;
 --crm-yellow: #f8e80b;
 --crm-yellow-light: #ffffcc;
 --crm-teal: #399389;
@@ -78,7 +78,7 @@ color-scheme: light dark;
 --crm-body-inset: inset 0 10px 8px -10px rgba(0,0,0,.15),inset 0 -11px 8px -9px rgba(0,0,0,.15);
 
 /* SIZES - temporary */
---roundness: 0;
+--crm-roundness: 2px;
 --xs: 0.1rem;
 --xs1: 0.125rem;
 --xs2: 0.15rem;
@@ -99,6 +99,12 @@ color-scheme: light dark;
 --xl: 3rem;
 --xxl: 4rem;
 
+/* TYPE */
+
+--crm-font-size: var(--r);
+--crm-link-decoration: none;
+--crm-link-decoration-hover: none;
+
 /* MOUSE EVENTS */
 --hover-clickable: pointer;
 
@@ -108,13 +114,10 @@ color-scheme: light dark;
 --btn-txt-transform: inherit;
 --btn-radius: 2px;
 --btn-padding: var(--m) var(--r2);
+--btn-small-padding: var(--s1) var(--m1);
 --btn-align: center;
 --btn-icon-spacing: var(--s);
 
-/* TYPE */
-
---crm-font-size: var(--r);
---crm-link-decoration: none;
 
 /* TABLES */
 --table-row-line: 1px dotted var(--dark-gray);
@@ -155,6 +158,24 @@ color-scheme: light dark;
 --expand-2-border: 1px solid var(--crm-background3);
 --expand-2-body-padding: 0;
 --expand-gap: 0;
+
+/* ALERTS */
+
+--crm-alert-padding: var(--r) var(--r2);
+--crm-alert-margin: 0 0 var(--m);
+--crm-alert-border-width: 1px;
+--crm-alert-background-help: var(--crm-green-light);
+--crm-alert-border-help: var(--crm-green);
+--crm-alert-text-help: var(--crm-text);
+--crm-alert-background-warning: var(--crm-amber-light);
+--crm-alert-border-warning: var(--crm-amber);
+--crm-alert-text-warning: var(--crm-text);
+--crm-alert-background-info: var(--crm-blue-light);
+--crm-alert-border-info: var(--crm-blue);
+--crm-alert-text-info: var(--crm-text);
+--crm-alert-background-danger: var(--crm-red-light);
+--crm-alert-border-danger: var(--crm-red);
+--crm-alert-text-danger: var(--crm-text);
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }

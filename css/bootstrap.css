@@ -1,5 +1,61 @@
 @import url(_bootstrap.css);
 
+/* NB: Where possible bootstrap classnames are defined with their CiviCRM-equivalent classnames in the component files, without namespacing (so usable anywhere). 
+   Where that's not possible, ie for Bootstrap elements that don't have a Civi equivalent (e.g. 'labels') they are listed here, with namespacing because of possible clashes. 
+   Over time, '_bootstrap.css' should become empty as Bootstrap elements are merged, added below, or dropped */
+
+/* 
+      A L E R T S
+                       */
+
+
+#bootstrap-theme .alert h4 {
+    margin-top: 0;
+    color: inherit;
+}
+#bootstrap-theme .alert .alert-link {
+    font-weight: bold;
+}
+#bootstrap-theme .alert > p, #bootstrap-theme .alert > ul {
+    margin-bottom: 0;
+}
+#bootstrap-theme .alert > p + p {
+    margin-top: 5px;
+}
+#bootstrap-theme .alert-dismissable, #bootstrap-theme .alert-dismissible {
+    padding-right: 35px;
+}
+#bootstrap-theme .alert-dismissable .close, #bootstrap-theme .alert-dismissible .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
+}
+#bootstrap-theme .alert-success hr {
+	border-top-color: #c9e2b3;
+}
+#bootstrap-theme .alert-success .alert-link {
+	color: var(--crm-alert-border-help);
+}
+#bootstrap-theme .alert-info hr {
+	border-top-color: #a6e1ec;
+}
+#bootstrap-theme .alert-info .alert-link {
+	color: var(--crm-alert-border-info);
+}
+#bootstrap-theme .alert-warning hr {
+	border-top-color: #f8e5be;
+}
+#bootstrap-theme .alert-warning .alert-link {
+	color: var(--crm-alert-border-warning);
+}
+#bootstrap-theme .alert-danger hr {
+	border-top-color: #e6c1c7;
+}
+#bootstrap-theme .alert-danger .alert-link {
+	color: var(--crm-alert-border-danger);
+}
+
 /*
       B U T T O N S
                               */
@@ -27,4 +83,83 @@
 	color: var(--crm-gray-800);
 	text-decoration: none;
 }
+
+/* 
+    L A B E L S
+                    */
+
+#bootstrap-theme .label {
+	display: inline;
+	padding: var(--btn-small-padding);
+	font-weight: var(--crm-bold-weight);
+	color: white;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: baseline;
+	border-radius: var(--crm-roundness);
+}
+#bootstrap-theme .label:empty {
+	display: none;
+}
+.btn #bootstrap-theme .label {
+	position: relative;
+	top: -1px;
+}
+#bootstrap-theme a.label:hover, #bootstrap-theme a.label:focus {
+	color: white;
+	text-decoration: none;
+	cursor: pointer;
+}
+#bootstrap-theme .label-default {
+	background-color: var(--crm-text);
+    color: var(--crm-light-text);
+}
+#bootstrap-theme .label-default[href]:hover, #bootstrap-theme .label-default[href]:focus {
+	background-color: gray;
+}
+#bootstrap-theme .label-primary {
+	background: var(--crm-primary);
+    color: var(--crm-primary-text);
+}
+#bootstrap-theme .label-primary[href]:hover, #bootstrap-theme .label-primary[href]:focus {
+	background: var(--crm-primary-hover);
+}
+#bootstrap-theme .label-success {
+	background: var(--crm-success);
+    color: var(--crm-success-text);
+}
+#bootstrap-theme .label-success[href]:hover, #bootstrap-theme .label-success[href]:focus {
+	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-success);
+}
+#bootstrap-theme .label-info {
+	background: var(--crm-info);
+    color: var(--crm-info-text);
+}
+#bootstrap-theme .label-info[href]:hover, #bootstrap-theme .label-info[href]:focus {
+	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-info);
+}
+#bootstrap-theme .label-warning {
+	background: var(--crm-warning);
+    color: var(--crm-warning-text);
+}
+#bootstrap-theme .label-warning[href]:hover, #bootstrap-theme .label-warning[href]:focus {
+	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-warning);
+}
+#bootstrap-theme .label-danger {
+	background: var(--crm-alert);
+    color: var(--crm-alert-text);
+}
+#bootstrap-theme .label-danger[href]:hover, #bootstrap-theme .label-danger[href]:focus {
+	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-alert);
+
+}
+
+
+
+
+
+
+
+
+
 

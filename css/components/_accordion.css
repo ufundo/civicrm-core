@@ -21,12 +21,12 @@
 }
 .crm-container .crm-accordion-bold {
 	background-color: var(--expand-body-bg);
-	border-radius: var(--roundness);
+	border-radius: var(--crm-roundness);
 }
 .crm-container .crm-accordion-bold > summary {
 	background-color: var(--expand-header-bg);
 	color: var(--expand-header-color);
-	border-radius: var(--roundness);	
+	border-radius: var(--crm-roundness);	
 	border: var(--expand-header-border);
 	border-width: var(--expand-header-border-width);
 	font-weight: var(--expand-header-weight);
@@ -36,7 +36,7 @@
 	color: var(--expand-header-color);
 }
 .crm-container .crm-accordion-bold[open] > summary { /* open version of that */
-	border-radius: var(--roundness) var(--roundness) 0 0; 
+	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0; 
 }
 .crm-container .crm-accordion-bold > summary.active { /* active version of that */
 	background-color: var(--expand-header-bg-active);
@@ -49,13 +49,13 @@
 	padding: var(--expand-body-padding);
 	border: var(--expand-body-border);
 	border-width: var(--expand-border-width);
-	border-radius: 0 0 var(--roundness) var(--roundness);
+	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	box-shadow: var(--expand-body-box-shadow);
 	animation: crm-details-show .3s ease-in-out;
 }
 .crm-container .crm-accordion-light {
 	border: var(--expand-2-border);
-	border-radius: var(--roundness);
+	border-radius: var(--crm-roundness);
 	padding: var(--expand-2-body-padding);
 }
 .crm-container .crm-accordion-light > summary {

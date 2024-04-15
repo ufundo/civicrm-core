@@ -3,3 +3,24 @@
 .crm-container .crm-form-block {
     box-shadow: var(--crm-block-shadow);
 }
+
+/* Footer */
+
+#civicrm-footer {
+    margin-top: var(--l);
+    padding: var(--m2);
+    text-align: center;
+    font-size: var(--m2);
+}
+.crm-container #civicrm-footer .status {
+    border-radius: var(--crm-roundness);
+    padding: var(--btn-small-padding);
+    border-color: transparent;
+}
+.crm-container #civicrm-footer .status.crm-error {
+    background-color: var(--crm-alert);
+    color: var(--crm-alert-text);
+}
+.crm-container #civicrm-footer .status.crm-error a {
+    color: var(--crm-alert-text);
+}

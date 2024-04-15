@@ -1,5 +1,5 @@
 .crm-container .btn,
-.crm-button,
+.crm-container .crm-button,
 [type="button"], [type="reset"], [type="submit"] {
     display: inline-block;
     text-align: var(--btn-align);
@@ -18,10 +18,10 @@
     background: var(--crm-primary);
     color: var(--crm-primary-text);
 }
-.crm-button:hover,
-.crm-button:focus,
-.crm-container .btn:hover,
-.crm-container .btn:focus {
+.crm-container .crm-button:hover,
+.crm-container .crm-button:focus,
+.crm-container .crm-container .btn:hover,
+.crm-container .crm-container .btn:focus {
     background: var(--crm-primary-hover);
     color: var(--crm-primary-text);
     text-decoration: none;

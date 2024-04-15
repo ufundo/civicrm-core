@@ -27,7 +27,7 @@
     margin: inherit;
 }
 .button:not(:focus) {
-    box-shadow: none;
+    box-shadow: none !important;
 }
 header.content-header {
     margin-bottom: 0;

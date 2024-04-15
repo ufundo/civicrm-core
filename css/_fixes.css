@@ -60,6 +60,7 @@
 	transform: var(--expand-transform);
 	transform-origin: center center;
 	transition: var(--expand-transition);
+	float: left;
 }
 .crm-container .collapsed .collapsible-title::before,
 .crm-container .collapsed .crm-accordion-header::before, 
@@ -82,7 +83,7 @@
 #crm-container .crm-dashlet-header {
 	cursor: var(--hover-clickable);
 	padding: var(--expand-header-padding);
-	border-radius: var(--roundness) var(--roundness) 0 0;
+	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
 	background-color: var(--expand-header-bg);
 	font-weight: var(--expand-header-weight);
 	color: var(--expand-header-color);
@@ -91,20 +92,27 @@
 .crm-container .crm-collapsible.collapsed .collapsible-title,
 .af-collapsible.af-collapsed > .af-title,
 #crm-container .crm-dashlet,
-.crm-container .crm-dashlet-header {
-	border-radius: var(--roundness);
+#crm-container .crm-dashlet-header {
+	border-radius: var(--crm-roundness);
+}
+#crm-container .crm-dashlet-header:has(.fa-caret-down) {
+	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
+}
+#crm-container .crm-dashlet-header a {
+	padding: var(--expand-body-padding);
+	color: var(--expand-header-color);
+	text-decoration: none;
 }
 #crm-container .widget-content .crm-accordion-header,
 .crm-container .crm-accordion-inner .crm-accordion-header,
 .crm-container .crm-collapsible .collapsible-title,
 #crm-container .crm-dashlet-header h3 {
 	background-color: transparent;
-	color: var(--expand-header-color);
+	color: var(--crm-text);
 	font-size: var(--crm-font-size);
 }
-#crm-container .crm-dashlet-header a {
+#crm-container .crm-dashlet-header h3 {
 	color: var(--expand-header-color);
-	text-decoration: none;
 }
 .crm-accordion-wrapper .crm-accordion-header.active,
 .crm-accordion-wrapper .crm-accordion-wrapper.collapsed:hover,
@@ -125,9 +133,8 @@
 
 /* Body */
 
-.crm-container .crm-accordion-wrapper .crm-accordion-body,
-.crm-container .crm-collapsible .crm-summary-block {
-	border-radius: 0 0 var(--roundness) var(--roundness);
+.crm-container .crm-accordion-wrapper .crm-accordion-body {
+	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	border: var(--expand-body-border);
 	padding: var(--expand-body-padding);
 	background-color: var(--expand-body-bg);
@@ -143,6 +150,27 @@
 .crm-container .crm-dashlet {
 	border: var(--expand-body2-border);
 	background-color: var(--expand-body2-bg);
+}
+.crm-container .crm-dashlet-content {
+	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
+}
+
+/*
+      A L E R T S
+                              */
+
+.crm-container del, 
+.crm-container .crm-is_deleted, 
+.crm-container table.caseSelector td.status-urgent, 
+.crm-container .font-red, 
+.crm-container .status-removed, 
+.crm-container .status-overdue, 
+.crm-container .status-fatal, 
+.crm-container .status-hold, 
+.crm-container .status-past, 
+.crm-contact-deceased, 
+.crm-container .status-warning {
+	color: var(--crm-alert);
 }
 
 /*
@@ -203,7 +231,6 @@
 	padding: 2rem;
 }
 .crm-container table,
-.crm-container tr,
-.crm-container .panel {
-	background: var(--background);
+.crm-container tr {
+	background: var(--crm-background);
 }

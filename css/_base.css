@@ -91,12 +91,12 @@ strong em, em strong {
 
 .crm-container a {
 	color: var(--crm-link);
-	text-decoration: none;
+	text-decoration: var(--crm-link-decoration);
 }
 .crm-container a:hover, 
 .crm-container a:focus {
 	color: var(--crm-link-hover);
-	text-decoration: var(--crm-link-decoration);
+	text-decoration: var(--crm-link-decoration-hover);
 }
 .crm-container a:focus {
 	outline: 5px auto -webkit-focus-ring-color;
@@ -111,7 +111,17 @@ strong em, em strong {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
-
+.crm-container .crm-flex-box {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+.crm-flex-box > * {
+    flex: 1;
+    box-sizing: border-box;
+    min-width: 0;
+}
 .css_right {
     float: right;
 }
+

@@ -18,8 +18,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 /* COLOUR NAMES */
 --crm-darkest: #0a0a0a;
 --crm-gray-900: #2f2f2e;
---crm-gray-800: #55565b;
---crm-gray-700: #70716b;
+--crm-gray-800: #3e3e3e;
+--crm-gray-700: #696969;
 --crm-gray-600: #828388;
 --crm-gray-500: #919297;
 --crm-gray-400: #adaeb3;
@@ -34,13 +34,13 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-blue-dark: #005c99;
 --crm-purple: #4d4d69;
 --crm-purple-dark: #3e3e54;
---crm-green: #58a458;
---crm-green-light: #CFF0BE;
+--crm-green: #b0d730;
+--crm-green-light: #f1f8eb;
 --crm-red: #B24B4F;
 --crm-red-light: #ffdddd;
 --crm-amber: #c67605;
 --crn-amber-light: #fbf0e2;
---crm-yellow: #f8e80b;
+--crm-yellow: #ffff66;
 --crm-yellow-light: #ffffcc;
 --crm-teal: #399389;
 --crm-dark-teal: #3e8079;
@@ -56,18 +56,18 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-background2: var(--crm-gray-050);
 --crm-background3: var(--crm-gray-100);
 --crm-background4: var(--crm-gray-200);
---crm-primary: #5d677b; 
---crm-primary-hover: #3e485b;
+--crm-primary: var(--crm-gray-700); 
+--crm-primary-hover: var(--crm-gray-800); 
 --crm-primary-text: var(--crm-light-text);
---crm-secondary: var(--crm-purple);
---crm-secondary-hover: var(--crm-purple-dark);
+--crm-secondary: #5d677b;
+--crm-secondary-hover: #3e485b;
 --crm-secondary-text: var(--crm-light-text);
 --crm-success: var(--crm-green);
---crm-success-text: var(--crm-dark-text);
+--crm-success-text: var(--crm-light-text);
 --crm-alert: var(--crm-red);
 --crm-alert-text: var(--crm-light-text);
 --crm-warning: var(--crm-amber);
---crm-warning-text: var(--crm-dark-text);
+--crm-warning-text: var(--crm-light-text);
 --crm-info: var(--crm-blue);
 --crm-info-text: var(--crm-light-text);
 
@@ -77,7 +77,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-body-inset:;
 
 /* SIZES - temporary */
---roundness: 0.25rem;
+--crm-roundness: 0.25rem;
 --xs: 0.1rem;
 --xs1: 0.125rem;
 --xs2: 0.15rem;
@@ -98,6 +98,12 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --xl: 3rem;
 --xxl: 4rem;
 
+/* TYPE */
+
+--crm-font-size: var(--r);
+--crm-link-decoration: none;
+--crm-link-decoration-hover: underline;
+
 /* MOUSE EVENTS */
 
 --hover-clickable: pointer;
@@ -106,15 +112,11 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --btn-box-shadow: none;
 --btn-border: 0 solid transparent;
 --btn-txt-transform: inherit;
---btn-radius: 2px;
---btn-padding: var(--m) var(--r2);
+--btn-radius: 3px;
+--btn-padding: var(--xs1) var(--m1);
+--btn-small-padding: var(--xs) var(--s);
 --btn-align: center;
 --btn-icon-spacing: var(--s);
-
-/* TYPE */
-
---crm-font-size: var(--r);
---crm-link-decoration: none;
 
 /* TABLES */
 --table-row-line: 1px dotted var(--dark-gray);
@@ -133,15 +135,15 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 /* ACCORDIONS */
 --expand-icon: "\f0da"; /* unicode value for FontAwesome icon */
 --expand-icon-color: var(--text);
---expand-icon-spacing: var(--m3);
+--expand-icon-spacing: var(--m);
 --expand-transform: rotate(90deg);
 --expand-transition: transform .3s; 
---expand-header-bg: var(--crm-primary);
+--expand-header-bg: var(--crm-secondary);
 --expand-header-bg-active: var(--crm-gray-900);
 --expand-header-color: var(--crm-light-text);
 --expand-header-padding: var(--s) var(--m);
 --expand-header-weight: bold;
---expand-header-border: 1px solid var(--crm-gray-300);
+--expand-header-border: 0 solid transparent;
 --expand-header-border-width: 0 0 1px 0;
 --expand-body-bg: var(--crm-background);
 --expand-body-box-shadow:;
@@ -155,6 +157,24 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --expand-2-border:;
 --expand-2-body-padding: 0;
 --expand-gap: var(--xs2) 0 0;
+
+/* ALERTS */
+
+--crm-alert-padding: var(--m) var(--m2);
+--crm-alert-margin: 0 0 var(--m);
+--crm-alert-border-width: 1px;
+--crm-alert-background-help: var(--crm-green-light);
+--crm-alert-border-help: var(--crm-green);
+--crm-alert-text-help: var(--crm-text);
+--crm-alert-background-warning: var(--crm-yellow-light);
+--crm-alert-border-warning: var(--crm-yellow);
+--crm-alert-text-warning: var(--crm-text);
+--crm-alert-background-info: var(--crm-blue-light);
+--crm-alert-border-info: var(--crm-blue);
+--crm-alert-text-info: var(--crm-text);
+--crm-alert-background-danger: var(--crm-red-light);
+--crm-alert-border-danger: var(--crm-red);
+--crm-alert-text-danger: var(--crm-text);
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }
