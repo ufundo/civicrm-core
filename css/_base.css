@@ -15,7 +15,8 @@
 .crm-container .clear {
 	clear: both;
 }
-#crm-container table th {
+#crm-container table th,
+#crm-container table tr {
 	background-color: transparent;
 }
 .crm-container ul#actions {
@@ -57,7 +58,7 @@
     font-family: var(--crm-font);
     font-size: var(--crm-font-size);
     color: var(--crm-text);
-    background: var(--crm-background);
+    background: var(--crm-page-background);
 }
 
 .crm-container table,

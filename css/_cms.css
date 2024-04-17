@@ -36,6 +36,14 @@ header.content-header {
 main.page-content {
     margin-top: 0;
 }
+.crm-container .form-item,
+.crm-container table {
+    margin-block: inherit;
+}
+.crm-container tr {
+    border-bottom: 0 solid transparent;
+    background: inherit;
+  }
 
 
 /******************

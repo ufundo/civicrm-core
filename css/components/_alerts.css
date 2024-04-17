@@ -35,9 +35,7 @@
 .crm-container .help a:hover,
 .crm-container .messages a:hover, 
 .crm-container .help a:focus,
-.crm-container .messages a:focus,
-.crm-container .btn:hover,
-.crm-container .btn:focus {
+.crm-container .messages a:focus {
 	color: var(--crm-link-hover) !important; 
 	text-decoration: var(--crm-link-decoration-hover); /* important used for Drupal Claro */
 }

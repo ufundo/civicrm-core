@@ -1,7 +1,111 @@
 /* Common page styling */
 
 .crm-container .crm-form-block {
-    box-shadow: var(--crm-block-shadow);
+    box-shadow: var(--crm-form-block-box-shadow);
+    background-color: var(--crm-form-block-background);
+    border-radius: var(--crm-form-block-border-radius);
+    padding: var(--crm-form-block-padding);
+}
+
+/* Panels (taken from Bootstrap3) */
+
+.crm-container .panel {
+    box-shadow: none;
+    background: var(--crm-background);
+    border-radius: var(--crm-roundness);
+    border: none;
+    margin-bottom: var(--1rem);
+}
+.crm-container .panel-body {
+	padding: var(--r);
+}
+.crm-container .panel-heading {
+	padding: var(--m1) var(--r);
+	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
+	border-bottom: 1px solid transparent;
+}
+.crm-container .panel-heading > .dropdown .dropdown-toggle {
+	color: inherit;
+}
+.crm-container .panel-title {
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: var(--r);
+	color: inherit;
+}
+.crm-container .panel-title > a, 
+.crm-container .panel-title > small, 
+.crm-container .panel-title > .small, 
+.crm-container .panel-title > small > a, 
+.crm-container .panel-title > .small > a {
+	color: inherit;
+}
+.crm-container .panel-footer {
+	padding: var(--m1) var(--r);
+    background: var(--crm-background);
+	border-top: 1px solid var(--crm-divider);
+	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
+}
+.crm-container .panel {
+	border-color: var(--crm-gray-300);
+}
+.crm-container .panel > .panel-heading {
+	border-color: var(--crm-gray-300);
+}
+.crm-container .panel > .panel-heading + .panel-collapse > .panel-body {
+	border-top-color: var(--crm-gray-300);
+}
+.crm-container .panel > .panel-footer + .panel-collapse > .panel-body {
+	border-color: var(--crm-gray-300);
+}
+.crm-container .panel-default > .panel-heading {
+    color: var(--crm-text);
+    background-color: var(--crm-background);
+}
+#crm-container .panel-title {
+    font-size: 1rem;
+    color: var(--crm-light-text);
+    margin: 0;
+}
+.crm-container .panel-default > .panel-heading .badge {
+	color: var(--crm-text-light);
+	background-color: var(--crm-gray-500);
+}
+.crm-container .panel-primary > .panel-heading {
+	color: var(--crm-primary-text);
+	background-color: var(--crm-primary);
+}
+.crm-container .panel-primary > .panel-heading .badge {
+	color: var(--crm-primary-text);
+	background-color: var(--crm-primary-hover);
+}
+.crm-container .panel-success > .panel-heading {
+	color: var(--crm-success);
+	background-color: var(--crm-success-text);
+}
+.crm-container .panel-info > .panel-heading {
+	color: var(--crm-info-text);
+	background-color: var(--crm-info);
+}
+.crm-container .panel-info > .panel-heading .badge {
+	color: var(--crm-info-text);
+	background-color: var(--crm-info-hover);
+}
+.crm-container .panel-warning > .panel-heading {
+	color: var(--crm-warning-text);
+	background-color: var(--crm-warning);
+}
+.crm-container .panel-warning > .panel-heading .badge {
+	color: var(--crm-warning-text);
+	background-color: var(--crm-warning-hover);
+}
+.crm-container .panel-danger > .panel-heading {
+	color: var(--crm-alert-text);
+	background-color: var(--crm-alert);
+}
+.crm-container .panel-danger > .panel-heading .badge {
+	color: var(--crm-alert-text);
+	background-color: var(--crm-alert-hover);
 }
 
 /* Footer */

@@ -230,7 +230,3 @@
 	left: 0;
 	padding: 2rem;
 }
-.crm-container table,
-.crm-container tr {
-	background: var(--crm-background);
-}
