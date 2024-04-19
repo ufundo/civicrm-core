@@ -62,7 +62,7 @@ color-scheme: light dark;
 --crm-background4: var(--crm-gray-200);
 --crm-primary: var(--crm-blue); 
 --crm-primary-hover: var(--crm-blue-dark);
---crm-primary-text: var(--crm-light-text);
+--crm-primary-text: var(--crm-light-text); /* text colour when on top of primary */
 --crm-secondary: var(--crm-purple);
 --crm-secondary-hover: var(--crm-purple-dark);
 --crm-secondary-text: var(--crm-light-text);
@@ -75,10 +75,12 @@ color-scheme: light dark;
 --crm-info: var(--crm-blue);
 --crm-info-text: var(--crm-light-text);
 --crm-focus: var(--crm-blue-mid);
+--crm-inactive: var(--crm-background4);
 
 /* SHADOWS */
 
 --crm-block-shadow: 0 3px 18px 0 rgba(48,40,40,.25);
+--crm-popup-shadow: var(--crm-block-shadow);
 --crm-body-inset: inset 0 10px 8px -10px rgba(0,0,0,.15),inset 0 -11px 8px -9px rgba(0,0,0,.15);
 
 /* SIZES - temporary */
@@ -108,6 +110,7 @@ color-scheme: light dark;
 /* TYPE */
 
 --crm-font-size: var(--r);
+--crm-small-font-size: var(--m2);
 --crm-link-decoration: none;
 --crm-link-decoration-hover: none;
 
@@ -123,6 +126,7 @@ color-scheme: light dark;
 --btn-small-padding: var(--s1) var(--m1);
 --btn-align: center;
 --btn-icon-spacing: var(--s);
+--btn-cancel-color:;
 
 /* TABLES */
 --table-row-line: 1px dotted var(--dark-gray);
@@ -193,6 +197,7 @@ color-scheme: light dark;
 --crm-input-padding: var(--xs1) var(--m1);
 --crm-input-padding-large: var(--s) var(--m1);
 --crm-input-height: var(--l);
+--crm-input-font-size: var(--m3);
 --crm-input-label-weight: var(--crm-bold-weight);
 --crm-input-label-font: var(--crm-font-bold);
 --crm-input-label-size: var(--m3);

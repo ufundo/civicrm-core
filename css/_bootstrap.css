@@ -1649,10 +1649,10 @@
 	border-bottom: 1px solid #eee;
 }
 
-#bootstrap-theme ul, #bootstrap-theme ol {
+/* #bootstrap-theme ul, #bootstrap-theme ol {
 	margin-top: 0;
 	margin-bottom: 10px;
-}
+} */
 
 #bootstrap-theme ul ul, #bootstrap-theme ul ol, #bootstrap-theme ol ul, #bootstrap-theme ol ol {
 	margin-bottom: 0;
@@ -4261,7 +4261,7 @@
 	z-index: 2;
 	margin-left: -1px;
 }
-
+/* 
 #bootstrap-theme .nav {
 	padding-left: 0;
 	margin-bottom: 0;
@@ -4346,7 +4346,7 @@
 	background-color: white;
 	border: 1px solid #ddd;
 	border-bottom-color: transparent;
-}
+} */
 
 #bootstrap-theme .nav-pills > li {
 	float: left;
@@ -5197,7 +5197,7 @@
 	cursor: not-allowed;
 	background-color: white;
 }
-
+/* 
 #bootstrap-theme .badge {
 	display: inline-block;
 	min-width: 10px;
@@ -5248,7 +5248,7 @@
 	color: white;
 	text-decoration: none;
 	cursor: pointer;
-}
+} */
 
 #bootstrap-theme .jumbotron {
 	padding-top: 30px;

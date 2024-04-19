@@ -1,0 +1,108 @@
+/* JQuery UI tabs */
+
+.crm-container .ui-widget-header {
+    font-family: var(--crm-font);
+    background: var(--crm-tabs-bg);
+    border: 0 solid transparent;
+    border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
+    padding: var(--s);
+}
+.crm-container .ui-tabs ul.ui-tabs-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--crm-tab-gap);
+    padding: var(--s);
+}
+.crm-container #mainTabContainer,
+#crm-container #civicrm-news-feed {
+    border: 1px solid var(--crm-tab-border-col);
+    border-radius: var(--crm-roundness);
+}
+.crm-container .ui-state-default, 
+.crm-container .ui-widget-content .ui-state-default, 
+.crm-container .ui-widget-header .ui-state-default, 
+.crm-container .ui-button,
+/* .crm-container .ui-widget, */
+.crm-container .ui-button.ui-state-disabled:hover, 
+.crm-container .ui-button.ui-state-disabled:active {
+    background: var(--crm-tab-bg);
+    border-radius: var(--crm-tab-roundness);
+    border: 0 solid transparent;
+    font-family: inherit;
+    color: var(--crm-text);
+    padding: 0;
+}
+.crm-container .ui-tabs .ui-tabs-nav li:hover,
+.crm-container .ui-tabs .ui-tabs-nav li:focus {
+    background: var(--crm-tab-bg-hover);
+}
+.crm-container .ui-tabs .ui-tabs-nav li.ui-tabs-active {
+    background: var(--crm-tab-bg-active);
+}
+.crm-container .ui-helper-clearfix::before, 
+.crm-container .ui-helper-clearfix::after {
+    display: none;
+}
+.crm-container .ui-tabs ul.ui-tabs-nav a {
+    color: var(--crm-link);
+    padding: var(--s3) var(--m) var(--s) var(--m); 
+}
+.crm-container .ui-tabs ul.ui-tabs-nav a em,
+.crm-container .nav-tabs a .badge {
+    font-style: normal;
+    background: var(--crm-tab-count-bg);
+    color: var(--crm-tab-count-col);
+    border-radius: 2rem;
+    width: 2.8ch;
+    height: 2.8ch;
+    line-height: 2.8ch;
+    display: inline-block;
+    text-align: center;
+    margin-top: -4px;
+    vertical-align: middle;
+    font-size: var(--m3);
+    padding: 0;
+    font-weight: normal;
+}
+.crm-container .ui-tabs ul.ui-tabs-nav .crm-count-0 a em {
+    background: var(--crm-background4);
+    color: var(--crm-light-text);
+}
+.crm-container .ui-tabs ul li em:empty,
+.crm-container .nav-tabs .badge:empty { /* this is to keep the height of tabs with empty badges */
+    min-width: 1px !important; 
+    visibility: hidden;
+    width: 0 !important;
+} 
+#crm-container .ui-tabs-panel {
+    padding: var(--s);
+  }
+
+/* Bootstrap tabs */
+
+.crm-container .nav-tabs {
+	border-bottom: 1px solid var(--crm-tab-border-col);
+    gap: var(--crm-tab-gap);
+}
+.crm-container .nav-tabs > li > a {
+	border: 1px solid transparent;
+	border-radius: var(--crm-tab-roundness) var(--crm-tab-roundness) 0 0;
+    display: block;
+    margin-bottom: -1px;
+}
+.crm-container .nav-tabs > li > a:hover,
+.crm-container .nav-tabs > li > a:focus,
+.crm-container .nav-tabs > li.active > a,
+.crm-container .nav-tabs > li.active > a:hover, 
+.crm-container .nav-tabs > li.active > a:focus {
+	color: var(--crm-text);
+	background-color: var(--crm-page-background);
+	border: 1px solid var(--crm-tab-border-col);
+	border-bottom-color: transparent;
+}
+.crm-container .nav-tabs > li.active > a {
+    background: var(--crm-tab-bg-active);
+}
+.crm-container .panel-heading:has(.nav-tabs) {
+    padding: var(--s) var(--m) 0 var(--m);
+}

@@ -43,8 +43,15 @@ main.page-content {
 .crm-container tr {
     border-bottom: 0 solid transparent;
     background: inherit;
-  }
-
+}
+.crm-container .button {
+    margin-block: inherit;
+    margin-inline: inherit;
+}
+.crm-container .action-link {
+    padding: 0;
+    line-height: 1;
+}
 
 /******************
    JOOMLA

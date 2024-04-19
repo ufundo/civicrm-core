@@ -15,13 +15,13 @@
 .crm-container .clear {
 	clear: both;
 }
-#crm-container table th,
-#crm-container table tr {
+#crm-container th,
+#crm-container tr,
+.crm-container tr,
+#crm-container td {
 	background-color: transparent;
-}
-.crm-container ul#actions {
-    list-style: none;
-    margin: 0;
+    border: inherit;
+    height: inherit;
 }
 
 /* JQueryUI resets */
@@ -29,6 +29,10 @@
 .ui-tabs .ui-tabs-panel {
     padding: inherit;
 }
+.ui-widget {
+    font-family: inherit;
+    font-size: inherit;
+  }
 
 /*
       A C C E S S I B I L I T Y

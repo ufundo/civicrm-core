@@ -7,6 +7,77 @@
     padding: var(--crm-form-block-padding);
 }
 
+/* Checkbox lists */
+
+.crm-container .listing-box, 
+.crm-container .listing-box-tall,
+.crm-container ul.crm-checkbox-list {
+    width: auto;
+    border-radius: var(--crm-roundness);
+    max-width: 30rem;
+    height: 7.25rem;
+    overflow: auto;
+    border: 1px solid var(--crm-gray-500);
+}
+.crm-container ul.crm-checkbox-list {
+    list-style: none;
+    margin: 0;
+    background-color: var(--crm-page-background);
+    width: 300px;
+    max-width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.crm-container ul.crm-checkbox-list li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+.crm-container ul.crm-checkbox-list li input {
+    position: absolute;
+    left: var(--s);
+    top: var(--m);
+}
+.crm-container .odd-row, 
+.crm-container .odd, tbody.scrollContent,
+.crm-container ul.crm-checkbox-list li label {
+    background-color: var(--crm-background2);
+    padding-inline: var(--s) var(--m2)
+}
+.crm-container .even-row, .crm-container .even, 
+tbody.scrollContent tr.alternateRow{
+    background-color: var(--crm-background3);
+    padding-inline: var(--s) var(--m2)
+}
+.crm-container ul.crm-checkbox-list li:nth-child(2n) label {
+    background-color: var(--crm-background3);
+}
+.crm-container ul.crm-checkbox-list li label {
+    display: block !important;
+    padding: var(--s) 0 var(--s) var(--r3);
+    margin: 0 !important;
+    word-break: break-all;
+}
+.crm-container ul.crm-checkbox-list li input:checked + label {
+    background-color: #ffffcc;
+}
+.crm-container ul.crm-checkbox-list li:nth-child(2n) input:checked + label {
+    background-color: #fffdb2;
+}
+
+/* States */
+
+.crm-container .disabled, 
+.crm-container .crm-disabled, 
+.crm-container .disabled *, 
+.crm-container .cancelled, 
+.crm-container .cancelled td, 
+.crm-container li.disabled a.ui-tabs-anchor, 
+.crm-container li.crm-count-0 a.ui-tabs-anchor, 
+.crm-container li.crm-count-0 a.ui-tabs-anchor em {
+    color: var(--crm-inactive);
+}
+
 /* Panels (taken from Bootstrap3) */
 
 .crm-container .panel {
@@ -75,7 +146,8 @@
 	color: var(--crm-primary-text);
 	background-color: var(--crm-primary);
 }
-.crm-container .panel-primary > .panel-heading .badge {
+.crm-container .panel-primary > .panel-heading .badge,
+.crm-container .panel-primary > .panel-heading a {
 	color: var(--crm-primary-text);
 	background-color: var(--crm-primary-hover);
 }
@@ -87,7 +159,8 @@
 	color: var(--crm-info-text);
 	background-color: var(--crm-info);
 }
-.crm-container .panel-info > .panel-heading .badge {
+.crm-container .panel-info > .panel-heading .badge,
+.crm-container .panel-info > .panel-heading a {
 	color: var(--crm-info-text);
 	background-color: var(--crm-info-hover);
 }
@@ -95,7 +168,8 @@
 	color: var(--crm-warning-text);
 	background-color: var(--crm-warning);
 }
-.crm-container .panel-warning > .panel-heading .badge {
+.crm-container .panel-warning > .panel-heading .badge,
+.crm-container .panel-warning > .panel-heading a {
 	color: var(--crm-warning-text);
 	background-color: var(--crm-warning-hover);
 }
@@ -103,9 +177,53 @@
 	color: var(--crm-alert-text);
 	background-color: var(--crm-alert);
 }
-.crm-container .panel-danger > .panel-heading .badge {
+.crm-container .panel-danger > .panel-heading .badge,
+.crm-container .panel-danger > .panel-heading a {
 	color: var(--crm-alert-text);
 	background-color: var(--crm-alert-hover);
+}
+
+/* Badge - from BS3 */
+
+.crm-container .badge {
+	display: inline-block;
+	min-width: 10px;
+	padding: 3px 7px;
+	font-size: var(--m2);
+	font-weight: var(--crm-bold-weight);
+	font-family: var(--crm-font-bold);
+	line-height: 1;
+	color: var(--crm-page-background);
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	background-color: var(--crm-primary);
+	border-radius: var(--m1);
+	position: relative;
+	top: -1px;
+}
+.crm-container .badge:empty {
+	display: none;
+}
+.btn-xs .badge, 
+.crm-container .btn-group-xs > .btn .badge, 
+.btn-group-xs > .btn .badge {
+	top: 0;
+	padding: 1px 5px;
+}
+.list-group-item.active > .badge, 
+.nav-pills > .active > a > .badge {
+	color: var(--crm-link);
+	background-color: var(--crm-page-background);
+}
+.nav-pills > li > a > .badge {
+	margin-left: 3px;
+}
+.crm-container a.badge:hover, 
+.crm-container a.badge:focus {
+	color: white;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 /* Footer */

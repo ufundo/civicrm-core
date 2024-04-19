@@ -1,0 +1,46 @@
+/* Bootstrap Nav */
+
+.crm-container .nav {
+	padding-left: 0;
+	margin-bottom: 0;
+	list-style: none;
+	display: flex;
+    flex-wrap: wrap;
+    cursor: var(--hover-clickable);
+}
+.crm-container .nav > li > a {
+	padding: var(--m) var(--r);
+}
+.crm-container .nav > li > a:hover, 
+.crm-container .nav > li > a:focus {
+	text-decoration: none;
+	background-color: var(--crm-background2);
+}
+.crm-container .nav > li.disabled > a {
+	color: var(--crm-inactive);
+}
+.crm-container .nav > li.disabled > a:hover, 
+.crm-container .nav > li.disabled > a:focus {
+    color: var(--crm-inactive);
+	text-decoration: none;
+	cursor: not-allowed;
+	background-color: transparent;
+}
+.crm-container .nav .open > a, 
+.crm-container .nav .open > a:hover, 
+.crm-container .nav .open > a:focus {
+	background-color: var(--crm-background2);
+	border-color: var(--crm-link);
+}
+.crm-container .nav .nav-divider {
+	height: 1px;
+	margin: var(--m) 0;
+	overflow: hidden;
+	background-color: var(--crm-divider);
+}
+.crm-container .nav > li > a > img {
+	max-width: none;
+}
+.crm-container .nav.nav-stacked {
+    flex-direction: column;
+}

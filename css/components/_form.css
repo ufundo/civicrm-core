@@ -35,6 +35,9 @@
     color: var(--crm-input-description);
     font-size: var(--crm-input-label-size);
 }
+.crm-container .crm-marker {
+    color: var(--crm-alert);
+}
 
 /* Input */
 
@@ -46,8 +49,10 @@
 .crm-container textarea, 
 .crm-container select.crm-form-multiselect,
 .crm-container select.crm-form-select, 
-.crm-container select[aria-controls] {
+.crm-container select[aria-controls],
+.ui-datepicker .ui-datepicker-header select {
     transition: var(--crm-input-active-ani);
+    font-size: var(--crm-input-font-size);
     background-color: var(--crm-input-background);
     border-radius: var(--crm-input-border-radius);
     box-shadow: var(--crm-input-box-shadow);
@@ -87,22 +92,30 @@ input.crm-form-autocomplete,
 input.crm-form-entityref {
     width: var(--crm-huge-input);
 }
+.crm-container input.crm-placeholder-icon::placeholder {
+    font-family: "FontAwesome";
+    text-align: right;
+}
 
 /* Checkboxes & radios */
 
 input.crm-form-radio + label, 
-input.crm-form-checkbox + label {
-    margin-left: 7px;
+input.crm-form-checkbox + label,
+.crm-container input[type="checkbox"] + label[for], 
+.crm-container input[type="radio"] + label[for] {
+    margin: 0 var(--m) 0 var(--s);
+    cursor: var(--hover-clickable);
 }
 .crm-container [type="checkbox"], 
 .crm-container [type="radio"] {
     accent-color: var(--crm-input-radio-color);
+    margin: -2px 4px 0 0;
   }
 
 /* Select2 */
 
 .crm-container .select2-container {
-    width: max-content !important;
+    width: 100%;
 }
 .crm-container .select2-container-multi .select2-choices,
 .crm-container .select2-container .select2-choice {
@@ -112,6 +125,7 @@ input.crm-form-checkbox + label {
     box-shadow: var(--crm-input-box-shadow);
     height: var(--crm-input-height);
     padding: var(--xs1) var(--r2) var(--xs1) var(--m);
+    font-size: var(--crm-input-font-size);
 }
 .crm-container .select2-container .select2-choice .select2-arrow {
     background: var(--crm-input-background);
@@ -195,4 +209,107 @@ input.crm-form-checkbox + label {
 }
 .select2-drop.select2-drop-active.crm-container .select2-results .select2-highlighted {
     background: var(--crm-background3);
+}
+
+/* Dates */
+
+.crm-container input.crm-form-time {
+    width: 9ch;
+    margin-left: 1em;
+}
+.crm-container input.dateplugin, 
+.crm-container input.crm-form-date {
+    width: 14ch;
+}
+.crm-container input.crm-placeholder-icon {
+    padding-right: var(--m);
+}
+.ui-datepicker, .ui-datepicker * {
+    border-radius: 0;
+    font-family: var(--crm-font);
+    height: inherit;
+}
+.ui-datepicker {
+    background: var(--crm-input-background) !important;
+    border-radius: 0;
+    box-shadow: var(--crm-popup-shadow);
+    min-width: 30ch;
+    padding: var(--m1);
+    width: auto;
+}
+.ui-datepicker .ui-datepicker-header {
+    border: 0;
+    margin-bottom: var(--s);
+}
+.ui-datepicker :not(b) {
+    background: none !important;
+}
+.ui-datepicker .ui-datepicker-header .ui-datepicker-prev, 
+.ui-datepicker .ui-datepicker-header .ui-datepicker-next {
+    border-radius: var(--crm-roundness);
+    box-shadow: none !important;
+    cursor: var(--hover-clickable);
+    text-align: center;
+    top: var(--s3);
+    border: 0 solid transparent;
+}
+.ui-datepicker-next.ui-corner-all:hover,
+.ui-datepicker-prev.ui-corner-all:hover {
+    background: var(--crm-gray-100) !important;
+    border: 0 solid transparent;
+  }
+.ui-datepicker .ui-datepicker-header .ui-datepicker-prev::before, 
+.ui-datepicker .ui-datepicker-header .ui-datepicker-next::before {
+    font-family: "FontAwesome";
+    color: var(--crm-text);
+    font-size: var(--crm-small-font-size);
+    line-height: var(--l);
+    padding: 0;
+}
+.ui-datepicker .ui-datepicker-prev::before {
+    content: "";
+}
+.ui-datepicker .ui-datepicker-next::before {
+    content: "";
+}
+.ui-datepicker .ui-datepicker-header select {
+    font-family: var(--crm-font);
+    margin: 0 var(--m1);
+    padding-left: 5px !important;
+    font-size: var(--m3);
+    width: 7ch;
+}
+.ui-datepicker-calendar thead tr {
+    border-top: 1px solid var(--crm-gray-300);
+}
+.ui-datepicker-calendar thead th {
+    color: var(--crm-text);
+    font-size: var(--crm-small-font-size);
+}
+.ui-datepicker-calendar tr {
+    border-bottom: none;
+}
+.ui-datepicker-calendar [data-handler], 
+.ui-datepicker-calendar .ui-state-disabled {
+    background-color: var(--crm-gray-50) !important;
+    border: 0;
+    font-size: var(--crm-small-font-size);
+    opacity: 1;
+    padding: var(--m);
+}
+.ui-datepicker-calendar .ui-state-disabled {
+    opacity: 0.35;
+}
+.ui-datepicker-calendar [data-handler] .ui-state-active, 
+.ui-datepicker-calendar .ui-state-disabled .ui-state-active {
+    background-color: var(--crm-primary) !important; 
+    color: var(--crm-primary-text) !important;
+}
+.ui-datepicker-calendar [data-handler] a, 
+.ui-datepicker-calendar .ui-state-disabled a {
+    border: 0;
+    border-radius: 20px;
+    cursor: var(--hover-clickable);
+    padding: var(--s);
+    text-align: center;
 }

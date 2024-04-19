@@ -1,0 +1,3 @@
+.crm-container a.helpicon::before {
+    content: "\f059";
+}

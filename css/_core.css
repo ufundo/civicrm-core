@@ -7,4 +7,8 @@
 @import url(components/_alerts.css);
 @import url(components/_buttons.css);
 @import url(components/_form.css);
+@import url(components/_icons.css);
+@import url(components/_nav.css);
+@import url(components/_tabs.css);
+@import url(components/_dropdowns.css);
 @import url(components/_common.css);
