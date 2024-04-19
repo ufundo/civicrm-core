@@ -163,6 +163,8 @@ color-scheme: light dark;
 --expand-header2-weight: bold;
 --expand-2-border: 1px solid var(--crm-background3);
 --expand-2-body-padding: 0;
+--crm-dashlet-bg: var(--crm-purple);
+--crm-dashlet-col: var(--crm-light-text);
 --expand-gap: 0;
 
 /* ALERTS */
@@ -204,6 +206,23 @@ color-scheme: light dark;
 --crm-input-description: var(--crm-gray-700);
 --crm-input-dropdown-icon: "\f107";
 --crm-input-radio-color: var(--crm-primary);
+
+/* Tabs */
+--crm-tabs-bg: var(--crm-background2);
+--crm-tabs-padding: var(--m) var(--m) 0 var(--m);
+--crm-tab-bg: var(--crm-background2);
+--crm-tab-bg-hover: var(--crm-background);
+--crm-tab-bg-active: var(--crm-background);
+--crm-tab-padding: var(--m2) var(--r1) var(--m);
+--crm-tab-col: var(--crm-text);
+--crm-tab-weight: normal;
+--crm-tab-font: var(--crm-font-bold);
+--crm-tab-count-bg: ;
+--crm-tab-count-col: var(--crm-text);
+--crm-tab-roundness: var(--crm-roundness);
+--crm-tab-border-col: var(--crm-gray-300);
+--crm-tab-border-col-jq: var(--crm-gray-300);
+--crm-tab-gap: var(--s);
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }

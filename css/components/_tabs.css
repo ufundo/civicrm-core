@@ -11,7 +11,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--crm-tab-gap);
-    padding: var(--s);
+    padding: var(--crm-tabs-padding);
 }
 .crm-container #mainTabContainer,
 #crm-container #civicrm-news-feed {
@@ -22,7 +22,6 @@
 .crm-container .ui-widget-content .ui-state-default, 
 .crm-container .ui-widget-header .ui-state-default, 
 .crm-container .ui-button,
-/* .crm-container .ui-widget, */
 .crm-container .ui-button.ui-state-disabled:hover, 
 .crm-container .ui-button.ui-state-disabled:active {
     background: var(--crm-tab-bg);
@@ -36,16 +35,23 @@
 .crm-container .ui-tabs .ui-tabs-nav li:focus {
     background: var(--crm-tab-bg-hover);
 }
+.ui-tabs .ui-tabs-nav {
+    border-bottom: 1px solid var(--crm-tab-border-col);
+}
 .crm-container .ui-tabs .ui-tabs-nav li.ui-tabs-active {
     background: var(--crm-tab-bg-active);
+    border: 1px solid var(--crm-tab-border-col-jq);
+    border-bottom: 0 solid transparent;
 }
 .crm-container .ui-helper-clearfix::before, 
 .crm-container .ui-helper-clearfix::after {
     display: none;
 }
 .crm-container .ui-tabs ul.ui-tabs-nav a {
-    color: var(--crm-link);
-    padding: var(--s3) var(--m) var(--s) var(--m); 
+    color: var(--crm-tab-col);
+    padding: var(--crm-tab-padding);
+	font-weight: var(--crm-tab-weight);
+	font-family: var(--crm-tab-font);
 }
 .crm-container .ui-tabs ul.ui-tabs-nav a em,
 .crm-container .nav-tabs a .badge {
@@ -61,8 +67,7 @@
     margin-top: -4px;
     vertical-align: middle;
     font-size: var(--m3);
-    padding: 0;
-    font-weight: normal;
+    padding: 0;  
 }
 .crm-container .ui-tabs ul.ui-tabs-nav .crm-count-0 a em {
     background: var(--crm-background4);
@@ -96,7 +101,7 @@
 .crm-container .nav-tabs > li.active > a:hover, 
 .crm-container .nav-tabs > li.active > a:focus {
 	color: var(--crm-text);
-	background-color: var(--crm-page-background);
+	background-color: var(--crm-tab-bg-hover);
 	border: 1px solid var(--crm-tab-border-col);
 	border-bottom-color: transparent;
 }

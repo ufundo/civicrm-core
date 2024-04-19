@@ -163,6 +163,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --expand-header2-weight: normal;
 --expand-2-border:;
 --expand-2-body-padding: 0;
+--crm-dashlet-bg: var(--crm-secondary);
+--crm-dashlet-col: var(--crm-light-text);
 --expand-gap: var(--xs2) 0 0;
 
 /* ALERTS */
@@ -207,13 +209,19 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 
 /* Tabs */
 --crm-tabs-bg: var(--crm-background4);
+--crm-tabs-padding: var(--s);
 --crm-tab-bg: var(--crm-background2);
---crm-tab-bg-hover: var(--crm-background);
+--crm-tab-bg-hover: var(--crm-page-background);
 --crm-tab-bg-active: var(--crm-page-background);
+--crm-tab-padding: var(--s3) var(--m) var(--s) var(--m); 
+--crm-tab-color: var(--crm-text);
+--crm-tab-weight: normal;
+--crm-tab-font:;
 --crm-tab-count-bg: var(--crm-info);
 --crm-tab-count-col: var(--crm-info-text);
 --crm-tab-roundness: var(--crm-roundness);
 --crm-tab-border-col: var(--crm-gray-400);
+--crm-tab-border-col-jq: ;
 --crm-tab-gap: var(--s);
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */

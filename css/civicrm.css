@@ -1,5 +1,5 @@
-@import url(_variables_washington.css); /* quick customisable values used across the theme */
-/*@import url(_variables_hoxton.css); /* quick customisable values used across the theme */
+/*@import url(_variables_washington.css); /* quick customisable values used across the theme */
+@import url(_variables_hoxton.css); /* quick customisable values used across the theme */
 @import url(_base.css); /* resets and civi wide styles */
 @import url(_core.css); /* components and utility classes */
 @import url(_cms.css); /* CMS-specific hacks/workarounds */
