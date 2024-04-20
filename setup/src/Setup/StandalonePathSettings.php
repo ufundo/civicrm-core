@@ -29,7 +29,7 @@ namespace Civi\Setup;
     // private
     'private'      => '[project_root]/private',
     // private subdirs
-    'settings'     => '[private]/civicrm.settings.php',
+    'settings'     => '[project_root]/settings/civicrm.settings.php',
     'compile'      => '[private]/cached_templates',
     'private_uploads'       => '[private]/uploads',
     'tmp'          => '[private]/tmp',
@@ -285,7 +285,7 @@ namespace Civi\Setup;
     $settingsPath = $this->getPath('settings');
 
     if (is_dir($settingsPath)) {
-      return glob($settingsPath . '/*.settings.php');
+      return glob($settingsPath . DIRECTORY_SEPARATOR . '*.settings.php');
     }
     else {
       return [$settingsPath];

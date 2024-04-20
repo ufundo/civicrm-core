@@ -1,33 +1,33 @@
 <?php
 
-function invoke() {
-  $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+  function invoke() {
+    $requestUri = $_SERVER['REQUEST_URI'] ?? '';
 
-  // initialise config and boot container
-  \CRM_Core_Config::singleton();
+    // initialise config and boot container
+    \CRM_Core_Config::singleton();
 
-  // Add CSS, JS, etc. that is required for this page.
-  \CRM_Core_Resources::singleton()->addCoreResources();
-  $parts = explode('?', $requestUri);
-  $args = explode('/', $parts[0] ?? '');
-  // Remove empty path segments, a//b becomes equivalent to a/b
-  $args = array_values(array_filter($args));
-  if (!$args) {
-    // This is a request for the site's homepage. See if we have one.
-    $item = CRM_Core_Invoke::getItem('/');
-    if (!$item) {
-      // We have no public homepage, so send them to login.
-      // This doesn't allow for /civicrm itself to be public,
-      // but that's got to be a pretty edge case, right?!
-      CRM_Utils_System::redirect('/civicrm/login');
+    // Add CSS, JS, etc. that is required for this page.
+    \CRM_Core_Resources::singleton()->addCoreResources();
+    $parts = explode('?', $requestUri);
+    $args = explode('/', $parts[0] ?? '');
+    // Remove empty path segments, a//b becomes equivalent to a/b
+    $args = array_values(array_filter($args));
+    if (!$args) {
+      // This is a request for the site's homepage. See if we have one.
+      $item = CRM_Core_Invoke::getItem('/');
+      if (!$item) {
+        // We have no public homepage, so send them to login.
+        // This doesn't allow for /civicrm itself to be public,
+        // but that's got to be a pretty edge case, right?!
+        CRM_Utils_System::redirect('/civicrm/login');
+      }
     }
-  }
-  // This IS required for compatibility. e.g. the extensions (at least) quickform uses it for the form's action attribute.
-  $_GET['q'] = implode('/', $args);
+    // This IS required for compatibility. e.g. the extensions (at least) quickform uses it for the form's action attribute.
+    $_GET['q'] = implode('/', $args);
 
-  // Render the page
-  print CRM_Core_Invoke::invoke($args);
-}
+    // Render the page
+    print CRM_Core_Invoke::invoke($args);
+  }
 
 /**
  * @throws \Exception if autoloader file not found
@@ -68,6 +68,12 @@ function findStandaloneClassLoader(): string {
 require_once findStandaloneAutoload();
 require_once findStandaloneClassLoader();
 CRM_Core_ClassLoader::singleton()->register();
+
+$pathHelper = \Civi\Setup\StandalonePathSettings::defaultSetup();
+
+foreach ($pathHelper->getSettingsFiles() as $settingsFile) {
+  require_once $settingsFile;
+}
 
 function standaloneErrorHandler(
     int $errno,
@@ -117,16 +123,9 @@ function standaloneErrorHandler(
   $handlingError = FALSE;
 }
 
-$pathSettingsHelper = \Civi\Setup\StandalonePathSettings::defaultSetup();
-
-function findStandaloneSettings(): ?string {
-  $settingsPath = $pathSettingsHelper->getPath('settings');
-
-  return file_exists($settingsPath) ? $settingsPath : NULL;
-}
-
 // check for settings file (indicating site is installed)
 $siteSettingsFile = findStandaloneSettings();
+// if (\Civi\Setup::siteInstalled()) {
 if ($siteSettingsFile) {
   require_once $siteSettingsFile;
   set_error_handler('standaloneErrorHandler', E_ALL);
@@ -138,10 +137,10 @@ else {
   \Civi\Setup::init([
     // This is just enough information to get going.
     'cms'     => 'Standalone',
-    'srcPath' => $pathSettingsHelper->getPath('core'),
+    'srcPath' => $pathHelper->getPath('core'),
   ]);
 
-  $coreUrl = \Civi\Setup::instance()->getModel()->mandatorySettings['userFrameworkResourceURL'];
+  $coreUrl = $pathHelper->getUserFrameworkResourceUrl();
 
   $ctrl = \Civi\Setup::instance()->createController()->getCtrl();
   $ctrl->setUrls([
