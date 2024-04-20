@@ -80,10 +80,14 @@ if (!defined('CIVI_SETUP')) {
       \Civi\Setup\FileUtil::makeWebWriteable($parent);
     }
 
-    // And persist it...
-    $tplPath = implode(DIRECTORY_SEPARATOR,
-      [$m->srcPath, 'templates', 'CRM', 'common', 'civicrm.settings.php.template']
-    );
+    // find the civicrm.settings.php template (Standalone uses a new one)
+    $tplPath = ($m->cms === 'Standalone') ?
+      [$m->srcPath, 'setup', 'res', 'civicrm.settings.php.template']:
+      [$m->srcPath, 'templates', 'CRM', 'common', 'civicrm.settings.php.template'];
+
+    $tplPath = implode(DIRECTORY_SEPARATOR, $tplPath);
+
+    // evalue the template and persist it
     $str = \Civi\Setup\SettingsUtil::evaluate($tplPath, $params);
     file_put_contents($m->settingsPath, $str);
 
