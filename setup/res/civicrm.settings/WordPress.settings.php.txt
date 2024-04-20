@@ -1,0 +1,57 @@
+
+<?php
+/*
+ +--------------------------------------------------------------------+
+ | CiviCRM version 5                                                  |
+ +--------------------------------------------------------------------+
+ | Copyright CiviCRM LLC (c) 2004-2020                                |
+ +--------------------------------------------------------------------+
+ | This file is a part of CiviCRM.                                    |
+ |                                                                    |
+ | CiviCRM is free software; you can copy, modify, and distribute it  |
+ | under the terms of the GNU Affero General Public License           |
+ | Version 3, 19 November 2007 and the CiviCRM Licensing Exception.   |
+ |                                                                    |
+ | CiviCRM is distributed in the hope that it will be useful, but     |
+ | WITHOUT ANY WARRANTY; without even the implied warranty of         |
+ | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               |
+ | See the GNU Affero General Public License for more details.        |
+ |                                                                    |
+ | You should have received a copy of the GNU Affero General Public   |
+ | License and the CiviCRM Licensing Exception along                  |
+ | with this program; if not, contact CiviCRM LLC                     |
+ | at info[AT]civicrm[DOT]org. If you have questions about the        |
+ | GNU Affero General Public License or the licensing of CiviCRM,     |
+ | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
+ +--------------------------------------------------------------------+
+*/
+
+/**
+ * CiviCRM CMS Settings
+ */
+
+if (CIVICRM_UF !== 'WordPress') {
+  return;
+}
+
+/**
+ * Content Management System (CMS) Datasource:
+ *
+ * Update this setting with your CMS (Drupal, Backdrop CMS, or Joomla) database username, password, server and DB name.
+ * If any of these contain a single quote or backslash, escape those characters with a backslash: \' and \\, respectively.
+ *
+ * Datasource (DSN) format:
+ *      define( 'CIVICRM_UF_DSN', 'mysql://cms_db_username:cms_db_password@db_server/cms_database?new_link=true');
+ */
+if (!defined('CIVICRM_UF_DSN') && CIVICRM_UF !== 'UnitTests') {
+  define( 'CIVICRM_UF_DSN'           , 'mysql://%%CMSdbUser%%:%%CMSdbPass%%@%%CMSdbHost%%/%%CMSdbName%%?new_link=true%%CMSdbSSL%%');
+}
+
+if (!defined('CIVICRM_CLEANURL')) {
+  if( function_exists('get_option') && get_option('permalink_structure') != '' ) {
+    define('CIVICRM_CLEANURL', 1 );
+  }
+  else {
+    define('CIVICRM_CLEANURL', 0);
+  }
+}

@@ -279,6 +279,25 @@ namespace Civi\Setup;
     ]);
   }
 
+
+  public function getSettingsFiles(): array
+  {
+    $settingsPath = $this->getPath('settings');
+
+    if (is_dir($settingsPath)) {
+      return glob($settingsPath . '/*.settings.php');
+    }
+    else {
+      return [$settingsPath];
+    }
+  }
+
+  public function getUserFrameworkResourceUrl(): string
+  {
+    return (\Composer\InstalledVersions::isInstalled('civicrm/civicrm-asset-plugin'))
+      ? $this->getUrl('public') . '/assets/civicrm/core' : $this->getUrl('core');
+  }
+
   public function getCorePathConfig(): array
   {
     $keyMap = [
@@ -298,12 +317,6 @@ namespace Civi\Setup;
     }
 
     return $mapped;
-  }
-
-  public function getUserFrameworkResourceUrl(): string
-  {
-    return (\Composer\InstalledVersions::isInstalled('civicrm/civicrm-asset-plugin'))
-      ? $this->getUrl('public') . '/assets/civicrm/core' : $this->getUrl('core');
   }
 
   public function getDomainLevelPathSettings(): array
@@ -350,4 +363,18 @@ namespace Civi\Setup;
     $model->setupPath = $this->getPath('setup');
   }
 
+  public function setPhpIncludePaths()
+  {
+    $updatedIncludePath = implode(PATH_SEPARATOR, [
+      // '.' // @todo why was this included from civicrm.settings.php? what would it refer to?
+      $this->getPath('core'),
+      $this->getPath('packages'),
+      get_include_path(),
+    ]);
+
+    if ( set_include_path( $updatedIncludePath ) === false ) {
+      echo "Could not set the include path<p>";
+      exit( );
+    }
+  }
  }
