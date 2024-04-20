@@ -3,27 +3,21 @@ body {
 }
 /* Header */
 .civicrm-setup-header {
-  height: 300px;
-  width: 100%;
-  display: block;
+width: 90%;
+max-width: 800px;
+margin: 8rem auto;
+display: flex;
+flex-flow: row wrap;
+gap: 8rem;
 }
 
 .civicrm-setup-header .title {
-  width: 25%;
-  position: absolute;
-  overflow: hidden;
-  float: left;
-  margin-left: 10%;
-  margin-top: 50px;
-  margin-right: 20%;
-  display: inline-flex;
 }
 
 .civicrm-setup-header h1 {
+  margin: 0;
   line-height: 35px;
   color: #ddd;
-  position: relative;
-  left: 400px;
   -webkit-animation: slide 1s forwards;
   -webkit-animation-delay: 0.5s;
   animation: slide 1s forwards;
