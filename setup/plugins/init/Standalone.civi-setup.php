@@ -40,6 +40,17 @@ function _standalone_setup_scheme(): string {
     }
     \Civi\Setup::log()->info(sprintf('[%s] Handle %s', basename(__FILE__), 'init'));
 
+    // @todo why is this set here as well as database.civi-setup.php?
+    // (in order to set cms db as well?)
+    $dbHost  = getenv('CIVICRM_DB_HOST') ?: '127.0.0.1';
+    $dbPort  = getenv('CIVICRM_DB_PORT') ?: '3306';
+    $model->db = $model->cmsDb = [
+      'server' => $dbHost . ':' . $dbPort,
+      'username' => getenv('CIVICRM_DB_USER') ?: '',
+      'password' => getenv('CIVICRM_DB_PASS') ?: '',
+      'database' => getenv('CIVICRM_DB_NAME') ?: '',
+    ];
+
     // error_log('artfulrobot: ' . __FILE__ . ' listener for civi.setup.init');
     // Compute settingsPath.
     // We use this structure: /var/www/standalone/data/{civicrm.settings.php,templates_c}
@@ -79,15 +90,6 @@ function _standalone_setup_scheme(): string {
     $model->settingsPath = implode(DIRECTORY_SEPARATOR, [$projectRootPath, 'data', 'civicrm.settings.php']);
     $model->templateCompilePath = implode(DIRECTORY_SEPARATOR, [$projectRootPath, 'data', 'templates_c']);
     // print "\n-------------------------\nSet model values:\n" . json_encode($model->getValues(), JSON_PRETTY_PRINT) . "\n-----------------------------\n";
-
-    // Compute DSN.
-    // print "=======================\n". json_encode(['model' => $model->getValues(), 'server' => $_SERVER], JSON_PRETTY_PRINT) ."\n";
-    $model->db = $model->cmsDb = [
-      'server' => 'localhost',
-      'username' => '',
-      'password' => '',
-      'database' => '',
-    ];
 
     // Compute URLs (@todo?)
     // original: $model->cmsBaseUrl = $_SERVER['HTTP_ORIGIN'] ?: $_SERVER['HTTP_REFERER'];
