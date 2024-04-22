@@ -250,8 +250,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     line-height: 1.5;
     border-radius: var(--crm-roundness);
 }
-.crm-container span.crm-hover-button, 
-.crm-container a.crm-hover-button {
+.crm-container span.crm-hover-button {
     color: var(--crm-darkest);
     opacity: 0.7;
 }

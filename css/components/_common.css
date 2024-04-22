@@ -72,9 +72,7 @@ tbody.scrollContent tr.alternateRow{
 .crm-container .disabled *, 
 .crm-container .cancelled, 
 .crm-container .cancelled td, 
-.crm-container li.disabled a.ui-tabs-anchor, 
-.crm-container li.crm-count-0 a.ui-tabs-anchor, 
-.crm-container li.crm-count-0 a.ui-tabs-anchor em {
+.crm-container li.disabled a.ui-tabs-anchor {
     color: var(--crm-inactive);
 }
 

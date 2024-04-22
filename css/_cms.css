@@ -52,6 +52,9 @@ main.page-content {
     padding: 0;
     line-height: 1;
 }
+.help p {
+    margin: 0;
+}
 
 /******************
    JOOMLA

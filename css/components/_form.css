@@ -14,6 +14,13 @@
     width: 22ch;
     text-align: right;
 }
+.crm-container .crm-summary-group .crm-section .label {
+    width: 40%;
+    text-align: left;
+    font-family: var(--crm-input-label-font);
+    font-weight: var(--crm-input-label-weight);
+    padding-right: var(--m2);
+}
 .crm-container .advanced-search-fields {
     column-gap: var(--r);
     row-gap: var(--s);
@@ -207,8 +214,31 @@ input.crm-form-checkbox + label,
     padding: var(--s);
     margin: 0;
 }
+.select2-results .select2-ajax-error, 
+.select2-results .select2-no-results,
+.select2-results .select2-searching,
+.select2-results .select2-selection-limit {
+    background: var(--crm-background);
+  }
 .select2-drop.select2-drop-active.crm-container .select2-results .select2-highlighted {
     background: var(--crm-background3);
+}
+.select2-drop.select2-drop-active.crm-container .crm-entityref-filters select,
+.select2-drop.select2-drop-active.crm-container .crm-entityref-filters input {
+    background: var(--crm-background);
+    border: 1px solid var(--crm-input-border-color);
+    border-radius: var(--crm-roundness);
+    box-sizing: border-box;
+    height: var(--l);
+    margin-top: var(--s);
+}
+.select2-drop.select2-drop-active.crm-container .select2-results li {
+    color: var(--crm-text);
+    padding: var(--s);
+}
+.select2-drop .crm-entityref-links {
+    border-top: 1px solid var(--crm-input-border-color);
+    margin-top: var(--m);
 }
 
 /* Dates */

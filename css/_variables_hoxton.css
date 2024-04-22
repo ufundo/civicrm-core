@@ -10,7 +10,8 @@
 --crm-font-bold:  "Civitype-bold", var(--crm-system-fonts);
 --crm-bold-weight: normal;
 --crm-font-italic:  "Civitype-italic", var(--crm-system-fonts);
---crm-italic-style: normal;--crm-font-bold-italic:  "Civitype", var(--crm-system-fonts);
+--crm-italic-style: normal;
+--crm-font-bold-italic:  "Civitype", var(--crm-system-fonts);
 
 /* COLOUR */
 
@@ -126,7 +127,7 @@ color-scheme: light dark;
 --btn-small-padding: var(--s1) var(--m1);
 --btn-align: center;
 --btn-icon-spacing: var(--s);
---btn-cancel-color:;
+--crm-cancel-color: var(--crm-alert);
 
 /* TABLES */
 --table-row-line: 1px dotted var(--dark-gray);
@@ -217,7 +218,7 @@ color-scheme: light dark;
 --crm-tab-col: var(--crm-text);
 --crm-tab-weight: normal;
 --crm-tab-font: var(--crm-font-bold);
---crm-tab-count-bg: ;
+--crm-tab-count-bg: var(--crm-primary);
 --crm-tab-count-col: var(--crm-text);
 --crm-tab-roundness: var(--crm-roundness);
 --crm-tab-border-col: var(--crm-gray-300);
