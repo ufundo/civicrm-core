@@ -51,15 +51,23 @@
 .crm-container .btn .crm-i::before {
     margin-right: var(--btn-icon-spacing);
 }
-.crm-container .crm-button-type-cancel,
+.crm-container .crm-button-type-cancel {
+    background: var(--crm-secondary);
+    color: var(--crm-secondary-text);
+}
+.crm-container a.button.delete-button, 
 .crm-container a.button.delete {
     background: var(--crm-cancel-color);
 }
-.crm-container .crm-button-type-cancel:hover,
-.crm-container .crm-button-type-cancel:focus,
+.crm-container a.button.delete-button:hover,
+.crm-container a.button.delete-button:focus,
 .crm-container a.button.delete:hover,
 .crm-container a.button.delete:focus {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-cancel-color);
+}
+.crm-container .crm-button-type-cancel:hover,
+.crm-container .crm-button-type-cancel:focus {
+    background: var(--crm-secondary-hover);
 }
 
 /* BS3 colour options */
@@ -146,21 +154,4 @@
 }
 .crm-submit-buttons {
     padding: var(--s);
-}
-/* Actions ribbon & links */
-
-.crm-actions-ribbon,
-.crm-container .action-link {
-    margin-bottom: var(--m);
-}
-.crm-actions-ribbon ul#actions {
-    list-style: none;
-    display: grid;
-    grid-template-columns: min-content min-content auto min-content min-content;
-    gap: var(--m);
-    margin: 0;
-}
-.crm-actions-ribbon .crm-next-action,
-.crm-actions-ribbon .crm-previous-action {
-    margin-left: auto;
 }

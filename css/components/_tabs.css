@@ -13,7 +13,6 @@
     gap: var(--crm-tab-gap);
     padding: var(--crm-tabs-padding);
 }
-.crm-container #mainTabContainer,
 #crm-container #civicrm-news-feed {
     border: 1px solid var(--crm-tab-border-col);
     border-radius: var(--crm-roundness);
@@ -40,8 +39,10 @@
 }
 .crm-container .ui-tabs .ui-tabs-nav li.ui-tabs-active {
     background: var(--crm-tab-bg-active);
-    border: 1px solid var(--crm-tab-border-col-jq);
+    border: var(--crm-tab-border-col-active);
     border-bottom: 0 solid transparent;
+    margin: 0;
+    padding: 0;
 }
 .crm-container .ui-helper-clearfix::before, 
 .crm-container .ui-helper-clearfix::after {
@@ -55,22 +56,28 @@
 }
 .crm-container .ui-tabs ul.ui-tabs-nav a em,
 .crm-container .nav-tabs a .badge {
-    font-style: normal;
+    font-family: inherit;
+    font-style: inherit;
     background: var(--crm-tab-count-bg);
     color: var(--crm-tab-count-col);
-    border-radius: 2rem;
-    width: 2.8ch;
-    height: 2.8ch;
-    line-height: 2.8ch;
+    border-radius: var(--m2);
+    min-width: var(--r2);
     display: inline-block;
     text-align: center;
-    margin-top: -4px;
-    vertical-align: middle;
-    font-size: var(--m3);
+    font-size: var(--m2);
     padding: 0;  
 }
-.crm-container .ui-tabs ul.ui-tabs-nav .crm-count-0 a em {
-    background: var(--crm-background4);
+.crm-container #mainTabContainer ul.ui-tabs-nav a em {
+    background: var(--crm-dash-tab-count-bg);
+    color: var(--crm-dash-tab-count-col);
+}
+.crm-container li.crm-count-0 a.ui-tabs-anchor, 
+.crm-container li.crm-count-0 a.ui-tabs-anchor em {
+    color: var(--crm-tab-col);
+}
+.crm-container .ui-tabs ul.ui-tabs-nav .crm-count-0 a em,
+.crm-container #mainTabContainer ul.ui-tabs-nav .crm-count-0 a em {
+    background: var(--crm-background5);
     color: var(--crm-light-text);
 }
 .crm-container .ui-tabs ul li em:empty,
@@ -78,10 +85,11 @@
     min-width: 1px !important; 
     visibility: hidden;
     width: 0 !important;
+    padding: 0
 } 
 #crm-container .ui-tabs-panel {
     padding: var(--s);
-  }
+}
 
 /* Bootstrap tabs */
 
@@ -112,145 +120,81 @@
     padding: var(--s) var(--m) 0 var(--m);
 }
 
-/* Contact Dashboard - including tabs */
+/* Dashboard */
 
-#crm-main-content-wrapper:has(.crm-contact-page) {
-    box-shadow: var(--crm-block-shadow);
-}
-#crm-container div.crm-summary-contactname-block {
-    background: var(--crm-darkest);
-    color: var(--crm-light-text);
-    min-height: 60px;
-    padding-bottom:  var(--m1);
-    padding-top: var(--r);
-    position: relative;
-}
-#crm-container #crm-contactname-content .crm-summary-display_name {
-    margin-left: var(--r);
-    padding: var(--1) 0;
-    font-size: var(--l);
-  }
-div.crm-summary-contactname-block + .crm-actions-ribbon {
-    background: var(--crm-gray-900);
-    color: var(--crm-light-text);
-    margin-bottom: 0;
-    padding: var(--r) var(--r1);
-}
-.crm-contact-page {
-    padding: 0;
-}
 .crm-container #mainTabContainer {
-    background-color: rgba(0,0,0,0);
-    border: 0 solid transparent;
-    display: flex;
-    position: relative;
+    border: var(--crm-dash-border);
+    border-radius: var(--crm-roundness);
+    display: var(--crm-dash-direction);
+    grid-template-columns: var(--crm-side-tabs-width) auto;
+    flex-direction: column;
+    margin-bottom: var(--r1);
 }
-.crm-container .ui-state-default, 
-.crm-container .ui-widget-content .ui-state-default, 
-.crm-container .ui-widget-header .ui-state-default {
-    background: var(--crm-background);
-    border-radius: 0;
+.crm-container #mainTabContainer .crm-contact-tabs-list {
+    background: var(--crm-dash-tabs-bg);
+    flex-direction: var(--crm-dash-tabs-flow);
+    border-radius: var(--crm-dash-roundness);
+    gap: var(--crm-dash-tab-gap);
+    box-shadow: var(--crm-block-shadow);
+    padding: var(--crm-dash-tabs-padding);
 }
-.crm-container li.crm-count-0 a.ui-tabs-anchor, 
-.crm-container li.crm-count-0 a.ui-tabs-anchor em {
-    color: var(--crm-text);
-}
-.crm-container li.crm-count-0 a.ui-tabs-anchor {
-    color: var(--crm-tab-col);
-}
-.crm-container #mainTabContainer .ui-tabs-nav li .ui-tabs-anchor {
-    display: grid;
-    grid-template-columns: 18px auto min-content;
-    width: 100%;
-    padding: var(--r) var(--r1);
-    gap: var(--m);
-    align-items: center;
-    border-radius: 0;
-}
-.crm-container #mainTabContainer .ui-tabs-nav li.ui-tabs-active {
-    border: 0 solid transparent;
+.crm-container #mainTabContainer .ui-tabs-nav li {
+    background: var(--crm-dash-tab-bg);
 }
 .crm-container #mainTabContainer .ui-tabs-nav li.ui-tabs-active a,
 .crm-container #mainTabContainer .ui-tabs-nav li:hover a,
 .crm-container #mainTabContainer .ui-tabs-nav li:focus a {
     color: var(--crm-link);
-    background: var(--crm-page-background);
+    background: var(--crm-dash-tab-bg-hover);
+}
+.crm-container #mainTabContainer .ui-tabs-nav li .ui-tabs-anchor {
+    display: grid;
+    grid-template-columns: min-content auto min-content;
+    width: 100%;
+    padding: var(--crm-dash-tab-padding);
+    gap: var(--m);
+    align-items: center;
+    border-radius: var(--crm-dash-roundness);
 }
 .crm-container #mainTabContainer .ui-tabs-nav li .ui-tabs-anchor i {
-    font-size: var(--m2);
+    font-size: var(--crm-dash-icon-size);
 }
-.crm-container #mainTabContainer ul.ui-tabs-nav a em {
-    font-style: normal;
-    font-family: var(--crm-font);
-    background: var(--crm-tab-count-bg);
-    color: var(--crm-tab-count-col);
-    border-radius: var(--m2);
-    min-width: var(--r2);
-    display: inline-block;
-    text-align: center;
-    margin: 0;
-    padding: 0 6px;
-    color: var(--crm-light-text);
-    font-family: var(--crm-text);
-    font-size: var(--m2);
-}
-.crm-container #mainTabContainer ul.ui-tabs-nav .crm-count-0 a em {
-    background-color: var(--crm-gray-500);
-}
-#mainTabContainer .crm-contact-tabs-list {
-    background: var(--crm-background);
-    flex-direction: column;
-    border-radius: 0;
-    gap: 0;
-    box-shadow: 0 3px 18px 0 rgba(48,40,40,.25);
-    padding: 0;
-    width: 220px;
+.crm-container #mainTabContainer .ui-tabs-nav li.ui-tabs-active {
+    border: 0 solid transparent;
 }
 
 /* Contact Dashboard - body */ 
 
 #mainTabContainer .crm-contact-tabs-list ~ .ui-tabs-panel {
     flex-grow: 1;
-    padding: var(--r2);
+    padding: var(--crm-dash-panel-padding);
 }
-#contact-summary .crm-summary-block {
-    background: var(--crm-background);
-    border-radius: var(--crm-roundness);
+
+/* Contact dashboard page */
+
+#crm-main-content-wrapper:has(.crm-contact-page) {
     box-shadow: var(--crm-block-shadow);
-    margin-bottom: var(--r1);
 }
-#crm-container .crm-edit-ready .crm-inline-edit:hover {
-    border-color: var(--crm-gray-900);
-    border-radius: var(--crm-roundness);
-    border-style: solid;
+#crm-container div.crm-summary-contactname-block {
+    background: var(--crm-dash-header-bg);
+    color: var(--crm-dash-header-col);
+    min-height: 60px;
+    padding: var(--m) 0 var(--s);
+    position: relative;
 }
-#contact-summary .crm-inline-edit {
-    border-width: 1px !important;
+#crm-container #crm-contactname-content .crm-summary-display_name {
+    padding: var(--crm-dash-header-padding);
+    font-size: var(--crm-dash-header-size);
+  }
+div.crm-summary-contactname-block + .crm-actions-ribbon {
+    color: var(--crm-dash-header-col);
+    background-color: var(--crm-dash-header-bg);
+    margin-bottom: 0;
+    clear: both;
 }
-#contact-summary .crm-inline-edit:hover .crm-edit-help,
-#crm-container #crm-contactname-content .crm-edit-help {
-    background: var(--crm-gray-050) !important;
-    border-radius: 0;
-    color: var(--crm-gray-900);
-    padding: var(--s) var(--m2);
-    border-bottom: 1px solid var(--crm-gray-900);;
-    border-left: 1px solid var(--crm-gray-900);;;
+.crm-contact-page {
+    padding: 0;
 }
-#contact-summary div.crm-clear {
-    padding: var(--m2) var(--r1);
-}
-#crm-container div.crm-summary-row {
-    background-color: var(--crm-background);
-}
-#contact-summary div.crm-summary-row div.crm-label {
-    background-color: var(--crm-background);
-    color: var(--crm-text);
-    padding: var(--m);
-    font-weight: var(--crm-bold-weight);
-    font-family:  var(--crm-font-bold);
-    font-size: var(--m3);
-}
-/* Header */
 #crm-container #crm-contactname-content > .crm-inline-block-content {
     display: flex;
     gap: var(--r);
@@ -261,102 +205,50 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
     position: relative;
     height: var(--l);
 }
-/* Edit state - dashboard */
-#crm-container div.crm-inline-edit.form {
-    border: 1px solid var(--crm-focus);
-    border-radius: var(--crm-roundness);
+.crm-actions-ribbon ul#actions {
+    list-style: none;
+    display: grid;
+    grid-template-columns: min-content min-content auto min-content min-content;
+    gap: var(--m);
+    margin: 0;
+    padding: var(--crm-dash-header-padding);
+    background: rgba(256,256,256,0.1);
 }
-#crm-container div.crm-inline-edit-form {
-    background-color:var(--crm-background);
-    white-space: nowrap;
-    padding: var(--m1);
-}
-#contact-summary .crm-inline-button, 
-#contact-summary .crm-submit-buttons {
-    border-bottom: 1px solid var(--crm-divider);
-    margin-bottom: 0;
-    padding-bottom: var(--m2);
-}
-#crm-container .CRM_Contact_Form_Inline_ContactName div.crm-inline-edit-form {
-    background-color: var(--crm-darkest);
-    display: flex;
-}
-#crm-container .CRM_Contact_Form_Inline_ContactName .crm-inline-button {
+.crm-actions-ribbon .crm-next-action,
+.crm-actions-ribbon .crm-previous-action {
     margin-left: auto;
-    order: 2;
-    align-self: end;
 }
-#contactname-block .crm-inline-edit {
-    border: 0 solid transparent;
-}
-/* Tooltip */
+/* Responsive - using Bootstrap viewports */
 
-.crm-container .crm-tooltip-wrapper {
-    position: absolute;
-    bottom: 0;
-    z-index: 10000;
-    background: none !important;
-    overflow: visible !important;
-    padding-bottom: 0 !important;
+@media (max-width: 990px) {
+    #crm-container:has(.crm-contact-page) {
+        padding: 0;
+        width: 100%;
+    }
 }
-.crm-container .crm-tooltip-wrapper .crm-tooltip {
-    box-shadow: var(--crm-block-shadow);
-    background: var(--crm-background);
-    border-radius: var(--crm-roundness);
-    padding: 0 0 var(--r);
-} 
-.crm-container a:not(.crm-tooltip-down) .crm-tooltip-wrapper::after {
-    border-left: 10px solid rgba(0,0,0,0);
-    border-right: 10px solid rgba(0,0,0,0);
-    border-top: 10px solid var(--crm-background);
-    bottom: -10px;
-    left: var(--m2);
-    content: "";
-    position: absolute;
+@media (max-width: 768px) {
+    .crm-container #mainTabContainer {
+        flex-direction: column;
+    }
+    #mainTabContainer .crm-contact-tabs-list {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .crm-actions-ribbon ul#actions {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .crm-actions-ribbon .crm-next-action, 
+    .crm-actions-ribbon .crm-previous-action {
+        margin-left: inherit;
+    }
 }
-.crm-container .crm-tooltip-down .crm-tooltip-wrapper {
-    top: var(--s);
-}
-.crm-container a.crm-tooltip-down .crm-tooltip-wrapper::before {
-    border-bottom: 10px solid var(--crm-background2);
-    border-left: 10px solid rgba(0,0,0,0);
-    border-right: 10px solid rgba(0,0,0,0);
-    content: "";
-    left: var(--m2);
-    position: relative;
-    top: -5px;
-}
-.crm-container .crm-tooltip .crm-summary-group {
-    width: 700px;
-    margin-bottom: 0;
-}
-#crm-container .crm-tooltip table, 
-#crm-container .crm-tooltip table tr td {
-    background-color: var(--crm-background);
-    border: none;
-    color: var(--crm-text);
-    word-wrap: break-word;
-}
-.crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr > td {
-    vertical-align: top;
-    white-space: normal;
-}
-.crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr > td.crm-section {
-    padding: var(--s) 0;
-}
-#crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(1) > td {
-    background: var(--crm-background2);
-    color: var(--crm-text);
-    font-size: var(--r1);
-    padding: var(--m2) var(--r1);
-    font-weight: var(--crm-bold-weight);
-    font-family: var(--crm-font-bold);
-}
-.crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(2) > td {
-    border-top: 1px solid var(--crm-divider) !important;
-    width: 50%;
-    padding: var(--r1) var(--m1) 0;
-}
-.crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(2) > td:first-child {
-    padding-left: var(--r1);
+@media (max-width: 500px) { /* shows only icons for contact dashboard */
+    .crm-container #mainTabContainer .ui-tabs-nav li .ui-tabs-anchor i {
+        font-size: var(--r);
+    }
+    .crm-container #mainTabContainer ul.ui-tabs-nav a span {
+        display: none;
+      }
 }

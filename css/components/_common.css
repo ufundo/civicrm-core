@@ -226,6 +226,16 @@ tbody.scrollContent tr.alternateRow{
 
 /* Footer */
 
+.crm-container #access {
+    text-align: right;
+}
+#crm-record-log {
+    font-size: var(--m3);
+    padding: var(--m3) 0;
+}
+#crm-record-log .col1 {
+    float: right;
+}
 #civicrm-footer {
     margin-top: var(--l);
     padding: var(--m2);

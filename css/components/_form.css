@@ -46,6 +46,35 @@
     color: var(--crm-alert);
 }
 
+/* contact dashboard */
+
+#contact-summary .crm-summary-block {
+    background: var(--crm-dash-block-bg);
+    border-radius: var(--crm-roundness);
+    box-shadow: var(--crm-block-shadow);
+    margin-bottom: var(--crm-dash-panel-padding);
+}
+#contact-summary div.crm-clear {
+    padding: var(--crm-dash-block-padding);
+}
+#crm-container div.crm-summary-row {
+    background-color: var(--crm-background);
+}
+#contact-summary div.crm-summary-row div.crm-label {
+    background-color: var(--crm-dash-label-bg);
+    color: var(--crm-text);
+    padding: var(--m);
+    font-weight: var(--crm-bold-weight);
+    font-family:  var(--crm-font-bold);
+    font-size: var(--crm-font-size);
+}
+#crm-container div.crm-summary-row div.crm-content {
+    padding: var(--m);
+}
+#crm-container div.contact_panel table {
+    width: auto;
+}
+
 /* Input */
 
 .crm-container input.crm-form-text, 
@@ -102,6 +131,79 @@ input.crm-form-entityref {
 .crm-container input.crm-placeholder-icon::placeholder {
     font-family: "FontAwesome";
     text-align: right;
+}
+
+/* Inline edit */
+
+#crm-container .crm-edit-ready .crm-inline-edit:hover {
+    cursor: var(--hover-clickable);
+    border: var(--crm-dash-edit-border);
+}
+#crm-container div.crm-inline-edit {
+    border: var(--crm-dash-edit-border);
+    border-color: transparent;
+    background: none;
+}
+#contact-summary .crm-inline-edit:hover .crm-edit-help,
+#crm-container #crm-contactname-content .crm-edit-help {
+    background: var(--crm-inline-edit-bg) !important;
+    border-bottom-left-radius: var(--crm-dash-roundness);
+    color: var(--crm-text);
+    padding: var(--s) var(--m2);
+    border-bottom: var(--crm-inline-edit-border);
+    border-left: var(--crm-inline-edit-border);
+}
+
+/* Inline edit */
+
+#contactname-block .crm-inline-edit {
+    border: 0 solid transparent;
+}
+#crm-container div.crm-inline-edit.form {
+    border: 1px solid var(--crm-focus);
+    border-radius: var(--crm-roundness);
+    width: fit-content;
+    float: none;    
+    padding: var(--r);
+}
+#crm-container .crm-inline-edit.form td {
+    background: transparent;
+    padding: var(--m);
+    border-bottom: 0 solid transparent;
+}
+#crm-container .CRM_Contact_Form_Inline_ContactName div.crm-inline-edit-form {
+    background-color: var(--crm-inline-edit-bg);
+    white-space: nowrap;
+    padding: var(--crm-dash-block-padding);
+    display: flex;
+}
+#crm-container table.crm-inline-edit-form td, 
+#crm-container div.crm-inline-edit-form {
+    background-color: transparent;
+}
+#crm-container div.crm-inline-edit-form div.crm-clear {
+    padding: var(--m) 0 0;
+}
+#crm-container .crm-inline-edit-form div.crm-summary-row div.crm-label,
+#crm-container .crm-inline-edit-form div.crm-summary-row .label {
+    float: none;
+    width: auto;
+    padding: var(--m) 0 var(--s);
+}
+#crm-container .crm-inline-edit-form div.crm-summary-row div.crm-content {
+    display: table-cell;
+    padding: 0;
+}
+#contact-summary .crm-inline-button, 
+#contact-summary .crm-submit-buttons {
+    border-bottom: 1px solid var(--crm-divider);
+    margin-bottom: 0;
+    padding-bottom: var(--m2);
+}
+#crm-container .CRM_Contact_Form_Inline_ContactName .crm-inline-button {
+    margin-left: auto;
+    order: 2;
+    align-self: end;
 }
 
 /* Checkboxes & radios */
@@ -176,6 +278,13 @@ input.crm-form-checkbox + label,
     margin: 0;
     padding: var(--s);
     min-height: unset;
+}
+.select2-container-disabled a {
+    box-shadow: none;
+    background: var(--crm-page-background);
+}
+.select2-container-disabled .select2-arrow {
+    background: transparent;
 }
 /* Select dropdwon */
 

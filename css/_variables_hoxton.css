@@ -61,6 +61,7 @@ color-scheme: light dark;
 --crm-background2: var(--crm-gray-050);
 --crm-background3: var(--crm-gray-100);
 --crm-background4: var(--crm-gray-200);
+--crm-background5: var(--crm-gray-500);
 --crm-primary: var(--crm-blue); 
 --crm-primary-hover: var(--crm-blue-dark);
 --crm-primary-text: var(--crm-light-text); /* text colour when on top of primary */
@@ -207,6 +208,8 @@ color-scheme: light dark;
 --crm-input-description: var(--crm-gray-700);
 --crm-input-dropdown-icon: "\f107";
 --crm-input-radio-color: var(--crm-primary);
+--crm-inline-edit-border: 1px solid var(--crm-gray-900);
+--crm-inline-edit-bg: var(--crm-background2);
 
 /* Tabs */
 --crm-tabs-bg: var(--crm-background2);
@@ -218,12 +221,40 @@ color-scheme: light dark;
 --crm-tab-col: var(--crm-text);
 --crm-tab-weight: normal;
 --crm-tab-font: var(--crm-font-bold);
---crm-tab-count-bg: var(--crm-primary);
+--crm-tab-count-bg: transparent;
 --crm-tab-count-col: var(--crm-text);
 --crm-tab-roundness: var(--crm-roundness);
 --crm-tab-border-col: var(--crm-gray-300);
---crm-tab-border-col-jq: var(--crm-gray-300);
+--crm-tab-border-active: 1px solid var(--crm-gray-300);
 --crm-tab-gap: var(--s);
+
+/* Contact dashboard */
+
+--crm-dash-border: 0 solid transparent;
+--crm-dash-direction: grid; /* choose 'flex' for tabs at top, or 'grid' for tabs at side */
+--crm-side-tabs-width: 220px; 
+--crm-dash-tabs-flow: column; /* choose 'row' for tabs at top, or 'column' for tabs at side */ 
+--crm-dash-roundness: 0;
+--crm-dash-tabs-bg: var(--crm-background);
+--crm-dash-tabs-padding: ;
+--crm-dash-tab-bg: transparent;
+--crm-dash-tab-bg-hover: var(--crm-page-background);
+--crm-dash-tab-padding: var(--r) var(--r1);
+--crm-dash-tab-col: ;
+--crm-dash-tab-gap: 0;
+--crm-dash-icon-size: var(--m2);
+--crm-dash-tab-count-bg: var(--crm-primary);
+--crm-dash-tab-count-col: var(--crm-light-text);
+--crm-dash-panel-padding: var(--r2);
+--crm-dash-edit-border: 1px solid var(--crm-gray-900);
+--crm-dash-block-padding: var(--m2) var(--r1);
+--crm-dash-block-bg: var(--crm-background);
+--crm-dash-block-radius: var(--crm-roundness);
+--crm-dash-label-bg: var(--crm-background);
+--crm-dash-header-bg: var(--crm-darkest);
+--crm-dash-header-col: var(--crm-light-text);
+--crm-dash-header-size: var(--l);
+--crm-dash-header-padding: var(--r) var(--r1);
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }
