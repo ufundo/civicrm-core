@@ -38,13 +38,10 @@
     left: var(--s);
     top: var(--m);
 }
-.crm-container .odd-row, 
-.crm-container .odd, tbody.scrollContent,
 .crm-container ul.crm-checkbox-list li label {
     background-color: var(--crm-background2);
     padding-inline: var(--s) var(--m2)
 }
-.crm-container .even-row, .crm-container .even, 
 tbody.scrollContent tr.alternateRow{
     background-color: var(--crm-background3);
     padding-inline: var(--s) var(--m2)
@@ -59,10 +56,10 @@ tbody.scrollContent tr.alternateRow{
     word-break: break-all;
 }
 .crm-container ul.crm-checkbox-list li input:checked + label {
-    background-color: #ffffcc;
+    background-color: var(--crm-yellow-light);
 }
 .crm-container ul.crm-checkbox-list li:nth-child(2n) input:checked + label {
-    background-color: #fffdb2;
+    background-color: var(--crm-yellow-less-light);
 }
 
 /* States */
@@ -234,7 +231,7 @@ tbody.scrollContent tr.alternateRow{
     padding: var(--m3) 0;
 }
 #crm-record-log .col1 {
-    float: right;
+    float: left;
 }
 #civicrm-footer {
     margin-top: var(--l);

@@ -46,6 +46,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crn-amber-light: #fbf0e2;
 --crm-yellow: #ffff66;
 --crm-yellow-light: #ffffcc;
+--crm-yellow-less-light: #fffdb2;
 --crm-teal: #399389;
 --crm-dark-teal: #3e8079;
 
@@ -111,7 +112,6 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-huge-input: 25em;
 
 /* TYPE */
-
 --crm-font-size: var(--r);
 --crm-small-font-size: var(--m2);
 --crm-link-decoration: none;
@@ -132,15 +132,27 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-cancel-color: var(--crm-alert);
 
 /* TABLES */
---table-row-line: 1px dotted var(--dark-gray);
---table-column-line: 0 solid transparent;
---table-font-size: var(--r);
---table-header-line: 1px solid var(--dark-gray);
---table-outside-border: 0 solid transparent;
---table-header-bg: #fff;
---table-header-txt: inherit;
---table-even-row: var(--vvv-light-gray);
---table-odd-row: transparent;
+--crm-table-outside-border: 1px solid var(--crm-gray-100);
+--crm-table-background: var(--crm-page-background);
+--crm-table-row-border: 1px solid var(--crm-gray-300);
+--crm-table-column-border: 0 solid transparent;
+--crm-table-font-size: var(--crm-font-size);
+--crm-table-padding: var(--s1);
+--crm-table-header-border: 1px solid transparent;
+--crm-table-header-bottom: 2px solid var(--crm-gray-300);
+--crm-table-header-bg: var(--crm-page-background);
+--crm-table-header-txt: inherit;
+--crm-table-even-row: var(--crm-gray-100);
+--crm-table-even-hover: var(--crm-yellow-less-light);
+--crm-table-odd-row: var(--crm-gray-050);
+--crm-table-odd-hover: var(--crm-yellow-light);
+--crm-table-sort-col: var(--crm-gray-300);
+--crm-table-sort-float: left; /* 'left', 'right' or 'none' */
+--crm-table-sort-active-col: var(--crm-link);
+--crm-table-compressed-width: auto;
+--crm-table-nested-padding: var(--r) var(--m);
+--crm-table-nested-head-border: 0 solid transparent;
+--crm-table-nested-border: 1px solid var(--crm-gray-300);
 
 /* ACCORDIONS */
 --expand-icon: "\f0da"; /* unicode value for FontAwesome icon */
@@ -215,6 +227,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 /* Tabs */
 --crm-tabs-bg: var(--crm-background4);
 --crm-tabs-padding: var(--s);
+--crm-tabs-border: ;
+--crm-tabs-gap: var(--s);
 --crm-tab-bg: var(--crm-background2);
 --crm-tab-bg-hover: var(--crm-page-background);
 --crm-tab-bg-active: var(--crm-page-background);
@@ -227,22 +241,22 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-tab-roundness: var(--crm-roundness);
 --crm-tab-border-col: var(--crm-gray-400);
 --crm-tab-border-active: 0 solid transparent;
---crm-tab-gap: var(--s);
+--crm-tab-2-border: var(--crm-dash-border);
 
 /* Contact  dashboard */
-
 --crm-dash-border: 1px solid var(--crm-tab-border-col);
+--crm-dash-roundness: var(--crm-roundness);
 --crm-dash-direction: flex; /* choose 'flex' for tabs at top, or 'grid' for tabs at side */
 --crm-side-tabs-width: ; 
 --crm-dash-tabs-flow: row; /* choose 'row' for tabs at top, or 'column' for tabs at side */ 
---crm-dash-roundness: var(--crm-roundness);
+--crm-dash-tabs-gap: var(--crm-tabs-gap);
 --crm-dash-tabs-bg: var(--crm-tabs-bg);
 --crm-dash-tabs-padding: var(--crm-tabs-padding);
 --crm-dash-tab-bg: var(--crm-tab-bg);
 --crm-dash-tab-bg-hover: var(--crm-tab-bg-hover);
 --crm-dash-tab-padding: var(--crm-tab-padding);
+--crm-dash-tab-border: 0 solid transparent;
 --crm-dash-tab-col: var(--crm-tab-col);
---crm-dash-tab-gap: var(--crm-tab-gap);
 --crm-dash-icon-size: var(--r);
 --crm-dash-tab-count-bg: var(--crm-tab-count-bg);
 --crm-dash-tab-count-col: var(--crm-tab-count-col);
@@ -255,7 +269,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dash-header-bg: var(--crm-page-background);
 --crm-dash-header-col: var(--crm-text);
 --crm-dash-header-size: var(--r3);
---crm-dash-header-padding: var(--r) 0;
+--crm-dash-header-padding: 0 0 var(--r) 0; 
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }

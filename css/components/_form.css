@@ -116,9 +116,10 @@
     border-color: var(--crm-focus);
     outline: 0;
 }
-body .page-wrapper :focus, 
+body :focus, 
 body .ui-dialog :focus {
     box-shadow: none;
+    border: 1px solid var(--crm-focus);
 }
 .crm-container .big {
     width: var(--crm-big-input);
@@ -146,7 +147,7 @@ input.crm-form-entityref {
 }
 #contact-summary .crm-inline-edit:hover .crm-edit-help,
 #crm-container #crm-contactname-content .crm-edit-help {
-    background: var(--crm-inline-edit-bg) !important;
+    background: var(--crm-background2) !important;
     border-bottom-left-radius: var(--crm-dash-roundness);
     color: var(--crm-text);
     padding: var(--s) var(--m2);
@@ -165,6 +166,10 @@ input.crm-form-entityref {
     width: fit-content;
     float: none;    
     padding: var(--r);
+    background: var(--crm-inline-edit-bg);
+}
+#crm-container #crm-contactname-content.crm-inline-edit.form {
+    background: var(--crm-inline-edit-bg);
 }
 #crm-container .crm-inline-edit.form td {
     background: transparent;
@@ -172,10 +177,10 @@ input.crm-form-entityref {
     border-bottom: 0 solid transparent;
 }
 #crm-container .CRM_Contact_Form_Inline_ContactName div.crm-inline-edit-form {
-    background-color: var(--crm-inline-edit-bg);
     white-space: nowrap;
     padding: var(--crm-dash-block-padding);
     display: flex;
+    color: var(--crm-text);
 }
 #crm-container table.crm-inline-edit-form td, 
 #crm-container div.crm-inline-edit-form {
@@ -184,11 +189,15 @@ input.crm-form-entityref {
 #crm-container div.crm-inline-edit-form div.crm-clear {
     padding: var(--m) 0 0;
 }
+#crm-container .crm-inline-edit-form div.crm-summary-row {
+    border: 0 solid transparent;
+}
 #crm-container .crm-inline-edit-form div.crm-summary-row div.crm-label,
 #crm-container .crm-inline-edit-form div.crm-summary-row .label {
     float: none;
     width: auto;
     padding: var(--m) 0 var(--s);
+    background: transparent;
 }
 #crm-container .crm-inline-edit-form div.crm-summary-row div.crm-content {
     display: table-cell;

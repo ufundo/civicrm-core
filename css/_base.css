@@ -15,13 +15,24 @@
 .crm-container .clear {
 	clear: both;
 }
-#crm-container th,
-#crm-container tr,
+.crm-container table,
+.crm-container th,
 .crm-container tr,
-#crm-container td {
+.crm-container td {
 	background-color: transparent;
+    background: inherit;
     border: inherit;
     height: inherit;
+    padding: inherit;
+    margin: inherit;
+    color: inherit;
+    line-height: inherit;
+    font-family: inherit;
+    font-size: inherit;
+}
+.crm-container tr:hover, 
+.crm-container tr:focus {
+	background-color: transparent;
 }
 
 /* JQueryUI resets */
@@ -68,7 +79,6 @@
     color: var(--crm-text);
     background: var(--crm-page-background);
 }
-
 .crm-container table,
 #crm-container tr, 
 #crm-container tr td,
@@ -80,7 +90,7 @@
 
 /* Core type */
 
-strong, b {
+strong, b, .crm-container .bold {
     font-family: var(--crm-font-bold);
     font-weight: var(--crm-bold-weight);
 }

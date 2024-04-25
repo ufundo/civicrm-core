@@ -155,3 +155,27 @@
 .crm-submit-buttons {
     padding: var(--s);
 }
+
+/* Hover buttons (plain text, button shows on hover) */
+
+.crm-container a.crm-hover-button.action-item, 
+.crm-container .crm-hover-button.btn-slide {
+    padding: var(--btn-small-padding);
+    border-radius: var(--btn-radius);
+    color: var(--crm-link);
+    cursor: var(--hover-clickable);
+}
+.crm-container .crm-hover-button:hover, 
+.crm-container a.crm-hover-button:hover, 
+.crm-container a.crm-hover-button:active {
+    background: var(--crm-secondary-hover);
+    color: var(--crm-secondary-text);
+    text-decoration: none;
+}
+
+/* Action links */
+
+.crm-container .ui-widget-content .action-link .button {
+    box-shadow: var(--crm-block-shadow) !important;
+    margin: var(--m) 0 ;
+}

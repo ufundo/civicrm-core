@@ -16,11 +16,11 @@
 
 /* D9 Claro */
 
-#crm-container td {
-	height: auto;
-}
+.crm-container .form-item {
+    margin: inherit;
+} 
 .crm-container details {
-	border: 0 solid transparent;
+	border: inherit;
 	padding: 0; 
 }
 .crm-container p {
@@ -36,21 +36,15 @@ header.content-header {
 main.page-content {
     margin-top: 0;
 }
-.crm-container .form-item,
-.crm-container table {
-    margin-block: inherit;
-}
-.crm-container tr {
-    border-bottom: 0 solid transparent;
-    background: inherit;
-}
 .crm-container .button {
     margin-block: inherit;
     margin-inline: inherit;
 }
-.crm-container .action-link {
+.crm-container .action-link,
+.crm-container .action-link:hover {
     padding: 0;
     line-height: 1;
+    background: inherit;
 }
 .help p {
     margin: 0;

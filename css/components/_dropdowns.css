@@ -54,6 +54,53 @@
     background-color: var(--crm-page-background);
 }
 
+/* In-table dropdown */
+
+.crm-container .btn-slide::after {
+    font-family: "FontAwesome";
+    content: "\f0da";
+    padding-left: 0.5ch;
+}
+.crm-container ul.panel {
+    display: none;
+    z-index: 9999;
+    position: absolute;
+    right: 0;
+    margin: var(--btn-small-padding);
+    width: 180px;
+    background: var(--crm-secondary-hover);
+    border-radius: var(--crm-roundness);
+}
+.crm-container ul.panel::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid var(--crm-secondary-hover);
+    top: -5px;
+    right: var(--l);
+}
+.crm-container ul.panel li {
+    padding: var(--s);
+    list-style: none;
+    width: auto;
+}
+#crm-container ul.panel li a {
+    text-decoration: none;
+    padding: var(--btn-small-padding);
+    display: block;
+    cursor: pointer;
+    color: var(--crm-light-text);
+    text-align: left;
+}
+#crm-container ul.panel li a:hover,
+#crm-container ul.panel li a:focus {
+    color: var(--crm-text);
+    background-color: var(--crm-page-background);
+}
 
 /* Tooltip - used on the contact dashboard but no-where else? */
 
