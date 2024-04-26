@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * This file performs minimal boot of Standalone autoloader, classloader and settings
+ *
+ * It's shared between index.php and cv
+ */
+
+/**
+ * @throws \Exception if autoloader file not found
+ */
+function findStandaloneAutoLoader(): string {
+  $dirsToCheck = [
+    [$_SERVER['DOCUMENT_ROOT'], 'core'],
+    [dirname($_SERVER['DOCUMENT_ROOT'])],
+  ];
+  foreach ($dirsToCheck as $dir) {
+    $path = implode(DIRECTORY_SEPARATOR, [...$dir, 'vendor', 'autoload.php']);
+
+    if (file_exists($path)) {
+      return $path;
+    }
+  }
+  throw new \Error('Couldn\'t find CiviCRM Standalone AutoLoader');
+}
+
+/**
+ * @throws \Exception if classloader file not found
+ */
+function findStandaloneClassLoader(): string {
+  $dirsToCheck = [
+    [$_SERVER['DOCUMENT_ROOT'], 'core'],
+    [dirname($_SERVER['DOCUMENT_ROOT']), 'vendor', 'civicrm', 'civicrm-core'],
+  ];
+  foreach ($dirsToCheck as $dir) {
+    $path = implode(DIRECTORY_SEPARATOR, [...$dir, 'CRM', 'Core', 'ClassLoader.php']);
+
+    if (file_exists($path)) {
+      return $path;
+    }
+  }
+  throw new \Error('Couldn\'t find CiviCRM Standalone Classloader');
+}
+
+require_once findStandaloneAutoLoader();
+require_once findStandaloneClassLoader();
+\CRM_Core_ClassLoader::singleton()->register();
+\Civi\Standalone\SettingsLoader::load();
+
