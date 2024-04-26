@@ -1,0 +1,94 @@
+/* catch-all for other components */
+
+/* Dashlets */
+
+.crm-container .crm-dashlet {
+    border-radius: var(--crm-dashlet-radius);
+    background-color: var(--crm-dashlet-bg);
+    padding: var(--crm-dashlet-padding);
+    box-shadow: var(--crm-popup-shadow);
+}
+.crm-container #civicrm-dashboard .crm-dashlet-header {
+    background-color: var(--crm-dashlet-header-bg);
+    border-radius: var(--crm-dashlet-radius);
+    padding: var(--crm-dashlet-header-padding);
+}
+#crm-container .crm-dashlet-header h3 {
+	color: var(--crm-dashlet-header-col);
+    font-size: var(--r);
+}
+#crm-container .crm-dashlet-header a {
+	color: var(--crm-dashlet-header-col);
+	text-decoration: none;
+    font-size: var(--r);
+    padding: var(--xs) var(--s);
+}
+.crm-container .crm-dashlet-content {
+    background: var(--crm-dashlet-bg);
+    padding: 0;
+    margin-top: var(--crm-dashlet-padding);
+}
+#crm-container #civicrm-news-feed {
+    border: 0 solid transparent;
+    border-radius: var(--crm-dashlet-radius);
+}
+#crm-container #civicrm-news-feed ul.ui-tabs-nav {
+    background: var(--crm-dashlet-tabs-bg);
+    margin-bottom: var(--crm-dashlet-padding);
+    border-radius: var(--crm-dashlet-radius);
+}
+#crm-container #civicrm-news-feed ul.ui-tabs-nav a {
+    border-radius: var(--crm-tab-roundness);
+    margin-bottom: -1px; 
+    background: var(--crm-dashlet-tab-bg);
+}
+#crm-container #civicrm-news-feed ul.ui-tabs-nav a:hover,
+#crm-container #civicrm-news-feed ul.ui-tabs-nav a:focus,
+#crm-container #civicrm-news-feed ul.ui-tabs-nav .ui-state-active a {
+    background: var(--crm-dashlet-tab-active);
+    border: var(--crm-tabs-border);
+    border-bottom: 1px solid var(--crm-dashlet-tab-active);
+    margin-bottom: -1px;
+}
+.crm-container #civicrm-news-feed .ui-tabs-panel {
+	padding: 0;
+}
+/* Home dashboard */
+
+#civicrm-dashboard > .crm-flex-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--r); 
+}
+fieldset.crm-inactive-dashlet-fieldset {
+    padding: 0;
+    margin-bottom: var(--r);
+}
+fieldset.crm-inactive-dashlet-fieldset legend {
+    background-color: transparent;
+    margin-bottom: var(--r);
+}
+fieldset.crm-inactive-dashlet-fieldset legend .crm-hover-button {
+    padding: var(--btn-large-padding);
+    margin-right: var(--r);
+}
+fieldset.crm-inactive-dashlet-fieldset > div {
+    background-color: #fff;
+    box-shadow: var(--crm-popup-shadow);
+    border-radius: var(--crm-dashlet-radius);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--r);
+    padding: var(--r);
+}
+.crm-container .crm-inactive-dashlet-fieldset .help {
+    width: 100%;
+    margin: 0;
+}
+.crm-container .crm-inactive-dashlet {
+    border-radius: var(--crm-dashlet-radius);
+    margin: 0;
+}
+#crm-container .crm-inactive-dashlet .crm-dashlet-header {
+    border-radius: var(--crm-dashlet-radius) var(--crm-dashlet-radius) 0 0;
+}

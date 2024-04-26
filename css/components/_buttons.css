@@ -157,16 +157,24 @@
 }
 
 /* Hover buttons (plain text, button shows on hover) */
-
-.crm-container a.crm-hover-button.action-item, 
-.crm-container .crm-hover-button.btn-slide {
-    padding: var(--btn-small-padding);
+.crm-container a.crm-hover-button {
     border-radius: var(--btn-radius);
     color: var(--crm-link);
     cursor: var(--hover-clickable);
+    padding: var(--btn-padding);
+    background-color: var(--crm-primary);
+    color: var(--crm-primary-text);
+}
+.crm-container a.crm-hover-button.action-item, 
+.crm-container .crm-hover-button.btn-slide {
+    background-color: transparent;
+    color: var(--crm-text);
+    padding: var(--btn-small-padding);
+    margin: 0;
 }
 .crm-container .crm-hover-button:hover, 
 .crm-container a.crm-hover-button:hover, 
+.crm-container a.crm-hover-button:focus, 
 .crm-container a.crm-hover-button:active {
     background: var(--crm-secondary-hover);
     color: var(--crm-secondary-text);

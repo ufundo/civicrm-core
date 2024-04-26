@@ -27,6 +27,10 @@
 .crm-container tr.hiddenElement {
 	display: none;
 }
+.accordion.ui-accordion.ui-widget.ui-helper-reset {
+	border: 0 solid transparent;
+	box-shadow: var(--crm-block-shadow);
+}
 
 /* Expand/collapse icons */
 
@@ -88,8 +92,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container .crm-accordion-header,
 .crm-container .crm-collapsible .collapsible-title,
 .crm-container span.collapsed,
-.af-collapsible > .af-title,
-#crm-container .crm-dashlet-header {
+.af-collapsible > .af-title {
 	cursor: var(--hover-clickable);
 	padding: var(--expand-header-padding);
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
@@ -97,34 +100,17 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	font-weight: var(--expand-header-weight);
 	color: var(--expand-header-color);
 } 
-.crm-container #civicrm-dashboard .crm-dashlet-header {
-	background: var(--crm-dashlet-bg);
-}
 .crm-container .crm-accordion-wrapper.collapsed .crm-accordion-header,
 .crm-container .crm-collapsible.collapsed .collapsible-title,
-.af-collapsible.af-collapsed > .af-title,
-#crm-container .crm-dashlet,
-#crm-container .crm-dashlet-header {
+.af-collapsible.af-collapsed > .af-title {
 	border-radius: var(--crm-roundness);
-}
-#crm-container .crm-dashlet-header:has(.fa-caret-down) {
-	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
-}
-#crm-container .crm-dashlet-header a {
-	color: var(--crm-dashlet-col);
-	text-decoration: none;
-	padding-top: var(--xs);
 }
 #crm-container .widget-content .crm-accordion-header,
 .crm-container .crm-accordion-inner .crm-accordion-header,
-.crm-container .crm-collapsible .collapsible-title,
-#crm-container .crm-dashlet-header h3 {
+.crm-container .crm-collapsible .collapsible-title{
 	background-color: transparent;
 	color: var(--crm-text);
 	font-size: var(--crm-font-size);
-}
-#crm-container .crm-dashlet-header h3 {
-	color: var(--crm-dashlet-col);
 }
 .crm-accordion-wrapper .crm-accordion-header.active,
 .crm-accordion-wrapper .crm-accordion-wrapper.collapsed:hover,
@@ -142,9 +128,6 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container .crm-accordion-wrapper .crm-master-accordion-header:focus {
 	background-color: var(--expand-header2-bg);
 }
-.crm-container #civicrm-news-feed .ui-tabs-panel {
-	padding: 0;
-}
 /* Body */
 
 .crm-container .crm-accordion-wrapper .crm-accordion-body {
@@ -155,18 +138,13 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	box-shadow: var(--expand-body-box-shadow);
 	animation: crm-details-show .3s ease-in-out;
 }
-.crm-container .ui-tabs-panel .crm-accordion-body > div,
 #crm-container .widget-content .crm-accordion-body,
 .crm-container .crm-collapsible .crm-summary-block {
 	padding: var(--expand-body-padding);
 }
-.crm-container .crm-master-accordion-header + .crm-accordion-body,
-.crm-container .crm-dashlet {
+.crm-container .crm-master-accordion-header + .crm-accordion-body {
 	border: var(--expand-body2-border);
 	background-color: var(--expand-body2-bg);
-}
-.crm-container .crm-dashlet-content {
-	padding: 0;
 }
 
 /*
@@ -211,14 +189,15 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	margin-bottom: 0;
 }	
 .crm-container .ui-button{
-    background: var(--crm-gray-100);
-    color: var(--crm-dark-text);
+    background: var(--crm-primary);
+    color: var(--crm-primary-text);
 }
 .crm-container .ui-button:hover,
 .crm-container .ui-button:focus,
 [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover,
 [type="button"]:focus, [type="reset"]:focus, [type="submit"]:focus {
-    background: var(--crm-gray-200);
+    background: var(--crm-primary-hover);
+	text-decoration: none;
 }
 .crm-button > input[type="button"],
 .crm-button > input[type="submit"] {
@@ -235,19 +214,22 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container a.button:hover,
 .crm-container a.button:focus {
     background: var(--crm-primary-hover);
-	text-decoration: none;
 }
+.crm-actions-ribbon a.button,
 .crm-container .action-link a.button {
     background: var(--crm-secondary);
     color: var(--crm-secondary-text);
     font-weight: normal;
 	text-decoration: none;
 }
+.crm-actions-ribbon a.button:hover,
+.crm-actions-ribbon a.button:focus,
 .crm-container .action-link a.button:hover,
 .crm-container .action-link a.button:focus {
     background: var(--crm-secondary-hover);
 	text-decoration: none;
 }
+
 /* Small buttons */
 
 .crm-container .btn-xs, 

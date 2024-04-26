@@ -103,6 +103,16 @@ strong em, em strong {
     font-weight: var(--crm-bold-weight);
     font-style: var(--crm-italic-style);
 }
+.crm-container h3 {
+    background-color: var(--crm-heading-bg);
+    font-size: var(--r1);
+    font-family: var(--crm-font-bold);
+    font-weight: var(--crm-bold-weight);
+    color: var(--crm-heading-col);
+    padding: var(--crm-heading-padding);
+    border-radius: var(--crm-heading-radius);
+    margin: 0 0 var(--m);
+}
 
 /* 
       L I N K 

@@ -1,0 +1,98 @@
+/* Main modal */
+/* Header */
+.crm-container.ui-dialog {
+    background: var(--crm-dialog-bg);
+    border: 0;
+    border-radius: var(--crm-dialog-radius);
+    box-shadow: var(--crm-popup-shadow);
+    color: var(--crm-text);
+    max-height: 90%;
+    padding: var(--crm-dialog-padding);
+}
+.crm-container.ui-dialog .ui-dialog-header, 
+.crm-container.ui-dialog .ui-dialog-titlebar,
+.crm-container .modal-header, 
+.crm-container.ui-dialog .ui-dialog-titlebar, 
+.crm-container .ui-dialog .ui-dialog-titlebar {
+    border: 0;
+    border-bottom: 1px solid var(--crm-gray-300) !important;
+    box-shadow: var(--crm-bottom-shadow);
+    color: var(--crm-dialog-header-col);
+    background: var(--crm-dialog-header-bg);
+    font-size: var(--crm-dialog-header-size);
+    border-radius: var(--crm-dialog-radius);
+    padding: var(--m1) var(--r);
+    position: relative;
+    overflow: auto;
+} 
+.crm-container.ui-dialog .ui-dialog-header .ui-dialog-title, 
+.crm-container.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
+    font-weight: var(--crm-bold-weight);
+    font-family: var(--crm-font-bold);
+    padding: 0;
+    width: 80%;
+}
+.crm-container.ui-dialog .ui-dialog-header .ui-button, 
+.crm-container.ui-dialog .ui-dialog-titlebar .ui-button {
+    background: transparent;
+    color: var(--crm-dialog-header-col);
+}
+.crm-container.ui-dialog .ui-dialog-header .ui-button-icon.ui-icon[class*=" fa-"], 
+.crm-container.ui-dialog .ui-dialog-titlebar .ui-button-icon.ui-icon[class*=" fa-"] {
+    font-size: var(--r1);
+    background-image: none;
+    color: var(--crm-dialog-header-col);
+}
+/* Body */
+.crm-container.ui-dialog .ui-dialog-content[id*="crm-ajax-dialog"] {
+    background: var(--crm-background);
+}
+.crm-container.ui-dialog .ui-dialog-content {
+    max-height: calc(100vh - 280px) !important;
+    border-radius: var(--crm-dialog-radius);
+    background: var(--crm-background);
+    color: var(--crm-text);
+    height: auto !important;
+    margin-bottom: 0;
+    margin-top: var(--crm-dialog-padding);
+    position: static;
+    z-index: 1;
+    padding: var(--m);
+}
+.crm-container.ui-dialog .ui-dialog-content .crm-block {
+    box-shadow: none;
+}
+.crm-container.ui-dialog .form-layout-compressed {
+    background: transparent;
+    box-shadow: none;
+    border: 0 solid transparent;
+}
+.crm-container.ui-dialog .ui-dialog-content tr, 
+.crm-container.ui-dialog .ui-dialog-content td, 
+.crm-container.ui-dialog .ui-dialog-content th {
+    border-bottom: 0;
+}
+.crm-container.ui-dialog details {
+    margin: var(--m) 0;
+}
+/* Footer */
+.crm-container.ui-dialog .ui-dialog-buttonpane {
+    background: var(--crm-dialog-bg);
+    border-radius: 0 0 var(--crm-dialog-radius) var(--crm-dialog-radius);
+    border-top: var(--crm-dialog-line) !important;
+    box-shadow: var(--crm-bottom-shadow);
+    position: relative;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+.crm-container.ui-dialog .ui-dialog-buttonset {
+    width: 100%;
+    display: flex;
+    gap: var(--m);
+    padding: var(--m) var(--m) var(--s1);
+    justify-content: flex-end;
+}
+.ui-dialog .ui-dialog-buttonpane button {
+    margin: 0;
+}

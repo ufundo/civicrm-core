@@ -1,11 +1,9 @@
-/* River Lee branch: Washington Square (aka Greenwich 2.0) */
-
+/* River Lee branch: Abingdon Square (aka Greenwich 2.0) */
 
 
 :root { 
 
 /* FONTS */
-
 --crm-system-fonts:;
 --crm-font:;
 --crm-font-bold:;
@@ -15,7 +13,6 @@
 --crm-font-bold-italic:;
     
 /* COLOUR */
-
 color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Safari)
 
 /* COLOUR NAMES */
@@ -26,11 +23,11 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-gray-600: #828388;
 --crm-gray-500: #919297;
 --crm-gray-400: #adaeb3;
---crm-gray-300: #d3dee2;
+--crm-gray-300: #d5d5d5;
 --crm-gray-200: #c2c0c0;
 --crm-gray-100: #e2e1e1;
---crm-gray-050: #f3f6f7;
---crm-gray-025: #f0f0f0;
+--crm-gray-050: #eaeaea;
+--crm-gray-025: #fbfafa;
 --transparent-black: rgba(0, 0, 0, 0.05);
 --crm-blue: #2C99A4;
 --crm-blue-light: #dff0f4;
@@ -51,7 +48,6 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dark-teal: #3e8079;
 
 /* PRACTICAL COLOURS */
-
 --crm-text: #464354;
 --crm-light-text: #fff;
 --crm-dark-text: var(--crm-text);
@@ -82,9 +78,9 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-inactive: var(--crm-background4);
 
 /* SHADOWS */
-
 --crm-block-shadow:;
 --crm-popup-shadow: 0 3px 18px 0 rgba(48,40,40,.25);
+--crm-bottom-shadow: 0 0 16px 1px rgba(0,0,0,.1);
 --crm-body-inset:;
 
 /* SIZES - temporary */
@@ -116,6 +112,10 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-small-font-size: var(--m2);
 --crm-link-decoration: none;
 --crm-link-decoration-hover: underline;
+--crm-heading-bg: var(--crm-blue-light);
+--crm-heading-col: var(--crm-text);
+--crm-heading-padding: var(--s2) var(--m2);
+--crm-heading-radius: var(--crm-roundness);
 
 /* MOUSE EVENTS */
 --hover-clickable: pointer;
@@ -127,6 +127,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --btn-radius: 3px;
 --btn-padding: var(--xs1) var(--m1);
 --btn-small-padding: var(--xs) var(--s);
+--btn-large-padding: var(--m) var(--r);
 --btn-align: center;
 --btn-icon-spacing: var(--s);
 --crm-cancel-color: var(--crm-alert);
@@ -142,9 +143,9 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-table-header-bottom: 2px solid var(--crm-gray-300);
 --crm-table-header-bg: var(--crm-page-background);
 --crm-table-header-txt: inherit;
---crm-table-even-row: var(--crm-gray-100);
+--crm-table-even-row: var(--crm-gray-050);
 --crm-table-even-hover: var(--crm-yellow-less-light);
---crm-table-odd-row: var(--crm-gray-050);
+--crm-table-odd-row: var(--crm-gray-025);
 --crm-table-odd-hover: var(--crm-yellow-light);
 --crm-table-sort-col: var(--crm-gray-300);
 --crm-table-sort-float: left; /* 'left', 'right' or 'none' */
@@ -169,7 +170,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --expand-header-border-width: 0 0 1px 0;
 --expand-body-bg:;
 --expand-body-box-shadow:;
---expand-body-border: 1px solid var(--crm-gray-700);
+--expand-body-border: 1px solid var(--crm-gray-500);
 --expand-border-width: 0 1px 1px 1px;
 --expand-body-padding: var(--s);
 --expand-body2-bg:;
@@ -178,8 +179,6 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --expand-header2-weight: normal;
 --expand-2-border:;
 --expand-2-body-padding: 0;
---crm-dashlet-bg: var(--crm-secondary);
---crm-dashlet-col: var(--crm-light-text);
 --expand-gap: var(--xs2) 0 0;
 
 /* ALERTS */
@@ -270,6 +269,26 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dash-header-col: var(--crm-text);
 --crm-dash-header-size: var(--r3);
 --crm-dash-header-padding: 0 0 var(--r) 0; 
+
+/* Dialog */
+--crm-dialog-bg: var(--crm-page-background);
+--crm-dialog-padding: var(--s);
+--crm-dialog-radius: var(--crm-roundness);
+--crm-dialog-line: ;
+--crm-dialog-header-bg: var(--crm-secondary);
+--crm-dialog-header-col: var(--crm-light-text);
+--crm-dialog-header-size: var(--r1);
+
+/* Dashlet */
+--crm-dashlet-bg: var(--crm-page-background);
+--crm-dashlet-padding: var(--s2);
+--crm-dashlet-header-bg: var(--crm-secondary);
+--crm-dashlet-header-col: var(--crm-light-text);
+--crm-dashlet-header-padding: var(--s);
+--crm-dashlet-tabs-bg: var(--crm-tabs-bg);
+--crm-dashlet-tab-bg: var(--crm-tab-bg);
+--crm-dashlet-tab-active: var(--crm-tab-bg-active);
+--crm-dashlet-radius: var(--crm-roundness);
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }

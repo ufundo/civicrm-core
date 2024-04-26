@@ -14,10 +14,6 @@
     padding: var(--crm-tabs-padding);
     border: var(--crm-tabs-border);
 }
-#crm-container #civicrm-news-feed {
-    border: 1px solid var(--crm-tab-border-col);
-    border-radius: var(--crm-roundness);
-}
 .crm-container .ui-state-default, 
 .crm-container .ui-widget-content .ui-state-default, 
 .crm-container .ui-widget-header .ui-state-default, 
