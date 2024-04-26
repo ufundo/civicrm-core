@@ -55,6 +55,7 @@ class StandaloneScaffold {
       "$destDir/web/public",
       "$destDir/web/private",
       "$destDir/web/extensions",
+      "$destDir/web/settings",
     ];
 
     foreach ($dirs as $dir) {
@@ -67,6 +68,13 @@ class StandaloneScaffold {
       'index.php.txt' => 'web/index.php',
       'htaccess.txt' => 'web/.htaccess',
     ];
+
+    // map all settings files
+    foreach (glob("$srcDir/civicrm.settings/*") as $settingsFile) {
+      $fileName = basename($settingsFile, '.txt');
+      $files["civicrm.settings/{$fileName}.txt"] = "web/settings/$fileName";
+    }
+
     foreach ($files as $srcFile => $destFile) {
       switch ($mode) {
         case 'copy':
