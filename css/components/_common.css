@@ -38,6 +38,9 @@
     left: var(--s);
     top: var(--m);
 }
+.listing-box input.crm-form-checkbox {
+    margin: 0 0 0 var(--s);
+}
 .crm-container ul.crm-checkbox-list li label {
     background-color: var(--crm-background2);
     padding-inline: var(--s) var(--m2)
@@ -77,26 +80,31 @@ tbody.scrollContent tr.alternateRow{
 
 .crm-container .panel {
     box-shadow: none;
-    background: var(--crm-background);
+	border-color: var(--crm-panel-border-col);
+    border-width: var(--crm-panel-border);
     border-radius: var(--crm-roundness);
-    border: none;
-    margin-bottom: var(--1rem);
-}
-.crm-container .panel-body {
-	padding: var(--r);
+    margin-bottom: calc(var(--r) + var(--crm-panel-head-margin));
+    background: transparent;
 }
 .crm-container .panel-heading {
-	padding: var(--m1) var(--r);
+	padding: var(--crm-padding-reg);
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
 	border-bottom: 1px solid transparent;
+    box-shadow: var(--crm-panel-shadow);
+    margin-bottom: var(--crm-panel-head-margin);
 }
 .crm-container .panel-heading > .dropdown .dropdown-toggle {
 	color: inherit;
 }
+.crm-container .panel-body {
+	padding: var(--crm-padding-reg);
+    background: var(--crm-panel-background);
+    box-shadow: var(--crm-panel-shadow);
+}
 .crm-container .panel-title {
 	margin-top: 0;
 	margin-bottom: 0;
-	font-size: var(--r);
+	font-size: var(--crm-font-size);
 	color: inherit;
 }
 .crm-container .panel-title > a, 
@@ -107,13 +115,11 @@ tbody.scrollContent tr.alternateRow{
 	color: inherit;
 }
 .crm-container .panel-footer {
-	padding: var(--m1) var(--r);
-    background: var(--crm-background);
+	padding: var(--crm-padding-reg);
+    background: var(--crm-panel-background);
 	border-top: 1px solid var(--crm-divider);
 	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
-}
-.crm-container .panel {
-	border-color: var(--crm-gray-300);
+    box-shadow: var(--crm-panel-shadow);
 }
 .crm-container .panel > .panel-heading {
 	border-color: var(--crm-gray-300);
@@ -126,11 +132,11 @@ tbody.scrollContent tr.alternateRow{
 }
 .crm-container .panel-default > .panel-heading {
     color: var(--crm-text);
-    background-color: var(--crm-background);
+    background-color: var(--crm-page-background);
 }
 #crm-container .panel-title {
     font-size: 1rem;
-    color: var(--crm-light-text);
+    color: inherit;
     margin: 0;
 }
 .crm-container .panel-default > .panel-heading .badge {
@@ -146,9 +152,17 @@ tbody.scrollContent tr.alternateRow{
 	color: var(--crm-primary-text);
 	background-color: var(--crm-primary-hover);
 }
+.crm-container .panel.panel-success {
+    border-color: var(--crm-green);
+    border-width: var(--crm-panel-border-width);
+}
 .crm-container .panel-success > .panel-heading {
 	color: var(--crm-success);
 	background-color: var(--crm-success-text);
+}
+.crm-container .panel.panel-info {
+    border-color: var(--crm-blue);
+    border-width: var(--crm-panel-border);
 }
 .crm-container .panel-info > .panel-heading {
 	color: var(--crm-info-text);
@@ -159,6 +173,10 @@ tbody.scrollContent tr.alternateRow{
 	color: var(--crm-info-text);
 	background-color: var(--crm-info-hover);
 }
+.crm-container .panel.panel-warning {
+    border-color: var(--crm-amber);
+    border-width: var(--crm-panel-border);
+}
 .crm-container .panel-warning > .panel-heading {
 	color: var(--crm-warning-text);
 	background-color: var(--crm-warning);
@@ -167,6 +185,10 @@ tbody.scrollContent tr.alternateRow{
 .crm-container .panel-warning > .panel-heading a {
 	color: var(--crm-warning-text);
 	background-color: var(--crm-warning-hover);
+}
+.crm-container .panel.panel-danger {
+    border-color: 1px solid var(--crm-red);
+    border-width: var(--crm-panel-border);
 }
 .crm-container .panel-danger > .panel-heading {
 	color: var(--crm-alert-text);

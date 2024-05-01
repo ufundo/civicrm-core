@@ -47,7 +47,15 @@
 .ui-widget button {
     font-family: inherit;
     font-size: inherit;
-  }
+}
+.ui-button-icon-only .ui-icon {
+    position: initial;
+    top: auto;
+    left: auto;
+    margin-top: auto;
+    margin-left: auto;
+    float: right;
+}
 
 /*
       A C C E S S I B I L I T Y
@@ -80,8 +88,8 @@
     background: var(--crm-page-background);
 }
 .crm-container table,
-#crm-container tr, 
-#crm-container tr td,
+.crm-container tr, 
+.crm-container tr td,
 #crm-container p,
 #crm-container ul {
     font-size: var(--crm-font-size);
@@ -111,7 +119,23 @@ strong em, em strong {
     color: var(--crm-heading-col);
     padding: var(--crm-heading-padding);
     border-radius: var(--crm-heading-radius);
-    margin: 0 0 var(--m);
+    margin: var(--crm-heading-margin);
+}
+
+/* Practical colors */
+
+.crm-container .del, 
+.crm-container .crm-is_deleted, 
+.crm-container table.caseSelector td.status-urgent, 
+.crm-container .font-red, 
+.crm-container .status-removed, 
+.crm-container .status-overdue, 
+.crm-container .status-fatal, 
+.crm-container .status-hold, 
+.crm-container .status-past, 
+.crm-contact-deceased, 
+.crm-container .status-warning {
+    color: var(--crm-alert-text) !important;
 }
 
 /* 
@@ -150,7 +174,7 @@ strong em, em strong {
     box-sizing: border-box;
     min-width: 0;
 }
-.css_right {
+.crm-container .css_right,
+#crm-container .float-right {
     float: right;
 }
-

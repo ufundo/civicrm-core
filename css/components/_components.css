@@ -25,9 +25,41 @@
 }
 .crm-container .crm-dashlet-content {
     background: var(--crm-dashlet-bg);
-    padding: 0;
-    margin-top: var(--crm-dashlet-padding);
+    padding: var(--crm-dashlet-padding) 0;
 }
+#crm-container .crm-dashlet .crm-accordion-body {
+    padding: 0;
+    border-bottom: var(--expand-body-border);
+}
+#crm-container .crm-dashlet .crm-accordion-body table {
+    margin: 0;
+    border: 0;
+    box-shadow: var(--crm-input-box-shadow);
+}
+#crm-container .crm-dashlet .crm-accordion-body table tr {
+    padding: var(--crm-dash-block-padding);
+    display: flex;
+    border: 0 solid transparent;
+    gap: var(--r);
+}
+.crm-dashlet .dataTables_wrapper {
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    padding: var(--crm-dash-block-padding);
+    background: var(--crm-dashlet-bg);
+}
+.crm-dashlet table.dataTable {
+    width: calc(100% - (0.5 * var(--crm-dash-block-padding))) !important;
+    overflow: scroll;
+    display: block;
+    padding: 0;
+    border-bottom: 0 solid transparent;
+}
+.crm-dashlet #help {
+    margin: var(--crm-dash-block-padding);
+}
+/* News feed */
 #crm-container #civicrm-news-feed {
     border: 0 solid transparent;
     border-radius: var(--crm-dashlet-radius);
@@ -52,6 +84,23 @@
 }
 .crm-container #civicrm-news-feed .ui-tabs-panel {
 	padding: 0;
+}
+#crm-container #civicrm-news-feed .crm-accordion-body {
+    padding: var(--crm-dashlet-padding);
+}
+/* Getting statrted */
+
+#civicrm-getting-started table {
+    box-shadow: none;
+    margin: 0;
+}
+
+/* Activity dashlet */
+
+#crm-container .crm-activity-selector-dashlet .crm-accordion-body table tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 0 solid transparent;
 }
 /* Home dashboard */
 
@@ -91,4 +140,28 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 }
 #crm-container .crm-inactive-dashlet .crm-dashlet-header {
     border-radius: var(--crm-dashlet-radius) var(--crm-dashlet-radius) 0 0;
+}
+
+/* Pagination */
+
+.crm-datatable-pager-top,
+.crm-datatable-pager-bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--m3);
+}
+.crm-datatable-pager-top {
+    margin-bottom: var(--r);
+}
+.crm-datatable-pager-bottom {
+    margin-top: var(--r);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: var(--crm-secondary);
+    color: var(--crm-secondary-text) !important;
+    border: 0 solid transparent;
+    padding: var(--s);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: var(--crm-secondary-hover);
 }

@@ -29,17 +29,19 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-gray-050: #eaeaea;
 --crm-gray-025: #fbfafa;
 --transparent-black: rgba(0, 0, 0, 0.05);
---crm-blue: #2C99A4;
---crm-blue-light: #dff0f4;
---crm-blue-dark: #005c99;
---crm-blue-mod: #66afe9;
+--crm-blue: #bce8f1;
+--crm-blue-light: #d9edf7;
+--crm-blue-dark: #3a87ad;
+--crm-blue-darker: #327293;
 --crm-purple: #4d4d69;
 --crm-purple-dark: #3e3e54;
---crm-green: #b0d730;
---crm-green-light: #f1f8eb;
---crm-red: #B24B4F;
---crm-red-light: #ffdddd;
---crm-amber: #c67605;
+--crm-green: #d6e9c6;
+--crm-green-light: #dff0d8;
+--crm-green-dark: #468847;
+--crm-red: #eed3d7;
+--crm-red-light: #f2dede;
+--crm-red-dark: #b94a48 ;
+--crm-amber: #dd5600;;
 --crn-amber-light: #fbf0e2;
 --crm-yellow: #ffff66;
 --crm-yellow-light: #ffffcc;
@@ -51,8 +53,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-text: #464354;
 --crm-light-text: #fff;
 --crm-dark-text: var(--crm-text);
---crm-link: var(--crm-blue);
---crm-link-hover: var(--crm-blue-dark);
+--crm-link: var(--crm-blue-dark);
+--crm-link-hover: var(--crm-blue-darker);
 --crm-divider: rgba(142, 146, 156, 0.5);
 --crm-page-background: #fff;
 --crm-background: #efefe5;
@@ -66,15 +68,15 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-secondary: #5d677b;
 --crm-secondary-hover: #3e485b;
 --crm-secondary-text: var(--crm-light-text);
---crm-success: var(--crm-green);
+--crm-success: var(--crm-green-dark);
 --crm-success-text: var(--crm-light-text);
---crm-alert: var(--crm-red);
+--crm-alert: var(--crm-red-dark);
 --crm-alert-text: var(--crm-light-text);
 --crm-warning: var(--crm-amber);
 --crm-warning-text: var(--crm-light-text);
---crm-info: var(--crm-blue);
---crm-info-text: var(--crm-light-text);
---crm-focus: var(--crm-blue-mid);
+--crm-info: var(--crm-blue-light);
+--crm-info-text: var(--crm-blue-dark);
+--crm-focus: var(--crm-blue-darker);
 --crm-inactive: var(--crm-background4);
 
 /* SHADOWS */
@@ -106,6 +108,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --xxl: 4rem;
 --crm-big-input: 15em;
 --crm-huge-input: 25em;
+--crm-padding-reg: var(--r);
+--crm-padding-small: var(--s);
 
 /* TYPE */
 --crm-font-size: var(--r);
@@ -115,6 +119,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-heading-bg: var(--crm-blue-light);
 --crm-heading-col: var(--crm-text);
 --crm-heading-padding: var(--s2) var(--m2);
+--crm-heading-margin: var(--m) 0;
 --crm-heading-radius: var(--crm-roundness);
 
 /* MOUSE EVENTS */
@@ -138,7 +143,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-table-row-border: 1px solid var(--crm-gray-300);
 --crm-table-column-border: 0 solid transparent;
 --crm-table-font-size: var(--crm-font-size);
---crm-table-padding: var(--s1);
+--crm-table-padding: var(--m);
 --crm-table-header-border: 1px solid transparent;
 --crm-table-header-bottom: 2px solid var(--crm-gray-300);
 --crm-table-header-bg: var(--crm-page-background);
@@ -154,6 +159,13 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-table-nested-padding: var(--r) var(--m);
 --crm-table-nested-head-border: 0 solid transparent;
 --crm-table-nested-border: 1px solid var(--crm-gray-300);
+
+/* PANELS */
+--crm-panel-shadow: var(--crm-block-shadow);
+--crm-panel-background: var(--crm-page-background);
+--crm-panel-border: 1px;
+--crm-panel-border-col: var(--crm-gray-300);
+--crm-panel-head-margin: 0;
 
 /* ACCORDIONS */
 --expand-icon: "\f0da"; /* unicode value for FontAwesome icon */
@@ -187,16 +199,16 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-alert-border-width: 1px;
 --crm-alert-background-help: var(--crm-green-light);
 --crm-alert-border-help: var(--crm-green);
---crm-alert-text-help: var(--crm-text);
+--crm-alert-text-help: var(--crm-green-dark);
 --crm-alert-background-warning: var(--crm-yellow-light);
 --crm-alert-border-warning: var(--crm-yellow);
 --crm-alert-text-warning: var(--crm-text);
 --crm-alert-background-info: var(--crm-blue-light);
 --crm-alert-border-info: var(--crm-blue);
---crm-alert-text-info: var(--crm-text);
+--crm-alert-text-info: var(--crm-blue-dark);
 --crm-alert-background-danger: var(--crm-red-light);
 --crm-alert-border-danger: var(--crm-red);
---crm-alert-text-danger: var(--crm-text);
+--crm-alert-text-danger: var(--crm-red-dark);
 
 /* FORM */
 --crm-form-block-box-shadow: var(--crm-block-shadow);
@@ -235,8 +247,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-tab-col: var(--crm-text);
 --crm-tab-weight: normal;
 --crm-tab-font:;
---crm-tab-count-bg: var(--crm-info);
---crm-tab-count-col: var(--crm-info-text);
+--crm-tab-count-bg: var(--crm-info-text);
+--crm-tab-count-col: var(--crm-info);
 --crm-tab-roundness: var(--crm-roundness);
 --crm-tab-border-col: var(--crm-gray-400);
 --crm-tab-border-active: 0 solid transparent;
@@ -261,7 +273,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dash-tab-count-col: var(--crm-tab-count-col);
 --crm-dash-panel-padding: var(--m);
 --crm-dash-edit-border: 2px dashed var(--crm-gray-300);
---crm-dash-block-padding: 0;
+--crm-dash-block-padding: var(--s) 0;
 --crm-dash-block-bg: ;
 --crm-dash-block-radius: var(--crm-roundness);
 --crm-dash-label-bg: var(--crm-background2);
@@ -289,6 +301,20 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dashlet-tab-bg: var(--crm-tab-bg);
 --crm-dashlet-tab-active: var(--crm-tab-bg-active);
 --crm-dashlet-radius: var(--crm-roundness);
+
+/* Notifications */
+--crm-notify-background: rgba(0,0,0,0.85);
+--crm-notify-padding: var(--m2);
+--crm-notify-col: var(--crm-light-text);
+--crm-notify-accent-border: 2px 0 0 0; /* adds a border to one/several sides of the notification - set to 0 for none */
+
+/* Icons */
+--crm-icon-alert: "\f06a";
+--crm-icon-success: "\f058";
+--crm-icon-close: "\f00d";
+--crm-icon-sort: "\f0dc";
+--crm-icon-sort-desc: "\f0dd";
+--crm-icon-sort-asc: "\f0de";
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }

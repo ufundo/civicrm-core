@@ -41,7 +41,8 @@
 .crm-container .crm-master-accordion-header:before,
 .crm-container .expanded::before,
 .crm-container a.collapsed::before,
-.crm-container a.crm-expand-row:not(.expanded)::before {
+.crm-container a.crm-expand-row:not(.expanded)::before,
+.crm-container .civicrm-community-messages .crm-collapsible .collapsible-title::before {
 	font-size: var(--crm-font-size);
 	font-style: normal;
 	text-rendering: auto;
@@ -60,7 +61,8 @@
 .crm-container .crm-master-accordion-header:before,
 .crm-container a.collapsed::before,
 .crm-container a.expanded::before,
-.crm-container a.crm-expand-row.expanded::before  {
+.crm-container a.crm-expand-row.expanded::before,
+.crm-container .civicrm-community-messages .crm-collapsible .collapsible-title::before {
 	content: var(--expand-icon);
 	transform: var(--expand-transform);
 	transform-origin: center center;
@@ -73,7 +75,8 @@
 .crm-dashlet-header .crm-dashlet-collapse.fa-caret-right::before,
 .af-collapsible.af-collapsed > .af-title::before,
 .crm-container a.collapsed:not(.expanded)::before,
-.crm-container a.crm-expand-row::before {
+.crm-container a.crm-expand-row::before,
+.crm-container .civicrm-community-messages .crm-collapsible.collapsed .collapsible-title::before {
     transform: none;
 	transform-origin: center center;
 	transition: var(--expand-transition);
@@ -182,16 +185,18 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	background-image: none;
 	border: var(--btn-border);
 	padding: var(--btn-padding);
-	font-size: var(--r);
-	line-height: 1.5;
+	font-size: var(--crm-font-size);
 	border-radius: var(--btn-radius);
 	user-select: none;
 	margin-bottom: 0;
-}	
-.crm-container .ui-button{
-    background: var(--crm-primary);
-    color: var(--crm-primary-text);
+	background-color: var(--crm-primary);
+	color: var(--crm-primary-text) !important;
+	line-height: 1.5;
 }
+/* .crm-container .ui-button{
+    background: var(--crm-primary);
+    color: var(--crm-primary-text) !important;
+} */
 .crm-container .ui-button:hover,
 .crm-container .ui-button:focus,
 [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover,
@@ -205,15 +210,18 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     color: inherit;
     padding: 0;
 }
-.crm-container a.button {
-    background: var(--crm-primary);
-    color: var(--crm-primary-text);
+.crm-container a.button,
+.crm-container [type="button"] {
+    background: var(--crm-secondary);
+    color: var(--crm-secondary-text);
     font-weight: normal;
 	text-decoration: none;
 }
 .crm-container a.button:hover,
-.crm-container a.button:focus {
-    background: var(--crm-primary-hover);
+.crm-container a.button:focus,
+.crm-container [type="button"]:hover,
+.crm-container [type="button"]:focus {
+    background: var(--crm-secondary-hover);
 }
 .crm-actions-ribbon a.button,
 .crm-container .action-link a.button {
@@ -250,6 +258,10 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     font-size: var(--crm-small-font-size);
     line-height: 1.5;
     border-radius: var(--crm-roundness);
+} 
+#crm-container .btn-group-xs button {
+    padding: var(--xs) var(--s);
+    font-size: var(--crm-small-font-size);
 }
 
 /* 

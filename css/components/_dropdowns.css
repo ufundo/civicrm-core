@@ -7,7 +7,7 @@
 #crm-participant-list {
     position: absolute;
     display: none;
-    top: 34px;
+    top: 45px;
     width: 220px;
     left: 0;
     z-index: 15;
@@ -20,9 +20,10 @@
 .crm-event-links-list-inner, 
 .crm-contribpage-links-list-inner, 
 .crm-contact-actions-list-inner {
-    background-color: var(--crm-primary);
-    padding: var(--crm-roundness);
+    background-color: var(--crm-secondary);
+    border-radius: var(--crm-roundness);
     box-shadow: var(--crm-popup-shadow);
+    padding: var(--crm-padding-small);
 }
 .ac_results::before {
     content: '';
@@ -32,7 +33,7 @@
     height: 0px;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid var(--crm-primary);
+    border-bottom: 5px solid var(--crm-secondary);
     top: -5px;
     left: 12px;
 }
@@ -41,7 +42,7 @@
     margin: 0;
 }
 #crm-contact-actions-list ul a {
-    color: var(--crm-primary-text);
+    color: var(--crm-secondary-text);
     padding-inline: var(--s);
     border-radius: var(--crm-roundness);
     display: inherit;
@@ -65,7 +66,7 @@
     display: none;
     z-index: 9999;
     position: absolute;
-    right: 0;
+    right: var(--r4);
     margin: var(--btn-small-padding);
     width: 180px;
     background: var(--crm-secondary-hover);

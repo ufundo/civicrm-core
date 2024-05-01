@@ -36,6 +36,7 @@
 .crm-container.ui-dialog .ui-dialog-titlebar .ui-button {
     background: transparent;
     color: var(--crm-dialog-header-col);
+    padding: 0 var(--m);
 }
 .crm-container.ui-dialog .ui-dialog-header .ui-button-icon.ui-icon[class*=" fa-"], 
 .crm-container.ui-dialog .ui-dialog-titlebar .ui-button-icon.ui-icon[class*=" fa-"] {
@@ -76,15 +77,18 @@
     margin: var(--m) 0;
 }
 /* Footer */
-.crm-container.ui-dialog .ui-dialog-buttonpane {
+.crm-container.ui-dialog .ui-dialog-buttonpane,
+.crm-container.ui-dialog .modal-dialog .modal-footer {
     background: var(--crm-dialog-bg);
     border-radius: 0 0 var(--crm-dialog-radius) var(--crm-dialog-radius);
     border-top: var(--crm-dialog-line) !important;
     box-shadow: var(--crm-bottom-shadow);
-    position: relative;
     display: flex;
     padding: 0;
     margin: 0;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
 }
 .crm-container.ui-dialog .ui-dialog-buttonset {
     width: 100%;
@@ -95,4 +99,54 @@
 }
 .ui-dialog .ui-dialog-buttonpane button {
     margin: 0;
+}
+
+/* System notifications */
+
+#crm-notification-container {
+    width: 350px;
+    position: fixed;
+    top: 100px;
+    right: var(--r2);
+    z-index: 999999;
+}
+.crm-container #crm-notification-container div.ui-notify-message-style {
+    background: var(--crm-notify-background);
+    box-shadow: var(--crm-popup-shadow);
+    color: var(--crm-notify-col);
+    border-radius: var(--crm-roundness);
+    padding: var(--crm-notify-padding);
+    margin-bottom: var(--r);
+    max-height: 600px;
+    overflow: auto;
+    border-width: var(--crm-notify-accent-border);
+    border-style: solid;
+    border-color: var(--crm-700-gray);
+}
+.crm-container #crm-notification-container div.ui-notify-message-style.error {
+    border-color: var(--crm-alert);
+}
+.crm-container #crm-notification-container div.ui-notify-message-style.success {
+    border-color: var(--crm-success);
+}
+#crm-notification-container div.ui-notify-message:last-child {
+    margin-bottom: 0;
+}
+.crm-container #crm-notification-container div.ui-notify-message h1 {
+    font-size: var(--r);
+    font-weight: var(--crm-bold-weight);
+    font-family: var(--crm-font-bold);
+    margin: 0 2ch var(--m) 0;
+}
+.crm-container #crm-notification-container div.ui-notify-message h1:empty {
+    float: left;
+    margin: 0;
+}
+.crm-container #crm-notification-container div.ui-notify-message-style {
+    color: var(--crm-notify-col);
+}
+.crm-container #crm-notification-container div.ui-notify-message .notify-content ul {
+    margin: 0 var(--r);
+    padding: var(--m) 0 var(--m) var(--m);
+    color: var(--crm-notify-col);
 }

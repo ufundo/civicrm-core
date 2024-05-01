@@ -11,7 +11,8 @@
     border: 1px solid transparent;
 }
 .crm-container th, 
-.crm-container table thead.sticky th
+.crm-container table thead.sticky th,
+.crm-container table.dataTable thead th
 /* .crm-container table.display thead th, 
 /* .crm-container table.caseSelector tr.columnheader th  */ { 
     background-color:  var(--crm-table-header-bg);
@@ -20,6 +21,8 @@
     font-family: var(--crm-font-bold);
     font-weight: var(--crm-bold-weight);
     padding: var(--crm-table-padding);
+	text-align: left;
+    vertical-align: bottom;
 }
 .crm-container:not(thead) tr {
     border-bottom: var(--crm-table-row-border);
@@ -46,7 +49,8 @@ tbody.scrollContent tr.alternateRow {
 .crm-container .even-row:hover{
     background-color: var(--crm-table-even-hover);
 }
-.crm-container td {
+.crm-container td,
+.crm-container table.dataTable thead td {
     padding: var(--crm-table-padding);
     vertical-align: top;
   }
@@ -56,7 +60,6 @@ tbody.scrollContent tr.alternateRow {
 .crm-container table td:has(.btn-slide) {
     text-align: right;
 }
-
 /* Nested table */ 
 
 .crm-container .crm-child-row tr:first-child {
@@ -79,7 +82,6 @@ tbody.scrollContent tr.alternateRow {
 #crm-container tr.crm-child-row:hover {
     background-color: transparent;
 }
-
 /* Compressed table */
 
 .crm-container table.form-layout-compressed {
@@ -95,35 +97,231 @@ tbody.scrollContent tr.alternateRow {
     padding: var(--crm-table-padding);
 }
 
-/* Sorting icons */
+/* Bootstrap tables */
 
-.crm-container tr a.sorting, 
-.crm-container tr a.sorting_asc, 
-.crm-container tr a.sorting_desc {
-    background: none;
-    color: var(--crm-text);
+.crm-container table col[class*="col-"] {
+	position: static;
+	display: table-column;
+	float: none;
 }
-.crm-container th a:hover,
-.crm-container th a:focus {
-    text-decoration: none;
+.crm-container table td[class*="col-"],
+.crm-container table th[class*="col-"] {
+	position: static;
+	display: table-cell;
+	float: none;
 }
-.crm-container a.sorting::after,
-.crm-container a.sorting_asc::after, 
-.crm-container a.sorting_desc::after {
-    font-family: "FontAwesome";
-    font-style: normal;
-    text-rendering: auto;
-    font-size: var(--crm-dash-icon-size);
-    content: "";
-    color: var(--crm-table-sort-col);
-    float: var(--crm-table-sort-float);
-    margin: 0 var(--m) 0 0;
+.crm-container .table {
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: var(--r1);
 }
-.crm-container a.sorting_asc::after {
-    content: "";
-    color: var(--crm-link);
+.crm-container .table > thead > tr > th,
+.crm-container .table > thead > tr > td,
+.crm-container .table > tbody > tr > th,
+.crm-container .table > tbody > tr > td,
+.crm-container .table > tfoot > tr > th,
+.crm-container .table > tfoot > tr > td {
+	padding: var(--crm-table-padding);
 }
-.crm-container a.sorting_desc::after {  
-    content: "";
-    color: var(--crm-link);
+.crm-container .crm-search-display-table > table.table > thead > tr > th.crm-search-result-select {
+    padding-inline: 0;
+}
+.crm-container .table > tbody + tbody {
+	border-top: var(--crm-table-header-bottom);
+}
+.crm-container .table-condensed > thead > tr > th,
+.crm-container .table-condensed > thead > tr > td,
+.crm-container .table-condensed > tbody > tr > th,
+.crm-container .table-condensed > tbody > tr > td,
+.crm-container .table-condensed > tfoot > tr > th,
+.crm-container .table-condensed > tfoot > tr > td {
+	padding: var(--s1);
+}
+.crm-container .table-bordered {
+	border: var(--crm-table-outside-border);
+}
+.crm-container .table-bordered > thead > tr > th,
+.crm-container .table-bordered > thead > tr > td,
+.crm-container .table-bordered > tbody > tr > th,
+.crm-container .table-bordered > tbody > tr > td,
+.crm-container .table-bordered > tfoot > tr > th,
+.crm-container .table-bordered > tfoot > tr > td {
+	border: var(--crm-table-outside-border);
+}
+.crm-container .table-bordered > thead > tr > th,
+.crm-container .table-bordered > thead > tr > td {
+	border-bottom-width: 2px;
+}
+.crm-container .table-striped > tbody > tr {
+	background-color: var(--crm-table-event-row);
+}
+.crm-container .table-striped > tbody > tr:nth-of-type(odd) {
+	background-color: var(--crm-table-odd-row);
+}
+.crm-container .table-hover > tbody > tr:hover {
+	background-color: var(--crm-table-even-hover);
+}
+.crm-container .table-striped > tbody > tr:nth-of-type(odd):hover {
+	background-color: var(--crm-table-odd-hover);
+}
+.crm-container .table > thead > tr > td.active,
+.crm-container .table > thead > tr > th.active,
+.crm-container .table > thead > tr.active > td,
+.crm-container .table > thead > tr.active > th,
+.crm-container .table > tbody > tr > td.active,
+.crm-container .table > tbody > tr > th.active,
+.crm-container .table > tbody > tr.active > td,
+.crm-container .table > tbody > tr.active > th,
+.crm-container .table > tfoot > tr > td.active,
+.crm-container .table > tfoot > tr > th.active,
+.crm-container .table > tfoot > tr.active > td,
+.crm-container .table > tfoot > tr.active > th {
+	background-color: var(--crm-table-odd-row);
+} 
+.crm-container .table-hover > tbody > tr > td.active:hover,
+.crm-container .table-hover > tbody > tr > th.active:hover,
+.crm-container .table-hover > tbody > tr.active:hover > td,
+.crm-container .table-hover > tbody > tr:hover > .active,
+.crm-container .table-hover > tbody > tr.active:hover > th {
+	background-color: var(--crm-table-odd-hover);
+}
+.crm-container .table > thead > tr > td.success,
+.crm-container .table > thead > tr > th.success,
+.crm-container .table > thead > tr.success > td,
+.crm-container .table > thead > tr.success > th,
+.crm-container .table > tbody > tr > td.success,
+.crm-container .table > tbody > tr > th.success,
+.crm-container .table > tbody > tr.success > td,
+.crm-container .table > tbody > tr.success > th,
+.crm-container .table > tfoot > tr > td.success,
+.crm-container .table > tfoot > tr > th.success,
+.crm-container .table > tfoot > tr.success > td,
+.crm-container .table > tfoot > tr.success > th {
+	background-color: var(--crm-alert-background-help);
+}
+.crm-container .table-hover > tbody > tr > td.success:hover,
+.crm-container .table-hover > tbody > tr > th.success:hover,
+.crm-container .table-hover > tbody > tr.success:hover > td,
+.crm-container .table-hover > tbody > tr:hover > .success,
+.crm-container .table-hover > tbody > tr.success:hover > th {
+	background-color: var(--crm-alert-border-help);
+}
+.crm-container .table > thead > tr > td.info,
+.crm-container .table > thead > tr > th.info,
+.crm-container .table > thead > tr.info > td,
+.crm-container .table > thead > tr.info > th,
+.crm-container .table > tbody > tr > td.info,
+.crm-container .table > tbody > tr > th.info,
+.crm-container .table > tbody > tr.info > td,
+.crm-container .table > tbody > tr.info > th,
+.crm-container .table > tfoot > tr > td.info,
+.crm-container .table > tfoot > tr > th.info,
+.crm-container .table > tfoot > tr.info > td,
+.crm-container .table > tfoot > tr.info > th {
+	background-color: var(--crm-alert-background-info);
+}
+.crm-container .table-hover > tbody > tr > td.info:hover,
+.crm-container .table-hover > tbody > tr > th.info:hover,
+.crm-container .table-hover > tbody > tr.info:hover > td,
+.crm-container .table-hover > tbody > tr:hover > .info,
+.crm-container .table-hover > tbody > tr.info:hover > th {
+	background-color: var(--crm-alert-border-info);
+}
+.crm-container .table > thead > tr > td.warning,
+.crm-container .table > thead > tr > th.warning,
+.crm-container .table > thead > tr.warning > td,
+.crm-container .table > thead > tr.warning > th,
+.crm-container .table > tbody > tr > td.warning,
+.crm-container .table > tbody > tr > th.warning,
+.crm-container .table > tbody > tr.warning > td,
+.crm-container .table > tbody > tr.warning > th,
+.crm-container .table > tfoot > tr > td.warning,
+.crm-container .table > tfoot > tr > th.warning,
+.crm-container .table > tfoot > tr.warning > td,
+.crm-container .table > tfoot > tr.warning > th {
+	background-color: var(--crm-alert-background-warning);
+}
+.crm-container .table-hover > tbody > tr > td.warning:hover,
+.crm-container .table-hover > tbody > tr > th.warning:hover,
+.crm-container .table-hover > tbody > tr.warning:hover > td,
+.crm-container .table-hover > tbody > tr:hover > .warning,
+.crm-container .table-hover > tbody > tr.warning:hover > th {
+	background-color: var(--crm-alert-border-warning);
+}
+.crm-container .table > thead > tr > td.danger,
+.crm-container .table > thead > tr > th.danger,
+.crm-container .table > thead > tr.danger > td,
+.crm-container .table > thead > tr.danger > th,
+.crm-container .table > tbody > tr > td.danger,
+.crm-container .table > tbody > tr > th.danger,
+.crm-container .table > tbody > tr.danger > td,
+.crm-container .table > tbody > tr.danger > th,
+.crm-container .table > tfoot > tr > td.danger,
+.crm-container .table > tfoot > tr > th.danger,
+.crm-container .table > tfoot > tr.danger > td,
+.crm-container .table > tfoot > tr.danger > th {
+	background-color: var(--crm-alert-background-danger);
+}
+.crm-container .table-hover > tbody > tr > td.danger:hover,
+.crm-container .table-hover > tbody > tr > th.danger:hover,
+.crm-container .table-hover > tbody > tr.danger:hover > td,
+.crm-container .table-hover > tbody > tr:hover > .danger,
+.crm-container .table-hover > tbody > tr.danger:hover > th {
+	background-color: var(--crm-alert-border-danger);
+}
+.crm-container .table-responsive {
+	min-height: .01%;
+	overflow-x: auto;
+}
+
+/* Responsive table */
+
+@media screen and (max-width: 767px) {
+	.crm-container .table-responsive,
+    .crm-container table {
+		width: 100%;
+		margin-bottom: 15px;
+		overflow-y: hidden;
+		border: var(--crm-table-outside-border);
+        display: contents; /* expirmental addition to provide more responsive behaviour */
+	}
+	.crm-container .table-responsive > .table {
+		margin-bottom: 0;
+	}
+	.crm-container .table-responsive > .table > thead > tr > th,
+    .crm-container .table-responsive > .table > thead > tr > td,
+    .crm-container .table-responsive > .table > tbody > tr > th,
+    .crm-container .table-responsive > .table > tbody > tr > td,
+    .crm-container .table-responsive > .table > tfoot > tr > th,
+    .crm-container .table-responsive > .table > tfoot > tr > td,
+    .crm-container th,
+    .crm-container td  {
+		white-space: nowrap;
+	}
+	.crm-container .table-responsive > .table-bordered {
+		border: 0;
+	}
+	.crm-container .table-responsive > .table-bordered > thead > tr > th:first-child,
+    .crm-container .table-responsive > .table-bordered > thead > tr > td:first-child,
+    .crm-container .table-responsive > .table-bordered > tbody > tr > th:first-child,
+    .crm-container .table-responsive > .table-bordered > tbody > tr > td:first-child,
+    .crm-container .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+    .crm-container .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+		border-left: 0;
+	}
+	
+	.crm-container .table-responsive > .table-bordered > thead > tr > th:last-child,
+    .crm-container .table-responsive > .table-bordered > thead > tr > td:last-child,
+    .crm-container .table-responsive > .table-bordered > tbody > tr > th:last-child,
+    .crm-container .table-responsive > .table-bordered > tbody > tr > td:last-child,
+    .crm-container .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+    .crm-container .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+		border-right: 0;
+	}
+	.crm-container .table-responsive > .table-bordered > tbody > tr:last-child > th,
+    .crm-container .table-responsive > .table-bordered > tbody > tr:last-child > td,
+    .crm-container .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+    .crm-container .table-responsive > .table-bordered > tfoot > tr:last-child > td {
+		border-bottom: 0;
+	}
 }

@@ -38,7 +38,8 @@
     display: inline-block;
     margin-bottom: var(--s);
 }
-.crm-container .description {
+.crm-container .description,
+.crm-container td.description {
     color: var(--crm-input-description);
     font-size: var(--crm-input-label-size);
 }
@@ -233,7 +234,7 @@ input.crm-form-checkbox + label,
 /* Select2 */
 
 .crm-container .select2-container {
-    width: 100%;
+    width: auto !important;
 }
 .crm-container .select2-container-multi .select2-choices,
 .crm-container .select2-container .select2-choice {

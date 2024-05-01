@@ -37,12 +37,15 @@ color-scheme: light dark;
 --crm-purple-dark: #3e3e54;
 --crm-green: #44cb7e;
 --crm-green-light: #bcecd1;
+--crm-green-dark: var(--crm-text);
 --crm-red: #cf3458;
 --crm-red-light: #ecb0be;
+--crm-red-dark: var(--crm-text);
 --crm-amber: #e6ab5e;
 --crm-amber-light: #fbf0e2;
 --crm-yellow: #f8e80b;
 --crm-yellow-light: #ffffcc;
+--crm-yellow-less-light: #fffdb2;
 --crm-teal: #399389;
 --crm-dark-teal: #3e8079;
 
@@ -68,7 +71,7 @@ color-scheme: light dark;
 --crm-success: var(--crm-green);
 --crm-success-text: var(--crm-dark-text);
 --crm-alert: var(--crm-red);
---crm-alert-text: var(--crm-light-text);
+--crm-alert-text: var(--crm-red);
 --crm-warning: var(--crm-amber);
 --crm-warning-text: var(--crm-dark-text);
 --crm-info: var(--crm-blue);
@@ -77,7 +80,6 @@ color-scheme: light dark;
 --crm-inactive: var(--crm-background4);
 
 /* SHADOWS */
-
 --crm-block-shadow: 0 3px 18px 0 rgba(48,40,40,.25);
 --crm-popup-shadow: var(--crm-block-shadow);
 --crm-bottom-shadow: 0 0 16px 1px rgba(0,0,0,.1);
@@ -106,12 +108,19 @@ color-scheme: light dark;
 --xxl: 4rem;
 --crm-big-input: 15em;
 --crm-huge-input: 25em;
+--crm-padding-reg: var(--r);
+--crm-padding-small: var(--s);
 
 /* TYPE */
 --crm-font-size: var(--r);
 --crm-small-font-size: var(--m2);
 --crm-link-decoration: none;
 --crm-link-decoration-hover: none;
+--crm-heading-bg: var(--crm-background3);
+--crm-heading-col: var(--crm-text);
+--crm-heading-padding: var(--m2) var(--r2);
+--crm-heading-margin: 0;
+--crm-heading-radius: 0;
 
 /* MOUSE EVENTS */
 --hover-clickable: pointer;
@@ -119,7 +128,7 @@ color-scheme: light dark;
 /* BUTTONS */
 --btn-box-shadow: none;
 --btn-border: 0 solid transparent;
---btn-txt-transform: inherit;
+--btn-txt-transform: uppercase;
 --btn-radius: 2px;
 --btn-padding: var(--m) var(--r2);
 --btn-small-padding: var(--s1) var(--m1);
@@ -151,6 +160,13 @@ color-scheme: light dark;
 --crm-table-nested-head-border: 2px solid var(--crm-gray-300);
 --crm-table-nested-border: 0 solid transparent;
 
+/* PANELS */
+--crm-panel-shadow: var(--crm-block-shadow);
+--crm-panel-background: var(--crm-background);
+--crm-panel-border: 0;
+--crm-panel-border-col: ;
+--crm-panel-head-margin: var(--m2   );
+
 /* ACCORDIONS */
 --expand-icon: "\f105"; /* unicode value for FontAwesome icon */
 --expand-icon-color: ;
@@ -168,15 +184,13 @@ color-scheme: light dark;
 --expand-body-box-shadow: var(--crm-body-inset);
 --expand-body-border:;
 --expand-border-width:;
---expand-body-padding: var(--r);
+--expand-body-padding: var(--crm-padding-reg);
 --expand-body2-bg: transparent;
 --expand-header2-bg: var(--crm-primary);
 --expand-header2-color: var(--crm-light-text);
 --expand-header2-weight: bold;
 --expand-2-border: 1px solid var(--crm-background3);
 --expand-2-body-padding: 0;
---crm-dashlet-bg: var(--crm-purple);
---crm-dashlet-col: var(--crm-light-text);
 --expand-gap: 0;
 
 /* ALERTS */
@@ -259,7 +273,7 @@ color-scheme: light dark;
 --crm-dash-tab-count-col: var(--crm-light-text);
 --crm-dash-panel-padding: var(--r2);
 --crm-dash-edit-border: 1px solid var(--crm-gray-900);
---crm-dash-block-padding: var(--m2) var(--r1);
+--crm-dash-block-padding: var(--m2);
 --crm-dash-block-bg: var(--crm-background);
 --crm-dash-block-radius: var(--crm-roundness);
 --crm-dash-label-bg: var(--crm-background);
@@ -269,7 +283,7 @@ color-scheme: light dark;
 --crm-dash-header-padding: var(--r) var(--r1);
 
 /* Dialog */
---crm-dialog-bg: ;
+--crm-dialog-bg: var(--crm-background);
 --crm-dialog-padding: 0;
 --crm-dialog-radius: var(--crm-roundness);
 --crm-dialog-line: 1px solid var(--crm-gray-300);
@@ -278,15 +292,30 @@ color-scheme: light dark;
 --crm-dialog-header-size: var(--r1);
 
 /* Dashlet */
---crm-dashlet-bg: var(--crm-page-background);
---crm-dashlet-padding: ;
+--crm-dashlet-bg: var(--crm-background);
+--crm-dashlet-padding: 0;
+--crm-dashlet-col: var(--crm-light-text);
 --crm-dashlet-header-bg: var(--crm-secondary);
 --crm-dashlet-header-col: var(--crm-light-text);
---crm-dashlet-header-padding: var(--m) var(--r);
+--crm-dashlet-header-padding: var(--crm-padding-reg);
 --crm-dashlet-tabs-bg: var(--crm-background);
 --crm-dashlet-tab-bg: var(--crm-background);
 --crm-dashlet-tab-active: var(--expand-header-bg);
 --crm-dashlet-radius: var(--crm-roundness);
+
+/* Notifications */
+--crm-notify-background: var(--crm-background);
+--crm-notify-padding: var(--m2);
+--crm-notify-col: var(--crm-text);
+--crm-notify-accent-border: 0 0 0 3px; /* adds a border to one/several sides of the notification - set to 0 for none */
+
+/* Icons */
+--crm-icon-alert: "\f06a";
+--crm-icon-success: "\f058";
+--crm-icon-close: "\f00d";
+--crm-icon-sort: "\f0dc";
+--crm-icon-sort-desc: "\f0dd";
+--crm-icon-sort-asc: "\f0de";
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }
