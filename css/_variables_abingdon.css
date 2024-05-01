@@ -184,13 +184,13 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --expand-body-box-shadow:;
 --expand-body-border: 1px solid var(--crm-gray-500);
 --expand-border-width: 0 1px 1px 1px;
---expand-body-padding: var(--s);
+--expand-body-padding: var(--crm-padding-reg);
 --expand-body2-bg:;
 --expand-header2-bg:;
 --expand-header2-color: var(--crm-text);
 --expand-header2-weight: normal;
 --expand-2-border:;
---expand-2-body-padding: 0;
+--expand-2-body-padding: var(--s);
 --expand-gap: var(--xs2) 0 0;
 
 /* ALERTS */
@@ -213,7 +213,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 /* FORM */
 --crm-form-block-box-shadow: var(--crm-block-shadow);
 --crm-form-block-background: var(--crm-background);
---crm-form-block-padding: var(--s);
+--crm-form-block-padding: var(--m);
 --crm-form-block-border-radius: var(--crm-roundness);
 --crm-input-background: var(--crm-page-background);
 --crm-input-background-image: linear-gradient(top, #eee 1%, #fff 15%);

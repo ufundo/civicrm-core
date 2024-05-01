@@ -165,3 +165,83 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     background: var(--crm-secondary-hover);
 }
+
+/* Alpha filter */
+
+.crm-container div#alpha-filter {
+    background-color: var(--crm-blue-light);
+    margin: var(--r) 0;
+    padding: var(--s2) 0;
+    text-align: left;
+    box-shadow: var(--crm-block-shadow);
+    border-radius: var(--crm-roundness);
+}
+
+/* SEARCH */
+.crm-container div#searchForm table.form-layout {
+    background: transparent;
+}
+/* Advanced Search */
+.crm-container .adv-search-top-submit {
+    display: flex;
+    float: right;
+    gap: 1rem;
+    align-items: center;
+}
+.crm-container .form-layout td:has(#_qf_Advanced_refresh-bottom) {
+    display: flex;
+    gap: var(--m);
+    align-items: center;
+    padding: var(--crm-padding-reg);
+}
+.crm-container .adv-search-top-submit .crm-submit-buttons,
+.crm-container .form-layout td:has(#_qf_Advanced_refresh-bottom) .crm-submit-buttons {
+    padding: 0;
+}
+/* Full Text */
+#searchForm table.form-layout-compressed td {
+    padding: var(--crm-padding-reg);
+}
+/* Case */
+.crm-case_search-accordion .crm-accordion-body .form-layout > tbody:first-child,
+.crm-case_search-accordion .crm-accordion-body .form-layout > tbody:first-child > tr,
+.crm-case_search-accordion .crm-accordion-body .form-layout > tbody:first-child > tr > td {
+    display: block;
+}
+.crm-case_search-accordion .crm-accordion-body .form-layout > tbody:first-child > tr:nth-of-type(1) > td:nth-of-type(2) {
+    display: none !important;
+}
+.crm-case_search-accordion .crm-accordion-body .form-layout > tbody:first-child > tr #s2id_case_status_id {
+    margin-bottom: var(--r1);
+}
+.crm-case_search-accordion .crm-accordion-body .form-layout > tbody:first-child > tr:nth-of-type(1) > td:nth-of-type(1) label {
+    display: block;
+}
+.crm-case_search-accordion .crm-accordion-body .form-layout > tbody:first-child > tr:nth-of-type(1) > td:nth-of-type(1) label + input {
+    margin-left: -0.6rem;
+}
+/* Mailing */
+.crm-search-form-block.crm-form-block {
+    padding: var(--crm-padding-reg);
+}
+/* Member */
+.page-civicrm-member-search .CRM_Member_Form_Search .crm-accordion-body tr:last-child td {
+    padding-top: var(--r);
+}
+/* Find Participants */
+.crm-container div#searchForm table.form-layout td {
+    border: 0 solid transparent;
+}
+/* Custom searches */
+.crm-container > #crm-main-content-wrapper > fieldset {
+    display: grid;
+    background: var(--crm-background);
+    border: 0 solid transparent;
+    box-shadow: var(--crm-block-shadow);
+    padding: var(--crm-padding-reg);
+    gap: var(--m);
+    margin-bottom: var(--r);
+}
+.crm-container > #crm-main-content-wrapper > fieldset > * {
+    margin: 0;
+}

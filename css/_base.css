@@ -102,7 +102,7 @@ strong, b, .crm-container .bold {
     font-family: var(--crm-font-bold);
     font-weight: var(--crm-bold-weight);
 }
-em {
+em, .font-italic {
     font-family: var(--crm-font-italic);
     font-style: var(--crm-italic-style);
 }

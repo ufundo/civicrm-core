@@ -27,6 +27,10 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before {
     content: var(--crm-icon-success);
     color: var(--crm-success);
 }
+.crm-container #crm-notification-container div.ui-notify-message.info h1::before {
+    content: var(--crm-icon-info);
+    color: var(--crm-info);
+}
 
 /* Close icon */
 #crm-notification-container .ui-notify-message a.ui-notify-cross,

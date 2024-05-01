@@ -129,6 +129,9 @@
 .crm-container #crm-notification-container div.ui-notify-message-style.success {
     border-color: var(--crm-success);
 }
+.crm-container #crm-notification-container div.ui-notify-message-style.info {
+    border-color: var(--crm-info);
+}
 #crm-notification-container div.ui-notify-message:last-child {
     margin-bottom: 0;
 }

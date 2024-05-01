@@ -6,6 +6,9 @@
     border-radius: var(--crm-form-block-border-radius);
     padding: var(--crm-form-block-padding);
 }
+.crm-container .crm-form-block:has(> details.crm-accordion-light) {
+    padding: 0;
+}
 
 /* Checkbox lists */
 

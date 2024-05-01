@@ -54,10 +54,15 @@
 	box-shadow: var(--expand-body-box-shadow);
 	animation: crm-details-show .3s ease-in-out;
 }
+.crm-container details.crm-accordion-light > .crm-accordion-body {
+	padding: var(--expand-body-padding);
+}
+.crm-container .CRM_Contact_Form_Search_Advanced details.crm-accordion-light > .crm-accordion-body {
+	padding: var(--expand-2-body-padding)
+}
 .crm-container .crm-accordion-light {
 	border: var(--expand-2-border);
 	border-radius: var(--crm-roundness);
-	padding: var(--expand-2-body-padding);
 }
 .crm-container .crm-accordion-light > summary {
 	font-family: var(--crm-font);

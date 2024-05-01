@@ -4,8 +4,19 @@
     margin-bottom: var(--r);
 }
 .crm-container table.form-layout td, 
-.crm-container table.form-layout-compressed td {
+.crm-container table.form-layout-compressed td,
+.crm-form-block .crm-section {
     padding: var(--s);
+}
+.crm-form-block .form-item table,
+.crm-form-block .form-item table tr,
+.crm-container .crm-form-block table,
+.crm-container .crm-form-block table tr,
+.crm-container .crm-accordion-body table.form-layout-compressed,
+.crm-container .crm-search-form-block table.form-layout-compressed {
+    box-shadow: none;
+    border: 0 solid transparent;
+    background: transparent;
 }
 .crm-container .form-layout td.label, 
 .crm-container .form-layout-compressed td.label, 
@@ -233,8 +244,11 @@ input.crm-form-checkbox + label,
 
 /* Select2 */
 
-.crm-container .select2-container {
+.crm-container .select2-container:not(.select2-container-multi) {
     width: auto !important;
+}
+.crm-container .select2-container-multi {
+    min-width: 96px;
 }
 .crm-container .select2-container-multi .select2-choices,
 .crm-container .select2-container .select2-choice {
@@ -245,6 +259,9 @@ input.crm-form-checkbox + label,
     height: var(--crm-input-height);
     padding: var(--xs1) var(--r2) var(--xs1) var(--m);
     font-size: var(--crm-input-font-size);
+}
+.crm-container .select2-container-multi .select2-choices {
+    padding-left: var(--xs1);
 }
 .crm-container .select2-container .select2-choice .select2-arrow {
     background: var(--crm-input-background);
@@ -261,7 +278,6 @@ input.crm-form-checkbox + label,
     font-family: "FontAwesome";
     font-style: normal;
     text-rendering: auto;
-    font-size: .8em;
     color: var(--crm-text);
     background: none;
     content: var(--crm-input-dropdown-icon);
