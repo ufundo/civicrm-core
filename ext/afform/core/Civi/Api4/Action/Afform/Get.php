@@ -160,7 +160,7 @@ class Get extends \Civi\Api4\Generic\BasicGetAction {
       return;
     }
     $filters = [
-      'is_multiple' => TRUE,
+      //'is_multiple' => TRUE,
       'is_active' => TRUE,
     ];
     if ($groupNames) {
