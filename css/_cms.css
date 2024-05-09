@@ -40,12 +40,6 @@ main.page-content {
     margin-block: inherit;
     margin-inline: inherit;
 }
-.crm-container .action-link,
-.crm-container .action-link:hover {
-    padding: 0;
-    line-height: 1;
-    background: inherit;
-}
 .help p {
     margin: 0;
 }

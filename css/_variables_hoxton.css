@@ -62,6 +62,7 @@ color-scheme: light dark;
 --crm-background3: var(--crm-gray-100);
 --crm-background4: var(--crm-gray-200);
 --crm-background5: var(--crm-gray-500);
+--crm-drag-background: var(--crm-background3);
 --crm-primary: var(--crm-blue); 
 --crm-primary-hover: var(--crm-blue-dark);
 --crm-primary-text: var(--crm-light-text); /* text colour when on top of primary */
@@ -110,6 +111,8 @@ color-scheme: light dark;
 --crm-huge-input: 25em;
 --crm-padding-reg: var(--r);
 --crm-padding-small: var(--s);
+--crm-padding-inset: 0; /* to support flush theme variations */
+--crm-page-padding: var(--r); /* Margin left/right */
 
 /* TYPE */
 --crm-font-size: var(--r);
@@ -118,7 +121,7 @@ color-scheme: light dark;
 --crm-link-decoration-hover: none;
 --crm-heading-bg: var(--crm-background3);
 --crm-heading-col: var(--crm-text);
---crm-heading-padding: var(--m2) var(--r2);
+--crm-heading-padding: var(--m2) var(--m);
 --crm-heading-margin: 0;
 --crm-heading-radius: 0;
 
@@ -150,15 +153,16 @@ color-scheme: light dark;
 --crm-table-header-txt: inherit;
 --crm-table-even-row: transparent;
 --crm-table-even-hover: transparent;
---crm-table-odd-row: transparent;
---crm-table-odd-hover: transparent;
---crm-table-sort-col: var(--crm-gray-300);
+--crm-table-odd-row: var(--crm-gray-025);
+--crm-table-odd-hover: var(--crm-gray-050);
+--crm-table-sort-col: var(--crm-gray-500);
 --crm-table-sort-float: left; /* 'left', 'right' or 'none' */
 --crm-table-sort-active-col: var(--crm-link);
---crm-table-compressed-width: 100%;
+--crm-table-compressed-width: auto;
 --crm-table-nested-padding: 0 0 var(--r) 0;
 --crm-table-nested-head-border: 2px solid var(--crm-gray-300);
 --crm-table-nested-border: 0 solid transparent;
+--crm-table-inset-bg: var(--crm-background3);
 
 /* PANELS */
 --crm-panel-shadow: var(--crm-block-shadow);
@@ -213,7 +217,7 @@ color-scheme: light dark;
 /* FORM */
 --crm-form-block-box-shadow: var(--crm-block-shadow);
 --crm-form-block-background: var(--crm-background);
---crm-form-block-padding: var(--crm-padding-reg);
+--crm-form-block-padding: var(--r);
 --crm-form-block-border-radius: 0;
 --crm-input-background: var(--crm-background);
 --crm-input-background-image: none;
@@ -290,6 +294,7 @@ color-scheme: light dark;
 --crm-dialog-header-bg: var(--crm-background2);
 --crm-dialog-header-col: var(--crm-text);
 --crm-dialog-header-size: var(--r1);
+--crm-dialog-body-padding: var(--s);
 
 /* Dashlet */
 --crm-dashlet-bg: var(--crm-background);
@@ -302,6 +307,14 @@ color-scheme: light dark;
 --crm-dashlet-tab-bg: var(--crm-background);
 --crm-dashlet-tab-active: var(--expand-header-bg);
 --crm-dashlet-radius: var(--crm-roundness);
+
+/* Button dropdowns */
+--crm-dropdown-padding: var(--s);
+--crm-dropdown-bg: var(--crm-secondary-hover);
+--crm-dropdown-col: var(--crm-light-text);
+--crm-dropdown-hover: var(--crm-text);
+--crm-dropdown-hover-bg: var(--crm-page-background);
+--crm-dropdown-border: 0;
 
 /* Notifications */
 --crm-notify-background: var(--crm-background);
@@ -317,6 +330,16 @@ color-scheme: light dark;
 --crm-icon-sort: "\f0dc";
 --crm-icon-sort-desc: "\f0dd";
 --crm-icon-sort-asc: "\f0de";
+
+/* Wizard */
+--crm-wizard-width: auto;
+--crm-wizard-margin: calc(-1 * var(--crm-form-block-padding)) calc(-1 * var(--crm-form-block-padding)) 0;
+--crm-wizard-height: 62px;
+--crm-wizard-radius: 0;
+--crm-wizard-active-col: var(--crm-link);
+--crm-wizard-active-bg: var(--crm-page-background);
+--crm-wizard-border-col: var(--crm-page-background);
+--crm-wizard-bg: var(--crm-background);
 
 /* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
 }

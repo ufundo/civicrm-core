@@ -8,7 +8,10 @@
     box-sizing: border-box;
 }
 #crm-container .hiddenElement,
-.crm-container .hiddenElement {
+.crm-container .hiddenElement,
+.crm-container .collapse {
+	display: none;
+} {
 	display: none;
 }
 #crm-container .clear,
@@ -37,24 +40,27 @@
 
 /* JQueryUI resets */
 
-.ui-tabs .ui-tabs-panel {
+.crm-container .ui-tabs .ui-tabs-panel {
     padding: inherit;
 }
-.ui-widget,
-.ui-widget input, 
-.ui-widget select, 
-.ui-widget textarea, 
-.ui-widget button {
+.crm-container .ui-widget,
+.crm-container .ui-widget input, 
+.crm-container .ui-widget select, 
+.crm-container .ui-widget textarea, 
+.crm-container .ui-widget button {
     font-family: inherit;
     font-size: inherit;
 }
-.ui-button-icon-only .ui-icon {
+.crm-container .ui-button-icon-only .ui-icon {
     position: initial;
     top: auto;
     left: auto;
     margin-top: auto;
     margin-left: auto;
     float: right;
+}
+.crm-container .ui-widget.ui-widget-content {
+    border: 0 solid transparent;
 }
 
 /*
@@ -74,6 +80,9 @@
 	padding: 0;
 	position: absolute;
 }	
+.crm-container .crm-draggable {
+    cursor: move;
+}
 
 /*
       T Y P E
@@ -98,20 +107,29 @@
 
 /* Core type */
 
-strong, b, .crm-container .bold {
+.crm-container strong,
+.crm-container b, 
+.crm-container .bold,
+.crm-container .font-bold {
     font-family: var(--crm-font-bold);
     font-weight: var(--crm-bold-weight);
 }
-em, .font-italic {
+.crm-container em, 
+.crm-container .font-italic {
     font-family: var(--crm-font-italic);
     font-style: var(--crm-italic-style);
 }
-strong em, em strong {
+.crm-container strong em, 
+.crm-container em strong {
     font-family: var(--crm-font-bold-italic);
     font-weight: var(--crm-bold-weight);
     font-style: var(--crm-italic-style);
 }
-.crm-container h3 {
+.crm-container .strikethrough {
+    text-decoration: line-through;
+  }
+.crm-container h3,
+#bootstrap-theme h3 {
     background-color: var(--crm-heading-bg);
     font-size: var(--r1);
     font-family: var(--crm-font-bold);
@@ -128,6 +146,7 @@ strong em, em strong {
 .crm-container .crm-is_deleted, 
 .crm-container table.caseSelector td.status-urgent, 
 .crm-container .font-red, 
+.crm-container p.error,
 .crm-container .status-removed, 
 .crm-container .status-overdue, 
 .crm-container .status-fatal, 
@@ -135,8 +154,105 @@ strong em, em strong {
 .crm-container .status-past, 
 .crm-contact-deceased, 
 .crm-container .status-warning {
-    color: var(--crm-alert-text) !important;
+    color: var(--crm-alert) !important;
 }
+
+/* BS3 type styles */
+
+.crm-container .text-left {
+	text-align: left;
+}
+.crm-container .text-right {
+	text-align: right;
+}
+.crm-container .text-center {
+	text-align: center;
+}
+.crm-container .text-justify {
+	text-align: justify;
+}
+.crm-container .text-nowrap {
+	white-space: nowrap;
+}
+.crm-container .text-lowercase {
+	text-transform: lowercase;
+}
+.crm-container .text-uppercase, 
+.crm-container .initialism {
+	text-transform: uppercase;
+}
+.crm-container .text-capitalize {
+	text-transform: capitalize;
+}
+.crm-container .text-muted,
+.crm-container .diasbled {
+	color: var(--crm-inactive);
+}
+.crm-container .text-primary {
+	color: var(--crm-primary);
+}
+.crm-container a.text-primary:hover, .crm-container a.text-primary:focus {
+	color: var(--crm-primary-hover);
+}
+.crm-container .text-success {
+	color: var(--crm-success);
+}
+.crm-container .text-info {
+	color: var(--crm-info);
+}
+.crm-container .text-warning {
+	color: var(--crm-warning);
+}
+.crm-container .text-danger {
+	color: var(--crm-alert);
+}
+.crm-container .bg-primary {
+	background-color: var(--crm-primary);
+}
+.crm-container a.bg-primary:hover, 
+.crm-container a.bg-primary:focus {
+	background-color: var(--crm-primary-hover);
+}
+.crm-container .bg-secondary {
+	background-color: var(--crm-secondary);
+}
+.crm-container a.bg-secondary:hover, 
+.crm-container a.bg-secondary:focus {
+	background-color: var(--crm-secondary-hover);
+}
+.crm-container .bg-success {
+	background-color: var(--crm-success);
+    color: var(--crm-success-text);
+}
+#crm-container a.bg-success:hover, 
+#crm-container a.bg-success:focus {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-success);
+}
+#crm-container .bg-info {
+	background-color: var(--crm-info);
+    color: var(--crm-info-text);
+}
+#crm-container a.bg-info:hover, 
+#crm-container a.bg-info:focus {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-info-text);
+}
+#crm-container .bg-warning {
+	background-color: var(--crm-warning);
+    color: var(--crm-warning-text);
+}
+#crm-container a.bg-warning:hover, 
+#crm-container a.bg-warning:focus {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-warning);
+}
+#crm-container .bg-danger {
+	background-color: var(--crm-alert);
+    color: var(--crm-alert-text);
+}
+#crm-container a.bg-danger:hover, 
+#crm-container a.bg-danger:focus {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-alert);
+}
+
 
 /* 
       L I N K 

@@ -7,16 +7,8 @@
 .crm-container table.form-layout-compressed td,
 .crm-form-block .crm-section {
     padding: var(--s);
-}
-.crm-form-block .form-item table,
-.crm-form-block .form-item table tr,
-.crm-container .crm-form-block table,
-.crm-container .crm-form-block table tr,
-.crm-container .crm-accordion-body table.form-layout-compressed,
-.crm-container .crm-search-form-block table.form-layout-compressed {
-    box-shadow: none;
-    border: 0 solid transparent;
-    background: transparent;
+    border: none;
+    height: auto;
 }
 .crm-container .form-layout td.label, 
 .crm-container .form-layout-compressed td.label, 
@@ -25,12 +17,20 @@
     width: 22ch;
     text-align: right;
 }
-.crm-container .crm-summary-group .crm-section .label {
-    width: 40%;
+.crm-container .crm-summary-group .crm-section .label,
+.crm-container label {
     text-align: left;
     font-family: var(--crm-input-label-font);
     font-weight: var(--crm-input-label-weight);
     padding-right: var(--m2);
+}
+.crm-container .crm-summary-group .crm-section .label {
+    width: 40%;
+}
+.crm-container .radio-inline label, 
+.crm-container .checkbox-inline label {
+    font-family: inherit;
+    font-weight: inherit;
 }
 .crm-container .advanced-search-fields {
     column-gap: var(--r);
@@ -56,6 +56,9 @@
 }
 .crm-container .crm-marker {
     color: var(--crm-alert);
+}
+.crm-container .form-inline {
+    padding: var(--s) 0;
 }
 
 /* contact dashboard */
@@ -89,6 +92,7 @@
 
 /* Input */
 
+.crm-container input.form-control,
 .crm-container input.crm-form-text, 
 .crm-container .crm-icon-picker-button, 
 .crm-container input.dateplugin, 
@@ -116,6 +120,7 @@
     padding: var(--crm-input-padding-large);
     height: inherit;
 }
+.crm-container input.form-control:focus,
 .crm-container input.crm-form-text:focus, 
 .crm-container .crm-icon-picker-button:focus, 
 .crm-container input.dateplugin:focus, 
@@ -166,8 +171,27 @@ input.crm-form-entityref {
     border-bottom: var(--crm-inline-edit-border);
     border-left: var(--crm-inline-edit-border);
 }
+.crm-container .crm-editable-form {
+    display: flex;
+}
+.crm-container .crm-editable-form input {
+    height: var(--crm-input-height);
+    box-shadow: var(--crm-input-box-shadow);
+    padding: var(--crm-input-padding);
+    font-size: var(--crm-input-font-size);
+}
+.crm-container .crm-editable-form button {
+    background: transparent;
+    padding: var(--crm-padding-small);
+}
+.crm-container .crm-editable-form [type="submit"] {
+    color: var(--crm-success) !important;
+}
+.crm-container .crm-editable-form [type="cancel"] {
+    color: var(--crm-alert) !important;
+}
 
-/* Inline edit */
+/* Inline edit - contact */
 
 #contactname-block .crm-inline-edit {
     border: 0 solid transparent;
@@ -217,7 +241,6 @@ input.crm-form-entityref {
 }
 #contact-summary .crm-inline-button, 
 #contact-summary .crm-submit-buttons {
-    border-bottom: 1px solid var(--crm-divider);
     margin-bottom: 0;
     padding-bottom: var(--m2);
 }
@@ -250,6 +273,7 @@ input.crm-form-checkbox + label,
 .crm-container .select2-container-multi {
     min-width: 96px;
 }
+.crm-container select.form-control,
 .crm-container .select2-container-multi .select2-choices,
 .crm-container .select2-container .select2-choice {
     background: var(--crm-input-background);
@@ -312,6 +336,15 @@ input.crm-form-checkbox + label,
 .select2-container-disabled .select2-arrow {
     background: transparent;
 }
+.crm-container .select2-container.select2-container-disabled .select2-choice {
+    background-color: var(--crm-background);
+    border: 1px solid var(--crm-inactive);
+    cursor: default;
+}
+.select2-container.select2-container-disabled .select2-choice .select2-arrow {
+    border-left: inherit;
+    background: var(--crm-background);
+}
 /* Select dropdwon */
 
 .select2-drop.select2-drop-active.crm-container {
@@ -353,7 +386,7 @@ input.crm-form-checkbox + label,
 .select2-results .select2-no-results,
 .select2-results .select2-searching,
 .select2-results .select2-selection-limit {
-    background: var(--crm-background);
+    background: var(--crm-input-background);
   }
 .select2-drop.select2-drop-active.crm-container .select2-results .select2-highlighted {
     background: var(--crm-background3);
@@ -378,7 +411,7 @@ input.crm-form-checkbox + label,
 
 /* Dates */
 
-.crm-container input.crm-form-time {
+.crm-container input.crm-form-time:not(.form-control) {
     width: 9ch;
     margin-left: 1em;
 }
@@ -408,6 +441,7 @@ input.crm-form-checkbox + label,
 }
 .ui-datepicker :not(b) {
     background: none !important;
+    border: 0 solid transparent !important;
 }
 .ui-datepicker .ui-datepicker-header .ui-datepicker-prev, 
 .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
@@ -477,4 +511,59 @@ input.crm-form-checkbox + label,
     cursor: var(--hover-clickable);
     padding: var(--s);
     text-align: center;
+}
+
+/* BS3 radio/checklbox */
+
+#bootstrap-theme .radio, #bootstrap-theme .checkbox {
+	position: relative;
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#bootstrap-theme .radio.disabled label, 
+#bootstrap-theme fieldset[disabled].radio label, 
+#bootstrap-theme .checkbox.disabled label, 
+#bootstrap-theme fieldset[disabled] .checkbox label {
+	cursor: not-allowed;
+}
+#bootstrap-theme .radio label, 
+#bootstrap-theme .checkbox label {
+	min-height: 20px;
+	padding-left: 20px;
+	margin-bottom: 0;
+	font-weight: 400;
+	cursor: pointer;
+}
+#bootstrap-theme .radio input[type="radio"], 
+#bootstrap-theme .radio-inline input[type="radio"], 
+#bootstrap-theme .checkbox input[type="checkbox"], 
+#bootstrap-theme .checkbox-inline input[type="checkbox"] {
+	/* position: absolute;
+	margin-top: 4px; */
+	/* margin-left: -20px; */
+}
+#bootstrap-theme .radio + .radio, #bootstrap-theme .checkbox + .checkbox {
+	margin-top: -5px;
+}
+#bootstrap-theme .radio-inline, 
+#bootstrap-theme .checkbox-inline {
+	position: relative;
+	display: inline-block;
+	/* padding-left: 20px; */
+	margin-bottom: 0;
+	font-weight: 400;
+	vertical-align: middle;
+	cursor: pointer;
+}
+#bootstrap-theme .radio-inline.disabled, 
+fieldset[disabled] #bootstrap-theme .radio-inline, 
+#bootstrap-theme .checkbox-inline.disabled, 
+fieldset[disabled] #bootstrap-theme .checkbox-inline {
+	cursor: not-allowed;
+}
+#bootstrap-theme .radio-inline + .radio-inline, 
+#bootstrap-theme .checkbox-inline + .checkbox-inline {
+	margin-top: 0;
+	margin-left: var(--m);
 }

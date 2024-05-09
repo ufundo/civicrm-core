@@ -42,7 +42,8 @@
 .crm-container .expanded::before,
 .crm-container a.collapsed::before,
 .crm-container a.crm-expand-row:not(.expanded)::before,
-.crm-container .civicrm-community-messages .crm-collapsible .collapsible-title::before {
+.crm-container .civicrm-community-messages .crm-collapsible .collapsible-title::before,
+.crm-container .show-children.collapsed::before {
 	font-size: var(--crm-font-size);
 	font-style: normal;
 	text-rendering: auto;
@@ -53,6 +54,7 @@
 	display: inline-block;
 	transform-origin: center center;
 	content: var(--expand-icon);
+	cursor: var(--hover-clickable);
 }
 .crm-container .crm-accordion-header::before, 
 .af-collapsible > .af-title::before,
@@ -62,7 +64,8 @@
 .crm-container a.collapsed::before,
 .crm-container a.expanded::before,
 .crm-container a.crm-expand-row.expanded::before,
-.crm-container .civicrm-community-messages .crm-collapsible .collapsible-title::before {
+.crm-container .civicrm-community-messages .crm-collapsible .collapsible-title::before,
+.crm-container .show-children.expanded::before {
 	content: var(--expand-icon);
 	transform: var(--expand-transform);
 	transform-origin: center center;
@@ -94,7 +97,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 
 .crm-container .crm-accordion-header,
 .crm-container .crm-collapsible .collapsible-title,
-.crm-container span.collapsed,
+.crm-container span.collapsed:not(.show-children),
 .af-collapsible > .af-title {
 	cursor: var(--hover-clickable);
 	padding: var(--expand-header-padding);
@@ -149,6 +152,10 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	border: var(--expand-body2-border);
 	background-color: var(--expand-body2-bg);
 }
+#crm-container summary label {
+	color: inherit;
+	font-size: inherit;
+}
 
 /*
       A L E R T S
@@ -192,6 +199,10 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	background-color: var(--crm-primary);
 	color: var(--crm-primary-text) !important;
 	line-height: 1.5;
+	display: flex;
+	align-items: center;
+	width: fit-content;
+	gap: var(--btn-icon-spacing); /* last four lines centre icons */
 }
 /* .crm-container .ui-button{
     background: var(--crm-primary);
@@ -284,32 +295,340 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 	T A B S 
 				*/
 
-.afadmin-list .nav-tabs + .form-inline,
-.crm-search-nav-tabs + .ng-scope > .form-inline {
-    padding: var(--r);
-    border-left: 1px solid var(--crm-tab-border-col);
-    border-right: 1px solid var(--crm-tab-border-col);
-	background: var(--crm-tab-bg-active);
-}
 .afadmin-list .nav-tabs + .form-inline + table,
-.crm-search-nav-tabs + .ng-scope .crm-search-display-table {
+.crm-search-nav-tabs ~ .ng-scope {
     border: 1px solid var(--crm-tab-border-col);
     border-top: 0 solid transparent;
     border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	background: var(--crm-tab-bg-active);
 }
-.crm-search-display-pager {
-    padding: 0 var(--r) var(--r) var(--r);
+.afadmin-list .nav-tabs + .form-inline,
+.crm-search-nav-tabs ~ .ng-scope > .form-inline {
+    padding: var(--r);
+	background: var(--crm-tab-bg-active);
 }
 .crm-container .ui-tabs ul.crm-extensions-tabs-list a em {
 	display: none;
+}
+
+/*
+      P A G E S
+                              */
+
+/* Search Kit Builder */
+
+#bootstrap-theme.crm-search .crm-search-nav-tabs > div.btn-group {
+    top: calc(-1 * var(--m));
+}
+#bootstrap-theme.crm-search .dropdown-menu li .form-inline {
+	padding: 0;
+}
+#bootstrap-theme.crm-search .crm-search-admin-relative textarea {
+    width: 100%;
+}
+#bootstrap-theme.crm-search .crm-search-admin-relative .api4-clause-group-sortable {
+    margin: var(--r) 0;
+}
+#bootstrap-theme.crm-search .crm-search-admin-relative details { /* only way to target settings accordions */
+    border: var(--expand-body-border);
+    border-radius: var(--crm-roundness);
+}
+#bootstrap-theme.crm-search .crm-search-admin-relative details > summary {
+    background: var(--expand-header-bg);
+    color: var(--expand-header-color);
+    padding: var(--crm-padding-small) var(--crm-padding-reg);
+}
+#bootstrap-theme.crm-search .crm-search-admin-relative details > fieldset {
+    padding: 0;
+    border: 0 solid transparent;
+}
+#bootstrap-theme.crm-search .crm-search-admin-relative details > fieldset .form-inline:not(td) {
+    background: var(--crm-drag-background);
+    border-radius: var(--crm-roundness);
+    margin-bottom: var(--s2);
+    padding: var(--crm-padding-small) var(--crm-padding-reg);
+}
+#bootstrap-theme.crm-search .crm-search-admin-relative details > fieldset fieldset,
+#bootstrap-theme.crm-search crm-search-admin-display fieldset .form-inline > fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0 solid transparent;
+}
+#bootstrap-theme.crm-search crm-search-admin-link-group {
+    background: var(--crm-background2);
+}
+#bootstrap-theme.crm-search crm-search-admin-link-group table {
+    margin: var(--crm-padding-reg);
+	max-width: calc(100% - var(--crm-padding-reg) - var(--crm-padding-reg));
+	box-shadow: none;
+}
+#bootstrap-theme.crm-search ul.nav-stacked li:last-of-type {
+    margin-top: var(--r);
+}
+#bootstrap-theme.crm-search ul.nav-stacked li:not(.active) button {
+    display: none;
+}
+#bootstrap-theme.crm-search ul.nav-stacked li:has(.btn-xs) a {
+    padding-right: 5ch;
+}
+#bootstrap-theme.crm-search .crm-search-admin-edit-columns {
+    padding: 0;
+    border: 0 solid transparent;
+}
+#bootstrap-theme.crm-search fieldset.crm-draggable {
+    background-color: var(--crm-drag-background);
+    border-radius: var(--crm-roundness);
+    border: 0 solid transparent !important;
+    padding: var(--crm-padding-small);
+    margin: var(--m)0 ;
+}
+#bootstrap-theme.crm-search .crm-search-admin-edit-columns details {
+    background-color: var(--crm-page-background);
+    border-radius: var(--crm-roundness);
+    border: 0;
+}
+#bootstrap-theme.crm-search .crm-search-admin-edit-columns details summary {
+    background: var(--expand-header2-bg);
+    color: var(--expand-header2-color);
+    padding: var(--crm-padding-reg);
+}
+#bootstrap-theme.crm-search .crm-search-admin-edit-columns details > *:not(summary) {
+    padding-inline: var(--crm-padding-reg);
+}
+#bootstrap-theme.crm-search .crm-search-admin-edit-columns details > *:first-child {
+    padding-bottom: var(--crm-padding-reg);
+}
+#bootstrap-theme.crm-search .crm-search-admin-edit-columns details > *:last-child {
+    padding-bottom: var(--crm-padding-reg);
+}
+/* Contacts - New */
+
+.CRM_Contact_Form_Contact > .crm-form-block > details,
+.CRM_Contact_Form_Contact > .crm-form-block > div > details {
+	margin-inline: calc(-1 * var(--crm-form-block-padding));
+	padding-inline: var(--expand-2-body-padding);
+	margin-bottom: var(--expand-2-body-padding);
+}
+#crm-container .crm-add-address-wrapper {
+	height: auto;
+}
+
+/* Contact dashboard page */
+
+.crm-container div.contact_panel {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: var(--crm-dash-panel-padding);
+}
+#crm-container div.contactCardLeft,
+#crm-container div.contactCardRight {
+	width: 100%;
+	display: block;
+	float: none;
+	clear: none;
+}  
+#mainTabContainer .crm-summary-block .crm-container-snippet table {
+	box-shadow: none;
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+#crm-main-content-wrapper:has(.crm-contact-page) {
+    box-shadow: var(--crm-block-shadow);
+}
+#crm-container div.crm-summary-contactname-block {
+    background: var(--crm-dash-header-bg);
+    color: var(--crm-dash-header-col);
+    min-height: 60px;
+    padding: var(--crm-dash-header-padding);
+    position: relative;
+}
+#crm-container #crm-contactname-content .crm-summary-display_name {
+    padding: var(--crm-dash-header-padding);
+    font-size: var(--crm-dash-header-size);
+    padding-inline: 0;
+}
+div.crm-summary-contactname-block + .crm-actions-ribbon {
+    color: var(--crm-dash-header-col);
+    background-color: var(--crm-dash-header-bg);
+    margin-bottom: 0;
+    clear: both;
+}
+#crm-container #crm-contactname-content > .crm-inline-block-content {
+    display: flex;
+    gap: var(--r);
+    align-items: center;
+}
+#crm-container #crm-contactname-content .crm-edit-help {
+    order: 2;
+    position: relative;
+    height: var(--l);
+}
+.crm-actions-ribbon ul#actions {
+    list-style: none;
+    display: grid;
+    grid-template-columns: min-content min-content auto min-content min-content;
+    gap: var(--m);
+    margin: 0;
+    padding: var(--crm-dash-header-padding);
+    background: rgba(256,256,256,0.1);
+}
+.crm-search-col-type-field  span.ng-scope a {
+    display: flex;
+    gap: var(--btn-icon-spacing);
+    align-items: center;   
+}
+#mainTabContainer #tagtree {
+	max-height: 100%;
+	overflow: inherit;
+}
+
+/* Tag mgmt page */
+
+.crm-container .tag-tree-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin: var(--m) 0;
+}
+.crm-container .tag-tree-wrapper div.tag-tree {
+    width: auto;
+}
+.crm-container .tag-tree-wrapper div.tag-info {
+    width: auto;
+    position: relative;
+    background: var(--crm-background);
+    border: 0 solid transparent;
+    box-shadow: var(--crm-block-shadow);
+    padding: var(--crm-padding-reg);
+    font-family: var(--crm-font);
+    border-radius: var(--crm-roundness);
+    top: 0;
+}
+.crm-container .tag-tree-wrapper div.tag-info .tdl {
+    font-weight: var(--crm-bold-weight);
+    font-family: var(--crm-font-bold);
+    color: var(--crm-text);
+}
+.crm-container .tag-tree-wrapper div.tag-info .crm-submit-buttons {
+    margin: var(--m) 0 0;
+    padding: 0;
+}
+.crm-container .tag-tree-wrapper .tag-tree a.crm-tag-item {
+    font-size: var(--r);
+    font-family: var(--crm-font);
+    height: auto;
+    padding: var(--crm-padding-small);
+    border-radius: var(--btn-radius);
+}
+@media (max-width: 768px) {
+    .crm-container .tag-tree-wrapper {
+        display: block;
+    }  
+}
+/* Dedupe change usage */
+.crm-container label:has(.dedupe-rules-dialog-desc) input {
+	float: left;
+	margin: var(--s) var(--m) 0 0;
+}
+.crm-container .dedupe-rules-dialog-desc {
+	font-weight: normal;
+	font-family: var(--crm-font);
 }
 
 /* Temp CSS to facilitate the build and testing, place for things lacking a home */
 
 #crm-container {
 	position: absolute;
-	width: calc(100% - 2rem);
+	width: calc(100% - var(--crm-page-padding) - var(--crm-page-padding));
 	left: 0;
-	padding: 2rem 1rem;
+	padding: 2rem var(--crm-page-padding);
+}
+
+/* 
+	R E S P O N S I V E
+						*/
+
+/* Contact dashboard */
+
+@media (max-width: 768px) {
+	.crm-container div.contact_panel {
+		display: block;
+	}
+}
+
+/* 
+	P A D D I N G    F I X E S
+								*/
+
+/* General */
+.crm-container .crm-form-block .crm-form-block {
+	padding: var(--crm-form-block-padding);
+	margin-bottom: var(--r);
+}
+/* Save as template text on new email form */
+.crm-container #editMessageDetails {
+	padding: var(--crm-padding-reg);
+}
+/* Contact dashboard page */
+.crm-contact-page {
+    padding: 0;
+}
+#mainTabContainer .form-group.pull-right  > .btn-group {
+    margin-bottom: var(--m2);
+}
+/* Search */
+.crm-search-display-pager {
+    padding: 0 var(--r) var(--r) var(--r);
+}
+/* Contact dashboard page */
+.crm-actions-ribbon .crm-next-action,
+.crm-actions-ribbon .crm-previous-action {
+    margin-left: auto;
+}
+/* Contacts - new */
+.CRM_Contact_Form_Contact > .crm-form-block .crm-submit-buttons:first-of-type {
+	margin-bottom: var(--crm-padding-reg);
+}
+.CRM_Contact_Form_Contact > .crm-form-block .crm-submit-buttons:last-of-type {
+	margin-top: var(--crm-padding-reg);
+}
+/* Imports */
+
+.crm-form-block.crm-import-datasource-form-block,
+.crm-form-block.crm-import-mapfield-form-block,
+.crm-form-block.crm-import-preview-form-block,
+.crm-form-block.crm-activity-import-preview-form-block {
+	padding-inline: var(--crm-form-block-padding);
+}
+.crm-form-block.crm-import-mapfield-form-block .help,
+.crm-form-block.crm-import-preview-form-block .help,
+.crm-activity-import-preview-form-block .help {
+	background-color: transparent;
+	border: 0;
+}
+/* Manage groups */
+.crm-group-search-form-block details table,
+.crm-group-search-form-block details table tr {
+	border: 0 solid transparent;
+}
+/* Group contents / contact listing */
+.crm-container .crm-form-block #searchForm .crm-form-block {
+	padding: 0;
+	margin-bottom: 0;
+}
+.crm-search-form .crm-submit-buttons {
+	padding: 0 0 var(--m);
+}
+.crm-search-form .crm-search-form-block {
+	margin-bottom: var(--r);
+}
+/* Dedupe page */
+#browseValues_Individual a.button,
+#browseValues_Household a.button,
+#browseValues_Organization a.button {
+	margin-bottom: var(--r2);
+}
+/* Dedupe exceptions */
+details + .crm-content-block:has(.dataTables_wrapper) {
+	margin-top: var(--r);
 }

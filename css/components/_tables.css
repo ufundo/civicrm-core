@@ -8,13 +8,10 @@
 }
 .crm-container table thead {
     background-color: var(--crm-table-header-bg);
-    border: 1px solid transparent;
 }
 .crm-container th, 
 .crm-container table thead.sticky th,
-.crm-container table.dataTable thead th
-/* .crm-container table.display thead th, 
-/* .crm-container table.caseSelector tr.columnheader th  */ { 
+.crm-container table.dataTable thead th { 
     background-color:  var(--crm-table-header-bg);
     border-bottom: var(--crm-table-header-bottom);
     color: var(--crm-text);
@@ -31,22 +28,29 @@
 .crm-container .odd, 
 tbody.scrollContent {
     background-color: var(--crm-table-odd-row);
-  }
+}
+.crm-container table.dataTable.hover tbody tr.odd:hover, 
+.crm-container table.dataTable.display tbody tr.odd:hover,
 .crm-container table.row-highlight tr:hover, 
 .crm-container .crm-row-selected,
-.crm-container .odd-row:hover {
+.crm-container .odd-row:hover,
+.crm-container .odd:hover {
     background-color: var(--crm-table-odd-hover);
 }
 .crm-container .even-row, 
 .crm-container .even, 
 tbody.scrollContent tr.alternateRow {
     background-color: var(--crm-table-even-row);
-  }
+}
+.crm-container table.dataTable.hover tbody tr.even:hover, 
+.crm-container table.dataTable.display tbody tr.even:hover,
 .crm-container table.row-highlight tr.even-row:hover, 
 .crm-container table.row-highlight tr.even:hover, 
 .crm-container .even-row.crm-row-selected, 
 .crm-container .even.crm-row-selected ,
-.crm-container .even-row:hover{
+.crm-container .even-row:hover, 
+.crm-container .even:hover, 
+tbody.scrollContent tr.alternateRow:hover {
     background-color: var(--crm-table-even-hover);
 }
 .crm-container td,
@@ -57,8 +61,22 @@ tbody.scrollContent tr.alternateRow {
 .crm-container table.selector td {
     border-right: var(--crm-table-column-border);
 }
-.crm-container table td:has(.btn-slide) {
+.crm-container table td:has(.btn-slide),
+.crm-container table td:has(.action-item) {
     text-align: right;
+}
+.crm-form-block .form-item table,
+.crm-form-block .form-item table tr,
+.crm-container .crm-form-block:not(.crm-report-field-form-block):not(.crm-group-search-form-block) table,
+.crm-container .crm-form-block:not(.crm-report-field-form-block):not(.crm-group-search-form-block) table tr,
+.crm-container .crm-accordion-body table.form-layout-compressed,
+.crm-container .crm-search-form-block table.form-layout-compressed {
+    box-shadow: none;
+    border: 0 solid transparent;
+    background: transparent;
+}
+.crm-container .crm-form-block.crm-report-field-form-block table {
+    box-shadow: none;
 }
 /* Nested table */ 
 
@@ -82,6 +100,32 @@ tbody.scrollContent tr.alternateRow {
 #crm-container tr.crm-child-row:hover {
     background-color: transparent;
 }
+/* Nested, inset table - groups page */
+
+tbody .crm-row-child {
+    border-top: 1px solid var(--crm-gray-400);
+}
+tbody .crm-row-child ~ .crm-row-child {
+    border-top: 0;
+}
+tbody .crm-row-child:not(:has(~ .crm-row-child)) {
+    border-bottom: 1px solid var(--crm-gray-025);
+}
+tbody .crm-row-child td {
+    box-shadow: inset 0 10px 8px -10px rgba(0,0,0,.15);
+    background: var(--crm-table-inset-bg);
+}
+tbody .crm-row-child:hover td {
+    background: var(--crm-table-odd-hover);
+    cursor: var(--hover-clickable);
+}
+tbody .crm-row-child ~ .crm-row-child td {
+    box-shadow: none;
+}
+tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
+    box-shadow: inset 0 -11px 8px -9px rgba(0,0,0,.15);
+}
+
 /* Compressed table */
 
 .crm-container table.form-layout-compressed {
@@ -153,15 +197,15 @@ tbody.scrollContent tr.alternateRow {
 	border-bottom-width: 2px;
 }
 .crm-container .table-striped > tbody > tr {
-	background-color: var(--crm-table-event-row);
+	background-color: var(--crm-table-even-row);
 }
-.crm-container .table-striped > tbody > tr:nth-of-type(odd) {
+.crm-container .table-striped > tbody > tr:nth-of-type(2n+1) {
 	background-color: var(--crm-table-odd-row);
 }
 .crm-container .table-hover > tbody > tr:hover {
 	background-color: var(--crm-table-even-hover);
 }
-.crm-container .table-striped > tbody > tr:nth-of-type(odd):hover {
+.crm-container .table-striped > tbody > tr:nth-of-type(2n+1):hover {
 	background-color: var(--crm-table-odd-hover);
 }
 .crm-container .table > thead > tr > td.active,

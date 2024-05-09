@@ -8,6 +8,10 @@
     flex-wrap: wrap;
     cursor: var(--hover-clickable);
 }
+.crm-container .nav > li {
+	position: relative;
+	display: block;
+}
 .crm-container .nav > li > a {
 	padding: var(--m) var(--r);
 }

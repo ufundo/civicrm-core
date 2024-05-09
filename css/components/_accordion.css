@@ -1,6 +1,4 @@
-
-
-.crm-container details + details {
+.crm-container details ~ details {
 	margin: var(--expand-gap);
 }
 .crm-container details details {
@@ -83,7 +81,10 @@
 #contact-summary .crm-accordion-light > summary,
 #contact-summary .crm-accordion-light > summary.active,
 #contact-summary .crm-accordion-light > summary:hover,
-#contact-summary .crm-accordion-light > summary:focus {
+#contact-summary .crm-accordion-light > summary:focus,
+#Contact .crm-accordion-light > summary,
+#Contact .crm-accordion-light > summary:hover,
+#Contact .crm-accordion-light > summary:focus {
 	box-shadow: none;
 	border: 0 solid transparent;
 	background-color: transparent;

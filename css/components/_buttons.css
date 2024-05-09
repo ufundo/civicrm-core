@@ -19,6 +19,8 @@
     color: var(--crm-primary-text);
     text-transform: var(--btn-txt-transform);
 }
+.crm-container .btn:hover,
+.crm-container .btn:focus,
 .crm-container .crm-button:hover,
 .crm-container .crm-button:focus,
 .crm-container .crm-container .btn:hover,
@@ -52,7 +54,9 @@
 .crm-container .btn .crm-i::before {
     margin-right: var(--btn-icon-spacing);
 }
-.crm-container .crm-button-type-cancel {
+.crm-container .crm-button-type-cancel,
+.crm-form-submit .cancel.crm-button,
+.crm-container button.ui-button:has(.fa-times) {
     background: var(--crm-secondary);
     color: var(--crm-secondary-text);
 }
@@ -67,7 +71,9 @@
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-cancel-color);
 }
 .crm-container .crm-button-type-cancel:hover,
-.crm-container .crm-button-type-cancel:focus {
+.crm-container .crm-button-type-cancel:focus,
+.crm-container button.ui-button:has(.fa-times):hover,
+.crm-container button.ui-button:has(.fa-times):focus {
     background: var(--crm-secondary-hover);
 }
 
@@ -75,6 +81,17 @@
 
 .crm-container .button .crm-i {
     padding-right: var(--m);
+}
+.crm-container #crmIconPicker a.ui-button {
+    color: var(--crm-text) !important;
+    background: transparent;
+    width: var(--r);
+    height: var(--r);
+}
+.crm-container #crmIconPicker {
+    display: grid;
+    grid-template-columns: repeat(30,1fr);
+    gap: var(--m);
 }
 
 /* BS3 colour options */
@@ -161,7 +178,16 @@
 }
 .crm-submit-buttons {
     padding: var(--s);
+    display: flex;
+    align-items: center;
+    gap: var(--s);
 }
+.crm-container .crm-form-block.crm-form-block > .crm-submit-buttons {
+    padding: var(--crm-padding-reg) calc(var(--m) - var(--crm-padding-inset));
+}
+/* .crm-report-field-form-block .crm-submit-buttons {
+	padding: var(--r) var(--m);
+} */
 
 /* Hover buttons (plain text, button shows on hover) */
 .crm-container a.crm-hover-button {
@@ -211,9 +237,36 @@
     margin: var(--m) 0 ;
 }
 
-/* BS3 icon-only dropdowns */
+/* Modal buttons */
 
-.crm-container .crm-search-display button.dropdown-toggle:not(.btn-default) {
+.crm-container.ui-dialog .ui-dialog-buttonset button {
+    background: var(--crm-primary);
+    color: var(--crm-primary-text);
+}
+.crm-container.ui-dialog .ui-dialog-buttonset button:hover,
+.crm-container.ui-dialog .ui-dialog-buttonset button:focus {
+    background: var(--crm-primary-hover);
+}
+
+/* BS3 button dropdowns */
+
+.crm-container .btn-primary.dropdown-toggle {
+    background: var(--crm-primary);
+    color: var(--crm-primary-text);
+}
+.crm-container .btn-primary.dropdown-toggle:hover,
+.crm-container .btn-primary.dropdown-toggle:focus {
+    background: var(--crm-primary-hover);
+}
+.crm-container .btn-secondary.dropdown-toggle {
+    background: var(--crm-secondary);
+    color: var(--crm-secondary-text);
+}
+.crm-container .btn-secondary.dropdown-toggle:hover,
+.crm-container .btn-secondary.dropdown-toggle:focus {
+    background: var(--crm-secondary-hover);
+}
+.crm-container .crm-search-display button.dropdown-toggle:not(.btn-default):not(.btn-secondary) {
     background-color: var(--crm-gray-200);
     color: var(--crm-text) !important;
 }

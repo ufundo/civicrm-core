@@ -24,26 +24,54 @@
     padding: var(--m1) var(--r);
     position: relative;
     overflow: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--m3);
 } 
 .crm-container.ui-dialog .ui-dialog-header .ui-dialog-title, 
 .crm-container.ui-dialog .ui-dialog-titlebar .ui-dialog-title {
     font-weight: var(--crm-bold-weight);
     font-family: var(--crm-font-bold);
     padding: 0;
-    width: 80%;
+    float: none;
+    flex: 1;
+    margin: 0;
+    width: auto;
 }
 .crm-container.ui-dialog .ui-dialog-header .ui-button, 
 .crm-container.ui-dialog .ui-dialog-titlebar .ui-button {
     background: transparent;
     color: var(--crm-dialog-header-col);
-    padding: 0 var(--m);
+    display: block;
+    font-size: 0;
+    padding: 0;
+    position: relative !important;
+    margin: 0;
+    right: inherit;
+    top: inherit;
+}
+.crm-container.ui-dialog .ui-dialog-titlebar .ui-state-hover .ui-icon, 
+.crm-container.ui-dialog .ui-dialog-titlebar .ui-state-focus .ui-icon, 
+.crm-container.ui-dialog .ui-dialog-titlebar .ui-button:hover,
+.crm-container.ui-dialog .ui-dialog-titlebar .ui-button:focus {
+    background: transparent;
+}
+.crm-container.ui-dialog .ui-button:has(.fa-times) {
+    order: 1;
 }
 .crm-container.ui-dialog .ui-dialog-header .ui-button-icon.ui-icon[class*=" fa-"], 
 .crm-container.ui-dialog .ui-dialog-titlebar .ui-button-icon.ui-icon[class*=" fa-"] {
     font-size: var(--r1);
+    height: 2ch;
     background-image: none;
     color: var(--crm-dialog-header-col);
 }
+.crm-container.ui-dialog .ui-dialog-titlebar .ui-button-icon.ui-icon[class*=" fa-"]:hover,
+.crm-container.ui-dialog .ui-dialog-titlebar .ui-button-icon.ui-icon[class*=" fa-"]:focus {
+    color: var(--crm-link);
+}
+
 /* Body */
 .crm-container.ui-dialog .ui-dialog-content[id*="crm-ajax-dialog"] {
     background: var(--crm-background);
@@ -54,11 +82,10 @@
     background: var(--crm-background);
     color: var(--crm-text);
     height: auto !important;
-    margin-bottom: 0;
-    margin-top: var(--crm-dialog-padding);
+    margin: var(--crm-dialog-padding) 0 var(--l);
     position: static;
     z-index: 1;
-    padding: var(--m);
+    padding: var(--crm-dialog-body-padding);
 }
 .crm-container.ui-dialog .ui-dialog-content .crm-block {
     box-shadow: none;
@@ -76,6 +103,12 @@
 .crm-container.ui-dialog details {
     margin: var(--m) 0;
 }
+.crm-container.ui-dialog .help, 
+.crm-container.ui-dialog .status, 
+.crm-container.ui-dialog .alert, 
+.crm-container.ui-dialog .alert-success {
+    margin: var(--m);
+}
 /* Footer */
 .crm-container.ui-dialog .ui-dialog-buttonpane,
 .crm-container.ui-dialog .modal-dialog .modal-footer {
@@ -89,12 +122,13 @@
     position: absolute;
     width: 100%;
     bottom: 0;
+    left: 0;
 }
 .crm-container.ui-dialog .ui-dialog-buttonset {
     width: 100%;
     display: flex;
     gap: var(--m);
-    padding: var(--m) var(--m) var(--s1);
+    padding: var(--m);
     justify-content: flex-end;
 }
 .ui-dialog .ui-dialog-buttonpane button {
@@ -126,8 +160,15 @@
 .crm-container #crm-notification-container div.ui-notify-message-style.error {
     border-color: var(--crm-alert);
 }
+.crm-container #crm-notification-container div.ui-notify-message-style.alert,
+.crm-container #crm-notification-container div.ui-notify-message-style.warning {
+    border-color: var(--crm-warning);
+}
 .crm-container #crm-notification-container div.ui-notify-message-style.success {
     border-color: var(--crm-success);
+}
+.crm-container #crm-notification-container div.ui-notify-message-style.info {
+    border-color: var(--crm-info);
 }
 .crm-container #crm-notification-container div.ui-notify-message-style.info {
     border-color: var(--crm-info);
@@ -151,5 +192,8 @@
 .crm-container #crm-notification-container div.ui-notify-message .notify-content ul {
     margin: 0 var(--r);
     padding: var(--m) 0 var(--m) var(--m);
+    color: var(--crm-notify-col);
+}
+.crm-container #crm-notification-container div.ui-notify-message .notify-content p {
     color: var(--crm-notify-col);
 }

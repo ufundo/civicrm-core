@@ -1,8 +1,16 @@
 .crm-container .ui-icon[class*=" fa-"] {
     margin: 0;
 }
-.crm-container a.helpicon::before {
-    content: "\f059";
+.crm-container button.btn-xs:has(.fa-times),
+.crm-container .crm-hover-button:has(.crm-i),
+.crm-container .crm-hover-button:has(.crm-i):hover,
+.crm-container .crm-hover-button:has(.crm-i):focus {
+    background: transparent;
+    color: var(--crm-link) !important;
+    padding: var(--crm-padding-small);
+}
+.crm-container .select2-container[class*=" fa-"]::before {
+    display: none;
 }
 
 /* Notification icons */
@@ -32,6 +40,15 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before {
     color: var(--crm-info);
 }
 
+/* Help icon */
+.crm-container a.helpicon::before {
+    content: "\f059";
+}
+.crm-container a.helpicon:hover,
+.crm-container a.helpicon:focus {
+    text-decoration: none;
+}
+
 /* Close icon */
 #crm-notification-container .ui-notify-message a.ui-notify-cross,
 div.civicrm-community-messages a.civicrm-community-message-dismiss,
@@ -52,7 +69,6 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container .ui-icon-circle-close::before {
     content: var(--crm-icon-close);
     color: var(--crm-notify-col);
-    color: var(--crm-text);
 }
 .crm-container .ui-icon-circle-close:hover,
 .crm-container .ui-icon-circle-close:focus,
@@ -93,7 +109,8 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 #crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon::before,
 .crm-container table.dataTable thead th.sorting::before,
 .crm-container table.dataTable thead th.sorting_asc::before,
-.crm-container table.dataTable thead th.sorting_desc::before  {
+.crm-container table.dataTable thead th.sorting_desc::before,
+.jstree-default .jstree-icon {
     font-family: "FontAwesome";
     font-style: normal;
     text-rendering: auto;
@@ -101,7 +118,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     content:  var(--crm-icon-sort);
     color: var(--crm-table-sort-col);
     float: var(--crm-table-sort-float);
-    margin: 0 var(--m) 0 0;
+    margin: var(--xs1) var(--m) 0 0;
 }
 .crm-container a.sorting_asc::after,
 #crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-asc::before,
@@ -114,4 +131,47 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container table.dataTable thead th.sorting_desc::before {  
     content: var(--crm-icon-sort-desc);
     color: var(--crm-link);
+}
+/* Jqueery UI icons (tags) */
+
+.crm-container .jstree-wholerow-ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--xs);
+}
+.jstree-default > .jstree-wholerow-ul > li.jstree-node {
+    margin-inline: 0;
+}
+.jstree-default .jstree-wholerow-clicked,
+.jstree-default .jstree-wholerow-hovered {
+    background: transparent !important;
+}
+.crm-container .jstree-default .jstree-icon {
+    background-image: none;
+    font-size: var(--r1);
+    margin-right: var(--btn-icon-spacing)
+}
+.crm-container .jstree-default .jstree-checkbox::before {
+    content: '\f096';
+}
+.crm-container .jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox::before, 
+.crm-container  .jstree-default .jstree-checked > .jstree-checkbox::before {
+    content: '\f046';
+    color: var(--crm-success);
+}
+.jstree-default > .jstree-no-dots .jstree-closed > .jstree-ocl::before {
+    margin-top: 5px;
+    display: block;
+    content: '\f105';
+    color: var(--crm-text);
+}
+.jstree-default > .jstree-no-dots .jstree-open > .jstree-ocl::before {
+    margin-top: 5px;
+    display: block;
+    content: '\f107';
+    color: var(--crm-text);
+}
+.crm-container .jstree-default .jstree-search {
+    color: var(--crm-alert);
+    font-weight: normal;
 }

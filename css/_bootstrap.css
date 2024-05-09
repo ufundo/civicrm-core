@@ -264,7 +264,7 @@
 		border: 1px solid #ddd !important;
 	}
 }
-
+/* 
 @font-face {
 	font-family: "Glyphicons Halflings";
 	src: url("../fonts/glyphicons-halflings-regular.eot");
@@ -1329,7 +1329,7 @@
 
 #bootstrap-theme .glyphicon-menu-up:before {
 	content: "";
-}
+} */
 
 #bootstrap-theme * {
 	-webkit-box-sizing: border-box;
@@ -1356,10 +1356,14 @@
 	background-color: white;
 }
 
-#bootstrap-theme input, #bootstrap-theme button, #bootstrap-theme select, #bootstrap-theme textarea {
+#bootstrap-theme input, #bootstrap-theme select, #bootstrap-theme textarea {
 	font-family: inherit;
 	font-size: inherit;
 	line-height: inherit;
+}
+#bootstrap-theme button {
+	font-family: inherit;
+	line-height: inherit;	
 }
 /* 
 #bootstrap-theme a {
@@ -1522,7 +1526,7 @@
 	padding: .2em;
 	background-color: #fcf8e3;
 }
-
+/* 
 #bootstrap-theme .text-left {
 	text-align: left;
 }
@@ -1641,7 +1645,7 @@
 
 #bootstrap-theme a.bg-danger:hover, #bootstrap-theme a.bg-danger:focus {
 	background-color: #e4b9b9;
-}
+} */
 
 #bootstrap-theme .page-header {
 	padding-bottom: 9px;
@@ -2769,7 +2773,7 @@
 	border: 0;
 	border-bottom: 1px solid #e5e5e5;
 }
-
+/*
 #bootstrap-theme label {
 	display: inline-block;
 	max-width: 100%;
@@ -2865,7 +2869,7 @@
 	background-color: transparent;
 	border: 0;
 }
-
+*/
 #bootstrap-theme .form-control[disabled], #bootstrap-theme .form-control[readonly], fieldset[disabled] #bootstrap-theme .form-control {
 	background-color: #eee;
 	opacity: 1;
@@ -2897,53 +2901,6 @@
 	margin-bottom: 15px;
 }
 
-#bootstrap-theme .radio, #bootstrap-theme .checkbox {
-	position: relative;
-	display: block;
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-
-#bootstrap-theme .radio.disabled label, fieldset[disabled] #bootstrap-theme .radio label, #bootstrap-theme .checkbox.disabled label, fieldset[disabled] #bootstrap-theme .checkbox label {
-	cursor: not-allowed;
-}
-
-#bootstrap-theme .radio label, #bootstrap-theme .checkbox label {
-	min-height: 20px;
-	padding-left: 20px;
-	margin-bottom: 0;
-	font-weight: 400;
-	cursor: pointer;
-}
-
-#bootstrap-theme .radio input[type="radio"], #bootstrap-theme .radio-inline input[type="radio"], #bootstrap-theme .checkbox input[type="checkbox"], #bootstrap-theme .checkbox-inline input[type="checkbox"] {
-	position: absolute;
-	margin-top: 4px \9;
-	margin-left: -20px;
-}
-
-#bootstrap-theme .radio + .radio, #bootstrap-theme .checkbox + .checkbox {
-	margin-top: -5px;
-}
-
-#bootstrap-theme .radio-inline, #bootstrap-theme .checkbox-inline {
-	position: relative;
-	display: inline-block;
-	padding-left: 20px;
-	margin-bottom: 0;
-	font-weight: 400;
-	vertical-align: middle;
-	cursor: pointer;
-}
-
-#bootstrap-theme .radio-inline.disabled, fieldset[disabled] #bootstrap-theme .radio-inline, #bootstrap-theme .checkbox-inline.disabled, fieldset[disabled] #bootstrap-theme .checkbox-inline {
-	cursor: not-allowed;
-}
-
-#bootstrap-theme .radio-inline + .radio-inline, #bootstrap-theme .checkbox-inline + .checkbox-inline {
-	margin-top: 0;
-	margin-left: 10px;
-}
 
 #bootstrap-theme .form-control-static {
 	min-height: 34px;
@@ -3643,162 +3600,7 @@
 	transition-timing-function: ease;
 }
 */
-#bootstrap-theme .caret {
-	display: inline-block;
-	width: 0;
-	height: 0;
-	margin-left: 2px;
-	vertical-align: middle;
-	border-top: 4px dashed;
-	border-top: 4px solid \9;
-	border-right: 4px solid transparent;
-	border-left: 4px solid transparent;
-}
 
-#bootstrap-theme .dropup, #bootstrap-theme .dropdown {
-	position: relative;
-}
-
-#bootstrap-theme .dropdown-toggle:focus {
-	outline: 0;
-}
-
-#bootstrap-theme .dropdown-menu {
-	position: absolute;
-	top: 100%;
-	left: 0;
-	z-index: 1000;
-	display: none;
-	float: left;
-	min-width: 160px;
-	padding: 5px 0;
-	margin: 2px 0 0;
-	font-size: 14px;
-	text-align: left;
-	list-style: none;
-	background-color: white;
-	-webkit-background-clip: padding-box;
-	background-clip: padding-box;
-	border: 1px solid #ccc;
-	border: 1px solid rgba(0, 0, 0, .15);
-	border-radius: 4px;
-	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
-	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
-}
-
-#bootstrap-theme .dropdown-menu.pull-right {
-	right: 0;
-	left: auto;
-}
-
-#bootstrap-theme .dropdown-menu .divider {
-	height: 1px;
-	margin: 9px 0;
-	overflow: hidden;
-	background-color: #e5e5e5;
-}
-
-#bootstrap-theme .dropdown-menu > li > a {
-	display: block;
-	padding: 3px 20px;
-	clear: both;
-	font-weight: 400;
-	line-height: 1.428571429;
-	color: #333;
-	white-space: nowrap;
-}
-
-#bootstrap-theme .dropdown-menu > li > a:hover, #bootstrap-theme .dropdown-menu > li > a:focus {
-	color: white;
-	text-decoration: none;
-	background-color: black;
-}
-
-#bootstrap-theme .dropdown-menu > .active > a, #bootstrap-theme .dropdown-menu > .active > a:hover, #bootstrap-theme .dropdown-menu > .active > a:focus {
-	color: white;
-	text-decoration: none;
-	background-color: black;
-	outline: 0;
-}
-
-#bootstrap-theme .dropdown-menu > .disabled > a, #bootstrap-theme .dropdown-menu > .disabled > a:hover, #bootstrap-theme .dropdown-menu > .disabled > a:focus {
-	color: #999;
-}
-
-#bootstrap-theme .dropdown-menu > .disabled > a:hover, #bootstrap-theme .dropdown-menu > .disabled > a:focus {
-	text-decoration: none;
-	cursor: not-allowed;
-	background-color: transparent;
-	background-image: none;
-	-webkit-filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-}
-
-#bootstrap-theme .open > .dropdown-menu {
-	display: block;
-}
-
-#bootstrap-theme .open > a {
-	outline: 0;
-}
-
-#bootstrap-theme .dropdown-menu-right {
-	right: 0;
-	left: auto;
-}
-
-#bootstrap-theme .dropdown-menu-left {
-	right: auto;
-	left: 0;
-}
-
-#bootstrap-theme .dropdown-header {
-	display: block;
-	padding: 3px 20px;
-	font-size: 12px;
-	line-height: 1.428571429;
-	color: #999;
-	white-space: nowrap;
-}
-
-#bootstrap-theme .dropdown-backdrop {
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	z-index: 990;
-}
-
-#bootstrap-theme .pull-right > .dropdown-menu {
-	right: 0;
-	left: auto;
-}
-
-#bootstrap-theme .dropup .caret, #bootstrap-theme .navbar-fixed-bottom .dropdown .caret {
-	content: "";
-	border-top: 0;
-	border-bottom: 4px dashed;
-	border-bottom: 4px solid \9;
-}
-
-#bootstrap-theme .dropup .dropdown-menu, #bootstrap-theme .navbar-fixed-bottom .dropdown .dropdown-menu {
-	top: auto;
-	bottom: 100%;
-	margin-bottom: 2px;
-}
-
-@media (min-width: 768px) {
-	#bootstrap-theme .navbar-right .dropdown-menu {
-		right: 0;
-		left: auto;
-	}
-	
-	#bootstrap-theme .navbar-right .dropdown-menu-left {
-		left: 0;
-		right: auto;
-	}
-}
 
 #bootstrap-theme [data-toggle="buttons"] > .btn input[type="radio"], #bootstrap-theme [data-toggle="buttons"] > .btn input[type="checkbox"], #bootstrap-theme [data-toggle="buttons"] > .btn-group > .btn input[type="radio"], #bootstrap-theme [data-toggle="buttons"] > .btn-group > .btn input[type="checkbox"] {
 	position: absolute;
@@ -6401,18 +6203,18 @@
 	margin-left: 0;
 	margin-right: 0;
 }
-
+/* 
 #bootstrap-theme .form-control.checkbox-inline > label {
 	margin-left: 9px;
 }
 
 #bootstrap-theme label input[type=checkbox]:not(:checked) + * {
 	font-weight: normal;
-}
+} */
 
-#bootstrap-theme .select2-choices {
+/* #bootstrap-theme .select2-choices {
 	margin-bottom: 0;
-}
+} 
 
 #bootstrap-theme input[type="search"]::-webkit-search-cancel-button {
 	-webkit-appearance: searchfield-cancel-button;
@@ -6486,3 +6288,4 @@
 	border-left: 1px solid #468847 !important;
 	background: #dff0d8 !important;
 }
+*/

@@ -177,7 +177,9 @@ fieldset.crm-inactive-dashlet-fieldset > div {
     border-radius: var(--crm-roundness);
 }
 
-/* SEARCH */
+/* 
+    S E A R C H
+                    */
 .crm-container div#searchForm table.form-layout {
     background: transparent;
 }

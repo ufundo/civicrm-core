@@ -62,17 +62,19 @@
     content: "\f0da";
     padding-left: 0.5ch;
 }
-.crm-container ul.panel {
+.crm-container .btn-slide ul.panel {
     display: none;
     z-index: 9999;
     position: absolute;
     right: var(--r4);
-    margin: var(--btn-small-padding);
-    width: 180px;
-    background: var(--crm-secondary-hover);
+    margin: var(--s);
+    width: var(--crm-dropdown-width);
+    background: var(--crm-dropdown-bg);
     border-radius: var(--crm-roundness);
+	border: var(--crm-dropdown-border);
 }
-.crm-container ul.panel::before {
+.crm-container .btn-slide ul.panel::before,
+.crm-container .btn-group .dropdown-menu::before {
     content: '';
     display: inline-block;
     position: absolute;
@@ -80,27 +82,27 @@
     height: 0px;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid var(--crm-secondary-hover);
+    border-bottom: 5px solid var(--crm-dropdown-bg);
     top: -5px;
     right: var(--l);
 }
-.crm-container ul.panel li {
+.crm-container .btn-slide ul.panel li {
     padding: var(--s);
     list-style: none;
     width: auto;
 }
-#crm-container ul.panel li a {
+#crm-container .btn-slide ul.panel li a {
     text-decoration: none;
-    padding: var(--btn-small-padding);
+    padding: var(--crm-dropdown-padding);
     display: block;
     cursor: pointer;
-    color: var(--crm-light-text);
+    color: var(--crm-dropdown-col);
     text-align: left;
 }
-#crm-container ul.panel li a:hover,
-#crm-container ul.panel li a:focus {
-    color: var(--crm-text);
-    background-color: var(--crm-page-background);
+#crm-container .btn-slide ul.panel li a:hover,
+#crm-container .btn-slide ul.panel li a:focus {
+    color: var(--crm-dropdown-hover);
+    background-color: var(--crm-dropdown-hover-bg);
 }
 
 /* Tooltip - used on the contact dashboard but no-where else? */
@@ -176,4 +178,145 @@
 }
 .crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(2) > td:first-child {
     padding-left: var(--r1);
+}
+
+/* BS3 Dropdowns */
+
+.crm-container .caret {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin: -2px 1px 0 2px;
+	vertical-align: middle;
+	border-top: 4px dashed;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+}
+.crm-container .dropup, .crm-container .dropdown {
+	position: relative;
+}
+.crm-container .dropdown-toggle:focus {
+	outline: 0;
+}
+.crm-container .btn-group .dropdown-menu,
+.crm-container .btn.dropdown-toggle + .dropdown-menu {
+	position: absolute;
+	top: 100%;
+	z-index: 1000;
+	display: none;
+    min-width: var(--crm-dropdown-width);
+	padding: var(--crm-dropdown-padding) !important;
+    margin-top: var(--s);
+	text-align: left;
+	list-style: none;
+	background-color: var(--crm-dropdown-bg);
+	background-clip: padding-box;
+	border: var(--crm-dropdown-border);
+	border-radius: var(--crm-roundness);
+	box-shadow: var(--crm-popup-shadow);
+}
+.crm-container .crm-search .api4-add-where-group-menu {
+    min-width: 80px;
+    background-color: var(--crm-dropdown-bg) !important;
+}
+.crm-container .dropdown-menu.pull-right {
+	right: 0;
+	left: auto;
+}
+.crm-container .dropdown-menu .divider {
+	height: 1px;
+	margin: var(--m) 0;
+	overflow: hidden;
+	background-color: var(--crm-background3);
+}
+#bootstrap-theme .dropdown-menu li .form-inline,
+#bootstrap-theme .dropdown-menu li .form-inline a {
+    color: var(--crm-dropdown-col);
+}
+.crm-container .dropdown-menu > li > a {
+	display: block;
+	padding: var(--crm-dropdown-padding);
+	clear: both;
+	color: var(--crm-dropdown-col);
+    border-radius: var(--crm-roundness);
+	white-space: nowrap;
+}
+.crm-container .dropdown-menu > li > a i.crm-i {
+    width: 2.5ch;
+}
+.crm-container .dropdown-menu > li > a:hover,
+.crm-container .dropdown-menu > li > a:focus,
+.crm-container .dropdown-menu > .active > a, 
+.crm-container .dropdown-menu > .active > a:hover, 
+.crm-container .dropdown-menu > .active > a:focus {
+	color: var(--crm-dropdown-hover);
+	background-color: var(--crm-dropdown-hover-bg);
+	text-decoration: none;
+    border-radius: var(--crm-roundness);
+}
+.crm-container .dropdown-menu > .disabled > a, 
+.crm-container .dropdown-menu > .disabled > a:hover, 
+.crm-container .dropdown-menu > .disabled > a:focus {
+	color: var(--crm-inactive);
+}
+.crm-container .dropdown-menu > .disabled > a:hover,
+.crm-container .dropdown-menu > .disabled > a:focus {
+	text-decoration: none;
+	cursor: not-allowed;
+	background-color: transparent;
+	background-image: none;
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.crm-container .open > .dropdown-menu,
+.crm-container .open .btn.dropdown-toggle + .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s);
+}
+.crm-container .open > a {
+	outline: 0;
+}
+.crm-container .dropdown-menu-right {
+	right: 0;
+	left: auto;
+}
+.crm-container .dropdown-menu-left {
+	right: auto;
+	left: 0;
+}
+.crm-container .dropdown-header {
+	display: block;
+	padding: var(--crm-dropdown-padding);
+	white-space: nowrap;
+    color: var(--crm-dropdown-col);
+    font-family: var(--crm-font-bold);
+    font-weight: var(--crm-bold-weight);
+    padding: var(--m2) var(--xs) var(--xs) !important;
+    border-bottom: 1px solid var(--crm-dropdown-col);
+}
+.crm-container .pull-right > .dropdown-menu {
+	right: 0;
+	left: auto;
+}
+.crm-container .dropup .caret, 
+.crm-container .navbar-fixed-bottom .dropdown .caret {
+	content: "";
+	border-top: 0;
+	border-bottom: 4px dashed;
+}
+.crm-container .dropup .dropdown-menu, 
+.crm-container .navbar-fixed-bottom .dropdown .dropdown-menu {
+	top: auto;
+	bottom: 100%;
+	margin-bottom: 2px;
+}
+@media (min-width: 768px) {
+	.crm-container .navbar-right .dropdown-menu {
+		right: 0;
+		left: auto;
+	}
+	.crm-container .navbar-right .dropdown-menu-left {
+		left: 0;
+		right: auto;
+	}
 }
