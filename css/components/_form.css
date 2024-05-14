@@ -10,6 +10,8 @@
     border: none;
     height: auto;
 }
+
+/* Labels */
 .crm-container .form-layout td.label, 
 .crm-container .form-layout-compressed td.label, 
 .crm-container .selector td.label, 
@@ -59,6 +61,19 @@
 }
 .crm-container .form-inline {
     padding: var(--s) 0;
+}
+/* Fieldset */
+.crm-container fieldset:not(.collapsed) {
+    padding: 0;
+    margin: var(--crm-padding-reg) 0;
+    border: 1px solid var(--crm-fieldset-border-color);
+    border-width: var(--crm-fieldset-border);
+}
+.crm-container fieldset legend {
+    font-weight: var(--crm-bold-weight);
+    font-family: var(--crm-font-bold);
+    padding-right: var(--m);
+    color: var(--crm-text);
 }
 
 /* contact dashboard */
@@ -118,7 +133,7 @@
 .crm-container textarea, 
 .crm-container select.crm-form-multiselect {
     padding: var(--crm-input-padding-large);
-    height: inherit;
+    height: auto;
 }
 .crm-container input.form-control:focus,
 .crm-container input.crm-form-text:focus, 

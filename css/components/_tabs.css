@@ -19,7 +19,7 @@
     padding: var(--crm-tabs-padding);
     border: var(--crm-tabs-border);
 }
-.crm-container .ui-tabs ul.ui-tabs-nav li.ui-state-active,
+/* .crm-container .ui-tabs ul.ui-tabs-nav li.ui-state-active, */
 .crm-container .ui-state-default, 
 .crm-container .ui-widget-content .ui-state-default, 
 .crm-container .ui-widget-header .ui-state-default, 
@@ -108,6 +108,7 @@
 .crm-container .nav-tabs {
 	border-bottom: 1px solid var(--crm-tab-border-col);
     gap: var(--crm-tabs-gap);
+    margin: 0;
 }
 .crm-container .nav-tabs > li > a {
 	border: 1px solid transparent;

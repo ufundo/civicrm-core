@@ -14,7 +14,12 @@
 }
 #crm-contact-actions-list {
     width: 495px;
-  }
+}
+#crm-contribpage-links-list {
+    top: 65px;
+    position: absolute;
+    left: 45px;
+}
 .ac_results-inner, 
 .crm-participant-list-inner, 
 .crm-event-links-list-inner, 
@@ -37,19 +42,22 @@
     top: -5px;
     left: 12px;
 }
-#crm-contact-actions-list ul {
+#crm-contact-actions-list ul, 
+.crm-contribpage-links-list-inner ul {
     list-style: none;
     margin: 0;
 }
-#crm-contact-actions-list ul a {
+#crm-contact-actions-list ul a, 
+.crm-contribpage-links-list-inner ul a {
     color: var(--crm-secondary-text);
     padding-inline: var(--s);
     border-radius: var(--crm-roundness);
     display: inherit;
-    margin-right: var(--s);
 }
 #crm-contact-actions-list ul a:hover,
-#crm-contact-actions-list ul a:focus {
+#crm-contact-actions-list ul a:focus, 
+.crm-contribpage-links-list-inner ul a:hover, 
+.crm-contribpage-links-list-inner ul a:focus {
     text-decoration: none;
     color: var(--crm-text);
     background-color: var(--crm-page-background);

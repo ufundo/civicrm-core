@@ -150,6 +150,43 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
     padding: var(--crm-table-padding);
 }
 
+/* Report table */
+
+.crm-container table.report {
+    width: auto;
+}
+.crm-container table.report td {
+    border: 1px solid var(--crm-gray-400);
+    background-color: var(--crm-gray-050);
+}
+#crm-container tr.columnheader-dark th {
+    background-color: var(--crm-gray-700);
+    color: var(--crm-light-text);
+    border: 1px solid var(--crm-gray-800)
+}
+
+/* Batch entry table */
+
+.crm-container .crm-grid-table {
+    display: table;
+    border-collapse: collapse;
+    border: var(--crm-table-outside-border);
+    background-color: var(--crm-table-background);
+}  
+.crm-container .crm-grid-row,
+.crm-container .crm-grid-header {
+    display: table-row;
+}  
+.crm-container .crm-grid-header {
+    white-space: nowrap;
+}  
+.crm-container .crm-grid-cell {
+    display: table-cell;
+    border-right: 1px solid var(--crm-table-column-border);
+    padding: var(--crm-table-padding);
+    vertical-align: top;
+}
+
 /* Bootstrap tables */
 
 .crm-container table col[class*="col-"] {

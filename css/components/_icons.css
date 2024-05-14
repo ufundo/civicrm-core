@@ -20,18 +20,23 @@
 }
 #crm-notification-container .ui-notify-message a.ui-notify-cross::before,
 .crm-container #crm-notification-container div.ui-notify-message h1::before,
-div.civicrm-community-messages a.civicrm-community-message-dismiss::before {
+div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
+.crm-container .delete-icon,
+.crm-container span.batch-valid,
+.crm-container span.batch-invalid {
     font-family: "FontAwesome";
     font-style: normal;
     text-rendering: auto;
     font-size: var(--crm-font-size);
     margin: 0 var(--m) 0 0;
 }
-.crm-container #crm-notification-container div.ui-notify-message.error h1::before {
+.crm-container #crm-notification-container div.ui-notify-message.error h1::before,
+.crm-container span.batch-invalid::before {
     content: var(--crm-icon-alert);
     color: var(--crm-alert);
 }
-.crm-container #crm-notification-container div.ui-notify-message.success h1::before {
+.crm-container #crm-notification-container div.ui-notify-message.success h1::before,
+.crm-container span.batch-valid::before {
     content: var(--crm-icon-success);
     color: var(--crm-success);
 }
@@ -132,6 +137,21 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     content: var(--crm-icon-sort-desc);
     color: var(--crm-link);
 }
+
+/* Trash icons */
+
+.crm-container .delete-icon {
+    background-image: none;
+}
+.crm-container .delete-icon::before {
+    content: "\f1f8";
+    color: var(--crm-text);
+}
+.crm-container .delete-icon:hover::before,
+.crm-container .delete-icon:focus::before {
+    color: var(--crm-alert);
+}
+
 /* Jqueery UI icons (tags) */
 
 .crm-container .jstree-wholerow-ul {
@@ -174,4 +194,11 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container .jstree-default .jstree-search {
     color: var(--crm-alert);
     font-weight: normal;
+}
+
+/* Resets icons with unwanted backgrounds */
+
+.crm-container a.crm-hover-button:has(span.icon) {
+    background-color: transparent;
+    padding: 0;
 }

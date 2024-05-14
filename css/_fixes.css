@@ -244,6 +244,10 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     background: var(--crm-secondary-hover);
 	text-decoration: none;
 }
+.crm-container .ui-tabs ul.ui-tabs-nav a.button { /* resets styles for buttons on a tab banner */
+	padding: var(--btn-padding);
+	line-height: 1.5;
+}
 
 /* Small buttons */
 
@@ -534,26 +538,33 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 /* CiviContribute dashboard */
 
-.crm-container .CRM_Contribute_Form_ContributionCharts #chartData table {
-	margin: 0;
-	box-shadow: none;
+.crm-container #ContributionCharts .ui-tabs-nav {
+	gap: 1px; /* to handle white space in markup */
 }
-.crm-container .CRM_Contribute_Form_ContributionCharts ul.ui-tabs-nav li.crm-tab-button {
+#ContributionCharts ul.ui-tabs-nav li.crm-tab-button {
 	padding: var(--m) var(--xs);
 }
-.CRM_Contribute_Form_ContributionCharts ul.ui-tabs-nav .float-right {
-	float: none;
-	position: absolute;
-	right: 0;
-	top: -8px;
-	z-index: 1;
+#ContributionCharts ul.ui-tabs-nav .float-right {
+	margin-left: auto;
 }
-.CRM_Contribute_Form_ContributionCharts ul.ui-tabs-nav .float-right table,
-.CRM_Contribute_Form_ContributionCharts ul.ui-tabs-nav .float-right table tr {
+#ContributionCharts ul.ui-tabs-nav .float-right table,
+#ContributionCharts ul.ui-tabs-nav .float-right table tr {
 	background: none;
+	margin: 0;
 	border: 0 solid transparent;
 	box-shadow: none;
 }
+#ContributionCharts #chartData {
+	padding: var(--crm-padding-reg);
+	box-shadow: none;
+}
+/* Create contribution pages */
+.crm-contribution-contributionpage-custom-form-block-custom_pre_id td.html-adjust > div > div,
+.crm-contribution-contributionpage-custom-form-block-custom_post_id td.html-adjust > div > div {
+	display: flex;
+	gap: var(--s);
+}
+
 /* Temp CSS to facilitate the build and testing, place for things lacking a home */
 
 #crm-container {
@@ -561,18 +572,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	width: calc(100% - var(--crm-page-padding) - var(--crm-page-padding));
 	left: 0;
 	padding: 2rem var(--crm-page-padding);
-}
-
-/* 
-	R E S P O N S I V E
-						*/
-
-/* Contact dashboard */
-
-@media (max-width: 768px) {
-	.crm-container div.contact_panel {
-		display: block;
-	}
 }
 
 /* 
@@ -617,7 +616,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	padding: 0;
 }
 /* Imports */
-
 .crm-form-block.crm-import-mapfield-form-block .help,
 .crm-form-block.crm-import-preview-form-block .help,
 .crm-activity-import-preview-form-block .help {
@@ -644,3 +642,31 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 details + .crm-content-block:has(.dataTables_wrapper) {
 	margin-top: var(--r);
 }
+/* Contribution page edit/create */
+.crm-container .crm-premium-settings-accordion {
+	margin-bottom: var(--crm-padding-reg);
+}
+/* Personal Campaign pages */
+.CRM_PCP_Form_PCP .messages.status {
+	margin: var(--crm-padding-reg) 0;
+}
+/* 
+	R E S P O N S I V E
+						*/
+
+/* Contact dashboard */
+
+@media (max-width: 768px) {
+	.crm-container div.contact_panel {
+		display: block;
+	}
+}
+
+/*
+
+	A F F O R M
+					*/
+
+.crm-container .af-layout-inline ~ .btn-group.pull-right {
+	margin: var(--crm-padding-reg) 0;
+}		

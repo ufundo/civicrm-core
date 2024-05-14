@@ -65,6 +65,7 @@ tbody.scrollContent tr.alternateRow{
     background: inherit;
     display: flex;
     gap: var(--m);
+    padding: var(--crm-padding-reg) 0;
 }
 
 /* Advanced multi-select */

@@ -238,6 +238,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-input-radio-color: var(--crm-focus);
 --crm-inline-edit-border: 0 solid transparent;
 --crm-inline-edit-bg: var(--crm-background);
+--crm-fieldset-border-color: var(--crm-gray-400);
+--crm-fieldset-border: 1px 0 0 0;
 
 /* Tabs */
 --crm-tabs-bg: var(--crm-background4);

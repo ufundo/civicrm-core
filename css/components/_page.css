@@ -2,29 +2,48 @@
 
 /* Common page styling */
 
-.crm-container #crm-main-content-wrapper {
+/* .crm-container #crm-main-content-wrapper, */
+/* .crm-container .crm-search-form-block, */
+.crm-container .crm-form-block,
+#bootstrap-theme .af-container-style-pane { /* darkened page bg style */
     box-shadow: var(--crm-form-block-box-shadow);
     background-color: var(--crm-form-block-background);
     border-radius: var(--crm-form-block-border-radius);
+    padding: var(--crm-form-block-padding);
+    margin: 0;
+}
+.crm-container .ui-tabs-panel .crm-form-block {
+    box-shadow: none;
+}
+.crm-container .crm-group-search-form-block,
+.CRM_Contact_Form_Search_Advanced .crm-form-block {
     padding: var(--crm-padding-inset);
 }
-#crm-main-content-wrapper:has(#bootstrap-theme) {
+.crm-contact-block > .help {
+    margin: var(--crm-padding-reg) 0;
+}
+/* .crm-container #crm-main-content-wrapper:has(
+    .CRM_Pledge_Form_Search,
+    .CRM_Contribute_Form_ContributionCharts,
+    #bootstrap-theme) { 
+    /*transparent page bg style 
     box-shadow: none;
     background-color: transparent;
+}  {
+    background-color: var(--crm-form-block-background);
 }
-/* .crm-container .crm-form-block, */
 .crm-container #crm-main-content-wrapper > .action-link,
 .crm-container .CRM_Contact_Form_Contact .crm-search-form-block,
 .crm-container .CRM_Mailing_Form_Search .crm-search-form-block,
 .crm-container .CRM_Mailing_Form_Search .action-link {
     padding: var(--crm-form-block-padding) calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
-}
-.crm-form-block.crm-import-datasource-form-block,
+} */
+/* .crm-form-block.crm-import-datasource-form-block,
 .crm-form-block.crm-import-mapfield-form-block,
 .crm-form-block.crm-import-preview-form-block,
 .crm-form-block.crm-activity-import-preview-form-block {
 	padding-inline: 0;
-}
+} */
 .crm-form-block.crm-import-datasource-form-block > h2,
 .crm-form-block.crm-import-mapfield-form-block > h2,
 .crm-form-block.crm-import-preview-form-block > h2,
@@ -35,9 +54,9 @@
 }
 /* .crm-container .crm-search-form-block, */
 /* .crm-search-form .crm-form-block, */
-/* .crm-container .crm-report-instanceList-form-block, */
+/* .crm-container .crm-report-instanceList-form-block, 
 .crm-container .crm-report-field-form-block {
-/* .crm-container .crm-group-search-form-block { */
+/* .crm-container .crm-group-search-form-block { 
     padding: var(--crm-padding-inset);
 }
 .crm-container .crm-activity-form-block,
@@ -51,27 +70,27 @@
 .crm-form-block.crm-import-mapfield-form-block > .help,
 .crm-form-block.crm-import-preview-form-block > .help,
 .crm-form-block.crm-activity-import-preview-form-block > .help,
-.crm-import-datasource-form-block .messages,
-#crm-main-content-wrapper .crm-content-block > .help {
+.crm-import-datasource-form-block .messages
+/* #crm-main-content-wrapper .crm-content-block > .help { */ {
     margin: calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
 }
-#crm-main-content-wrapper > .help {
+/* #crm-main-content-wrapper > .help {
     margin: calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
     /* position: relative;
     top: var(--r); */
-}
+} */
 #crm-main-content-wrapper .newGroup {
     margin: var(--crm-form-block-padding) calc(var(--crm-form-block-padding) - var(--crm-padding-inset)) 0;
 }
-.crm-container button.crm-form-submit {
+/* .crm-container button.crm-form-submit {
     margin: var(--crm-form-block-padding) calc(var(--crm-form-block-padding) - var(--crm-padding-inset)) calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
-}
+} */
 .crm-report-form-block table {
     box-shadow: none;
 }
-.crm-container .crm-form-block.crm-form-block > .crm-submit-buttons {
+/* .crm-container .crm-form-block.crm-form-block > .crm-submit-buttons {
     padding: 0 var(--crm-padding-inset);
-} 
+}  */
 /* .crm-report-field-form-block .crm-submit-buttons {
 	padding: var(--r) var(--m);
 } */
@@ -82,7 +101,7 @@
 	float: none !important; /* overwrites inline 'float' that breaks page wrapper */
 	display: flex;
 	justify-content: flex-end;
-	padding: 0 calc(var(--crm-form-block-padding) - var(--crm-padding-inset)) var(--l) 0;
+	padding: 0 0 var(--l) 0;
 }
 /* Mailing */
 .crm-search-form-block.crm-form-block {
