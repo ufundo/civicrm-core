@@ -23,6 +23,7 @@
 .crm-container .crm-accordion-bold {
 	background-color: var(--expand-body-bg);
 	border-radius: var(--crm-roundness);
+	margin: var(--expand-gap);
 }
 .crm-container .crm-accordion-bold > summary {
 	background-color: var(--expand-header-bg);

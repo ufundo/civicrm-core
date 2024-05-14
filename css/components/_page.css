@@ -1,2 +1,90 @@
 /* For page edges, borders and structures */
 
+/* Common page styling */
+
+.crm-container #crm-main-content-wrapper {
+    box-shadow: var(--crm-form-block-box-shadow);
+    background-color: var(--crm-form-block-background);
+    border-radius: var(--crm-form-block-border-radius);
+    padding: var(--crm-padding-inset);
+}
+#crm-main-content-wrapper:has(#bootstrap-theme) {
+    box-shadow: none;
+    background-color: transparent;
+}
+/* .crm-container .crm-form-block, */
+.crm-container #crm-main-content-wrapper > .action-link,
+.crm-container .CRM_Contact_Form_Contact .crm-search-form-block,
+.crm-container .CRM_Mailing_Form_Search .crm-search-form-block,
+.crm-container .CRM_Mailing_Form_Search .action-link {
+    padding: var(--crm-form-block-padding) calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
+}
+.crm-form-block.crm-import-datasource-form-block,
+.crm-form-block.crm-import-mapfield-form-block,
+.crm-form-block.crm-import-preview-form-block,
+.crm-form-block.crm-activity-import-preview-form-block {
+	padding-inline: 0;
+}
+.crm-form-block.crm-import-datasource-form-block > h2,
+.crm-form-block.crm-import-mapfield-form-block > h2,
+.crm-form-block.crm-import-preview-form-block > h2,
+.crm-form-block.crm-activity-import-preview-form-block > h2,
+.crm-group-search-form-block .crm-datatable-pager-top,
+.crm-group-search-form-block .crm-datatable-pager-bottom {
+    margin-inline: var(--crm-form-block-padding);
+}
+/* .crm-container .crm-search-form-block, */
+/* .crm-search-form .crm-form-block, */
+/* .crm-container .crm-report-instanceList-form-block, */
+.crm-container .crm-report-field-form-block {
+/* .crm-container .crm-group-search-form-block { */
+    padding: var(--crm-padding-inset);
+}
+.crm-container .crm-activity-form-block,
+.crm-container .crm-contactEmail-form-block {
+    padding: var(--crm-form-block-padding) var(--crm-padding-inset);
+}
+/* .crm-container .crm-search-form-block { - used on Find Contacts
+    padding: calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
+} */
+.crm-form-block.crm-import-datasource-form-block > .help,
+.crm-form-block.crm-import-mapfield-form-block > .help,
+.crm-form-block.crm-import-preview-form-block > .help,
+.crm-form-block.crm-activity-import-preview-form-block > .help,
+.crm-import-datasource-form-block .messages,
+#crm-main-content-wrapper .crm-content-block > .help {
+    margin: calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
+}
+#crm-main-content-wrapper > .help {
+    margin: calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
+    /* position: relative;
+    top: var(--r); */
+}
+#crm-main-content-wrapper .newGroup {
+    margin: var(--crm-form-block-padding) calc(var(--crm-form-block-padding) - var(--crm-padding-inset)) 0;
+}
+.crm-container button.crm-form-submit {
+    margin: var(--crm-form-block-padding) calc(var(--crm-form-block-padding) - var(--crm-padding-inset)) calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
+}
+.crm-report-form-block table {
+    box-shadow: none;
+}
+.crm-container .crm-form-block.crm-form-block > .crm-submit-buttons {
+    padding: 0 var(--crm-padding-inset);
+} 
+/* .crm-report-field-form-block .crm-submit-buttons {
+	padding: var(--r) var(--m);
+} */
+/* Dedupe page */
+#browseValues_Individual > div:last-of-type,
+#browseValues_Household > div:last-of-type,
+#browseValues_Organization > div:last-of-type {
+	float: none !important; /* overwrites inline 'float' that breaks page wrapper */
+	display: flex;
+	justify-content: flex-end;
+	padding: 0 calc(var(--crm-form-block-padding) - var(--crm-padding-inset)) var(--l) 0;
+}
+/* Mailing */
+.crm-search-form-block.crm-form-block {
+    /* padding: var(--crm-padding-reg); */
+}

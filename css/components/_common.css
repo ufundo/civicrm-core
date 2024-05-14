@@ -1,15 +1,3 @@
-/* Common page styling */
-
-.crm-container .crm-form-block {
-    box-shadow: var(--crm-form-block-box-shadow);
-    background-color: var(--crm-form-block-background);
-    border-radius: var(--crm-form-block-border-radius);
-    padding: var(--crm-form-block-padding);
-    padding-inline: var(--crm-padding-inset);
-}
-/* .crm-container .crm-form-block:has(> details) {
-    padding: var(--expand-2-body-padding);
-} */
 
 /* Checkbox lists */
 
@@ -73,12 +61,10 @@ tbody.scrollContent tr.alternateRow{
 
 .crm-container .action-link,
 .crm-container .action-link:hover {
-    padding: 0;
     line-height: 1;
     background: inherit;
     display: flex;
     gap: var(--m);
-    margin: var(--m) 0 var(--r);
 }
 
 /* Advanced multi-select */

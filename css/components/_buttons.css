@@ -182,12 +182,6 @@
     align-items: center;
     gap: var(--s);
 }
-.crm-container .crm-form-block.crm-form-block > .crm-submit-buttons {
-    padding: var(--crm-padding-reg) calc(var(--m) - var(--crm-padding-inset));
-}
-/* .crm-report-field-form-block .crm-submit-buttons {
-	padding: var(--r) var(--m);
-} */
 
 /* Hover buttons (plain text, button shows on hover) */
 .crm-container a.crm-hover-button {

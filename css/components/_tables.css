@@ -5,6 +5,7 @@
     margin: 0 0 var(--r);
     border-collapse: collapse;
     width: 100%;
+    max-width: 100%;
 }
 .crm-container table thead {
     background-color: var(--crm-table-header-bg);
@@ -65,17 +66,21 @@ tbody.scrollContent tr.alternateRow:hover {
 .crm-container table td:has(.action-item) {
     text-align: right;
 }
+.crm-container table.form-layout td:has(details) {
+    padding: 0;
+}
 .crm-form-block .form-item table,
 .crm-form-block .form-item table tr,
-.crm-container .crm-form-block:not(.crm-report-field-form-block):not(.crm-group-search-form-block) table,
-.crm-container .crm-form-block:not(.crm-report-field-form-block):not(.crm-group-search-form-block) table tr,
+.crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block) table:not(#preview-counts),
+.crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block) table:not(#preview-counts) tr,
 .crm-container .crm-accordion-body table.form-layout-compressed,
 .crm-container .crm-search-form-block table.form-layout-compressed {
     box-shadow: none;
     border: 0 solid transparent;
     background: transparent;
 }
-.crm-container .crm-form-block.crm-report-field-form-block table {
+.crm-container .crm-form-block.crm-report-field-form-block table,
+.crm-container .crm-search-display table {
     box-shadow: none;
 }
 /* Nested table */ 
@@ -84,8 +89,8 @@ tbody.scrollContent tr.alternateRow:hover {
     border: 1px solid var(--crm-page-background);
 }
 .crm-container .crm-child-row {
-    border-top: var(--crm-table-nested-head-border);
-    border-bottom: var(--crm-table-nested-head-border);
+    border-top: 1px solid var(--crm-gray-400);
+    border-bottom: 1px solid var(--crm-gray-025);
 }
 .crm-container .crm-child-row table {
     box-shadow: none;
@@ -99,6 +104,10 @@ tbody.scrollContent tr.alternateRow:hover {
 }
 #crm-container tr.crm-child-row:hover {
     background-color: transparent;
+}
+.crm-container tr.crm-child-row > td {
+    box-shadow: inset 0 10px 8px -10px rgba(0,0,0,.3), inset 0 -11px 8px -9px rgba(0,0,0,.15);
+    background: var(--crm-table-inset-bg);
 }
 /* Nested, inset table - groups page */
 

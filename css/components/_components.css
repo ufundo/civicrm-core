@@ -149,6 +149,7 @@ fieldset.crm-inactive-dashlet-fieldset > div {
     display: flex;
     justify-content: space-between;
     font-size: var(--m3);
+    margin-inline: var(--m);
 }
 .crm-datatable-pager-top {
     margin-bottom: var(--r);
@@ -182,6 +183,7 @@ fieldset.crm-inactive-dashlet-fieldset > div {
                     */
 .crm-container div#searchForm table.form-layout {
     background: transparent;
+    box-shadow: none;
 }
 /* Advanced Search */
 .crm-container .adv-search-top-submit {
@@ -194,7 +196,7 @@ fieldset.crm-inactive-dashlet-fieldset > div {
     display: flex;
     gap: var(--m);
     align-items: center;
-    padding: var(--crm-padding-reg);
+    /* padding: var(--crm-padding-reg); */
 }
 .crm-container .adv-search-top-submit .crm-submit-buttons,
 .crm-container .form-layout td:has(#_qf_Advanced_refresh-bottom) .crm-submit-buttons {
@@ -222,10 +224,7 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 .crm-case_search-accordion .crm-accordion-body .form-layout > tbody:first-child > tr:nth-of-type(1) > td:nth-of-type(1) label + input {
     margin-left: -0.6rem;
 }
-/* Mailing */
-.crm-search-form-block.crm-form-block {
-    padding: var(--crm-padding-reg);
-}
+
 /* Member */
 .page-civicrm-member-search .CRM_Member_Form_Search .crm-accordion-body tr:last-child td {
     padding-top: var(--r);

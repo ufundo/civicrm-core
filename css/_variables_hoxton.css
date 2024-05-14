@@ -111,7 +111,7 @@ color-scheme: light dark;
 --crm-huge-input: 25em;
 --crm-padding-reg: var(--r);
 --crm-padding-small: var(--s);
---crm-padding-inset: 0; /* to support flush theme variations */
+--crm-padding-inset: 0rem; /* to support flush theme variations */
 --crm-page-padding: var(--r); /* Margin left/right */
 
 /* TYPE */
@@ -294,7 +294,7 @@ color-scheme: light dark;
 --crm-dialog-header-bg: var(--crm-background2);
 --crm-dialog-header-col: var(--crm-text);
 --crm-dialog-header-size: var(--r1);
---crm-dialog-body-padding: var(--s);
+--crm-dialog-body-padding: var(--m);
 
 /* Dashlet */
 --crm-dashlet-bg: var(--crm-background);
@@ -333,7 +333,7 @@ color-scheme: light dark;
 
 /* Wizard */
 --crm-wizard-width: auto;
---crm-wizard-margin: calc(-1 * var(--crm-form-block-padding)) calc(-1 * var(--crm-form-block-padding)) 0;
+--crm-wizard-margin: calc(-1 * var(--crm-form-block-padding)) 0 0;
 --crm-wizard-height: 62px;
 --crm-wizard-radius: 0;
 --crm-wizard-active-col: var(--crm-link);

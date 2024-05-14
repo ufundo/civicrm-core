@@ -1,5 +1,5 @@
-Package: brunswick
-Copyright (C) 2022, FIXME <FIXME>
+Package: riverlea
+Copyright (C) 2024, Nicol Wistreich
 Licensed under the GNU Affero Public License 3.0 (below).
 
 -------------------------------------------------------------------------------

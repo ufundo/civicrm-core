@@ -19,6 +19,7 @@
     padding: var(--crm-tabs-padding);
     border: var(--crm-tabs-border);
 }
+.crm-container .ui-tabs ul.ui-tabs-nav li.ui-state-active,
 .crm-container .ui-state-default, 
 .crm-container .ui-widget-content .ui-state-default, 
 .crm-container .ui-widget-header .ui-state-default, 
@@ -39,6 +40,7 @@
 .ui-tabs .ui-tabs-nav {
     border-bottom: 1px solid var(--crm-tab-border-col);
 }
+.crm-container .ui-tabs ul.ui-tabs-nav li.ui-tabs-selected,
 .crm-container .ui-tabs .ui-tabs-nav li.ui-tabs-active {
     background: var(--crm-tab-bg-active);
     border: var(--crm-tab-border-active);
@@ -55,6 +57,13 @@
     padding: var(--crm-tab-padding);
 	font-weight: var(--crm-tab-weight);
 	font-family: var(--crm-tab-font);
+    line-height: var(--r1);
+    text-decoration: none;
+}
+.crm-container .ui-tabs .ui-tabs-nav li.ui-tabs-selected a {
+    background: transparent;
+    color: var(--crm-tab-col);
+    padding: var(--crm-tab-padding);
 }
 .crm-container .ui-tabs ul.ui-tabs-nav a em,
 .crm-container .nav-tabs a .badge {

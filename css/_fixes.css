@@ -204,10 +204,6 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	width: fit-content;
 	gap: var(--btn-icon-spacing); /* last four lines centre icons */
 }
-/* .crm-container .ui-button{
-    background: var(--crm-primary);
-    color: var(--crm-primary-text) !important;
-} */
 .crm-container .ui-button:hover,
 .crm-container .ui-button:focus,
 [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover,
@@ -273,6 +269,9 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 #crm-container .btn-group-xs button {
     padding: var(--xs) var(--s);
     font-size: var(--crm-small-font-size);
+}
+.crm-container button.btn:has(.fa-square-o) {
+	padding-inline: var(--m);
 }
 
 /* 
@@ -414,7 +413,6 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 }
 
 /* Contact dashboard page */
-
 .crm-container div.contact_panel {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -534,7 +532,28 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	font-weight: normal;
 	font-family: var(--crm-font);
 }
+/* CiviContribute dashboard */
 
+.crm-container .CRM_Contribute_Form_ContributionCharts #chartData table {
+	margin: 0;
+	box-shadow: none;
+}
+.crm-container .CRM_Contribute_Form_ContributionCharts ul.ui-tabs-nav li.crm-tab-button {
+	padding: var(--m) var(--xs);
+}
+.CRM_Contribute_Form_ContributionCharts ul.ui-tabs-nav .float-right {
+	float: none;
+	position: absolute;
+	right: 0;
+	top: -8px;
+	z-index: 1;
+}
+.CRM_Contribute_Form_ContributionCharts ul.ui-tabs-nav .float-right table,
+.CRM_Contribute_Form_ContributionCharts ul.ui-tabs-nav .float-right table tr {
+	background: none;
+	border: 0 solid transparent;
+	box-shadow: none;
+}
 /* Temp CSS to facilitate the build and testing, place for things lacking a home */
 
 #crm-container {
@@ -585,21 +604,20 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 .crm-actions-ribbon .crm-previous-action {
     margin-left: auto;
 }
+.crm-container .view-contact-groups .description {
+	margin: var(--r) 0;
+}
 /* Contacts - new */
 .CRM_Contact_Form_Contact > .crm-form-block .crm-submit-buttons:first-of-type {
 	margin-bottom: var(--crm-padding-reg);
+	padding: 0;
 }
 .CRM_Contact_Form_Contact > .crm-form-block .crm-submit-buttons:last-of-type {
 	margin-top: var(--crm-padding-reg);
+	padding: 0;
 }
 /* Imports */
 
-.crm-form-block.crm-import-datasource-form-block,
-.crm-form-block.crm-import-mapfield-form-block,
-.crm-form-block.crm-import-preview-form-block,
-.crm-form-block.crm-activity-import-preview-form-block {
-	padding-inline: var(--crm-form-block-padding);
-}
 .crm-form-block.crm-import-mapfield-form-block .help,
 .crm-form-block.crm-import-preview-form-block .help,
 .crm-activity-import-preview-form-block .help {
@@ -621,12 +639,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 .crm-search-form .crm-search-form-block {
 	margin-bottom: var(--r);
-}
-/* Dedupe page */
-#browseValues_Individual a.button,
-#browseValues_Household a.button,
-#browseValues_Organization a.button {
-	margin-bottom: var(--r2);
 }
 /* Dedupe exceptions */
 details + .crm-content-block:has(.dataTables_wrapper) {
