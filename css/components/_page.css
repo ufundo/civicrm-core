@@ -39,7 +39,9 @@
 .crm-container .crm-payment-form-block details,
 .crm-container .crm-import-preview-form-block details,
 .crm-form-block.crm-import-datasource-form-block h3,
-.crm-container .crm-event-manage-eventinfo-form-block details  {
+.crm-container .crm-event-manage-eventinfo-form-block details,
+.crm-container .crm-wizard-step details,
+.crm-container .CRM_Admin_Form_MessageTemplates details {
     margin: var(--crm-padding-inset) calc((-1 * var(--crm-form-block-padding)) + var(--crm-padding-inset));
 }
 /* Page backgrounds - reset of elements cought up in outset accordions (!) */
@@ -54,7 +56,8 @@
 .crm-contribution-contributionpage-premium-form-block .messages {
     margin: calc(var(--crm-form-block-padding) - var(--crm-padding-inset));
 }
-.crm-contact-block > .help {
+.crm-contact-block > .help,
+.CRM_Mailing_Form_Search .messages {
     margin: var(--crm-padding-reg) 0;
 }
 #crm-main-content-wrapper .newGroup {

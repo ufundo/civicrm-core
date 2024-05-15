@@ -588,6 +588,14 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	justify-content: flex-end;
 	padding: 0 0 var(--l) 0;
 }
+/* New mailing */
+.crmMailing-preview .preview-contact,
+.crmMailing-preview .preview-group {
+	display: flex;
+	height: auto;
+	align-items: center;
+	gap: var(--m);
+}
 
 /* Temp CSS to facilitate the build and testing, place for things lacking a home */
 

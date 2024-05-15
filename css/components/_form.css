@@ -319,6 +319,14 @@ input.crm-form-checkbox) + label {
 .crm-container .crm-multiple-checkbox-radio-options.crm-options-per-line .crm-option-label-pair {
     flex: 0 0 calc((100% - (var(--crm-opts-per-line) - 1) * var(--gap)) / var(--crm-opts-per-line));
 }
+/* Slider */
+#crm-container .ui-slider {
+    background: var(--crm-background4);
+}
+#crm-container .ui-slider .ui-slider-handle {
+    border: 0;
+    background: var(--crm-background5);
+}
 
 /* Select2 */
 

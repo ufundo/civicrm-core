@@ -97,10 +97,6 @@ tbody.scrollContent tr.alternateRow{
 
 /* Wizard steps */
 
-.crm-container #wizard-steps {
-    margin: var(--crm-wizard-margin);
-    width: var(--crm-wizard-width);
-}
 #crm-container ul.wizard-bar {
     border-collapse: collapse;
     white-space: nowrap;
@@ -114,6 +110,14 @@ tbody.scrollContent tr.alternateRow{
     padding: 0;
     text-align: left;
     width: 100%;
+}
+.crm-container #wizard-steps,
+#crm-container ul.crm-wizard-nav {
+    margin: var(--crm-wizard-margin);
+    width: var(--crm-wizard-width);
+}
+#crm-container ul.crm-wizard-nav {
+    margin-bottom: var(--r);
 }
 .crm-container ul.wizard-bar li {
     margin: -2px;
@@ -145,6 +149,9 @@ tbody.scrollContent tr.alternateRow{
     width: 0;
     z-index: 10;
 }
+.crm-container ul.crm-wizard-nav > li::after {
+    border-left: 25px solid var(--crm-wizard-border-col);
+}
 .crm-container ul.wizard-bar > li::before {
     border-bottom: var(--crm-wizard-height) solid rgba(0,0,0,0);  
     border-left: 20px solid var(--crm-wizard-bg);
@@ -157,6 +164,9 @@ tbody.scrollContent tr.alternateRow{
     width: 0;
     z-index: 11;
 }
+.crm-container ul.crm-wizard-nav > li::before {
+    border-left: 25px solid var(--crm-wizard-bg);
+}
 .crm-container ul.wizard-bar > li.current-step {
     background-color: var(--crm-wizard-active-bg);
     color: var(--crm-wizard-active-col);
@@ -166,6 +176,9 @@ tbody.scrollContent tr.alternateRow{
 }
 .crm-container ul.wizard-bar > li:not(:first-child) {
     padding-left: 50px !important;
+}
+.crm-wizard-buttons {
+    margin-top: var(--crm-padding-reg);
 }
 
 /* Panels (taken from Bootstrap3) */

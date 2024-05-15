@@ -67,6 +67,9 @@ tbody.scrollContent tr.alternateRow:hover {
 .crm-container table td:has(.action-item) {
     text-align: right;
 }
+.crm-container table.crm-mailing-ab-table td:has(.action-item) {
+    text-align: inherit;
+}
 .crm-container table.form-layout td:has(details) {
     padding: 0;
 }
