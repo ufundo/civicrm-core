@@ -137,6 +137,7 @@ color-scheme: light dark;
 --btn-small-padding: var(--s1) var(--m1);
 --btn-large-padding: var(--m) var(--r);
 --btn-align: center;
+--btn-height: 40px;
 --btn-icon-spacing: var(--s);
 --crm-cancel-color: var(--crm-alert);
 
@@ -315,6 +316,7 @@ color-scheme: light dark;
 --crm-dropdown-hover: var(--crm-text);
 --crm-dropdown-hover-bg: var(--crm-page-background);
 --crm-dropdown-border: 0;
+--crm-dropdown-width: 180px;
 
 /* Notifications */
 --crm-notify-background: var(--crm-background);
@@ -333,7 +335,7 @@ color-scheme: light dark;
 
 /* Wizard */
 --crm-wizard-width: auto;
---crm-wizard-margin: calc(-1 * var(--crm-form-block-padding)) 0 0;
+--crm-wizard-margin: calc(-1 * var(--crm-form-block-padding)) calc(-1 * var(--crm-form-block-padding)) 0;
 --crm-wizard-height: 62px;
 --crm-wizard-radius: 0;
 --crm-wizard-active-col: var(--crm-link);

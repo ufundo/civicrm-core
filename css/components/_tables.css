@@ -12,7 +12,8 @@
 }
 .crm-container th, 
 .crm-container table thead.sticky th,
-.crm-container table.dataTable thead th { 
+.crm-container table.dataTable thead th,
+.crm-container tr.columnheader td { 
     background-color:  var(--crm-table-header-bg);
     border-bottom: var(--crm-table-header-bottom);
     color: var(--crm-text);
@@ -22,7 +23,7 @@
 	text-align: left;
     vertical-align: bottom;
 }
-.crm-container:not(thead) tr {
+.crm-container table:not(thead) tr {
     border-bottom: var(--crm-table-row-border);
 }
 .crm-container .odd-row,
@@ -71,16 +72,19 @@ tbody.scrollContent tr.alternateRow:hover {
 }
 .crm-form-block .form-item table,
 .crm-form-block .form-item table tr,
-.crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block) table:not(#preview-counts),
+.crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block,#map-field) table:not(#preview-counts),
 .crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block) table:not(#preview-counts) tr,
 .crm-container .crm-accordion-body table.form-layout-compressed,
-.crm-container .crm-search-form-block table.form-layout-compressed {
+.crm-container .crm-search-form-block table.form-layout-compressed,
+.crm-container table.no-border,
+.crm-container table.no-border tr {
     box-shadow: none;
     border: 0 solid transparent;
     background: transparent;
 }
 .crm-container .crm-form-block.crm-report-field-form-block table,
-.crm-container .crm-search-display table {
+.crm-container .crm-search-display table,
+.crm-container .CRM_Contribute_Form_ContributionCharts #chartData table {
     box-shadow: none;
 }
 /* Nested table */ 
@@ -185,6 +189,14 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
     border-right: 1px solid var(--crm-table-column-border);
     padding: var(--crm-table-padding);
     vertical-align: top;
+}
+
+/* Fees tables (contribs/events) */
+
+.crm-container table#map-field-table {
+    width: auto;
+    border: var(--crm-table-outside-border);
+    margin-top: var(--crm-padding-reg);
 }
 
 /* Bootstrap tables */

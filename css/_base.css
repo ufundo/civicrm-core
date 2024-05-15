@@ -11,9 +11,7 @@
 .crm-container .hiddenElement,
 .crm-container .collapse {
 	display: none;
-} {
-	display: none;
-}
+} 
 #crm-container .clear,
 .crm-container .clear {
 	clear: both;
@@ -155,7 +153,8 @@
 .crm-container .status-hold, 
 .crm-container .status-past, 
 .crm-contact-deceased, 
-.crm-container .status-warning {
+.crm-container .status-warning,
+.crm-container .crm-error {
     color: var(--crm-alert) !important;
 }
 
@@ -164,7 +163,8 @@
 .crm-container .text-left {
 	text-align: left;
 }
-.crm-container .text-right {
+.crm-container .text-right,
+.crm-container td.right {
 	text-align: right;
 }
 .crm-container .text-center {

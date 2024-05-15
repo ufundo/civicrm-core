@@ -180,7 +180,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	  For buttons not using .crm-button or .btn or <button>
                               */
 
-.crm-container a.button,
+#crm-container a.button,
 .crm-container button,
 .crm-container .ui-button {
 	display: inline-block;
@@ -217,7 +217,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     color: inherit;
     padding: 0;
 }
-.crm-container a.button,
+#crm-container a.button,
 .crm-container [type="button"] {
     background: var(--crm-secondary);
     color: var(--crm-secondary-text);
@@ -244,10 +244,10 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     background: var(--crm-secondary-hover);
 	text-decoration: none;
 }
-.crm-container .ui-tabs ul.ui-tabs-nav a.button { /* resets styles for buttons on a tab banner */
+/* .crm-container .ui-tabs ul.ui-tabs-nav a.button { /* resets styles for buttons on a tab banner 
 	padding: var(--btn-padding);
 	line-height: 1.5;
-}
+} */
 
 /* Small buttons */
 
@@ -557,12 +557,36 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 #ContributionCharts #chartData {
 	padding: var(--crm-padding-reg);
 	box-shadow: none;
+	background: var(--crm-tab-bg-active);
 }
-/* Create contribution pages */
+/* Include profile (contribtuion page and events  */
 .crm-contribution-contributionpage-custom-form-block-custom_pre_id td.html-adjust > div > div,
-.crm-contribution-contributionpage-custom-form-block-custom_post_id td.html-adjust > div > div {
+.crm-contribution-contributionpage-custom-form-block-custom_post_id td.html-adjust > div > div,
+.crm-event-manage-registration-form-block-custom_pre_id td > div > div,
+.crm-event-manage-registration-form-block-custom_post_id td > div > div {
 	display: flex;
 	gap: var(--s);
+}
+/* event dashboard */
+.CRM_Event_Form_Search .button {
+	float: left;
+	margin-right: var(--m);
+}
+#crm-event-dashboard-heading + div a,
+.CRM_Event_Form_SearchEvent .crm-content-block .float-right a {
+	display: flex;
+	padding: 0 0 var(--m) 0;
+	gap: var(--m);
+	align-items: center;
+}
+/* Dedupe page */
+#browseValues_Individual > div:last-of-type,
+#browseValues_Household > div:last-of-type,
+#browseValues_Organization > div:last-of-type {
+	float: none !important; /* overwrites inline 'float' that breaks page wrapper */
+	display: flex;
+	justify-content: flex-end;
+	padding: 0 0 var(--l) 0;
 }
 
 /* Temp CSS to facilitate the build and testing, place for things lacking a home */

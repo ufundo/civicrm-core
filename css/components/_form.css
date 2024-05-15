@@ -10,6 +10,15 @@
     border: none;
     height: auto;
 }
+.crm-container div.form-layout-compressed {
+    display: flex;
+    gap: var(--s);
+    padding: var(--r) 0;
+    align-items: center;
+}
+.crm-container .crm-results-block-empty {
+    margin: var(--crm-padding-reg) 0;
+}
 
 /* Labels */
 .crm-container .form-layout td.label, 
@@ -134,6 +143,11 @@
 .crm-container select.crm-form-multiselect {
     padding: var(--crm-input-padding-large);
     height: auto;
+    min-height: var(--crm-input-height);
+}
+.crm-container .replace-plain {
+    background-color: var(--crm-background3);
+    min-width: var(--crm-huge-input);
 }
 .crm-container input.form-control:focus,
 .crm-container input.crm-form-text:focus, 
@@ -147,6 +161,11 @@
 .crm-container select[aria-controls]:focus {
     border-color: var(--crm-focus);
     outline: 0;
+}
+.crm-container input.error,
+.crm-container input.crm-error,
+.crm-container select.crm-error {
+    border-color: var(--crm-alert);
 }
 body :focus, 
 body .ui-dialog :focus {

@@ -204,6 +204,9 @@
     display: inline-block;
     line-height: 1.5;
 }
+.crm-container a.crm-hover-button + .crm-hover-button {
+    margin-inline: var(--m);
+}
 .crm-container .crm-submit-buttons .crm-hover-button {
     padding: var(--btn-padding);
 }

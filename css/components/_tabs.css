@@ -190,7 +190,6 @@
     padding: var(--crm-dash-panel-padding);
 }
 
-
 /* SearchKit tabs */
 
 .crm-search .crm-flex-box.crm-search-admin-outer {
@@ -225,6 +224,12 @@
 .crm-search .crm-search-admin-outer .crm-flex-4.panel .panel-body {
     border-radius: var(--crm-roundness);
     height: 100%;
+}
+
+/* Contribution dashboard tabs */
+
+.crm-container #ContributionCharts #mainTabContainer {
+    box-shadow: var(--crm-block-shadow);
 }
 
 /* Responsive - using Bootstrap viewports */

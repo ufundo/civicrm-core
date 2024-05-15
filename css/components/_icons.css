@@ -1,6 +1,9 @@
 .crm-container .ui-icon[class*=" fa-"] {
     margin: 0;
 }
+.crm-container .messages .crm-i {
+    padding: var(--s) var(--m) var(--s) 0;
+}
 .crm-container button.btn-xs:has(.fa-times),
 .crm-container .crm-hover-button:has(.crm-i),
 .crm-container .crm-hover-button:has(.crm-i):hover,

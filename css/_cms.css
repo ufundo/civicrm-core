@@ -40,7 +40,7 @@ main.page-content {
     margin-block: inherit;
     margin-inline: inherit;
 }
-.help p {
+.crm-container .help p {
     margin: 0;
 }
 

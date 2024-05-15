@@ -1,34 +1,41 @@
 /* Actions dropdowns */
 
-#crm-event-links-list, 
-#crm-contribpage-links-list, 
-#crm-create-new-list, 
-#crm-contact-actions-list, 
-#crm-participant-list {
+#crm-create-new-list {
     position: absolute;
-    display: none;
     top: 45px;
     width: 220px;
     left: 0;
-    z-index: 15;
+}
+#crm-contribpage-links-wrapper,
+#crm-event-links-wrapper,
+#crm-participant-wrapper,
+#crm-contact-actions-wrapper {
+    position: relative;
+}
+#crm-contribpage-links-list,
+#crm-event-links-list,
+#crm-participant-list,
+#crm-contact-actions-list {
+    top: calc(var(--btn-height) + 5px);
+    position: absolute;
+    display: none;
+    left: 0;
+    z-index: 5;
 }
 #crm-contact-actions-list {
     width: 495px;
-}
-#crm-contribpage-links-list {
-    top: 65px;
-    position: absolute;
-    left: 45px;
 }
 .ac_results-inner, 
 .crm-participant-list-inner, 
 .crm-event-links-list-inner, 
 .crm-contribpage-links-list-inner, 
-.crm-contact-actions-list-inner {
+.crm-contact-actions-list-inner,
+.crm-participant-list-inner {
     background-color: var(--crm-secondary);
     border-radius: var(--crm-roundness);
     box-shadow: var(--crm-popup-shadow);
     padding: var(--crm-padding-small);
+    min-width: var(--crm-dropdown-width);
 }
 .ac_results::before {
     content: '';
@@ -43,12 +50,16 @@
     left: 12px;
 }
 #crm-contact-actions-list ul, 
-.crm-contribpage-links-list-inner ul {
+.crm-contribpage-links-list-inner ul,
+.crm-event-links-list-inner ul,
+.crm-participant-list-inner ul {
     list-style: none;
     margin: 0;
 }
 #crm-contact-actions-list ul a, 
-.crm-contribpage-links-list-inner ul a {
+.crm-contribpage-links-list-inner ul a,
+.crm-event-links-list-inner ul a,
+.crm-participant-list-inner ul a {
     color: var(--crm-secondary-text);
     padding-inline: var(--s);
     border-radius: var(--crm-roundness);
@@ -57,7 +68,11 @@
 #crm-contact-actions-list ul a:hover,
 #crm-contact-actions-list ul a:focus, 
 .crm-contribpage-links-list-inner ul a:hover, 
-.crm-contribpage-links-list-inner ul a:focus {
+.crm-contribpage-links-list-inner ul a:focus,
+.crm-event-links-list-inner ul a:hover,
+.crm-event-links-list-inner ul a:focus,
+.crm-participant-list-inner ul a:hover, 
+.crm-participant-list-inner ul a:focus {
     text-decoration: none;
     color: var(--crm-text);
     background-color: var(--crm-page-background);
@@ -70,13 +85,16 @@
     content: "\f0da";
     padding-left: 0.5ch;
 }
+.crm-container .btn-slide {
+    position: relative;
+}
 .crm-container .btn-slide ul.panel {
     display: none;
     z-index: 9999;
     position: absolute;
-    right: var(--r4);
-    margin: var(--s);
-    width: var(--crm-dropdown-width);
+    right: 0;
+    margin: var(--m) 0;
+    min-width: var(--crm-dropdown-width);
     background: var(--crm-dropdown-bg);
     border-radius: var(--crm-roundness);
 	border: var(--crm-dropdown-border);
@@ -92,7 +110,7 @@
     border-right: 5px solid transparent;
     border-bottom: 5px solid var(--crm-dropdown-bg);
     top: -5px;
-    right: var(--l);
+    right: var(--r);
 }
 .crm-container .btn-slide ul.panel li {
     padding: var(--s);
