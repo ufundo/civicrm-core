@@ -204,7 +204,10 @@
     display: inline-block;
     line-height: 1.5;
 }
-.crm-container a.crm-hover-button + .crm-hover-button:not(:last-of-type) {
+.crm-container td a.crm-hover-button + .crm-hover-button:not(:last-of-type) {
+    margin-inline: var(--m);
+}
+.crm-container td:has(.btn-slide) a.crm-hover-button + .crm-hover-button {
     margin-inline: var(--m);
 }
 .crm-container .crm-submit-buttons .crm-hover-button {

@@ -3,6 +3,7 @@
 }
 .crm-container .messages .crm-i {
     padding: var(--s) var(--m) var(--s) 0;
+    float: left;
 }
 .crm-container button.btn-xs:has(.fa-times),
 .crm-container .crm-hover-button:has(.crm-i),

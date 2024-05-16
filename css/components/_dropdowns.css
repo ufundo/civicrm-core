@@ -117,7 +117,7 @@
     list-style: none;
     width: auto;
 }
-#crm-container .btn-slide ul.panel li a {
+.crm-container .btn-slide ul.panel li a {
     text-decoration: none;
     padding: var(--crm-dropdown-padding);
     display: block;
@@ -125,8 +125,8 @@
     color: var(--crm-dropdown-col);
     text-align: left;
 }
-#crm-container .btn-slide ul.panel li a:hover,
-#crm-container .btn-slide ul.panel li a:focus {
+.crm-container .btn-slide ul.panel li a:hover,
+.crm-container .btn-slide ul.panel li a:focus {
     color: var(--crm-dropdown-hover);
     background-color: var(--crm-dropdown-hover-bg);
 }

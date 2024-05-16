@@ -139,22 +139,22 @@ tbody.scrollContent tr.alternateRow{
 }
 .crm-container ul.wizard-bar > li::after {
     border-bottom: var(--crm-wizard-height) solid rgba(0,0,0,0);
-    border-left: 20px solid var(--crm-wizard-border-col);
+    border-left: calc(1px + var(--crm-wizard-angle)) solid var(--crm-wizard-border-col);
     border-top: var(--crm-wizard-height) solid rgba(0,0,0,0);
     content: "";
     height: 0;
     position: absolute;
     right: -21px;
     top: calc(-0.5 * var(--crm-wizard-height));
-    width: 0;
+    width: 20px;
     z-index: 10;
 }
 .crm-container ul.crm-wizard-nav > li::after {
-    border-left: 25px solid var(--crm-wizard-border-col);
+    border-left: calc(1.25 * var(--crm-wizard-angle)) solid var(--crm-wizard-border-col);
 }
 .crm-container ul.wizard-bar > li::before {
     border-bottom: var(--crm-wizard-height) solid rgba(0,0,0,0);  
-    border-left: 20px solid var(--crm-wizard-bg);
+    border-left: var(--crm-wizard-angle) solid var(--crm-wizard-bg);
     border-top: var(--crm-wizard-height) solid rgba(0,0,0,0);
     content: "";
     height: 0;
@@ -165,7 +165,7 @@ tbody.scrollContent tr.alternateRow{
     z-index: 11;
 }
 .crm-container ul.crm-wizard-nav > li::before {
-    border-left: 25px solid var(--crm-wizard-bg);
+    border-left: calc(1.25 * var(--crm-wizard-angle)) solid var(--crm-wizard-bg);
 }
 .crm-container ul.wizard-bar > li.current-step {
     background-color: var(--crm-wizard-active-bg);
@@ -175,7 +175,7 @@ tbody.scrollContent tr.alternateRow{
     border-left-color: var(--crm-wizard-active-bg);
 }
 .crm-container ul.wizard-bar > li:not(:first-child) {
-    padding-left: 50px !important;
+    padding-left: calc(var(--l) + var(--crm-wizard-angle)) !important;
 }
 .crm-wizard-buttons {
     margin-top: var(--crm-padding-reg);

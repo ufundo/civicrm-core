@@ -1,5 +1,4 @@
-/* River Lee branch: Abingdon Square (aka Greenwich 2.0) */
-
+/* River Lee branch: Abingdon Square (aka Greenwich 2.0). */
 
 :root { 
 
@@ -233,7 +232,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-input-font-size: var(--m3);
 --crm-input-label-weight: bold;
 --crm-input-label-font: var(--crm-font);
---crm-input-label-size: var(--m3);
+--crm-input-label-size: var(--crm-font-size);
 --crm-input-description: var(--crm-gray-700);
 --crm-input-dropdown-icon: "\f107";
 --crm-input-radio-color: var(--crm-focus);
@@ -336,8 +335,9 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 /* Wizard */
 --crm-wizard-width: fit-content;
 --crm-wizard-margin: 0 auto;
---crm-wizard-height: 40px;
+--crm-wizard-height: 30px;
 --crm-wizard-radius: var(--l);
+--crm-wizard-angle: 0px; 
 --crm-wizard-active-col: var(--crm-light-text);
 --crm-wizard-active-bg: var(--crm-link);
 --crm-wizard-border-col: var(--crm-divider);

@@ -24,7 +24,7 @@
 	padding: 0; 
 }
 .crm-container p {
-    margin: inherit;
+    margin: 0;
 }
 .button:not(:focus) {
     box-shadow: none !important;

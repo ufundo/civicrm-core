@@ -75,7 +75,7 @@ tbody.scrollContent tr.alternateRow:hover {
 }
 .crm-form-block .form-item table,
 .crm-form-block .form-item table tr,
-.crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block,#map-field) table:not(#preview-counts),
+.crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block,#map-field,.crm-membership-form-block,.crm-contribution-form-block) table:not(#preview-counts),
 .crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block) table:not(#preview-counts) tr,
 .crm-container .crm-accordion-body table.form-layout-compressed,
 .crm-container .crm-search-form-block table.form-layout-compressed,

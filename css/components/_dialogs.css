@@ -87,8 +87,10 @@
     z-index: 1;
     padding: var(--crm-dialog-body-padding);
 }
-.crm-container.ui-dialog .ui-dialog-content .crm-block {
+.crm-container.ui-dialog .ui-dialog-content .crm-block,
+.crm-container.ui-dialog details table {
     box-shadow: none;
+    padding: var(--crm-dialog-body-padding);
 }
 .crm-container.ui-dialog .form-layout-compressed {
     background: transparent;
@@ -101,13 +103,13 @@
     border-bottom: 0;
 }
 .crm-container.ui-dialog details {
-    margin: var(--m) 0;
+    margin: var(--crm-dialog-body-padding) 0;
 }
 .crm-container.ui-dialog .help, 
 .crm-container.ui-dialog .status, 
 .crm-container.ui-dialog .alert, 
 .crm-container.ui-dialog .alert-success {
-    margin: var(--m);
+    margin: var(--crm-dialog-body-padding);
 }
 /* Footer */
 .crm-container.ui-dialog .ui-dialog-buttonpane,
