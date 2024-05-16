@@ -41,7 +41,9 @@
 .crm-form-block.crm-import-datasource-form-block h3,
 .crm-container .crm-event-manage-eventinfo-form-block details,
 .crm-container .crm-wizard-step details,
-.crm-container .CRM_Admin_Form_MessageTemplates details {
+.crm-container .CRM_Admin_Form_MessageTemplates details,
+.crm-container .crm-case-caseview-form-block details,
+.crm-container .crm-case-activity-form-block details {
     margin: var(--crm-padding-inset) calc((-1 * var(--crm-form-block-padding)) + var(--crm-padding-inset));
 }
 /* Page backgrounds - reset of elements cought up in outset accordions (!) */
@@ -63,6 +65,4 @@
 #crm-main-content-wrapper .newGroup {
     margin: var(--crm-form-block-padding) calc(var(--crm-form-block-padding) - var(--crm-padding-inset)) 0;
 }
-.crm-report-form-block table {
-    box-shadow: none;
-}
+

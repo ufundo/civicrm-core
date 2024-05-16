@@ -4,6 +4,15 @@
    The end goal (Civi 7.0?) would be to remove these once the markup is
    consistent, and another  */
 
+/* Temp CSS to facilitate the build and testing, place for things lacking a home */
+
+#crm-container {
+	position: absolute;
+	width: calc(100% - var(--crm-page-padding) - var(--crm-page-padding));
+	left: 0;
+	padding: 2rem var(--crm-page-padding);
+}
+
 /*
       A C C O R D I O N S
       From Civi 5.72 these are only needed for extensions
@@ -596,15 +605,20 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	align-items: center;
 	gap: var(--m);
 }
-
-/* Temp CSS to facilitate the build and testing, place for things lacking a home */
-
-#crm-container {
-	position: absolute;
-	width: calc(100% - var(--crm-page-padding) - var(--crm-page-padding));
-	left: 0;
-	padding: 2rem var(--crm-page-padding);
+/* Cases dashboard */
+.crm-container .crm-case-dashboard-switch-view-buttons {
+	margin-left: auto;
+	display: flex;
 }
+.crm-container .crm-case-caseview-form-block table {
+	width: 100% !important;
+}
+.crm-case-form-block h3,
+.crm-case-caseview-form-block h3 {
+	background: transparent;
+	padding: 0;
+}
+
 
 /* 
 	P A D D I N G    F I X E S
@@ -681,6 +695,14 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 /* Personal Campaign pages */
 .CRM_PCP_Form_PCP .messages.status {
 	margin: var(--crm-padding-reg) 0;
+}
+/* Manage cases */
+.crm-container table.report.case-summary {
+	margin-top: var(--crm-padding-reg);
+}
+.crm-container .case-control-panel,
+.crm-container .crm-case-filter-upcoming {
+	padding-bottom: var(--crm-padding-reg);
 }
 /* 
 	R E S P O N S I V E

@@ -63,8 +63,8 @@ tbody.scrollContent tr.alternateRow:hover {
 .crm-container table.selector td {
     border-right: var(--crm-table-column-border);
 }
-.crm-container table td:has(.btn-slide),
-.crm-container table td:has(.action-item) {
+.crm-container table td:has(.btn-slide), 
+.crm-container table td:not(.crm-case-date):has(.action-item) {
     text-align: right;
 }
 .crm-container table.crm-mailing-ab-table td:has(.action-item) {
@@ -75,21 +75,42 @@ tbody.scrollContent tr.alternateRow:hover {
 }
 .crm-form-block .form-item table,
 .crm-form-block .form-item table tr,
-.crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block,#map-field,.crm-membership-form-block,.crm-contribution-form-block) table:not(#preview-counts),
-.crm-container .crm-form-block:not(.crm-report-field-form-block,.crm-group-search-form-block) table:not(#preview-counts) tr,
+.crm-container .crm-form-block:not(
+    .crm-report-field-form-block,
+    .crm-group-search-form-block,
+    #map-field,
+    .crm-membership-form-block,
+    .crm-contribution-form-block,
+    .crm-case-caseview-form-block,
+    .crm-case-activity-form-block) 
+        table:not(#preview-counts),
+.crm-container .crm-form-block:not(
+    .crm-report-field-form-block,
+    .crm-group-search-form-block,
+    .crm-membership-form-block,
+    .crm-contribution-form-block,
+    .crm-case-caseview-form-block,
+    .crm-case-activity-form-block)
+        table:not(#preview-counts) tr,
 .crm-container .crm-accordion-body table.form-layout-compressed,
 .crm-container .crm-search-form-block table.form-layout-compressed,
+.crm-container .crm-case-activity-form-block > table,
 .crm-container table.no-border,
-.crm-container table.no-border tr {
+.crm-container table.no-border tr,
+.crm-container table#crm-activity-view-table,
+.crm-container .crm-report-form-block table.form-layout-compressed  {
     box-shadow: none;
     border: 0 solid transparent;
     background: transparent;
 }
 .crm-container .crm-form-block.crm-report-field-form-block table,
 .crm-container .crm-search-display table,
-.crm-container .CRM_Contribute_Form_ContributionCharts #chartData table {
+/* .crm-report-form-block table, */
+.crm-container .CRM_Contribute_Form_ContributionCharts #chartData table,
+.crm-container .crm-case-caseview-form-block table {
     box-shadow: none;
 }
+
 /* Nested table */ 
 
 .crm-container .crm-child-row tr:first-child {

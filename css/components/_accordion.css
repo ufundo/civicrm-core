@@ -53,6 +53,15 @@
 	box-shadow: var(--expand-body-box-shadow);
 	animation: crm-details-show .3s ease-in-out;
 }
+/* Simple fix for details without a summary element */
+.crm-container details.crm-accordion-bold:not( > summary) {
+	border: var(--expand-body-border);
+	padding: var(--expand-body-padding);
+}
+.crm-container details.crm-accordion-bold:not( > summary) {
+	border: 0;
+	padding: 0;
+}
 .crm-container details.crm-accordion-light > .crm-accordion-body {
 	padding: var(--expand-body-padding);
 }
