@@ -16,6 +16,9 @@
 
 /* D9 Claro */
 
+#block-claro-content {
+    --crm-page-padding: 3rem;
+}
 .crm-container .form-item {
     margin: inherit;
 } 

@@ -30,7 +30,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --transparent-black: rgba(0, 0, 0, 0.05);
 --crm-blue: #bce8f1;
 --crm-blue-light: #d9edf7;
---crm-blue-dark: #3a87ad;
+--crm-blue-dark: #4294bd;
 --crm-blue-darker: #327293;
 --crm-purple: #4d4d69;
 --crm-purple-dark: #3e3e54;
@@ -76,7 +76,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-warning-text: var(--crm-light-text);
 --crm-info: var(--crm-blue-dark);
 --crm-info-text: var(--crm-light-text);
---crm-focus: var(--crm-blue-darker);
+--crm-focus: var(--crm-blue-dark);
 --crm-inactive: var(--crm-background4);
 
 /* SHADOWS */
@@ -236,6 +236,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-input-description: var(--crm-gray-700);
 --crm-input-dropdown-icon: "\f107";
 --crm-input-radio-color: var(--crm-focus);
+--crm-form-select-bg: var(--crm-background2);
 --crm-inline-edit-border: 0 solid transparent;
 --crm-inline-edit-bg: var(--crm-background);
 --crm-fieldset-border-color: var(--crm-gray-400);
@@ -327,6 +328,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 /* Icons */
 --crm-icon-alert: "\f06a";
 --crm-icon-success: "\f058";
+--crm-icon-info: "\f05a";
 --crm-icon-close: "\f00d";
 --crm-icon-sort: "\f0dc";
 --crm-icon-sort-desc: "\f0dd";

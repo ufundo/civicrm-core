@@ -1,13 +1,25 @@
-@import url(_bootstrap.css);
+@import url(_bootstrap3.css);
 
 /* NB: Where possible bootstrap classnames are defined with their CiviCRM-equivalent classnames in the component files, without namespacing (so usable anywhere). 
    Where that's not possible, ie for Bootstrap elements that don't have a Civi equivalent (e.g. 'labels') they are listed here, with namespacing because of possible clashes. 
    Over time, '_bootstrap.css' should become empty as Bootstrap elements are merged, added below, or dropped */
 
 /* 
+	  T Y P E 
+	  			*/
+
+#bootstrap-theme .help-block {
+	display: block;
+	color: var(--crm-text);
+	font-style: var(--crm-italic-style);
+	font-family: var(--crm-font-italic);
+	margin: var(--s) 0 var(--m);
+	font-size: var(--crm-font-small-size);
+}
+
+/* 
       A L E R T S
                        */
-
 
 #bootstrap-theme .alert h4 {
     margin-top: 0;
@@ -21,15 +33,6 @@
 }
 #bootstrap-theme .alert > p + p {
     margin-top: 5px;
-}
-#bootstrap-theme .alert-dismissable, #bootstrap-theme .alert-dismissible {
-    padding-right: 35px;
-}
-#bootstrap-theme .alert-dismissable .close, #bootstrap-theme .alert-dismissible .close {
-    position: relative;
-    top: -2px;
-    right: -21px;
-    color: inherit;
 }
 #bootstrap-theme .alert-success hr {
 	border-top-color: #c9e2b3;
@@ -263,8 +266,104 @@
 	border: 0;
 }
 
+/* 
+	P A G I N A T I O N
+						*/
 
 
-
-
-
+#bootstrap-theme .pagination {
+	display: inline-block;
+	padding-left: 0;
+	margin: var(--crm-padding-reg) 0;
+	border-radius: var(--crm-roundness);
+}
+#bootstrap-theme .pagination > li {
+	display: inline;
+}
+#bootstrap-theme .pagination > li > a, 
+#bootstrap-theme .pagination > li > span {
+	position: relative;
+	float: left;
+	padding: var(--s) var(--m);
+	margin-left: -1px;
+	line-height: 1.4;
+	color: var(--crm-link);
+	text-decoration: none;
+	background-color: var(--crm-page-background);
+	border: 1px solid var(--crm-divider);
+}
+#bootstrap-theme .pagination > li > a:hover, 
+#bootstrap-theme .pagination > li > a:focus, 
+#bootstrap-theme .pagination > li > span:hover, 
+#bootstrap-theme .pagination > li > span:focus {
+	z-index: 2;
+	color: var(--crm-link-hover);
+	background-color: var(--crm-background);
+	border-color: var(--crm-background4);
+}
+#bootstrap-theme .pagination > li:first-child > a, 
+#bootstrap-theme .pagination > li:first-child > span {
+	margin-left: 0;
+	border-top-left-radius: var(--crm-roundness);
+	border-bottom-left-radius: var(--crm-roundness);
+}
+#bootstrap-theme .pagination > li:last-child > a, 
+#bootstrap-theme .pagination > li:last-child > span {
+	border-top-right-radius: var(--crm-roundness);
+	border-bottom-right-radius: var(--crm-roundness);
+}
+#bootstrap-theme .pagination > .active > a, 
+#bootstrap-theme .pagination > .active > a:hover, 
+#bootstrap-theme .pagination > .active > a:focus, 
+#bootstrap-theme .pagination > .active > span, 
+#bootstrap-theme .pagination > .active > span:hover, 
+#bootstrap-theme .pagination > .active > span:focus {
+	z-index: 3;
+	color: var(--crm-primary-text);
+	cursor: default;
+	background-color: var(--crm-primary);
+	border-color: var(--crm-primary);
+}
+#bootstrap-theme .pagination > .disabled > span, 
+#bootstrap-theme .pagination > .disabled > span:hover, 
+#bootstrap-theme .pagination > .disabled > span:focus, 
+#bootstrap-theme .pagination > .disabled > a, 
+#bootstrap-theme .pagination > .disabled > a:hover, 
+#bootstrap-theme .pagination > .disabled > a:focus {
+	color: var(--crm-inactive);
+	cursor: not-allowed;
+	background-color: transparent;
+	border-color: var(--crm-inactive);
+}
+#bootstrap-theme .pagination-lg > li > a, 
+#bootstrap-theme .pagination-lg > li > span {
+	padding: var(--m2) var(--r);
+	font-size: var(--r1);
+	line-height: 1.3;
+}
+#bootstrap-theme .pagination-lg > li:first-child > a, 
+#bootstrap-theme .pagination-lg > li:first-child > span {
+	border-top-left-radius: calc(1.5 * var(--crm-roundness));
+	border-bottom-left-radius: calc(1.5 * var(--crm-roundness));
+}
+#bootstrap-theme .pagination-lg > li:last-child > a, 
+#bootstrap-theme .pagination-lg > li:last-child > span {
+	border-top-right-radius: calc(1.5 * var(--crm-roundness));
+	border-bottom-right-radius: calc(1.5 * var(--crm-roundness));
+}
+#bootstrap-theme .pagination-sm > li > a, 
+#bootstrap-theme .pagination-sm > li > span {
+	padding: var(--crm-padding-small);
+	font-size: var(--crm-font-size-small);
+	line-height: 1.5;
+}
+#bootstrap-theme .pagination-sm > li:first-child > a, 
+#bootstrap-theme .pagination-sm > li:first-child > span {
+	border-top-left-radius: calc(0.75 * var(--crm-roundness));
+	border-bottom-left-radius: calc(0.75 * var(--crm-roundness));
+}
+#bootstrap-theme .pagination-sm > li:last-child > a, 
+#bootstrap-theme .pagination-sm > li:last-child > span {
+	border-top-right-radius: calc(0.75 * var(--crm-roundness));
+	border-bottom-right-radius: calc(0.75 * var(--crm-roundness));
+}

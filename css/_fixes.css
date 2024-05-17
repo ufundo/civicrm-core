@@ -246,8 +246,8 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     font-weight: normal;
 	text-decoration: none;
 }
-.crm-actions-ribbon a.button:hover,
-.crm-actions-ribbon a.button:focus,
+#crm-container .crm-actions-ribbon a.button:not(.delete):hover,
+#crm-container .crm-actions-ribbon a.button:not(.delete):focus,
 .crm-container .action-link a.button:hover,
 .crm-container .action-link a.button:focus {
     background: var(--crm-secondary-hover);
@@ -308,11 +308,16 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 				*/
 
 .afadmin-list .nav-tabs + .form-inline + table,
-.crm-search-nav-tabs ~ .ng-scope {
+.crm-search-nav-tabs ~ .ng-scope,
+.afadmin-list > .form-inline {
     border: 1px solid var(--crm-tab-border-col);
     border-top: 0 solid transparent;
     border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	background: var(--crm-tab-bg-active);
+}
+.afadmin-list > .form-inline {
+	border-radius: 0;
+	border-bottom: 0;
 }
 .afadmin-list .nav-tabs + .form-inline,
 .crm-search-nav-tabs ~ .ng-scope > .form-inline {
@@ -547,11 +552,22 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 /* CiviContribute dashboard */
 
+.crm-container #ContributionCharts #mainTabContainer {
+    box-shadow: var(--crm-block-shadow);
+}
 .crm-container #ContributionCharts .ui-tabs-nav {
+	align-items: center;
 	gap: 1px; /* to handle white space in markup */
 }
+.crm-container #ContributionCharts .ui-tabs-nav .float-right td {
+	padding: 0 var(--s);
+}
 #ContributionCharts ul.ui-tabs-nav li.crm-tab-button {
-	padding: var(--m) var(--xs);
+	padding: var(--crm-tab-padding);
+	border-radius: var(--crm-tab-roundness);
+}
+#ContributionCharts ul.ui-tabs-nav li.crm-tab-button a {
+	padding: 0;
 }
 #ContributionCharts ul.ui-tabs-nav .float-right {
 	margin-left: auto;
@@ -618,8 +634,211 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	background: transparent;
 	padding: 0;
 }
+/* API Explorer 4 */
 
+.crm-container .api4-explorer-row.crm-flex-box {
+	column-gap: var(--crm-padding-reg);
+	margin-bottom: var(--crm-padding-reg);
+}
+.crm-container .api4-explorer-row .explorer-params-panel,
+.crm-container .api4-explorer-row .explorer-code-panel {
+	flex: 2;
+}
+.crm-container .api4-explorer-row .panel-heading {
+	padding: 0 var(--m1);
+	display: flex;
+	align-items: center;
+}
+#crm-container .api4-explorer-row .panel-heading h3 {
+	background: transparent;
+}
+.crm-container .api4-explorer-row .explorer-code-panel .panel-heading {
+	align-items: end;
+}
+.crm-container .api4-explorer-row .panel-heading .form-inline {
+	width: 100%;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	gap: var(--m);
+}
+.crm-container .api4-explorer-row .nav-tabs {
+	border-bottom: 0;
+}
+.crm-container .panel-heading .form-inline .pull-right {
+	margin-left: auto;
+}
+.crm-container .explorer-result-panel .form-inline.pull-right {
+	order: 2;
+	justify-content: end;
+}
+.crm-container .explorer-result-panel .panel-heading .nav-tabs {
+	width: 100%;
+	align-self: end;
+}
+/* resets on api4-explorer.css */
+#bootstrap-theme .api4-explorer-row > .panel {
+	margin: 0;
+}
+#bootstrap-theme.api4-explorer-page .explorer-params-panel .panel-heading {
+	padding-top: inherit;
+}
+#bootstrap-theme.api4-explorer-page .explorer-params-panel .panel-heading button {
+	position: inherit;
+}
+/* Form Builder Admin */
+/* #afGuiEditor #afGuiEditor-palette {
+	flex: 1;
+}
+#afGuiEditor #afGuiEditor-canvas {
+	flex: 2;
+} */
+#afGuiEditor-palette .form-group label {
+	width: 100%;
+	display: block;
+}
+#afGuiEditor #af_config_form_permission_operator {
+	width: 60px;
+}
+#afGuiEditor #s2id_af_config_form_permission {
+	width: calc(100% - 65px) !important;
+}
+#afGuiEditor .panel-heading ul.nav-tabs li {
+	top: inherit;
+	width: fit-content !important;
+}
+#afGuiEditor .panel-heading ul.nav-tabs li > a {
+	font-size: var(--crm-font-size);
+	padding: var(--s1) var(--m2);
+	height: auto;
+}
+#afGuiEditor fieldset legend {
+	padding-top: var(--s);
+	font-size: var(--r2);
+	margin-bottom: var(--m);
+	color: var(--crm-text);
+	border-bottom: 1px solid var(--crm-divider);
+	line-height: 1;
+}
+#afGuiEditor .af-gui-columns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--r);
+}
+#afGuiEditor .af-gui-columns fieldset:last-of-type {
+	grid-column: 1 / span 2;
+}
+#afGuiEditor .af-gui-entity-values legend,
+#afGuiEditor .af-gui-entity-palette legend {
+	font-size: var(--crm-font-size);
+}
+#afGuiEditor-palette-config .panel-body {
+	padding: var(--crm-padding-reg);
+}
+#afGuiEditor-palette-config .af-gui-entity-values hr {
+	display: none;
+}
+#afGuiEditor-palette-config .af-gui-entity-palette [type="search"] {
+	display: block;
+	top: 1rem;
+	width: calc(100% - 10px);
+	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
+	border-color: var(--crm-divider);
+}
+.af-gui-entity-palette-select-list {
+	border: 1px solid var(--crm-divider);
+	border-radius: var(--crm-roundness);
+	padding: var(--s);
+	margin-top: var(--l);
+}
+#afGuiEditor-palette-config .af-gui-entity-palette .input-group {
+	margin-top: var(--s);
+}
+#afGuiEditor .af-gui-field-input-type-chainselect .input-group .dropdown-toggle, 
+#afGuiEditor .af-gui-field-input-type-select .input-group .dropdown-toggle, 
+#afGuiEditor-palette-config .af-gui-entity-palette .input-group .btn,
+#afGuiEditor-canvas-body .af-gui-field-input .input-group .btn {
+	padding: var(--s) var(--m1);
+}
+#afGuiEditor .panel-body {
+	width: 100%;
+}
+/* Handle excess nav items 
 
+#afGuiEditor-palette-config > .panel-heading {
+	overflow-x: scroll;
+	overflow-y: hidden;
+}
+ul#afGuiEditor-palette-tabs {
+	display: ruby;
+}
+ul#afGuiEditor-palette-tabs li {
+	max-width: min-content !important;
+}
+/* AfEditor builder */
+
+#afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
+	color: var(--crm-dropdown-col);
+}
+#afGuiEditor .af-gui-text-legend, 
+#afGuiEditor .af-gui-text-h3 {
+	font-size: var(--crm-font-size);
+}
+#afGuiEditor-canvas [ui-sortable] {
+	margin-top: 5px;
+}
+#afGuiEditor .af-gui-container {
+	padding: var(--m);
+}
+#afGuiEditor .af-gui-container.af-container-style-pane {
+	background: linear-gradient(to bottom, #f2f2f2 0 var(--l), transparent var(--l) 100%) no-repeat;
+	border-radius: var(--crm-roundness);
+}
+#afGuiEditor .af-gui-content-editing-area .af-gui-edit-options-bar,
+#afGuiEditor-canvas [ui-sortable] .af-gui-bar  {
+	font-family: inherit;
+}
+#afGuiEditor-canvas [ui-sortable] .af-gui-bar {
+	font-family: inherit;
+	height: var(--l);
+	border-radius: var(--crm-roundness);
+	background-color: var(--crm-background3);
+	background: var(--crm-gray-300);
+	background-color: var(--crm-gray-300);
+}
+#afGuiEditor-canvas [ui-sortable] .af-gui-bar:has(~ .af-gui-field-input) {
+	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
+}
+#afGuiEditor [ui-sortable] .af-gui-bar::before, 
+#afGuiEditor .af-gui-entity-palette-select-list [ui-sortable] > div:not(.disabled):hover::before, 
+#afGuiEditor af-gui-edit-options.af-gui-content-editing-area [ui-sortable] li::before {
+	height: var(--r3);
+	left: 5px;
+}
+#afGuiEditor .af-gui-container-title {
+	top: calc(-1 * var(--s3));
+}
+#afGuiEditor .af-gui-node-title {
+	margin: 0 var(--m1);
+}
+#afGuiEditor .af-gui-node-title + * {
+	padding-top: var(--m);
+}
+#afGuiEditor .af-gui-element {
+	position: relative;
+	padding: 0 var(--s) var(--s);
+	display: block;
+	min-height: var(--l);
+	background: var(--crm-background2);
+	border-radius: var(--crm-roundness);
+	margin-bottom: var(--s2);
+}
+#afGuiEditor .af-gui-content-editing-area:has(.ng-hide) {
+	padding-top: 0;
+}
+#afGuiEditor .af-gui-markup {
+	padding: 40px 0 0;
+}
 /* 
 	P A D D I N G    F I X E S
 								*/
@@ -704,6 +923,17 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 .crm-container .crm-case-filter-upcoming {
 	padding-bottom: var(--crm-padding-reg);
 }
+/* Contrib dashboard / form builder */
+#ContributionCharts .ui-tabs-nav .button,
+#afGuiEditor-canvas .panel-heading .form-inline .btn {
+	padding: var(--btn-small-padding);
+}
+#afGuiEditor-canvas .panel-heading .form-inline {
+	padding: 0;
+}
+#afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
+	padding: var(--crm-dropdown-padding);
+}
 /* 
 	R E S P O N S I V E
 						*/
@@ -723,4 +953,4 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 
 .crm-container .af-layout-inline ~ .btn-group.pull-right {
 	margin: var(--crm-padding-reg) 0;
-}		
+}

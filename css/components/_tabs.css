@@ -1,6 +1,7 @@
 /* JQuery UI tabs */
 
-.crm-container #mainTabContainer.ui-tabs {
+.crm-container #mainTabContainer.ui-tabs,
+.crm-container .crm-tabset.ui-tabs {
     border: var(--crm-dash-border);
     border-radius: var(--crm-roundness);
     margin-bottom: var(--r1);
@@ -18,6 +19,7 @@
     gap: var(--crm-tabs-gap);
     padding: var(--crm-tabs-padding);
     border: var(--crm-tabs-border);
+    margin: 0 !important;
 }
 /* .crm-container .ui-tabs ul.ui-tabs-nav li.ui-state-active, */
 .crm-container .ui-state-default, 
@@ -43,7 +45,7 @@
 .crm-container .ui-tabs ul.ui-tabs-nav li.ui-tabs-selected,
 .crm-container .ui-tabs .ui-tabs-nav li.ui-tabs-active {
     background: var(--crm-tab-bg-active);
-    border: var(--crm-tab-border-active);
+    border: var(--crm-tab-border-active); 
     border-bottom: 0 solid transparent;
     margin: 0 0 -1px;
     padding: 0;
@@ -59,6 +61,8 @@
 	font-family: var(--crm-tab-font);
     line-height: var(--r1);
     text-decoration: none;
+    font-size: var(--crm-font-size);
+    border-radius: var(--crm-tab-roundness);
 }
 .crm-container .ui-tabs .ui-tabs-nav li.ui-tabs-selected a {
     background: transparent;
@@ -99,7 +103,6 @@
     padding: 0
 } 
 #crm-container .ui-tabs-panel {
-    padding: var(--m);
     background: var(--crm-tab-bg-active);
 }
 
@@ -116,9 +119,9 @@
     display: block;
     margin-bottom: -1px;
 }
-.crm-container .nav-tabs > li > a:hover,
-.crm-container .nav-tabs > li > a:focus,
-.crm-container .nav-tabs > li.active > a,
+#crm-container .nav-tabs > li > a:hover,
+#crm-container .nav-tabs > li > a:focus,
+#crm-container .nav-tabs > li.active > a, /* using # to occlude BS */
 .crm-container .nav-tabs > li.active > a:hover, 
 .crm-container .nav-tabs > li.active > a:focus {
 	color: var(--crm-text);
@@ -126,7 +129,7 @@
 	border: 1px solid var(--crm-tab-border-col);
 	border-bottom-color: transparent;
 }
-.crm-container .nav-tabs > li.active > a {
+#crm-container .nav-tabs > li.active > a {
     background: var(--crm-tab-bg-active);
 }
 .crm-container .panel-heading:has(.nav-tabs) {
@@ -143,7 +146,7 @@
 .crm-container .crm-contact-page #mainTabContainer .crm-contact-tabs-list {
     background: var(--crm-dash-tabs-bg);
     flex-direction: var(--crm-dash-tabs-flow);
-    border-radius: var(--crm-dash-roundness);
+    border-radius: var(--crm-dash-roundness) var(--crm-dash-roundness) 0 0
     gap: var(--crm-dash-tabs-gap);
     box-shadow: var(--crm-block-shadow);
     padding: var(--crm-dash-tabs-padding);
@@ -224,12 +227,6 @@
 .crm-search .crm-search-admin-outer .crm-flex-4.panel .panel-body {
     border-radius: var(--crm-roundness);
     height: 100%;
-}
-
-/* Contribution dashboard tabs */
-
-.crm-container #ContributionCharts #mainTabContainer {
-    box-shadow: var(--crm-block-shadow);
 }
 
 /* Responsive - using Bootstrap viewports */

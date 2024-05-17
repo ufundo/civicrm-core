@@ -208,9 +208,9 @@ color-scheme: light dark;
 --crm-alert-background-warning: var(--crm-amber-light);
 --crm-alert-border-warning: var(--crm-amber);
 --crm-alert-text-warning: var(--crm-text);
---crm-alert-background-info: var(--crm-blue-light);
---crm-alert-border-info: var(--crm-blue);
---crm-alert-text-info: var(--crm-text);
+--crm-alert-background-info: var(--crm-primary);
+--crm-alert-border-info: var(--crm-primary);
+--crm-alert-text-info: var(--crm-primary-text);
 --crm-alert-background-danger: var(--crm-red-light);
 --crm-alert-border-danger: var(--crm-red);
 --crm-alert-text-danger: var(--crm-text);
@@ -237,8 +237,11 @@ color-scheme: light dark;
 --crm-input-description: var(--crm-gray-700);
 --crm-input-dropdown-icon: "\f107";
 --crm-input-radio-color: var(--crm-primary);
+--crm-form-select-bg: var(--crm-background2);
 --crm-inline-edit-border: 1px solid var(--crm-gray-900);
 --crm-inline-edit-bg: var(--crm-background);
+--crm-fieldset-border-color: ;
+--crm-fieldset-border: 0;
 
 /* Tabs */
 --crm-tabs-bg: var(--crm-background2);

@@ -24,36 +24,32 @@
     position: relative;
     margin: 0;
     padding: 0;
+    display: grid;
+    grid-template-columns: var(--r) 100%;
+    gap: var(--s);
 }
 .crm-container ul.crm-checkbox-list li input {
-    position: absolute;
-    left: var(--s);
-    top: var(--m);
+    margin: 0;
 }
 .listing-box input.crm-form-checkbox {
     margin: 0 0 0 var(--s);
 }
-.crm-container ul.crm-checkbox-list li label {
+.crm-container ul.crm-checkbox-list li {
     background-color: var(--crm-background2);
-    padding-inline: var(--s) var(--m2)
-}
-tbody.scrollContent tr.alternateRow{
-    background-color: var(--crm-background3);
-    padding-inline: var(--s) var(--m2)
-}
-.crm-container ul.crm-checkbox-list li:nth-child(2n) label {
-    background-color: var(--crm-background3);
-}
-.crm-container ul.crm-checkbox-list li label {
-    display: block !important;
-    padding: var(--s) 0 var(--s) var(--r3);
-    margin: 0 !important;
+    padding-inline: var(--s) var(--m2);
     word-break: break-all;
 }
-.crm-container ul.crm-checkbox-list li input:checked + label {
+tbody.scrollContent tr.alternateRow {
+    background-color: var(--crm-background3);
+    padding-inline: var(--s) var(--m2)
+}
+.crm-container ul.crm-checkbox-list li:nth-child(2n) {
+    background-color: var(--crm-background3);
+}
+.crm-container ul.crm-checkbox-list li:has(input:checked) {
     background-color: var(--crm-yellow-light);
 }
-.crm-container ul.crm-checkbox-list li:nth-child(2n) input:checked + label {
+.crm-container ul.crm-checkbox-list li:nth-child(2n):has(input:checked) {
     background-color: var(--crm-yellow-less-light);
 }
 
@@ -82,6 +78,9 @@ tbody.scrollContent tr.alternateRow{
     border: 0;
     align-items: center;
     height: 125px;
+}
+table.advmultiselect {
+    width: auto;
 }
 
 /* States */
@@ -184,9 +183,8 @@ tbody.scrollContent tr.alternateRow{
 /* Panels (taken from Bootstrap3) */
 
 .crm-container .panel {
-    box-shadow: none;
-	border-color: var(--crm-panel-border-col);
-    border-width: var(--crm-panel-border);
+    box-shadow: var(--crm-panel-shadow);
+	border: var(--crm-panel-border) solid var(--crm-panel-border-col);
     border-radius: var(--crm-roundness);
     margin-bottom: calc(var(--r) + var(--crm-panel-head-margin));
     background: transparent;
@@ -196,7 +194,7 @@ tbody.scrollContent tr.alternateRow{
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
 	border-bottom: 1px solid transparent;
     box-shadow: var(--crm-panel-shadow);
-    margin-bottom: var(--crm-panel-head-margin);
+    /* margin-bottom: var(--crm-panel-head-margin); */
 }
 .crm-container .panel-heading > .dropdown .dropdown-toggle {
 	color: inherit;
@@ -204,7 +202,8 @@ tbody.scrollContent tr.alternateRow{
 .crm-container .panel-body {
 	padding: var(--crm-padding-reg);
     background: var(--crm-panel-background);
-    box-shadow: var(--crm-panel-shadow);
+    box-shadow: none;
+    border-radius: var(--crm-roundness);
 }
 .crm-container .panel-title {
 	margin-top: 0;
@@ -226,9 +225,6 @@ tbody.scrollContent tr.alternateRow{
 	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
     box-shadow: var(--crm-panel-shadow);
 }
-.crm-container .panel > .panel-heading {
-	border-color: var(--crm-gray-300);
-}
 .crm-container .panel > .panel-heading + .panel-collapse > .panel-body {
 	border-top-color: var(--crm-gray-300);
 }
@@ -237,12 +233,16 @@ tbody.scrollContent tr.alternateRow{
 }
 .crm-container .panel-default > .panel-heading {
     color: var(--crm-text);
-    background-color: var(--crm-page-background);
+    background-color: var(--crm-background2);
+	border-color: var(--crm-gray-300);
 }
 #crm-container .panel-title {
     font-size: 1rem;
     color: inherit;
     margin: 0;
+}
+.crm-container .panel-default {
+    border-color: var(--crm-divider);
 }
 .crm-container .panel-default > .panel-heading .badge {
 	color: var(--crm-text-light);
@@ -251,58 +251,47 @@ tbody.scrollContent tr.alternateRow{
 .crm-container .panel-primary > .panel-heading {
 	color: var(--crm-primary-text);
 	background-color: var(--crm-primary);
+	border-color: var(--crm-gray-300);
 }
 .crm-container .panel-primary > .panel-heading .badge,
 .crm-container .panel-primary > .panel-heading a {
 	color: var(--crm-primary-text);
-	background-color: var(--crm-primary-hover);
-}
-.crm-container .panel.panel-success {
-    border-color: var(--crm-green);
-    border-width: var(--crm-panel-border-width);
 }
 .crm-container .panel-success > .panel-heading {
 	color: var(--crm-success);
-	background-color: var(--crm-success-text);
+	background-color: var(--crm-green-light);
+	border-color: var(--crm-gray-300);
 }
-.crm-container .panel.panel-info {
-    border-color: var(--crm-blue);
-    border-width: var(--crm-panel-border);
+.crm-container .panel-success > .panel-heading .badge,
+.crm-container .panel-success > .panel-heading a {
+	color: var(--crm-success);
 }
 .crm-container .panel-info > .panel-heading {
-	color: var(--crm-info-text);
-	background-color: var(--crm-info);
+	color: var(--crm-alert-text-info);
+	background-color: var(--crm-alert-background-info);
+	border-color: var(--crm-gray-300);
 }
 .crm-container .panel-info > .panel-heading .badge,
 .crm-container .panel-info > .panel-heading a {
-	color: var(--crm-info-text);
-	background-color: var(--crm-info-hover);
-}
-.crm-container .panel.panel-warning {
-    border-color: var(--crm-amber);
-    border-width: var(--crm-panel-border);
+	color: var(--crm-alert-text-info);
 }
 .crm-container .panel-warning > .panel-heading {
 	color: var(--crm-warning-text);
 	background-color: var(--crm-warning);
+	border-color: var(--crm-gray-300);
 }
 .crm-container .panel-warning > .panel-heading .badge,
 .crm-container .panel-warning > .panel-heading a {
 	color: var(--crm-warning-text);
-	background-color: var(--crm-warning-hover);
-}
-.crm-container .panel.panel-danger {
-    border-color: 1px solid var(--crm-red);
-    border-width: var(--crm-panel-border);
 }
 .crm-container .panel-danger > .panel-heading {
-	color: var(--crm-alert-text);
-	background-color: var(--crm-alert);
+	color: var(--crm-alert);
+	background-color: var(--crm-red-light);
+	border-color: var(--crm-gray-300);
 }
 .crm-container .panel-danger > .panel-heading .badge,
 .crm-container .panel-danger > .panel-heading a {
-	color: var(--crm-alert-text);
-	background-color: var(--crm-alert-hover);
+	color: var(--crm-alert);
 }
 
 /* Badge - from BS3 */

@@ -39,6 +39,10 @@ tbody.scrollContent {
 .crm-container .odd:hover {
     background-color: var(--crm-table-odd-hover);
 }
+table.dataTable.display tbody tr.odd > .sorting_1, 
+table.dataTable.order-column.stripe tbody tr.odd > .sorting_1 {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05)) var(--crm-table-odd-row);
+}
 .crm-container .even-row, 
 .crm-container .even, 
 tbody.scrollContent tr.alternateRow {
@@ -54,6 +58,17 @@ tbody.scrollContent tr.alternateRow {
 .crm-container .even:hover, 
 tbody.scrollContent tr.alternateRow:hover {
     background-color: var(--crm-table-even-hover);
+}
+table.dataTable.display tbody tr.even > .sorting_1, 
+table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05)) var(--crm-table-even-row);
+}
+.crm-container .extension-installed {
+    background-color: var(--crm-green-light);
+}
+table.dataTable.display tbody tr.extension-installed > .sorting_1, 
+table.dataTable.order-column.stripe tbody tr.extension-installed > .sorting_1 {
+    background: var(--crm-green);
 }
 .crm-container td,
 .crm-container table.dataTable thead td {

@@ -13,7 +13,8 @@
     color: var(--crm-link) !important;
     padding: var(--crm-padding-small);
 }
-.crm-container .select2-container[class*=" fa-"]::before {
+.crm-container .select2-container[class*=" fa-"]::before,
+.crm-container .messages.crm-empty-table > img /* removes inform.gif icon */ {
     display: none;
 }
 
@@ -27,7 +28,8 @@
 div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container .delete-icon,
 .crm-container span.batch-valid,
-.crm-container span.batch-invalid {
+.crm-container span.batch-invalid,
+.crm-container .messages.crm-empty-table::before {
     font-family: "FontAwesome";
     font-style: normal;
     text-rendering: auto;
@@ -44,7 +46,8 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     content: var(--crm-icon-success);
     color: var(--crm-success);
 }
-.crm-container #crm-notification-container div.ui-notify-message.info h1::before {
+.crm-container #crm-notification-container div.ui-notify-message.info h1::before,
+.crm-container .messages.crm-empty-table::before {
     content: var(--crm-icon-info);
     color: var(--crm-info);
 }

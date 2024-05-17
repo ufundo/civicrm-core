@@ -71,28 +71,32 @@
 }
 #crm-container #civicrm-news-feed ul.ui-tabs-nav a {
     border-radius: var(--crm-tab-roundness);
-    margin-bottom: -1px; 
+    /* margin-bottom: -1px;  */
     background: var(--crm-dashlet-tab-bg);
 }
 #crm-container #civicrm-news-feed ul.ui-tabs-nav a:hover,
 #crm-container #civicrm-news-feed ul.ui-tabs-nav a:focus,
 #crm-container #civicrm-news-feed ul.ui-tabs-nav .ui-state-active a {
     background: var(--crm-dashlet-tab-active);
-    border: var(--crm-tabs-border);
+    /* border: var(--crm-tabs-border); */
     border-bottom: 1px solid var(--crm-dashlet-tab-active);
-    margin-bottom: -1px;
+    /* margin-bottom: -1px; */
 }
 .crm-container #civicrm-news-feed .ui-tabs-panel {
 	padding: 0;
 }
 #crm-container #civicrm-news-feed .crm-accordion-body {
-    padding: var(--crm-dashlet-padding);
+    padding: var(--expand-body-padding);
 }
 /* Getting statrted */
 
 #civicrm-getting-started table {
     box-shadow: none;
+    border: 0 solid transparent;
     margin: 0;
+}
+#civicrm-getting-started table tr:last-of-type {
+    border-bottom: 0 solid transparent;
 }
 
 /* Activity dashlet */

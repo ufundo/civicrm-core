@@ -3,8 +3,7 @@
 .crm-container .status,
 .crm-container .messages,
 .crm-container .alert,
-.crm-container .alert-success,
-#bootstrap-theme .help-block {
+.crm-container .alert-success {
     background-color: var(--crm-alert-background-help);
     border: var(--crm-alert-border-width) solid var(--crm-alert-border-help);
     color: var(--crm-alert-text-help);
@@ -19,8 +18,7 @@
     border-color: var(--crm-alert-border-warning);
     color: var(--crm-alert-text-warning);
 }
-.crm-container .alert-info,
-#bootstrap-theme .help-block {
+.crm-container .alert-info {
     background-color: var(--crm-alert-background-info);
     border-color: var(--crm-alert-border-info);
     color: var(--crm-alert-text-info);
@@ -42,4 +40,38 @@
 .crm-container .messages a:focus {
 	color: var(--crm-link-hover) !important; 
 	text-decoration: var(--crm-link-decoration-hover); /* important used for Drupal Claro */
+}
+
+/* BS alert close */
+
+.crm-container button.close {
+    float: right;
+	padding: 0;
+	border: 0;
+	cursor: pointer;
+	background: transparent;
+	appearance: none;
+    font-size: var(--r1);
+    line-height: 1;
+    color: var(--crm-darkest) !important;
+    text-shadow: 0 1px 0 #fff;
+    font-family: var(--crm-font-bold);
+    font-weight: var(--crm-bold-weight);
+    opacity: .2;
+}
+.crm-container button.close:hover,
+.crm-container button.close:focus {
+    background: transparent;
+    opacity: 0.4;
+}
+.crm-container .alert-dismissable, 
+.crm-container .alert-dismissible {
+    padding-right: 35px;
+}
+.crm-container .alert-dismissable .close, 
+.crm-container .alert-dismissible .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
 }

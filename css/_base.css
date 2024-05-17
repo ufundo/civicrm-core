@@ -154,10 +154,13 @@
 .crm-container .status-past, 
 .crm-contact-deceased, 
 .crm-container .status-warning,
-.crm-container .crm-error {
+.crm-container .crm-error,
+#crm-container td.tasklist a:link {
     color: var(--crm-alert) !important;
 }
-
+#crm-container td.tasklist a:visited {
+    color: var(--crm-success);
+}
 /* BS3 type styles */
 
 .crm-container .text-left {
@@ -253,6 +256,31 @@
 #crm-container a.bg-danger:hover, 
 #crm-container a.bg-danger:focus {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-alert);
+}
+.crm-container pre {
+	display: block;
+	padding: var(--crm-padding-small);
+	margin: 0 0 var(--crm-padding-small);
+	font-size: var(--crm-font-size);
+	line-height: 1.4;
+	color: var(--crm-text);
+	word-break: break-all;
+	word-wrap: break-word;
+	background-color: whitesmoke;
+	border: 1px solid var(--crm-background4);
+	border-radius: var(--crm-roundness);
+}
+.crm-container pre code {
+	padding: 0;
+	font-size: inherit;
+	color: inherit;
+	white-space: pre-wrap;
+	background-color: transparent;
+	border-radius: 0;
+} 
+.crm-container .pre-scrollable {
+	max-height: 340px;
+	overflow-y: scroll;
 }
 
 
