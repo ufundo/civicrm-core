@@ -4,14 +4,14 @@
 .crm-container .crm-tabset.ui-tabs {
     border: var(--crm-dash-border);
     border-radius: var(--crm-roundness);
-    margin-bottom: var(--r1);
+    margin-bottom: var(--crm-r1);
 }
 .crm-container .ui-widget-header {
     font-family: var(--crm-font);
     background: var(--crm-tabs-bg);
     border: 0 solid transparent;
     border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
-    padding: var(--s);
+    padding: var(--crm-s);
 }
 .crm-container .ui-tabs ul.ui-tabs-nav {
     display: flex;
@@ -59,7 +59,7 @@
     padding: var(--crm-tab-padding);
 	font-weight: var(--crm-tab-weight);
 	font-family: var(--crm-tab-font);
-    line-height: var(--r1);
+    line-height: var(--crm-r1);
     text-decoration: none;
     font-size: var(--crm-font-size);
     border-radius: var(--crm-tab-roundness);
@@ -75,11 +75,11 @@
     font-style: inherit;
     background: var(--crm-tab-count-bg);
     color: var(--crm-tab-count-col);
-    border-radius: var(--m2);
-    min-width: var(--r2);
+    border-radius: var(--crm-m2);
+    min-width: var(--crm-r2);
     display: inline-block;
     text-align: center;
-    font-size: var(--m2);
+    font-size: var(--crm-m2);
     /* padding: 0;   */
 }
 .crm-container #mainTabContainer ul.ui-tabs-nav a em {
@@ -104,6 +104,7 @@
 } 
 #crm-container .ui-tabs-panel {
     background: var(--crm-tab-bg-active);
+    padding: var(--crm-tab-padding);
 }
 
 /* Bootstrap tabs */
@@ -133,7 +134,7 @@
     background: var(--crm-tab-bg-active);
 }
 .crm-container .panel-heading:has(.nav-tabs) {
-    padding: var(--s) var(--m) 0 var(--m);
+    padding: var(--crm-s) var(--crm-m) 0 var(--crm-m);
 }
 
 /* Dashboard */
@@ -168,7 +169,7 @@
     grid-template-columns: min-content auto;
     width: 100%;
     padding: var(--crm-tab-padding);
-    gap: var(--m);
+    gap: var(--crm-m);
     align-items: center;
     border-radius: var(--crm-dash-roundness);
 }
@@ -211,9 +212,9 @@
 }  
 .crm-search .crm-search-admin-outer ul.nav-stacked {
     display: flex;
-    gap: var(--s);
+    gap: var(--crm-s);
     position: relative;
-    margin-top: var(--r);
+    margin-top: var(--crm-r);
 }
 .crm-search .crm-search-admin-outer ul.nav-stacked li.active a {
     background-color: var(--crm-tab-bg-active);
@@ -257,7 +258,7 @@
 }
 @media (max-width: 500px) { /* shows only icons for contact dashboard */
     .crm-container #mainTabContainer .ui-tabs-nav li .ui-tabs-anchor i {
-        font-size: var(--r);
+        font-size: var(--crm-r);
     }
     .crm-container #mainTabContainer ul.ui-tabs-nav a span {
         display: none;

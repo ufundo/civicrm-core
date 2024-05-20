@@ -16,7 +16,7 @@
 #crm-event-links-list,
 #crm-participant-list,
 #crm-contact-actions-list {
-    top: calc(var(--btn-height) + 5px);
+    top: calc(var(--crm-btn-height) + 5px);
     position: absolute;
     display: none;
     left: 0;
@@ -61,7 +61,7 @@
 .crm-event-links-list-inner ul a,
 .crm-participant-list-inner ul a {
     color: var(--crm-secondary-text);
-    padding-inline: var(--s);
+    padding-inline: var(--crm-s);
     border-radius: var(--crm-roundness);
     display: inherit;
 }
@@ -93,7 +93,7 @@
     z-index: 9999;
     position: absolute;
     right: 0;
-    margin: var(--m) 0;
+    margin: var(--crm-m) 0;
     min-width: var(--crm-dropdown-width);
     background: var(--crm-dropdown-bg);
     border-radius: var(--crm-roundness);
@@ -110,10 +110,18 @@
     border-right: 5px solid transparent;
     border-bottom: 5px solid var(--crm-dropdown-bg);
     top: -5px;
-    right: var(--r);
+    right: var(--crm-r);
+}
+.crm-container .btn-group .dropdown-menu::before {
+    left: var(--crm-l);
+    right: auto;
+}
+.crm-container .btn-group .dropdown-menu-right::before {
+    right: var(--crm-r);
+    left: auto;
 }
 .crm-container .btn-slide ul.panel li {
-    padding: var(--s);
+    padding: var(--crm-s);
     list-style: none;
     width: auto;
 }
@@ -148,26 +156,26 @@
     box-shadow: var(--crm-block-shadow);
     background: var(--crm-background);
     border-radius: var(--crm-roundness);
-    padding: 0 0 var(--r);
+    padding: 0 0 var(--crm-r);
 } 
 .crm-container a:not(.crm-tooltip-down) .crm-tooltip-wrapper::after {
     border-left: 10px solid rgba(0,0,0,0);
     border-right: 10px solid rgba(0,0,0,0);
     border-top: 10px solid var(--crm-background);
     bottom: -10px;
-    left: var(--m2);
+    left: var(--crm-m2);
     content: "";
     position: absolute;
 }
 .crm-container .crm-tooltip-down .crm-tooltip-wrapper {
-    top: var(--s);
+    top: var(--crm-s);
 }
 .crm-container a.crm-tooltip-down .crm-tooltip-wrapper::before {
     border-bottom: 10px solid var(--crm-background2);
     border-left: 10px solid rgba(0,0,0,0);
     border-right: 10px solid rgba(0,0,0,0);
     content: "";
-    left: var(--m2);
+    left: var(--crm-m2);
     position: relative;
     top: -5px;
 }
@@ -187,23 +195,23 @@
     white-space: normal;
 }
 .crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr > td.crm-section {
-    padding: var(--s) 0;
+    padding: var(--crm-s) 0;
 }
 #crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(1) > td {
     background: var(--crm-background2);
     color: var(--crm-text);
-    font-size: var(--r1);
-    padding: var(--m2) var(--r1);
+    font-size: var(--crm-r1);
+    padding: var(--crm-m2) var(--crm-r1);
     font-weight: var(--crm-bold-weight);
     font-family: var(--crm-font-bold);
 }
 .crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(2) > td {
     border-top: 1px solid var(--crm-divider) !important;
     width: 50%;
-    padding: var(--r1) var(--m1) 0;
+    padding: var(--crm-r1) var(--crm-m1) 0;
 }
 .crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(2) > td:first-child {
-    padding-left: var(--r1);
+    padding-left: var(--crm-r1);
 }
 
 /* BS3 Dropdowns */
@@ -232,7 +240,7 @@
 	display: none;
     min-width: var(--crm-dropdown-width);
 	padding: var(--crm-dropdown-padding) !important;
-    margin-top: var(--s);
+    margin-top: var(--crm-s);
 	text-align: left;
 	list-style: none;
 	background-color: var(--crm-dropdown-bg);
@@ -251,13 +259,16 @@
 }
 .crm-container .dropdown-menu .divider {
 	height: 1px;
-	margin: var(--m) 0;
+	margin: var(--crm-m) 0;
 	overflow: hidden;
 	background-color: var(--crm-background3);
 }
 #bootstrap-theme .dropdown-menu li .form-inline,
 #bootstrap-theme .dropdown-menu li .form-inline a {
     color: var(--crm-dropdown-col);
+}
+.crm-container .dropdown-menu > li {
+    border-radius: var(--crm-roundness);
 }
 .crm-container .dropdown-menu > li > a {
 	display: block;
@@ -297,7 +308,7 @@
 .crm-container .open .btn.dropdown-toggle + .dropdown-menu {
     display: flex;
     flex-direction: column;
-    gap: var(--s);
+    gap: var(--crm-s);
 }
 .crm-container .open > a {
 	outline: 0;
@@ -317,7 +328,7 @@
     color: var(--crm-dropdown-col);
     font-family: var(--crm-font-bold);
     font-weight: var(--crm-bold-weight);
-    padding: var(--m2) var(--xs) var(--xs) !important;
+    padding: var(--crm-m2) var(--crm-xs) var(--crm-xs) !important;
     border-bottom: 1px solid var(--crm-dropdown-col);
 }
 .crm-container .pull-right > .dropdown-menu {
@@ -347,7 +358,7 @@
 #crm-container .dropdown-menu {
     position: absolute;
     top: 100%;
-    left: 0;
+    /* left: 0; */
     z-index: 1000;
     display: none;
     float: left;

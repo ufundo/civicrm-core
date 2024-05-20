@@ -2,7 +2,7 @@
     margin: 0;
 }
 .crm-container .messages .crm-i {
-    padding: var(--s) var(--m) var(--s) 0;
+    padding: var(--crm-s) var(--crm-m) var(--crm-s) 0;
     float: left;
 }
 .crm-container button.btn-xs:has(.fa-times),
@@ -34,7 +34,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     font-style: normal;
     text-rendering: auto;
     font-size: var(--crm-font-size);
-    margin: 0 var(--m) 0 0;
+    margin: 0 var(--crm-m) 0 0;
 }
 .crm-container #crm-notification-container div.ui-notify-message.error h1::before,
 .crm-container span.batch-invalid::before {
@@ -130,7 +130,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     content:  var(--crm-icon-sort);
     color: var(--crm-table-sort-col);
     float: var(--crm-table-sort-float);
-    margin: var(--xs1) var(--m) 0 0;
+    margin: var(--crm-xs1) var(--crm-m) 0 0;
 }
 .crm-container a.sorting_asc::after,
 #crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-asc::before,
@@ -164,7 +164,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container .jstree-wholerow-ul {
     display: flex;
     flex-direction: column;
-    gap: var(--xs);
+    gap: var(--crm-xs);
 }
 .jstree-default > .jstree-wholerow-ul > li.jstree-node {
     margin-inline: 0;
@@ -175,7 +175,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 }
 .crm-container .jstree-default .jstree-icon {
     background-image: none;
-    font-size: var(--r1);
+    font-size: var(--crm-r1);
     margin-right: var(--btn-icon-spacing)
 }
 .crm-container .jstree-default .jstree-checkbox::before {

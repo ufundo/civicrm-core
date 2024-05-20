@@ -23,12 +23,11 @@ color-scheme: light dark;
 --crm-gray-600: #828388;
 --crm-gray-500: #919297;
 --crm-gray-400: #adaeb3;
---crm-gray-300: #d3dee2;
---crm-gray-200: #cad5d7;
+--crm-gray-300: #cad5d7;
+--crm-gray-200: #d3dee2;
 --crm-gray-100: #ebeff0;
 --crm-gray-050: #f3f6f7;
 --crm-gray-025: #f9faff;
---transparent-black: rgba(0, 0, 0, 0.05);
 --crm-blue: #0071bd;
 --crm-blue-mid: #66afe9;
 --crm-blue-light: #dff0f4;
@@ -88,57 +87,57 @@ color-scheme: light dark;
 
 /* SIZES - temporary */
 --crm-roundness: 2px;
---xs: 0.1rem;
---xs1: 0.125rem;
---xs2: 0.15rem;
---s: 0.25rem;
---s1: 0.275rem;
---s2: 0.325rem;
---s3: 0.375rem;
---m: 0.5rem;
---m1: 0.625rem;
---m2: 0.75rem;
---m3: 0.875rem;
---r: 1rem;
---r1: 1.125rem;
---r2: 1.25rem;
---r3: 1.375rem;
---r4: 1.5rem;
---l: 2rem;
---xl: 3rem;
---xxl: 4rem;
+--crm-xs: 0.1rem;
+--crm-xs1: 0.125rem;
+--crm-xs2: 0.15rem;
+--crm-s: 0.25rem;
+--crm-s1: 0.275rem;
+--crm-s2: 0.325rem;
+--crm-s3: 0.375rem;
+--crm-m: 0.5rem;
+--crm-m1: 0.625rem;
+--crm-m2: 0.75rem;
+--crm-m3: 0.875rem;
+--crm-r: 1rem;
+--crm-r1: 1.125rem;
+--crm-r2: 1.25rem;
+--crm-r3: 1.375rem;
+--crm-r4: 1.5rem;
+--crm-l: 2rem;
+--crm-xl: 3rem;
+--crm-xxl: 4rem;
 --crm-big-input: 15em;
 --crm-huge-input: 25em;
---crm-padding-reg: var(--r);
---crm-padding-small: var(--s);
+--crm-padding-reg: var(--crm-r);
+--crm-padding-small: var(--crm-s);
 --crm-padding-inset: 0rem; /* to support flush theme variations */
---crm-page-padding: var(--r); /* Margin left/right */
+--crm-page-padding: var(--crm-r); /* Margin left/right */
 
 /* TYPE */
---crm-font-size: var(--r);
---crm-small-font-size: var(--m2);
+--crm-font-size: var(--crm-r);
+--crm-small-font-size: var(--crm-m2);
 --crm-link-decoration: none;
 --crm-link-decoration-hover: none;
 --crm-heading-bg: var(--crm-background3);
 --crm-heading-col: var(--crm-text);
---crm-heading-padding: var(--m2) var(--m);
+--crm-heading-padding: var(--crm-m2) var(--crm-m);
 --crm-heading-margin: 0;
 --crm-heading-radius: 0;
 
 /* MOUSE EVENTS */
---hover-clickable: pointer;
+--crm-hover-clickable: pointer;
 
 /* BUTTONS */
---btn-box-shadow: none;
---btn-border: 0 solid transparent;
---btn-txt-transform: uppercase;
---btn-radius: 2px;
---btn-padding: var(--m) var(--r2);
---btn-small-padding: var(--s1) var(--m1);
---btn-large-padding: var(--m) var(--r);
---btn-align: center;
---btn-height: 40px;
---btn-icon-spacing: var(--s);
+--crm-btn-box-shadow: none;
+--crm-btn-border: 0 solid transparent;
+--crm-btn-txt-transform: uppercase;
+--crm-btn-radius: 2px;
+--crm-btn-padding: var(--crm-m) var(--crm-r2);
+--crm-btn-small-padding: var(--crm-s1) var(--crm-m1);
+--crm-btn-large-padding: var(--crm-m) var(--crm-r);
+--crm-btn-align: center;
+--crm-btn-height: 40px;
+--crm-btn-icon-spacing: var(--crm-s);
 --crm-cancel-color: var(--crm-alert);
 
 /* TABLES */
@@ -147,7 +146,7 @@ color-scheme: light dark;
 --crm-table-row-border: 1px solid var(--crm-gray-300);
 --crm-table-column-border: 0 solid transparent;
 --crm-table-font-size: var(--crm-font-size);
---crm-table-padding: var(--m);
+--crm-table-padding: var(--crm-m);
 --crm-table-header-border: 1px solid transparent;
 --crm-table-header-bottom: 1px solid var(--crm-gray-300);
 --crm-table-header-bg: var(--crm-background3);
@@ -160,7 +159,7 @@ color-scheme: light dark;
 --crm-table-sort-float: left; /* 'left', 'right' or 'none' */
 --crm-table-sort-active-col: var(--crm-link);
 --crm-table-compressed-width: auto;
---crm-table-nested-padding: 0 0 var(--r) 0;
+--crm-table-nested-padding: 0 0 var(--crm-r) 0;
 --crm-table-nested-head-border: 2px solid var(--crm-gray-300);
 --crm-table-nested-border: 0 solid transparent;
 --crm-table-inset-bg: var(--crm-background3);
@@ -170,37 +169,37 @@ color-scheme: light dark;
 --crm-panel-background: var(--crm-background);
 --crm-panel-border: 0;
 --crm-panel-border-col: ;
---crm-panel-head-margin: var(--m2   );
+--crm-panel-head-margin: var(--crm-m2   );
 
 /* ACCORDIONS */
---expand-icon: "\f105"; /* unicode value for FontAwesome icon */
---expand-icon-color: ;
---expand-icon-spacing: var(--m3);
---expand-transform: rotate(90deg);
---expand-transition: transform .3s; 
---expand-header-bg: var(--crm-background2);
---expand-header-bg-active: var(--crm-background3);
---expand-header-color: var(--crm-text);
---expand-header-padding: var(--m2) var(--m3);
---expand-header-weight: bold;
---expand-header-border: 1px solid var(--crm-gray-300);
---expand-header-border-width: 0 0 1px 0;
---expand-body-bg: transparent;
---expand-body-box-shadow: var(--crm-body-inset);
---expand-body-border:;
---expand-border-width:;
---expand-body-padding: var(--crm-padding-reg);
---expand-body2-bg: transparent;
---expand-header2-bg: var(--crm-primary);
---expand-header2-color: var(--crm-light-text);
---expand-header2-weight: bold;
---expand-2-border: 0 solid transparent;
---expand-2-body-padding: 0;
---expand-gap: 0;
+--crm-expand-icon: "\f105"; /* unicode value for FontAwesome icon */
+--crm-expand-icon-color: ;
+--crm-expand-icon-spacing: var(--crm-m3);
+--crm-expand-transform: rotate(90deg);
+--crm-expand-transition: transform .3s; 
+--crm-expand-header-bg: var(--crm-background2);
+--crm-expand-header-bg-active: var(--crm-background3);
+--crm-expand-header-color: var(--crm-text);
+--crm-expand-header-padding: var(--crm-m2) var(--crm-m3);
+--crm-expand-header-weight: bold;
+--crm-expand-header-border: 1px solid var(--crm-gray-300);
+--crm-expand-header-border-width: 0 0 1px 0;
+--crm-expand-body-bg: transparent;
+--crm-expand-body-box-shadow: var(--crm-body-inset);
+--crm-expand-body-border:;
+--crm-expand-border-width:;
+--crm-expand-body-padding: var(--crm-padding-reg);
+--crm-expand-body2-bg: transparent;
+--crm-expand-header2-bg: var(--crm-primary);
+--crm-expand-header2-color: var(--crm-light-text);
+--crm-expand-header2-weight: bold;
+--crm-expand-2-border: 0 solid transparent;
+--crm-expand-2-body-padding: 0;
+--crm-expand-gap: 0;
 
 /* ALERTS */
---crm-alert-padding: var(--r) var(--r2);
---crm-alert-margin: 0 0 var(--m);
+--crm-alert-padding: var(--crm-r) var(--crm-r2);
+--crm-alert-margin: 0 0 var(--crm-m);
 --crm-alert-border-width: 1px;
 --crm-alert-background-help: var(--crm-green-light);
 --crm-alert-border-help: var(--crm-green);
@@ -218,7 +217,7 @@ color-scheme: light dark;
 /* FORM */
 --crm-form-block-box-shadow: var(--crm-block-shadow);
 --crm-form-block-background: var(--crm-background);
---crm-form-block-padding: var(--r);
+--crm-form-block-padding: var(--crm-r);
 --crm-form-block-border-radius: 0;
 --crm-input-background: var(--crm-background);
 --crm-input-background-image: none;
@@ -227,10 +226,10 @@ color-scheme: light dark;
 --crm-input-border-radius: var(--crm-roundness);
 --crm-input-active-ani: border-color .15s ease-in-out 0s;
 --crm-input-box-shadow: inset 0 0 3px 0 rgba(0,0,0,.2);
---crm-input-padding: var(--xs1) var(--m1);
---crm-input-padding-large: var(--s) var(--m1);
---crm-input-height: var(--l);
---crm-input-font-size: var(--m3);
+--crm-input-padding: var(--crm-xs1) var(--crm-m1);
+--crm-input-padding-large: var(--crm-s) var(--crm-m1);
+--crm-input-height: var(--crm-l);
+--crm-input-font-size: var(--crm-m3);
 --crm-input-label-weight: var(--crm-bold-weight);
 --crm-input-label-font: var(--crm-font-bold);
 --crm-input-label-size: var(--crm-font-size);
@@ -245,13 +244,13 @@ color-scheme: light dark;
 
 /* Tabs */
 --crm-tabs-bg: var(--crm-background2);
---crm-tabs-padding: var(--m) var(--m) 0 var(--m);
+--crm-tabs-padding: var(--crm-m) var(--crm-m) 0 var(--crm-m);
 --crm-tabs-border: 1px solid var(--crm-gray-300);
---crm-tabs-gap: var(--s);
+--crm-tabs-gap: var(--crm-s);
 --crm-tab-bg: var(--crm-background2);
 --crm-tab-bg-hover: var(--crm-background);
 --crm-tab-bg-active: var(--crm-background);
---crm-tab-padding: var(--m2) var(--r1) var(--m);
+--crm-tab-padding: var(--crm-m2) var(--crm-r1) var(--crm-m);
 --crm-tab-col: var(--crm-text);
 --crm-tab-weight: normal;
 --crm-tab-font: var(--crm-font-bold);
@@ -273,22 +272,22 @@ color-scheme: light dark;
 --crm-dash-tabs-padding: ;
 --crm-dash-tab-bg: transparent;
 --crm-dash-tab-bg-hover: var(--crm-page-background);
---crm-dash-tab-padding: var(--r) var(--r1);
+--crm-dash-tab-padding: var(--crm-r) var(--crm-r1);
 --crm-dash-tab-border: var(--crm-dash-border);
 --crm-dash-tab-col: ;
---crm-dash-icon-size: var(--m2);
+--crm-dash-icon-size: var(--crm-m2);
 --crm-dash-tab-count-bg: var(--crm-primary);
 --crm-dash-tab-count-col: var(--crm-light-text);
---crm-dash-panel-padding: var(--r2);
+--crm-dash-panel-padding: var(--crm-r2);
 --crm-dash-edit-border: 1px solid var(--crm-gray-900);
---crm-dash-block-padding: var(--m2);
+--crm-dash-block-padding: var(--crm-m2);
 --crm-dash-block-bg: var(--crm-background);
 --crm-dash-block-radius: var(--crm-roundness);
 --crm-dash-label-bg: var(--crm-background);
 --crm-dash-header-bg: var(--crm-gray-900);
 --crm-dash-header-col: var(--crm-light-text);
---crm-dash-header-size: var(--l);
---crm-dash-header-padding: var(--r) var(--r1);
+--crm-dash-header-size: var(--crm-l);
+--crm-dash-header-padding: var(--crm-r) var(--crm-r1);
 
 /* Dialog */
 --crm-dialog-bg: var(--crm-background);
@@ -297,8 +296,8 @@ color-scheme: light dark;
 --crm-dialog-line: 1px solid var(--crm-gray-300);
 --crm-dialog-header-bg: var(--crm-background2);
 --crm-dialog-header-col: var(--crm-text);
---crm-dialog-header-size: var(--r1);
---crm-dialog-body-padding: var(--m);
+--crm-dialog-header-size: var(--crm-r1);
+--crm-dialog-body-padding: var(--crm-m);
 
 /* Dashlet */
 --crm-dashlet-bg: var(--crm-background);
@@ -309,11 +308,11 @@ color-scheme: light dark;
 --crm-dashlet-header-padding: var(--crm-padding-reg);
 --crm-dashlet-tabs-bg: var(--crm-background);
 --crm-dashlet-tab-bg: var(--crm-background);
---crm-dashlet-tab-active: var(--expand-header-bg);
+--crm-dashlet-tab-active: var(--crm-expand-header-bg);
 --crm-dashlet-radius: var(--crm-roundness);
 
 /* Button dropdowns */
---crm-dropdown-padding: var(--s);
+--crm-dropdown-padding: var(--crm-s);
 --crm-dropdown-bg: var(--crm-secondary-hover);
 --crm-dropdown-col: var(--crm-light-text);
 --crm-dropdown-hover: var(--crm-text);
@@ -323,7 +322,7 @@ color-scheme: light dark;
 
 /* Notifications */
 --crm-notify-background: var(--crm-background);
---crm-notify-padding: var(--m2);
+--crm-notify-padding: var(--crm-m2);
 --crm-notify-col: var(--crm-text);
 --crm-notify-accent-border: 0 0 0 3px; /* adds a border to one/several sides of the notification - set to 0 for none */
 
@@ -347,7 +346,7 @@ color-scheme: light dark;
 --crm-wizard-border-col: var(--crm-page-background);
 --crm-wizard-bg: var(--crm-background);
 
-/* --expand-body-indent: calc(var(--m3) + var(--m2) + var(--m2));  matches the indent between expand icon & title - leave blank for no indent */
+/* --crm-expand-body-indent: calc(var(--crm-m3) + var(--crm-m2) + var(--crm-m2));  matches the indent between expand icon & title - leave blank for no indent */
 }
 
 /* light/dark mode settings */
@@ -366,6 +365,6 @@ color-scheme: light dark;
         --crm-blue-info: #2C99A4;
 
         /* And others */
-        --expand-border: 1px solid #fff;
+        --crm-expand-border: 1px solid #fff;
     }
 }

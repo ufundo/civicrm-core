@@ -1,19 +1,19 @@
 /* Form parts */
 
 .crm-container div.crm-field-wrapper {
-    margin-bottom: var(--r);
+    margin-bottom: var(--crm-r);
 }
 .crm-container table.form-layout td, 
 .crm-container table.form-layout-compressed td,
 .crm-form-block .crm-section {
-    padding: var(--m) var(--s);
+    padding: var(--crm-m) var(--crm-s);
     border: none;
     height: auto;
 }
 .crm-container div.form-layout-compressed {
     display: flex;
-    gap: var(--s);
-    padding: var(--r) 0;
+    gap: var(--crm-s);
+    padding: var(--crm-r) 0;
     align-items: center;
 }
 .crm-container .crm-results-block-empty {
@@ -27,7 +27,7 @@
 .crm-container .form-layout-compressed th.label {
     width: auto;
     text-align: right;
-    padding-right: var(--m2);
+    padding-right: var(--crm-m2);
     font-family: var(--crm-input-label-font);
     font-weight: var(--crm-input-label-weight);
 }
@@ -36,7 +36,7 @@
     text-align: left;
     font-family: var(--crm-input-label-font);
     font-weight: var(--crm-input-label-weight);
-    padding-right: var(--m2);
+    padding-right: var(--crm-m2);
 }
 .crm-container .label > label { /* Fix for dble label specification */
     padding-right: 0;
@@ -51,8 +51,8 @@
     font-weight: inherit;
 }
 .crm-container .advanced-search-fields {
-    column-gap: var(--r);
-    row-gap: var(--s);
+    column-gap: var(--crm-r);
+    row-gap: var(--crm-s);
 }
 .crm-container .form-layout label,
 .crm-container .form-layout-compressed label, 
@@ -65,7 +65,7 @@
     font-weight: var(--crm-input-label-weight);
     font-size: var(--crm-input-label-size);
     display: inline-block;
-    margin-bottom: var(--s);
+    margin-bottom: var(--crm-s);
 }
 .crm-container .description:not(#help),
 .crm-container td.description {
@@ -76,7 +76,10 @@
     color: var(--crm-alert);
 }
 .crm-container .form-inline {
-    padding: var(--s) 0;
+    padding: var(--crm-s) 0;
+}
+.crm-search-display .form-inline {
+    padding: var(--crm-padding-reg) 0;
 }
 /* Fieldset */
 .crm-container fieldset:not(.collapsed, .crm-inactive-dashlet-fieldset) {
@@ -88,7 +91,7 @@
 .crm-container fieldset legend {
     font-weight: var(--crm-bold-weight);
     font-family: var(--crm-font-bold);
-    padding-right: var(--m);
+    padding-right: var(--crm-m);
     color: var(--crm-text);
 }
 
@@ -109,13 +112,13 @@
 #contact-summary div.crm-summary-row div.crm-label {
     background-color: var(--crm-dash-label-bg);
     color: var(--crm-text);
-    padding: var(--m);
+    padding: var(--crm-m);
     font-weight: var(--crm-bold-weight);
     font-family:  var(--crm-font-bold);
     font-size: var(--crm-font-size);
 }
 #crm-container div.crm-summary-row div.crm-content {
-    padding: var(--m);
+    padding: var(--crm-m);
 }
 #crm-container div.contact_panel table {
     width: auto;
@@ -195,7 +198,7 @@ input.crm-form-entityref {
 /* Inline edit */
 
 #crm-container .crm-edit-ready .crm-inline-edit:hover {
-    cursor: var(--hover-clickable);
+    cursor: var(--crm-hover-clickable);
     border: var(--crm-dash-edit-border);
 }
 #crm-container div.crm-inline-edit {
@@ -208,7 +211,7 @@ input.crm-form-entityref {
     background: var(--crm-background2) !important;
     border-bottom-left-radius: var(--crm-dash-roundness);
     color: var(--crm-text);
-    padding: var(--s) var(--m2);
+    padding: var(--crm-s) var(--crm-m2);
     border-bottom: var(--crm-inline-edit-border);
     border-left: var(--crm-inline-edit-border);
 }
@@ -242,7 +245,7 @@ input.crm-form-entityref {
     border-radius: var(--crm-roundness);
     width: fit-content;
     float: none;    
-    padding: var(--r);
+    padding: var(--crm-r);
     background: var(--crm-inline-edit-bg);
 }
 #crm-container #crm-contactname-content.crm-inline-edit.form {
@@ -250,7 +253,7 @@ input.crm-form-entityref {
 }
 #crm-container .crm-inline-edit.form td {
     background: transparent;
-    padding: var(--m);
+    padding: var(--crm-m);
     border-bottom: 0 solid transparent;
 }
 #crm-container .CRM_Contact_Form_Inline_ContactName div.crm-inline-edit-form {
@@ -264,7 +267,7 @@ input.crm-form-entityref {
     background-color: transparent;
 }
 #crm-container div.crm-inline-edit-form div.crm-clear {
-    padding: var(--m) 0 0;
+    padding: var(--crm-m) 0 0;
 }
 #crm-container .crm-inline-edit-form div.crm-summary-row {
     border: 0 solid transparent;
@@ -273,7 +276,7 @@ input.crm-form-entityref {
 #crm-container .crm-inline-edit-form div.crm-summary-row .label {
     float: none;
     width: auto;
-    padding: var(--m) 0 var(--s);
+    padding: var(--crm-m) 0 var(--crm-s);
     background: transparent;
 }
 #crm-container .crm-inline-edit-form div.crm-summary-row div.crm-content {
@@ -283,7 +286,7 @@ input.crm-form-entityref {
 #contact-summary .crm-inline-button, 
 #contact-summary .crm-submit-buttons {
     margin-bottom: 0;
-    padding-bottom: var(--m2);
+    padding-bottom: var(--crm-m2);
 }
 #crm-container .CRM_Contact_Form_Inline_ContactName .crm-inline-button {
     margin-left: auto;
@@ -297,8 +300,8 @@ input.crm-form-radio + label,
 input.crm-form-checkbox + label,
 .crm-container input[type="checkbox"] + label[for], 
 .crm-container input[type="radio"] + label[for] {
-    margin: 0 var(--m) 0 var(--s);
-    cursor: var(--hover-clickable);
+    margin: 0 var(--crm-m) 0 var(--crm-s);
+    cursor: var(--crm-hover-clickable);
 }
 .crm-container [type="checkbox"], 
 .crm-container [type="radio"] {
@@ -352,7 +355,7 @@ input.crm-form-checkbox) + label {
     border-radius: var(--crm-input-border-radius);
     box-shadow: var(--crm-input-box-shadow);
     height: var(--crm-input-height);
-    padding: var(--xs1) var(--r2) var(--xs1) var(--m);
+    padding: var(--crm-xs1) var(--crm-r2) var(--crm-xs1) var(--crm-m);
     font-size: var(--crm-input-font-size);
 }
 .crm-container .select2-container .select2-choice .select2-arrow {
@@ -360,7 +363,7 @@ input.crm-form-checkbox) + label {
     border-left-color: var(--crm-input-border-color);  
     border-radius: 0 var(--crm-input-border-radius) var(--crm-input-border-radius) 0;
     text-align: center;
-    width: var(--r3);
+    width: var(--crm-r3);
 }
 .crm-container .select2-container .select2-choice .select2-arrow b {
     display: none;
@@ -374,14 +377,14 @@ input.crm-form-checkbox) + label {
     background: none;
     content: var(--crm-input-dropdown-icon);
     right: 0;
-    top: var(--s);
+    top: var(--crm-s);
     display: block;
-    height: var(--r);
+    height: var(--crm-r);
     position: absolute;
-    width: var(--r2);
+    width: var(--crm-r2);
 }
 .crm-container .select2-container .select2-choice .select2-arrow::before {
-    top: var(--xs);
+    top: var(--crm-xs);
 }
 .crm-container .select2-dropdown-open .select2-choice, 
 .crm-container .select2-dropdown-open .select2-choices {
@@ -394,7 +397,7 @@ input.crm-form-checkbox) + label {
     font-family: var(--crm-font);
     line-height: normal;
     margin: 0;
-    padding: var(--s);
+    padding: 0;
     min-height: unset;
 }
 .select2-container-disabled a {
@@ -416,14 +419,14 @@ input.crm-form-checkbox) + label {
 .crm-container .select2-container-multi .select2-choices {
     display: flex;
     flex-flow: wrap;
-    gap: var(--s);
-    padding: var(--s);
+    gap: var(--crm-s);
+    padding: var(--crm-s);
 }
 .select2-container-multi .select2-choices .select2-search-choice {
-    padding: var(--s) var(--m) var(--s) var(--r1);
+    padding: var(--crm-xs) var(--crm-m) var(--crm-xs) var(--crm-r1);
     margin: 0;
     position: relative;
-    line-height: 1.2;
+    line-height: inherit;
     color: var(--crm-text);
     cursor: default;
     border: 1px solid var(--crm-divider);
@@ -432,6 +435,9 @@ input.crm-form-checkbox) + label {
     user-select: none;
     background-color: var(--crm-form-select-bg);
     background-image: none;
+}
+.select2-container-multi .select2-search-choice-close {
+    top: var(--crm-m);
 }
 .select2-container-multi .select2-choices .select2-search-choice p {
     margin: 0;
@@ -445,6 +451,10 @@ input.crm-form-checkbox) + label {
     border-bottom-right-radius: var(--crm-roundness);
     border-color: var(--crm-focus);
     right: -1px;
+}
+.select2-drop.select2-drop-active.crm-container.select2-drop-above {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 .select2-search::after {
     font-family: "FontAwesome";
@@ -465,13 +475,13 @@ input.crm-form-checkbox) + label {
     line-height: 20px;
 }
 .crm-container .select2-results {
-    font-size: var(--m2);
+    font-size: var(--crm-m2);
     padding: 0;
     margin: 0;
 }
 .select2-drop.select2-drop-active.crm-container .select2-results li {
     color: var(--crm-text);
-    padding: var(--s);
+    padding: var(--crm-s);
     margin: 0;
 }
 .select2-results .select2-ajax-error, 
@@ -489,16 +499,16 @@ input.crm-form-checkbox) + label {
     border: 1px solid var(--crm-input-border-color);
     border-radius: var(--crm-roundness);
     box-sizing: border-box;
-    height: var(--l);
-    margin-top: var(--s);
+    height: var(--crm-l);
+    margin-top: var(--crm-s);
 }
 .select2-drop.select2-drop-active.crm-container .select2-results li {
     color: var(--crm-text);
-    padding: var(--s);
+    padding: var(--crm-s);
 }
 .select2-drop .crm-entityref-links {
     border-top: 1px solid var(--crm-input-border-color);
-    margin-top: var(--m);
+    margin-top: var(--crm-m);
 }
 
 /* Dates */
@@ -512,7 +522,7 @@ input.crm-form-checkbox) + label {
     width: 14ch;
 }
 .crm-container input.crm-placeholder-icon {
-    padding-right: var(--m);
+    padding-right: var(--crm-m);
 }
 .ui-datepicker, .ui-datepicker * {
     border-radius: 0;
@@ -524,12 +534,12 @@ input.crm-form-checkbox) + label {
     border-radius: 0;
     box-shadow: var(--crm-popup-shadow);
     min-width: 30ch;
-    padding: var(--m1);
+    padding: var(--crm-m1);
     width: auto;
 }
 .ui-datepicker .ui-datepicker-header {
     border: 0;
-    margin-bottom: var(--s);
+    margin-bottom: var(--crm-s);
 }
 .ui-datepicker :not(b) {
     background: none !important;
@@ -539,9 +549,9 @@ input.crm-form-checkbox) + label {
 .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     border-radius: var(--crm-roundness);
     box-shadow: none !important;
-    cursor: var(--hover-clickable);
+    cursor: var(--crm-hover-clickable);
     text-align: center;
-    top: var(--s3);
+    top: var(--crm-s3);
     border: 0 solid transparent;
 }
 .ui-datepicker-next.ui-corner-all:hover,
@@ -554,7 +564,7 @@ input.crm-form-checkbox) + label {
     font-family: "FontAwesome";
     color: var(--crm-text);
     font-size: var(--crm-small-font-size);
-    line-height: var(--l);
+    line-height: var(--crm-l);
     padding: 0;
 }
 .ui-datepicker .ui-datepicker-prev::before {
@@ -565,9 +575,9 @@ input.crm-form-checkbox) + label {
 }
 .ui-datepicker .ui-datepicker-header select {
     font-family: var(--crm-font);
-    margin: 0 var(--m1);
+    margin: 0 var(--crm-m1);
     padding-left: 5px !important;
-    font-size: var(--m3);
+    font-size: var(--crm-m3);
     width: 7ch;
 }
 .ui-datepicker-calendar thead tr {
@@ -586,7 +596,7 @@ input.crm-form-checkbox) + label {
     border: 0;
     font-size: var(--crm-small-font-size);
     opacity: 1;
-    padding: var(--m);
+    padding: var(--crm-m);
 }
 .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.35;
@@ -600,8 +610,8 @@ input.crm-form-checkbox) + label {
 .ui-datepicker-calendar .ui-state-disabled a {
     border: 0;
     border-radius: 20px;
-    cursor: var(--hover-clickable);
-    padding: var(--s);
+    cursor: var(--crm-hover-clickable);
+    padding: var(--crm-s);
     text-align: center;
 }
 
@@ -657,5 +667,5 @@ fieldset[disabled] #bootstrap-theme .checkbox-inline {
 #bootstrap-theme .radio-inline + .radio-inline, 
 #bootstrap-theme .checkbox-inline + .checkbox-inline {
 	margin-top: 0;
-	margin-left: var(--m);
+	margin-left: var(--crm-m);
 }

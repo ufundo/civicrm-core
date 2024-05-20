@@ -18,7 +18,7 @@
     border-color: var(--crm-alert-border-warning);
     color: var(--crm-alert-text-warning);
 }
-.crm-container .alert-info {
+#crm-container .alert-info {
     background-color: var(--crm-alert-background-info);
     border-color: var(--crm-alert-border-info);
     color: var(--crm-alert-text-info);
@@ -51,7 +51,7 @@
 	cursor: pointer;
 	background: transparent;
 	appearance: none;
-    font-size: var(--r1);
+    font-size: var(--crm-r1);
     line-height: 1;
     color: var(--crm-darkest) !important;
     text-shadow: 0 1px 0 #fff;

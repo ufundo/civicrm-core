@@ -2,7 +2,7 @@
     border: var(--crm-table-outside-border);
     background: var(--crm-table-background);
     box-shadow: var(--crm-block-shadow);
-    margin: 0 0 var(--r);
+    margin: 0 0 var(--crm-r);
     border-collapse: collapse;
     width: 100%;
     max-width: 100%;
@@ -120,7 +120,6 @@ table.dataTable.order-column.stripe tbody tr.extension-installed > .sorting_1 {
 }
 .crm-container .crm-form-block.crm-report-field-form-block table,
 .crm-container .crm-search-display table,
-/* .crm-report-form-block table, */
 .crm-container .CRM_Contribute_Form_ContributionCharts #chartData table,
 .crm-container .crm-case-caseview-form-block table {
     box-shadow: none;
@@ -169,7 +168,7 @@ tbody .crm-row-child td {
 }
 tbody .crm-row-child:hover td {
     background: var(--crm-table-odd-hover);
-    cursor: var(--hover-clickable);
+    cursor: var(--crm-hover-clickable);
 }
 tbody .crm-row-child ~ .crm-row-child td {
     box-shadow: none;
@@ -185,7 +184,7 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
     border: var(--crm-table-outside-border);
     background: var(--crm-table-background);
     box-shadow: var(--crm-block-shadow);
-    margin: var(--m) 0 var(--l);
+    margin: var(--crm-m) 0 var(--crm-l);
 }
 .crm-container table.form-layout-compressed th {
     background: transparent;
@@ -238,7 +237,7 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
     margin-top: var(--crm-padding-reg);
 }
 
-/* Bootstrap tables */
+/* BOOTSTRAP tables */
 
 .crm-container table col[class*="col-"] {
 	position: static;
@@ -254,7 +253,7 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
 .crm-container .table {
 	width: 100%;
 	max-width: 100%;
-	margin-bottom: var(--r1);
+	margin-bottom: var(--crm-r1);
 }
 .crm-container .table > thead > tr > th,
 .crm-container .table > thead > tr > td,
@@ -276,7 +275,7 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
 .crm-container .table-condensed > tbody > tr > td,
 .crm-container .table-condensed > tfoot > tr > th,
 .crm-container .table-condensed > tfoot > tr > td {
-	padding: var(--s1);
+	padding: var(--crm-s1);
 }
 .crm-container .table-bordered {
 	border: var(--crm-table-outside-border);
@@ -465,4 +464,33 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
     .crm-container .table-responsive > .table-bordered > tfoot > tr:last-child > td {
 		border-bottom: 0;
 	}
+}
+
+/* Afform tables (in addition to BS tables */
+
+.crm-container table td.crm-search-col-type-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--crm-s);
+}
+.crm-container table td.crm-search-col-type-buttons.text-right {
+    flex-direction: row-reverse;
+}
+.crm-container th.crm-search-result-select button.btn,
+.crm-container th.crm-search-result-select button.btn:hover,
+.crm-container th.crm-search-result-select button.btn:focus {
+    background: transparent;
+    padding: var(--crm-xs1) var(--crm-m1);
+}
+.crm-container th.crm-search-result-select button.btn i.crm-i {
+    color: var(--crm-text);
+}
+#crm-container th.crm-search-result-select button.btn.dropdown-toggle {
+    border-radius: var(--crm-roundness);
+    background-color: var(--crm-background4);
+    padding: var(--crm-xs1) var(--crm-m1);
+}
+.crm-container .crm-search-display-table table {
+    border: var(--crm-table-outside-border);
+    box-shadow: var(--crm-block-shadow);
 }

@@ -1,15 +1,15 @@
 .crm-container details ~ details {
-	margin: var(--expand-gap);
+	margin: var(--crm-expand-gap);
 }
 .crm-container details details {
-	padding: 0 var(--expand-gap);
+	padding: 0 var(--crm-expand-gap);
 }
 .crm-container summary { /* default summary setting*/
 	display: list-item;
 	list-style: none;
-	cursor: var(--hover-clickable);
+	cursor: var(--crm-hover-clickable);
 	font-size: var(--crm-font-size);
-	padding: var(--m2) var(--m3);
+	padding: var(--crm-m2) var(--crm-m3);
 	font-family: var(--crm-font-bold);
 	font-weight: var(--crm-bold-weight);
 	color: var(--crm-text);
@@ -21,21 +21,21 @@
 	display: none;
 }
 .crm-container .crm-accordion-bold {
-	background-color: var(--expand-body-bg);
+	background-color: var(--crm-expand-body-bg);
 	border-radius: var(--crm-roundness);
-	margin: var(--expand-gap);
+	margin: var(--crm-expand-gap);
 }
 .crm-container .crm-accordion-bold > summary {
-	background-color: var(--expand-header-bg);
-	color: var(--expand-header-color);
+	background-color: var(--crm-expand-header-bg);
+	color: var(--crm-expand-header-color);
 	border-radius: var(--crm-roundness);	
-	border: var(--expand-header-border);
-	border-width: var(--expand-header-border-width);
-	font-weight: var(--expand-header-weight);
-	padding: var(--expand-header-padding);
+	border: var(--crm-expand-header-border);
+	border-width: var(--crm-expand-header-border-width);
+	font-weight: var(--crm-expand-header-weight);
+	padding: var(--crm-expand-header-padding);
 }
 .crm-container .crm-accordion-bold > summary a {
-	color: var(--expand-header-color);
+	color: var(--crm-expand-header-color);
 }
 .crm-container .crm-accordion-bold[open] > summary { /* open version of that */
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0; 
@@ -43,47 +43,47 @@
 .crm-container .crm-accordion-bold > summary.active,
 .crm-container .crm-accordion-bold > summary:hover,
 .crm-container .crm-accordion-bold > summary:focus { /* hover version of that */
-	background-color: var(--expand-header-bg-active);
+	background-color: var(--crm-expand-header-bg-active);
 }
 .crm-container details.crm-accordion-bold > .crm-accordion-body {
-	padding: var(--expand-body-padding);
-	border: var(--expand-body-border);
-	border-width: var(--expand-border-width);
+	padding: var(--crm-expand-body-padding);
+	border: var(--crm-expand-body-border);
+	border-width: var(--crm-expand-border-width);
 	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
-	box-shadow: var(--expand-body-box-shadow);
+	box-shadow: var(--crm-expand-body-box-shadow);
 	animation: crm-details-show .3s ease-in-out;
 }
 /* Simple fix for details without a summary element */
 .crm-container details.crm-accordion-bold:not( > summary) {
-	border: var(--expand-body-border);
-	padding: var(--expand-body-padding);
+	border: var(--crm-expand-body-border);
+	padding: var(--crm-expand-body-padding);
 }
 .crm-container details.crm-accordion-bold:not( > summary) {
 	border: 0;
 	padding: 0;
 }
 .crm-container details.crm-accordion-light > .crm-accordion-body {
-	padding: var(--expand-body-padding);
+	padding: var(--crm-expand-body-padding);
 }
 .crm-container .CRM_Contact_Form_Search_Advanced details.crm-accordion-light > .crm-accordion-body {
-	padding: var(--expand-2-body-padding)
+	padding: var(--crm-expand-2-body-padding)
 }
 .crm-container .crm-accordion-light {
-	border: var(--expand-2-border);
+	border: var(--crm-expand-2-border);
 	border-radius: var(--crm-roundness);
 }
 .crm-container .crm-accordion-light > summary {
 	font-family: var(--crm-font);
-	font-weight: var(--expand-header2-weight);
-	background-color: var(--expand-header2-bg);
-	color: var(--expand-header2-color);
+	font-weight: var(--crm-expand-header2-weight);
+	background-color: var(--crm-expand-header2-bg);
+	color: var(--crm-expand-header2-color);
 }
 .crm-container .crm-accordion-light > summary.active { /* active version of that */
 	font-family: var(--crm-font-bold);
 	font-weight: var(--crm-bold-weight);
 }
 .crm-container .crm-accordion-light > summary a {
-	color: var(--expand-header2-color);
+	color: var(--crm-expand-header2-color);
 }
 /* Contact dashboard */
 
@@ -105,8 +105,8 @@
 	margin-bottom: 0;
 }
 #contact-summary summary {
-	padding: var(--m) !important;
-	font-size: var(--r1);
+	padding: var(--crm-m) !important;
+	font-size: var(--crm-r1);
 } 
 #contact-summary details .crm-accordion-body {
 	box-shadow: none;
@@ -115,19 +115,19 @@
 
 .crm-container details > summary::before {
 	font-size: var(--crm-font-size);
-	content: var(--expand-icon);
-	color: var(--expand-icon-color);
+	content: var(--crm-expand-icon);
+	color: var(--crm-expand-icon-color);
 	font-style: normal;
 	line-height: 1.35;
 	font-family: FontAwesome;
 	text-rendering: auto;
 	text-indent: inherit;
-	margin-right: var(--expand-icon-spacing);
+	margin-right: var(--crm-expand-icon-spacing);
 	display: inline-block;
 	transform-origin: center center;
-	transition: var(--expand-transition);
+	transition: var(--crm-expand-transition);
 }
 .crm-container details[open] > summary::before {
-	transform: var(--expand-transform);
-	transition: var(--expand-transition);
+	transform: var(--crm-expand-transform);
+	transition: var(--crm-expand-transition);
 }

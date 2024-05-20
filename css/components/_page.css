@@ -66,3 +66,27 @@
     margin: var(--crm-form-block-padding) calc(var(--crm-form-block-padding) - var(--crm-padding-inset)) 0;
 }
 
+/* Pagination */
+
+.crm-datatable-pager-top,
+.crm-datatable-pager-bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--crm-m3);
+    margin-inline: var(--crm-m);
+}
+.crm-datatable-pager-top {
+    margin-bottom: var(--crm-r);
+}
+.crm-datatable-pager-bottom {
+    margin-top: var(--crm-r);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: var(--crm-secondary);
+    color: var(--crm-secondary-text) !important;
+    border: 0 solid transparent;
+    padding: var(--crm-s);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: var(--crm-secondary-hover);
+}
