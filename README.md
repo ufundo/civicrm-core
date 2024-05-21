@@ -6,9 +6,10 @@ The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
 ## Changelog
 
-0.1 - proof-of-concept, Brunswick, empty theme structure doing just two things: for older CMS interfaces enforces a 100% font-size default to cascade the browser default font-size, and demonstrates a 1rem variable on top of that for some Civi body text sizes. The computed font-size of Civi paragraph and table text should show as 16px in Inspector (for standard setups).
-0.2 - adds a bunch of css variables for testing/dev, adds the entirity of the current Greenwich Bootstrap 3 build to start cutting it back, and adds a components directory with initial component 'accordions' (with animated exapnd/close + CSS variables). Separate components files will likely be merged when the extension is moving to testing, to reduce http requests.
-0.3.alpha - RiverLea CiviCRM theme at ~ 80% (*"The last 20% of work takes the same amount of time as the previous 80%."). Has two 'streams' Hoxton and Abingdon.
+- 0.1 - proof-of-concept, Brunswick, empty theme structure doing just two things: for older CMS interfaces enforces a 100% font-size default to cascade the browser default font-size, and demonstrates a 1rem variable on top of that for some Civi body text sizes. The computed font-size of Civi paragraph and table text should show as 16px in Inspector (for standard setups).
+- 0.2 - adds a bunch of css variables for testing/dev, adds the entirity of the current Greenwich Bootstrap 3 build to start cutting it back, and adds a components directory with initial component 'accordions' (with animated exapnd/close + CSS variables). Separate components files will likely be merged when the extension is moving to testing, to reduce http requests.
+- 0.3.alpha1 - Drupal9 + Claro, Shoreditch & Greenwich. Does not cover: front-end layouts, small screens, Backdrop, Joomla 3, Joomla 4, Drupal 7, Drupal 9+ Seven, Standalone, WordPress.
+- 0.3.alpha2 (in progress) - Drupal9 + Claro,Seven, WordPress, Joomla 4. Does not cover: front-end layouts, small screens, Backdrop, Joomla 3, Drupal 7, Standalone.
 
 ## Installation (CLI, Zip)
 
@@ -36,8 +37,3 @@ cv en riverlea
 After installing the extension, select it via Nav menu > Administer > Customize Data and Screens > Display Preferences, and save.
 
 In some instances, after upgrading CiviCRM, the theme defaults back to Civi's default theme and you will need to disable and re-enable the theme extension.
-
-## Changelog / known issues
-
-Version 0.2 (in progress) - Drupal9 + Seven, WordPress, Joomla 4. Does not cover: front-end layouts, small screens, Backdrop, Joomla 3, Drupal 7, Standalone.
-Version 0.1 - Drupal9 + Claro, Shoreditch & Greenwich. Does not cover: front-end layouts, small screens, Backdrop, Joomla 3, Joomla 4, Drupal 7, Drupal 9+ Seven, Standalone, WordPress.
