@@ -2,10 +2,10 @@
    The end goal (Civi 7.0?) would be to remove these once the markup is
    consistent, and another  */
 
-/*
-      A C C O R D I O N S
-      From Civi 5.72 these are only needed for extensions
-                              */
+/******************
+    ACCORDIONS
+    From Civi 5.72 these are only needed for extensions
+*******************/
 
 /* Reset */
 
@@ -154,9 +154,9 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	font-size: inherit;
 }
 
-/*
-      A L E R T S
-                              */
+/******************
+    ALERTS
+*******************/
 
 .crm-container del, 
 .crm-container .crm-is_deleted, 
@@ -172,10 +172,10 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	color: var(--crm-alert);
 }
 
-/*
-      B U T T O N S
+/******************
+    BUTTONS
 	  For buttons not using .crm-button or .btn or <button>
-                              */
+*******************/
 
 #crm-container a.button,
 .crm-container button,
@@ -274,10 +274,10 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 	padding-inline: var(--crm-m);
 }
 
-/* 
-	F O R M
+/******************
+	FORM
 	Inline labels/inputs with a 17% width?
-			*/
+*******************/
 
 @media (min-width: 480px) {
 	.crm-container .crm-section .label {
@@ -290,9 +290,9 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 	}
 }
 
-/* 
-	T A B S 
-				*/
+/******************
+	TABS
+*******************/
 
 .afadmin-list .nav-tabs + .form-inline + table,
 .crm-search-nav-tabs ~ .ng-scope,
@@ -315,9 +315,9 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 	display: none;
 }
 
-/*
-      P A G E S
-                              */
+/******************
+    PAGES
+*******************/
 
 /* Search Kit Builder */
 
@@ -755,18 +755,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 #afGuiEditor .panel-body {
 	width: 100%;
 }
-/* Handle excess nav items 
-
-#afGuiEditor-palette-config > .panel-heading {
-	overflow-x: scroll;
-	overflow-y: hidden;
-}
-ul#afGuiEditor-palette-tabs {
-	display: ruby;
-}
-ul#afGuiEditor-palette-tabs li {
-	max-width: min-content !important;
-}
 /* AfEditor builder */
 
 #afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
@@ -832,9 +820,10 @@ ul#afGuiEditor-palette-tabs li {
 	padding: 40px 0 0;
 }
 
-/* 
-    S E A R C H
-                    */
+/******************
+    SEARCH
+*******************/
+
 .crm-container div#searchForm table.form-layout {
 	background: transparent;
 	box-shadow: none;
@@ -850,7 +839,6 @@ ul#afGuiEditor-palette-tabs li {
 	display: flex;
 	gap: var(--crm-m);
 	align-items: center;
-	/* padding: var(--crm-padding-reg); */
 }
 .crm-container .adv-search-top-submit .crm-submit-buttons,
 .crm-container .form-layout td:has(#_qf_Advanced_refresh-bottom) .crm-submit-buttons {
@@ -901,9 +889,9 @@ ul#afGuiEditor-palette-tabs li {
 	margin: 0;
 }
 					
-/* 
-	P A D D I N G    F I X E S
-								*/
+/******************
+	PADDING FIXES
+*******************/
 
 /* General */
 .crm-container .crm-form-block .crm-form-block {
@@ -997,9 +985,9 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	padding: var(--crm-dropdown-padding);
 }
 
-/* 
-	R E S P O N S I V E
-						*/
+/******************
+	RESPONSIVE
+*******************/
 
 /* Contact dashboard */
 
@@ -1009,10 +997,9 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	}
 }
 
-/*
-
-	A F F O R M layouts
-						*/
+/******************
+	AFFORM layouts
+*******************/
 
 /* padding fixes */
 

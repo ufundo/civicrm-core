@@ -339,7 +339,6 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
 	border-bottom: 1px solid transparent;
     box-shadow: var(--crm-panel-shadow);
-    /* margin-bottom: var(--crm-panel-head-margin); */
 }
 .crm-container .panel-heading > .dropdown .dropdown-toggle {
 	color: inherit;

@@ -637,14 +637,14 @@ input.crm-form-checkbox) + label {
 	font-weight: 400;
 	cursor: pointer;
 }
-#bootstrap-theme .radio input[type="radio"], 
+/* #bootstrap-theme .radio input[type="radio"], 
 #bootstrap-theme .radio-inline input[type="radio"], 
 #bootstrap-theme .checkbox input[type="checkbox"], 
 #bootstrap-theme .checkbox-inline input[type="checkbox"] {
 	/* position: absolute;
 	margin-top: 4px; */
 	/* margin-left: -20px; */
-}
+} */
 #bootstrap-theme .radio + .radio, #bootstrap-theme .checkbox + .checkbox {
 	margin-top: -5px;
 }
@@ -652,7 +652,6 @@ input.crm-form-checkbox) + label {
 #bootstrap-theme .checkbox-inline {
 	position: relative;
 	display: inline-block;
-	/* padding-left: 20px; */
 	margin-bottom: 0;
 	font-weight: 400;
 	vertical-align: middle;
