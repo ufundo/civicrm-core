@@ -81,7 +81,7 @@ table.dataTable.order-column.stripe tbody tr.extension-installed > .sorting_1 {
     text-align: right;
 }
 .crm-container table.crm-mailing-ab-table td:has(.action-item) {
-    text-align: inherit;
+    text-align: unset;
 }
 .crm-container table.form-layout td:has(details) {
     padding: 0;

@@ -63,7 +63,7 @@
     color: var(--crm-secondary-text);
     padding-inline: var(--crm-s);
     border-radius: var(--crm-roundness);
-    display: inherit;
+    display: unset;
 }
 #crm-contact-actions-list ul a:hover,
 #crm-contact-actions-list ul a:focus, 
@@ -377,7 +377,7 @@
 }
 #crm-container .dropdown-menu.dropdown-menu-right {
     right: 0;
-    left: inherit;
+    left: unset;
 }
 #crm-container .dropdown-menu li input {
     width: -moz-available;

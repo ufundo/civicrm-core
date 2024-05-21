@@ -48,8 +48,8 @@
     padding: 0;
     position: relative !important;
     margin: 0;
-    right: inherit;
-    top: inherit;
+    right: unset;
+    top: unset;
 }
 .crm-container.ui-dialog .ui-dialog-titlebar .ui-state-hover .ui-icon, 
 .crm-container.ui-dialog .ui-dialog-titlebar .ui-state-focus .ui-icon, 

@@ -255,7 +255,7 @@
     }
     .crm-actions-ribbon .crm-next-action, 
     .crm-actions-ribbon .crm-previous-action {
-        margin-left: inherit;
+        margin-left: 0;
     }
 }
 @media (max-width: 500px) { /* shows only icons for contact dashboard */

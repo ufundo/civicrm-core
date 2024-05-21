@@ -57,7 +57,7 @@ tbody.scrollContent tr.alternateRow {
 .crm-container .action-link,
 .crm-container .action-link:hover {
     line-height: 1;
-    background: inherit;
+    background: unset;
     display: flex;
     gap: var(--crm-m);
     padding: var(--crm-padding-reg) 0;
