@@ -111,6 +111,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-padding-small: var(--crm-s);
 --crm-padding-inset: var(--crm-m);
 --crm-page-padding: var(--crm-xl); /* Margin left/right */
+--crm-page-width: 100%; /* Default that CMS can overwrite */
 
 /* TYPE */
 --crm-font-size: var(--crm-r);
@@ -168,7 +169,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-panel-background: var(--crm-page-background);
 --crm-panel-border: 1px;
 --crm-panel-border-col: var(--crm-gray-300);
---crm-panel-head-margin: 0;
+--crm-panel-head-margin: 0px;
 
 /* ACCORDIONS */
 --crm-expand-icon: "\f0da"; /* unicode value for FontAwesome icon */
@@ -343,8 +344,6 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-wizard-active-bg: var(--crm-link);
 --crm-wizard-border-col: var(--crm-divider);
 --crm-wizard-bg: var(--crm-page-background);
-
-/* --crm-expand-body-indent: calc(var(--crm-m3) + var(--crm-m2) + var(--crm-m2));  matches the indent between expand icon & title - leave blank for no indent */
 }
 
 /* light/dark mode settings */

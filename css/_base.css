@@ -1,6 +1,6 @@
-/*
-      R E S E T S
-                    */
+/******************
+   RESETS
+*******************/
 
 .crm-container *,
 .crm-container *::before,
@@ -19,13 +19,14 @@
 .crm-container table,
 .crm-container th,
 .crm-container tr,
-.crm-container td {
+.crm-container td,
+.crm-container details {
 	background-color: transparent;
-    background: inherit;
-    border: inherit;
-    height: inherit;
-    padding: inherit;
-    margin: inherit;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    height: unset;
     color: inherit;
     line-height: inherit;
     font-family: inherit;
@@ -38,14 +39,12 @@
 
 /* JQueryUI resets */
 
-.crm-container .ui-tabs .ui-tabs-panel {
-    padding: inherit;
+.crm-container .ui-tabs .ui-tabs-panel,
+.crm-container .ui-tabs {
+    padding: 0;
 }
 .crm-container .ui-widget,
-.crm-container .ui-widget input, 
-.crm-container .ui-widget select, 
-.crm-container .ui-widget textarea, 
-.crm-container .ui-widget button {
+.crm-container .ui-widget:where(input,select,textarea,button) {
     font-family: inherit;
     font-size: inherit;
 }
@@ -59,17 +58,15 @@
 }
 .crm-container .ui-widget.ui-widget-content,
 .ui-tabs .ui-tabs-nav li {
-    border: 0 solid transparent;
+    border: 0;
     background: transparent;
 }
 
-/*
-      A C C E S S I B I L I T Y
-                                    */
+/******************
+   ACCESSIBILITY
+*******************/
 
-/* text exclusively for screen readers */
-
-.sr-only {
+.sr-only { /* text exclusively for screen readers */
 	border: 0;
 	clip: rect(1px, 1px, 1px, 1px);
 	clip-path: inset(50%);
@@ -84,9 +81,9 @@
     cursor: move;
 }
 
-/*
-      T Y P E
-                */
+/******************
+   TYPE
+*******************/
 
 /* Set Default Type */
 
@@ -99,8 +96,8 @@
 .crm-container table,
 .crm-container tr, 
 .crm-container tr td,
-#crm-container p,
-#crm-container ul {
+.crm-container p,
+.crm-container ul {
     font-size: var(--crm-font-size);
     color: var(--crm-text);
 }
@@ -155,12 +152,21 @@
 .crm-contact-deceased, 
 .crm-container .status-warning,
 .crm-container .crm-error,
-#crm-container td.tasklist a:link {
+.crm-container td.tasklist a:link {
     color: var(--crm-alert) !important;
 }
 #crm-container td.tasklist a:visited {
     color: var(--crm-success);
 }
+.crm-container .disabled, 
+.crm-container .crm-disabled, 
+.crm-container .disabled *, 
+.crm-container .cancelled, 
+.crm-container .cancelled td, 
+.crm-container li.disabled a.ui-tabs-anchor {
+    color: var(--crm-inactive) !important;
+}
+
 /* BS3 type styles */
 
 .crm-container .text-left {
@@ -283,10 +289,9 @@
 	overflow-y: scroll;
 }
 
-
-/* 
-      L I N K 
-                 */
+/******************
+   LINK 
+*******************/
 
 .crm-container a {
 	color: var(--crm-link);
@@ -300,12 +305,16 @@
 .crm-container a:focus {
 	outline: 5px auto -webkit-focus-ring-color;
 	outline-offset: -2px;
-} */
+} 
 
-/*
-      P O S I T I O N
-                        */
+/******************
+   POSITION
+*******************/
 
+#crm-container {
+	max-width: 100%;
+	padding: var(--crm-page-padding);
+}
 .crm-flex-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -321,6 +330,6 @@
     min-width: 0;
 }
 .crm-container .css_right,
-#crm-container .float-right {
+.crm-container .float-right {
     float: right;
 }

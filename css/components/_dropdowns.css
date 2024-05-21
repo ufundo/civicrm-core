@@ -93,6 +93,7 @@
     z-index: 9999;
     position: absolute;
     right: 0;
+    padding: 0;
     margin: var(--crm-m) 0;
     min-width: var(--crm-dropdown-width);
     background: var(--crm-dropdown-bg);

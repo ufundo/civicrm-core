@@ -1,23 +1,11 @@
-
-
 /* CSS hacks to accommodate quirks and inconsistencies in the markup.
    The end goal (Civi 7.0?) would be to remove these once the markup is
    consistent, and another  */
-
-/* Temp CSS to facilitate the build and testing, place for things lacking a home */
-
-#crm-container {
-	position: absolute;
-	width: calc(100% - var(--crm-page-padding) - var(--crm-page-padding));
-	left: 0;
-	padding: 2rem var(--crm-page-padding);
-}
 
 /*
       A C C O R D I O N S
       From Civi 5.72 these are only needed for extensions
                               */
-
 
 /* Reset */
 
@@ -276,7 +264,6 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 .crm-container .btn-group-xs > input[type="button"] {
     padding: var(--crm-xs) var(--crm-s);
     font-size: var(--crm-small-font-size);
-    line-height: 1.5;
     border-radius: var(--crm-roundness);
 } 
 #crm-container .btn-group-xs button {
@@ -381,9 +368,6 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 }
 #bootstrap-theme.crm-search ul.nav-stacked li:last-of-type {
     margin-top: var(--crm-r);
-}
-#bootstrap-theme.crm-search ul.nav-stacked li:not(.active) button {
-    display: none;
 }
 #bootstrap-theme.crm-search ul.nav-stacked li:has(.btn-xs) a {
     padding-right: 5ch;
@@ -614,9 +598,20 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	padding: 0 0 var(--crm-l) 0;
 }
 /* extensions */
-.crm-container #extensions table.dataTable summary {
-	padding:0;
+.crm-container #extensions-main,
+.crm-container #extensions-addnew {
+	padding: 0;
 }
+/* .crm-container #extensions table.dataTable {
+	box-shadow: none;
+} */
+.crm-container #extensions table.dataTable summary {
+	padding: 0;
+	background-color: unset;
+	color: var(--crm-text);
+	font-weight: unset;
+}
+
 /* New mailing */
 .crmMailing-preview .preview-contact,
 .crmMailing-preview .preview-group {

@@ -14,38 +14,47 @@
 
 /* Drupal 8+ -  */
 
+body.page-civicrm header.content-header {
+    margin-bottom: 0;
+    background-color: var(--crm-background);
+}
+body.page-civicrm main.page-content {
+    margin-top: 0;
+}
+body.page-civicrm header + div.layout-container {
+    background-color: var(--crm-page-background) !important;
+    margin: 0 !important; /* use of important vs some themes */
+}
 /* D9 Claro */
 
 #block-claro-content {
     --crm-page-padding: 3rem;
+    --crm-page-width: calc(100% - var(--crm-page-padding) - var(--crm-page-padding));
 }
-.crm-container .form-item {
-    margin: inherit;
-} 
-.crm-container details {
-	border: inherit;
-	padding: 0; 
-}
-.crm-container p {
+#block-claro-content .crm-container:where(.form-item, p, .help p, .button) {
     margin: 0;
 }
-.button:not(:focus) {
-    box-shadow: none !important;
+#block-claro-content .button:not(:focus) {
+    box-shadow: none;
 }
-header.content-header {
-    margin-bottom: 0;
-    background-color: var(--crm-background);
+/* D9 Seven */
+
+#block-seven-content {
+    --crm-page-padding: 2rem;
 }
-main.page-content {
-    margin-top: 0;
+#block-seven-breadcrumbs {
+    --crm-page-padding: 2rem;
+    padding: 0 var(--crm-page-padding);
 }
-.crm-container .button {
-    margin-block: inherit;
-    margin-inline: inherit;
+#block-seven-content .button {
+    text-shadow: none;
+    margin-left: 0;
 }
-.crm-container .help p {
-    margin: 0;
+#block-seven-content .form-composite > legend, 
+#block-seven-content .label {
+    font-weight: inherit;
 }
+
 
 /******************
    JOOMLA
@@ -56,13 +65,36 @@ main.page-content {
 body.com_civicrm {
     font-size: 100%;
 }
+body.admin.com_civicrm {
+    --crm-page-padding: 3rem;
+    --crm-page-width: 100%;
+}
 
-/* Joomla 4 - body.com_civicrm.layout-default */
+/* J4 resets */
+
+body.admin.com_civicrm.layout-default .crm-container .dropdown-toggle::after {
+    display: none;
+}
+body.admin.com_civicrm.layout-default .crm-container details summary ~ * {
+    margin-top: 0;
+}
 
 /******************
    WORDPRESS
 *******************/
 
 body.wp-admin {
+    --crm-page-padding: 1rem 2rem 1rem 1rem;
     font-size: 100%;
+}
+body.wp-admin #crm-container {
+    background: transparent;
+}
+
+/******************
+   STANDALONE
+*******************/
+
+html.crm-standalone {
+    --crm-page-width: 100%;
 }

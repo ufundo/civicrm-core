@@ -1013,7 +1013,7 @@
 	content: "";
 } */
 
-#bootstrap-theme * {
+/* #bootstrap-theme * {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -1033,7 +1033,7 @@
 	line-height: 1.428571429;
 	color: #555;
 	background-color: white;
-}
+} */
 #bootstrap-theme input, #bootstrap-theme select, #bootstrap-theme textarea {
 	font-family: inherit;
 	font-size: inherit;
@@ -1041,7 +1041,8 @@
 }#bootstrap-theme button {
 	font-family: inherit;
 	line-height: inherit;	
-}/* 
+}
+/* 
 #bootstrap-theme a {
 	color: #2786c2;
 	text-decoration: none;
@@ -1054,7 +1055,6 @@
 	outline: 5px auto -webkit-focus-ring-color;
 	outline-offset: -2px;
 } */
-
 #bootstrap-theme figure {
 	margin: 0;
 }

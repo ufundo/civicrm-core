@@ -1,6 +1,8 @@
 .crm-container .btn,
 .crm-container .crm-button,
-[type="button"], [type="reset"], [type="submit"] {
+.crm-container [type="button"],
+.crm-container [type="reset"],
+.crm-container [type="submit"] {
     display: inline-block;
     text-align: var(--crm-btn-align);
     white-space: nowrap;
@@ -11,7 +13,6 @@
     border: var(--crm-btn-border);
     padding: var(--crm-btn-padding);
     font-size: var(--crm-r);
-    line-height: 1.5;
     border-radius: var(--crm-btn-radius);
     user-select: none;
     margin-bottom: 0;
@@ -163,7 +164,6 @@
 .crm-container .btn-xs, .crm-container .btn-group-xs > .btn {
 	padding: var(--crm-xs) var(--crm-s2);
 	font-size: var(--crm-m2);
-	line-height: 1.5;
 	border-radius: var(--crm-btn-radius);
 }
 .crm-container .btn-block {

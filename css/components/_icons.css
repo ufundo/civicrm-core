@@ -131,6 +131,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     color: var(--crm-table-sort-col);
     float: var(--crm-table-sort-float);
     margin: var(--crm-xs1) var(--crm-m) 0 0;
+    position: relative;
 }
 .crm-container a.sorting_asc::after,
 #crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-asc::before,

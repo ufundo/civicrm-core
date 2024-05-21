@@ -63,12 +63,10 @@ table.dataTable.display tbody tr.even > .sorting_1,
 table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05)) var(--crm-table-even-row);
 }
-.crm-container .extension-installed {
-    background-color: var(--crm-green-light);
-}
+.crm-container .extension-installed,
 table.dataTable.display tbody tr.extension-installed > .sorting_1, 
 table.dataTable.order-column.stripe tbody tr.extension-installed > .sorting_1 {
-    background: var(--crm-green);
+    background: var(--crm-green-light);
 }
 .crm-container td,
 .crm-container table.dataTable thead td {
@@ -420,7 +418,7 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
 	.crm-container .table-responsive,
     .crm-container table {
 		width: 100%;
-		margin-bottom: 15px;
+		margin-bottom: var(--crm-r);
 		overflow-y: hidden;
 		border: var(--crm-table-outside-border);
         display: contents; /* expirmental addition to provide more responsive behaviour */

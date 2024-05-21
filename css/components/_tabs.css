@@ -102,11 +102,13 @@
     width: 0 !important;
     padding: 0
 } 
-#crm-container .ui-tabs-panel {
+.crm-container .ui-tabs-panel {
     background: var(--crm-tab-bg-active);
     padding: var(--crm-tab-padding);
 }
-
+.crm-container .crm-contact-page .ui-tabs-panel {
+    background: transparent;
+}
 /* Bootstrap tabs */
 
 .crm-container .nav-tabs {
