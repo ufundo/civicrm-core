@@ -7,13 +7,13 @@
 /* Backdrop - html.admin-bar */
 
 html.admin-bar body {
-    background-color: (--crm-c-page-background);
+    background-color: var(--crm-c-page-background);
 }
 html.admin-bar .crm-container {
     --crm-page-padding: 0;
 }
 html.admin-bar #admin-bar-menu a.civicrm {
-    padding-left: 1.75rem;
+    padding-left: 1.75rem !important;
 }
 html.admin-bar #admin-bar-menu .civicrm .admin-bar-link-icon {
     display: none;

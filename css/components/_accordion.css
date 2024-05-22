@@ -1,3 +1,6 @@
+.crm-container details {
+	background-color: unset;
+}
 .crm-container details ~ details {
 	margin: var(--crm-expand-gap);
 }
