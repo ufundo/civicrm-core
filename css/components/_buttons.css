@@ -16,8 +16,8 @@
     border-radius: var(--crm-btn-radius);
     user-select: none;
     margin-bottom: 0;
-    background: var(--crm-primary);
-    color: var(--crm-primary-text);
+    background: var(--crm-c-primary);
+    color: var(--crm-c-primary-text);
     text-transform: var(--crm-btn-txt-transform);
 }
 .crm-container .btn:hover,
@@ -26,8 +26,8 @@
 .crm-container .crm-button:focus,
 .crm-container .crm-container .btn:hover,
 .crm-container .crm-container .btn:focus {
-    background: var(--crm-primary-hover);
-    color: var(--crm-primary-text);
+    background: var(--crm-c-primary-hover);
+    color: var(--crm-c-primary-text);
     text-decoration: none;
 }
 .crm-button:focus,
@@ -58,8 +58,8 @@
 .crm-container .crm-button-type-cancel,
 .crm-form-submit .cancel.crm-button,
 .crm-container button.ui-button:has(.fa-times) {
-    background: var(--crm-secondary);
-    color: var(--crm-secondary-text);
+    background: var(--crm-c-secondary);
+    color: var(--crm-c-secondary-text);
 }
 .crm-container a.button.delete-button, 
 .crm-container a.button.delete, 
@@ -76,7 +76,7 @@
 .crm-container .crm-button-type-cancel:focus,
 .crm-container button.ui-button:has(.fa-times):hover,
 .crm-container button.ui-button:has(.fa-times):focus {
-    background: var(--crm-secondary-hover);
+    background: var(--crm-c-secondary-hover);
 }
 
 /* Icons */
@@ -85,7 +85,7 @@
     padding-right: var(--crm-m);
 }
 .crm-container #crmIconPicker a.ui-button {
-    color: var(--crm-text) !important;
+    color: var(--crm-c-text) !important;
     background: transparent;
     width: var(--crm-r);
     height: var(--crm-r);
@@ -100,50 +100,50 @@
 /* BS3 colour options */
 
 .crm-container .btn-secondary {
-    background: var(--crm-secondary); 
-    color: var(--crm-secondary-text);
+    background: var(--crm-c-secondary); 
+    color: var(--crm-c-secondary-text);
 }
 .crm-container .btn-secondary:hover,
 .crm-container .btn-secondary:focus {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-secondary); /* darkening fallback if hover state not set */
-    background: var(--crm-secondary-hover);
-    color: var(--crm-secondary-text);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-secondary); /* darkening fallback if hover state not set */
+    background: var(--crm-c-secondary-hover);
+    color: var(--crm-c-secondary-text);
 }
 .crm-container .btn-info {
-    background: var(--crm-info); 
-    color: var(--crm-info-text);
+    background: var(--crm-c-info); 
+    color: var(--crm-c-info-text);
 }
 .crm-container .btn-info:hover,
 .crm-container .btn-info:focus {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-info);
-    color: var(--crm-info-text);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-info);
+    color: var(--crm-c-info-text);
 }
 .crm-container .btn-warning {
-    background: var(--crm-warning); 
-    color: var(--crm-warning-text);
+    background: var(--crm-c-warning); 
+    color: var(--crm-c-warning-text);
 }
 .crm-container .btn-warning:hover,
 .crm-container .btn-warning:focus {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-warning);
-    color: var(--crm-warning-text);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-warning);
+    color: var(--crm-c-warning-text);
 }
 .crm-container .btn-success {
-    background: var(--crm-success); 
-    color: var(--crm-success-text);
+    background: var(--crm-c-success); 
+    color: var(--crm-c-success-text);
 }
 .crm-container .btn-success:hover,
 .crm-container .btn-success:focus {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-success);
-    color: var(--crm-success-text);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-success);
+    color: var(--crm-c-success-text);
 }
 .crm-container .btn-danger {
-    background: var(--crm-alert); 
-    color: var(--crm-alert-text);
+    background: var(--crm-c-alert); 
+    color: var(--crm-c-alert-text);
 }
 .crm-container .btn-danger:hover,
 .crm-container .btn-danger:focus {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-alert);
-    color: var(--crm-alert-text);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-alert);
+    color: var(--crm-c-alert-text);
 }
 
 /* BS3 size options */
@@ -188,17 +188,17 @@
 /* Hover buttons (plain text, button shows on hover) */
 .crm-container a.crm-hover-button {
     border-radius: var(--crm-btn-radius);
-    color: var(--crm-link);
+    color: var(--crm-c-link);
     cursor: var(--crm-hover-clickable);
     padding: var(--crm-btn-padding);
-    background-color: var(--crm-primary);
-    color: var(--crm-primary-text);
+    background-color: var(--crm-c-primary);
+    color: var(--crm-c-primary-text);
 }
 .crm-container a.crm-hover-button.action-item, 
 .crm-container .crm-hover-button.btn-slide,
 .crm-container .crm-submit-buttons .crm-hover-button {
     background-color: transparent;
-    color: var(--crm-text);
+    color: var(--crm-c-text);
     padding: var(--crm-btn-small-padding);
     margin: 0;
     cursor: var(--crm-hover-clickable);
@@ -217,7 +217,7 @@
 }
 .crm-container .crm-hover-button.crm-clear-link,
 .crm-container .crm-hover-button.crm-close-accordion {
-    color: var(--crm-link);
+    color: var(--crm-c-link);
     padding: 0;
     background: unset;
 }
@@ -227,8 +227,8 @@
 .crm-container a.crm-hover-button:active,
 .crm-container .crm-submit-buttons .crm-hover-button:hover,
 .crm-container .crm-submit-buttons .crm-hover-button:focus {
-    background: var(--crm-secondary-hover);
-    color: var(--crm-secondary-text);
+    background: var(--crm-c-secondary-hover);
+    color: var(--crm-c-secondary-text);
     text-decoration: none;
 }
 
@@ -242,35 +242,35 @@
 /* Modal buttons */
 
 .crm-container.ui-dialog .ui-dialog-buttonset button {
-    background: var(--crm-primary);
-    color: var(--crm-primary-text);
+    background: var(--crm-c-primary);
+    color: var(--crm-c-primary-text);
 }
 .crm-container.ui-dialog .ui-dialog-buttonset button:hover,
 .crm-container.ui-dialog .ui-dialog-buttonset button:focus {
-    background: var(--crm-primary-hover);
+    background: var(--crm-c-primary-hover);
 }
 
 /* BS3 button dropdowns */
 
 .crm-container .btn-primary.dropdown-toggle {
-    background: var(--crm-primary);
-    color: var(--crm-primary-text);
+    background: var(--crm-c-primary);
+    color: var(--crm-c-primary-text);
 }
 .crm-container .btn-primary.dropdown-toggle:hover,
 .crm-container .btn-primary.dropdown-toggle:focus {
-    background: var(--crm-primary-hover);
+    background: var(--crm-c-primary-hover);
 }
 .crm-container .btn-secondary.dropdown-toggle {
-    background: var(--crm-secondary);
-    color: var(--crm-secondary-text);
+    background: var(--crm-c-secondary);
+    color: var(--crm-c-secondary-text);
 }
 .crm-container .btn-secondary.dropdown-toggle:hover,
 .crm-container .btn-secondary.dropdown-toggle:focus {
-    background: var(--crm-secondary-hover);
+    background: var(--crm-c-secondary-hover);
 }
 .crm-container .crm-search-display button.dropdown-toggle:not(.btn-default):not(.btn-secondary) {
-    background-color: var(--crm-gray-200);
-    color: var(--crm-text) !important;
+    background-color: var(--crm-c-gray-200);
+    color: var(--crm-c-text) !important;
 }
 
 /* BS3 Button groups and dropdowns  */

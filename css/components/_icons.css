@@ -10,7 +10,7 @@
 .crm-container .crm-hover-button:has(.crm-i):hover,
 .crm-container .crm-hover-button:has(.crm-i):focus {
     background: transparent;
-    color: var(--crm-link) !important;
+    color: var(--crm-c-link) !important;
     padding: var(--crm-padding-small);
 }
 .crm-container .select2-container[class*=" fa-"]::before,
@@ -39,17 +39,17 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container #crm-notification-container div.ui-notify-message.error h1::before,
 .crm-container span.batch-invalid::before {
     content: var(--crm-icon-alert);
-    color: var(--crm-alert);
+    color: var(--crm-c-alert);
 }
 .crm-container #crm-notification-container div.ui-notify-message.success h1::before,
 .crm-container span.batch-valid::before {
     content: var(--crm-icon-success);
-    color: var(--crm-success);
+    color: var(--crm-c-success);
 }
 .crm-container #crm-notification-container div.ui-notify-message.info h1::before,
 .crm-container .messages.crm-empty-table::before {
     content: var(--crm-icon-info);
-    color: var(--crm-info);
+    color: var(--crm-c-info);
 }
 
 /* Help icon */
@@ -98,7 +98,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container table.dataTable thead th.sorting_asc,
 .crm-container table.dataTable thead th.sorting_desc  {
     background: none;
-    color: var(--crm-text);
+    color: var(--crm-c-text);
 }
 .crm-container th a:hover,
 .crm-container th a:focus {
@@ -137,13 +137,13 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 #crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-asc::before,
 .crm-container table.dataTable thead th.sorting_asc::before {
     content: var(--crm-icon-sort-asc);
-    color: var(--crm-link);
+    color: var(--crm-c-link);
 }
 .crm-container a.sorting_desc::after,
 #crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-desc::before,
 .crm-container table.dataTable thead th.sorting_desc::before {  
     content: var(--crm-icon-sort-desc);
-    color: var(--crm-link);
+    color: var(--crm-c-link);
 }
 
 /* Trash icons */
@@ -153,11 +153,11 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 }
 .crm-container .delete-icon::before {
     content: "\f1f8";
-    color: var(--crm-text);
+    color: var(--crm-c-text);
 }
 .crm-container .delete-icon:hover::before,
 .crm-container .delete-icon:focus::before {
-    color: var(--crm-alert);
+    color: var(--crm-c-alert);
 }
 
 /* Jqueery UI icons (tags) */
@@ -185,22 +185,22 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container .jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox::before, 
 .crm-container  .jstree-default .jstree-checked > .jstree-checkbox::before {
     content: '\f046';
-    color: var(--crm-success);
+    color: var(--crm-c-success);
 }
 .jstree-default > .jstree-no-dots .jstree-closed > .jstree-ocl::before {
     margin-top: 5px;
     display: block;
     content: '\f105';
-    color: var(--crm-text);
+    color: var(--crm-c-text);
 }
 .jstree-default > .jstree-no-dots .jstree-open > .jstree-ocl::before {
     margin-top: 5px;
     display: block;
     content: '\f107';
-    color: var(--crm-text);
+    color: var(--crm-c-text);
 }
 .crm-container .jstree-default .jstree-search {
-    color: var(--crm-alert);
+    color: var(--crm-c-alert);
     font-weight: normal;
 }
 

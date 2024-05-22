@@ -12,7 +12,7 @@
 	padding: var(--crm-m2) var(--crm-m3);
 	font-family: var(--crm-font-bold);
 	font-weight: var(--crm-bold-weight);
-	color: var(--crm-text);
+	color: var(--crm-c-text);
 }
 .crm-container table summary { /* Makes summary match the size of the rest of the table it's in */
 	font-size: inherit;
@@ -98,7 +98,7 @@
 	box-shadow: none;
 	border: 0 solid transparent;
 	background-color: transparent;
-	color: var(--crm-text);
+	color: var(--crm-c-text);
 }
 #contact-summary details .crm-summary-block {
 	box-shadow: var(--crm-block-shadow);

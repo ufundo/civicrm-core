@@ -16,7 +16,7 @@
 .crm-container tr.columnheader td { 
     background-color:  var(--crm-table-header-bg);
     border-bottom: var(--crm-table-header-bottom);
-    color: var(--crm-text);
+    color: var(--crm-c-text);
     font-family: var(--crm-font-bold);
     font-weight: var(--crm-bold-weight);
     padding: var(--crm-table-padding);
@@ -66,7 +66,7 @@ table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
 .crm-container .extension-installed,
 table.dataTable.display tbody tr.extension-installed > .sorting_1, 
 table.dataTable.order-column.stripe tbody tr.extension-installed > .sorting_1 {
-    background: var(--crm-green-light);
+    background: var(--crm-c-green-light);
 }
 .crm-container td,
 .crm-container table.dataTable thead td {
@@ -126,11 +126,11 @@ table.dataTable.order-column.stripe tbody tr.extension-installed > .sorting_1 {
 /* Nested table */ 
 
 .crm-container .crm-child-row tr:first-child {
-    border: 1px solid var(--crm-page-background);
+    border: 1px solid var(--crm-c-page-background);
 }
 .crm-container .crm-child-row {
-    border-top: 1px solid var(--crm-gray-400);
-    border-bottom: 1px solid var(--crm-gray-025);
+    border-top: 1px solid var(--crm-c-gray-400);
+    border-bottom: 1px solid var(--crm-c-gray-025);
 }
 .crm-container .crm-child-row table {
     box-shadow: none;
@@ -152,13 +152,13 @@ table.dataTable.order-column.stripe tbody tr.extension-installed > .sorting_1 {
 /* Nested, inset table - groups page */
 
 tbody .crm-row-child {
-    border-top: 1px solid var(--crm-gray-400);
+    border-top: 1px solid var(--crm-c-gray-400);
 }
 tbody .crm-row-child ~ .crm-row-child {
     border-top: 0;
 }
 tbody .crm-row-child:not(:has(~ .crm-row-child)) {
-    border-bottom: 1px solid var(--crm-gray-025);
+    border-bottom: 1px solid var(--crm-c-gray-025);
 }
 tbody .crm-row-child td {
     box-shadow: inset 0 10px 8px -10px rgba(0,0,0,.15);
@@ -196,13 +196,13 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
     width: auto;
 }
 .crm-container table.report td {
-    border: 1px solid var(--crm-gray-400);
-    background-color: var(--crm-gray-050);
+    border: 1px solid var(--crm-c-gray-400);
+    background-color: var(--crm-c-gray-050);
 }
 #crm-container tr.columnheader-dark th {
-    background-color: var(--crm-gray-700);
-    color: var(--crm-light-text);
-    border: 1px solid var(--crm-gray-800)
+    background-color: var(--crm-c-gray-700);
+    color: var(--crm-c-light-text);
+    border: 1px solid var(--crm-c-gray-800)
 }
 
 /* Batch entry table */
@@ -481,11 +481,11 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
     padding: var(--crm-xs1) var(--crm-m1);
 }
 .crm-container th.crm-search-result-select button.btn i.crm-i {
-    color: var(--crm-text);
+    color: var(--crm-c-text);
 }
 #crm-container th.crm-search-result-select button.btn.dropdown-toggle {
     border-radius: var(--crm-roundness);
-    background-color: var(--crm-background4);
+    background-color: var(--crm-c-background4);
     padding: var(--crm-xs1) var(--crm-m1);
 }
 .crm-container .crm-search-display-table table {

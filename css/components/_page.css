@@ -82,11 +82,11 @@
     margin-top: var(--crm-r);
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background: var(--crm-secondary);
-    color: var(--crm-secondary-text) !important;
+    background: var(--crm-c-secondary);
+    color: var(--crm-c-secondary-text) !important;
     border: 0 solid transparent;
     padding: var(--crm-s);
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-    background: var(--crm-secondary-hover);
+    background: var(--crm-c-secondary-hover);
 }

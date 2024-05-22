@@ -112,7 +112,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container .crm-accordion-inner .crm-accordion-header,
 .crm-container .crm-collapsible .collapsible-title{
 	background-color: transparent;
-	color: var(--crm-text);
+	color: var(--crm-c-text);
 	font-size: var(--crm-font-size);
 }
 .crm-accordion-wrapper .crm-accordion-header.active,
@@ -169,7 +169,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container .status-past, 
 .crm-contact-deceased, 
 .crm-container .status-warning {
-	color: var(--crm-alert);
+	color: var(--crm-c-alert);
 }
 
 /******************
@@ -193,8 +193,8 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	border-radius: var(--crm-btn-radius);
 	user-select: none;
 	margin-bottom: 0;
-	background-color: var(--crm-primary);
-	color: var(--crm-primary-text) !important;
+	background-color: var(--crm-c-primary);
+	color: var(--crm-c-primary-text) !important;
 	line-height: 1.5;
 	display: flex;
 	align-items: center;
@@ -205,7 +205,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container .ui-button:focus,
 [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover,
 [type="button"]:focus, [type="reset"]:focus, [type="submit"]:focus {
-    background: var(--crm-primary-hover);
+    background: var(--crm-c-primary-hover);
 	text-decoration: none;
 }
 .crm-button > input[type="button"],
@@ -216,8 +216,8 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 }
 #crm-container a.button,
 .crm-container [type="button"] {
-    background: var(--crm-secondary);
-    color: var(--crm-secondary-text);
+    background: var(--crm-c-secondary);
+    color: var(--crm-c-secondary-text);
     font-weight: normal;
 	text-decoration: none;
 }
@@ -225,12 +225,12 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container a.button:focus,
 .crm-container [type="button"]:hover,
 .crm-container [type="button"]:focus {
-    background: var(--crm-secondary-hover);
+    background: var(--crm-c-secondary-hover);
 }
 .crm-actions-ribbon a.button,
 .crm-container .action-link a.button {
-    background: var(--crm-secondary);
-    color: var(--crm-secondary-text);
+    background: var(--crm-c-secondary);
+    color: var(--crm-c-secondary-text);
     font-weight: normal;
 	text-decoration: none;
 }
@@ -238,7 +238,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 #crm-container .crm-actions-ribbon a.button:not(.delete):focus,
 .crm-container .action-link a.button:hover,
 .crm-container .action-link a.button:focus {
-    background: var(--crm-secondary-hover);
+    background: var(--crm-c-secondary-hover);
 	text-decoration: none;
 }
 /* .crm-container .ui-tabs ul.ui-tabs-nav a.button { /* resets styles for buttons on a tab banner 
@@ -347,7 +347,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     border: 0 solid transparent;
 }
 #bootstrap-theme.crm-search .crm-search-admin-relative details > fieldset .form-inline:not(td) {
-    background: var(--crm-drag-background);
+    background: var(--crm-c-drag-background);
     border-radius: var(--crm-roundness);
     margin-bottom: var(--crm-s2);
     padding: var(--crm-padding-small) var(--crm-padding-reg);
@@ -359,7 +359,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     border: 0 solid transparent;
 }
 #bootstrap-theme.crm-search crm-search-admin-link-group {
-    background: var(--crm-background2);
+    background: var(--crm-c-background2);
 }
 #bootstrap-theme.crm-search crm-search-admin-link-group table {
     margin: var(--crm-padding-reg);
@@ -377,14 +377,14 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     border: 0 solid transparent;
 }
 #bootstrap-theme.crm-search fieldset.crm-draggable {
-    background-color: var(--crm-drag-background);
+    background-color: var(--crm-c-drag-background);
     border-radius: var(--crm-roundness);
     border: 0 solid transparent !important;
     padding: var(--crm-padding-small);
     margin: var(--crm-m)0 ;
 }
 #bootstrap-theme.crm-search .crm-search-admin-edit-columns details {
-    background-color: var(--crm-page-background);
+    background-color: var(--crm-c-page-background);
     border-radius: var(--crm-roundness);
     border: 0;
 }
@@ -496,7 +496,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 .crm-container .tag-tree-wrapper div.tag-info {
     width: auto;
     position: relative;
-    background: var(--crm-background);
+    background: var(--crm-c-background);
     border: 0 solid transparent;
     box-shadow: var(--crm-block-shadow);
     padding: var(--crm-padding-reg);
@@ -507,7 +507,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 .crm-container .tag-tree-wrapper div.tag-info .tdl {
     font-weight: var(--crm-bold-weight);
     font-family: var(--crm-font-bold);
-    color: var(--crm-text);
+    color: var(--crm-c-text);
 }
 .crm-container .tag-tree-wrapper div.tag-info .crm-submit-buttons {
     margin: var(--crm-m) 0 0;
@@ -608,7 +608,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 .crm-container #extensions table.dataTable summary {
 	padding: 0;
 	background-color: unset;
-	color: var(--crm-text);
+	color: var(--crm-c-text);
 	font-weight: unset;
 }
 
@@ -708,8 +708,8 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	padding-top: var(--crm-s);
 	font-size: var(--crm-r2);
 	margin-bottom: var(--crm-m);
-	color: var(--crm-text);
-	border-bottom: 1px solid var(--crm-divider);
+	color: var(--crm-c-text);
+	border-bottom: 1px solid var(--crm-c-divider);
 	line-height: 1;
 }
 #afGuiEditor .af-gui-columns {
@@ -735,10 +735,10 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	top: 1rem;
 	width: calc(100% - 10px);
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
-	border-color: var(--crm-divider);
+	border-color: var(--crm-c-divider);
 }
 .af-gui-entity-palette-select-list {
-	border: 1px solid var(--crm-divider);
+	border: 1px solid var(--crm-c-divider);
 	border-radius: var(--crm-roundness);
 	padding: var(--crm-s);
 	margin-top: var(--crm-l);
@@ -782,9 +782,9 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	font-family: inherit;
 	height: var(--crm-l);
 	border-radius: var(--crm-roundness);
-	background-color: var(--crm-background3);
-	background: var(--crm-gray-300);
-	background-color: var(--crm-gray-300);
+	background-color: var(--crm-c-background3);
+	background: var(--crm-c-gray-300);
+	background-color: var(--crm-c-gray-300);
 }
 #afGuiEditor-canvas [ui-sortable] .af-gui-bar:has(~ .af-gui-field-input) {
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
@@ -809,7 +809,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	padding: 0 var(--crm-s) var(--crm-s);
 	display: block;
 	min-height: var(--crm-l);
-	background: var(--crm-background2);
+	background: var(--crm-c-background2);
 	border-radius: var(--crm-roundness);
 	margin-bottom: var(--crm-s2);
 }
@@ -878,7 +878,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 /* Custom searches */
 .crm-container > #crm-main-content-wrapper > fieldset {
 	display: grid;
-	background: var(--crm-background);
+	background: var(--crm-c-background);
 	border: 0 solid transparent;
 	box-shadow: var(--crm-block-shadow);
 	padding: var(--crm-padding-reg);
