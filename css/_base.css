@@ -1,6 +1,5 @@
 /******************
    RESETS
-   ref: https://elad2412.github.io/the-new-css-reset/
 *******************/
 
 .crm-container:where(span, applet, object,
@@ -17,6 +16,10 @@ menu, nav, output, ruby, section, summary,
 time, mark) {
     all: unset;
     display: revert;
+}
+.crm-container:where(article, aside, details, figcaption, figure, footer, 
+header, hgroup, main, menu, nav, section, summary) {
+    display: block;
 }
 .crm-container *,
 .crm-container *::before,
@@ -40,63 +43,14 @@ time, mark) {
     max-inline-size: 100%;
     max-block-size: 100%;
 }
-/* Safari - solving issue when using user-select:none on the <body> text input doesn't working 
-.crm-container input, .crm-container textarea {
-    -webkit-user-select: auto;
-}
-/* revert the 'white-space' property for textarea elements on Safari 
-.crm-container textarea {
-    white-space: revert;
-}
-/* minimum style to allow to style meter element 
-.crm-container meter {
-    -webkit-appearance: revert;
-    appearance: revert;
-}
-/* preformatted text - use only for this feature 
-.crm-container :where(pre) {
-    all: revert;
-}
-/* reset default text opacity of input placeholder 
-.crm-container ::placeholder {
-    color: unset;
-}
-/* remove default dot (•) sign 
-.crm-container ::marker {
-    content: initial;
-}*/
 #crm-container .hiddenElement,
 .crm-container .hiddenElement,
 .crm-container .collapse {
     display: none;
 }
-/* Revert Modal native behavior 
-.crm-container :where(dialog:modal) {
-    all: revert;
-}*/
 .crm-container table {
     border-collapse: collapse;
 }
-/* .crm-container table,
-.crm-container th,
-.crm-container tr,
-.crm-container td,
-.crm-container details {
-	background-color: transparent;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    height: unset;
-    color: inherit;
-    line-height: inherit;
-    font-family: inherit;
-    font-size: inherit;
-}
-.crm-container tr:hover, 
-.crm-container tr:focus {
-	background-color: transparent;
-} */
 
 /* JQueryUI resets */
 
