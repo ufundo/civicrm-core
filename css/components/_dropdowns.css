@@ -31,7 +31,7 @@
 .crm-contribpage-links-list-inner, 
 .crm-contact-actions-list-inner,
 .crm-participant-list-inner {
-    background-color: var(--crm-secondary);
+    background-color: var(--crm-c-secondary);
     border-radius: var(--crm-roundness);
     box-shadow: var(--crm-popup-shadow);
     padding: var(--crm-padding-small);
@@ -45,7 +45,7 @@
     height: 0px;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid var(--crm-secondary);
+    border-bottom: 5px solid var(--crm-c-secondary);
     top: -5px;
     left: 12px;
 }
@@ -60,7 +60,7 @@
 .crm-contribpage-links-list-inner ul a,
 .crm-event-links-list-inner ul a,
 .crm-participant-list-inner ul a {
-    color: var(--crm-secondary-text);
+    color: var(--crm-c-secondary-text);
     padding-inline: var(--crm-s);
     border-radius: var(--crm-roundness);
     display: unset;
@@ -74,8 +74,8 @@
 .crm-participant-list-inner ul a:hover, 
 .crm-participant-list-inner ul a:focus {
     text-decoration: none;
-    color: var(--crm-text);
-    background-color: var(--crm-page-background);
+    color: var(--crm-c-text);
+    background-color: var(--crm-c-page-background);
 }
 
 /* In-table dropdown */
@@ -155,14 +155,14 @@
 }
 .crm-container .crm-tooltip-wrapper .crm-tooltip {
     box-shadow: var(--crm-block-shadow);
-    background: var(--crm-background);
+    background: var(--crm-c-background);
     border-radius: var(--crm-roundness);
     padding: 0 0 var(--crm-r);
 } 
 .crm-container a:not(.crm-tooltip-down) .crm-tooltip-wrapper::after {
     border-left: 10px solid rgba(0,0,0,0);
     border-right: 10px solid rgba(0,0,0,0);
-    border-top: 10px solid var(--crm-background);
+    border-top: 10px solid var(--crm-c-background);
     bottom: -10px;
     left: var(--crm-m2);
     content: "";
@@ -172,7 +172,7 @@
     top: var(--crm-s);
 }
 .crm-container a.crm-tooltip-down .crm-tooltip-wrapper::before {
-    border-bottom: 10px solid var(--crm-background2);
+    border-bottom: 10px solid var(--crm-c-background2);
     border-left: 10px solid rgba(0,0,0,0);
     border-right: 10px solid rgba(0,0,0,0);
     content: "";
@@ -186,9 +186,9 @@
 }
 #crm-container .crm-tooltip table, 
 #crm-container .crm-tooltip table tr td {
-    background-color: var(--crm-background);
+    background-color: var(--crm-c-background);
     border: none;
-    color: var(--crm-text);
+    color: var(--crm-c-text);
     word-wrap: break-word;
 }
 .crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr > td {
@@ -199,15 +199,15 @@
     padding: var(--crm-s) 0;
 }
 #crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(1) > td {
-    background: var(--crm-background2);
-    color: var(--crm-text);
+    background: var(--crm-c-background2);
+    color: var(--crm-c-text);
     font-size: var(--crm-r1);
     padding: var(--crm-m2) var(--crm-r1);
     font-weight: var(--crm-bold-weight);
     font-family: var(--crm-font-bold);
 }
 .crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(2) > td {
-    border-top: 1px solid var(--crm-divider) !important;
+    border-top: 1px solid var(--crm-c-divider) !important;
     width: 50%;
     padding: var(--crm-r1) var(--crm-m1) 0;
 }
@@ -262,7 +262,7 @@
 	height: 1px;
 	margin: var(--crm-m) 0;
 	overflow: hidden;
-	background-color: var(--crm-background3);
+	background-color: var(--crm-c-background3);
 }
 #bootstrap-theme .dropdown-menu li .form-inline,
 #bootstrap-theme .dropdown-menu li .form-inline a {
@@ -295,7 +295,7 @@
 .crm-container .dropdown-menu > .disabled > a, 
 .crm-container .dropdown-menu > .disabled > a:hover, 
 .crm-container .dropdown-menu > .disabled > a:focus {
-	color: var(--crm-inactive);
+	color: var(--crm-c-inactive);
 }
 .crm-container .dropdown-menu > .disabled > a:hover,
 .crm-container .dropdown-menu > .disabled > a:focus {

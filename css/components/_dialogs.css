@@ -5,7 +5,7 @@
     border: 0;
     border-radius: var(--crm-dialog-radius);
     box-shadow: var(--crm-popup-shadow);
-    color: var(--crm-text);
+    color: var(--crm-c-text);
     max-height: 90%;
     padding: var(--crm-dialog-padding);
 }
@@ -15,7 +15,7 @@
 .crm-container.ui-dialog .ui-dialog-titlebar, 
 .crm-container .ui-dialog .ui-dialog-titlebar {
     border: 0;
-    border-bottom: 1px solid var(--crm-gray-300) !important;
+    border-bottom: 1px solid var(--crm-c-gray-300) !important;
     box-shadow: var(--crm-bottom-shadow);
     color: var(--crm-dialog-header-col);
     background: var(--crm-dialog-header-bg);
@@ -69,18 +69,18 @@
 }
 .crm-container.ui-dialog .ui-dialog-titlebar .ui-button-icon.ui-icon[class*=" fa-"]:hover,
 .crm-container.ui-dialog .ui-dialog-titlebar .ui-button-icon.ui-icon[class*=" fa-"]:focus {
-    color: var(--crm-link);
+    color: var(--crm-c-link);
 }
 
 /* Body */
 .crm-container.ui-dialog .ui-dialog-content[id*="crm-ajax-dialog"] {
-    background: var(--crm-background);
+    background: var(--crm-c-background);
 }
 .crm-container.ui-dialog .ui-dialog-content {
     max-height: calc(100vh - 280px) !important;
     border-radius: var(--crm-dialog-radius);
-    background: var(--crm-background);
-    color: var(--crm-text);
+    background: var(--crm-c-background);
+    color: var(--crm-c-text);
     height: auto !important;
     margin: var(--crm-dialog-padding) 0 var(--crm-xxl);
     position: static;
@@ -163,20 +163,20 @@
     border-color: var(--crm-700-gray);
 }
 .crm-container #crm-notification-container div.ui-notify-message-style.error {
-    border-color: var(--crm-alert);
+    border-color: var(--crm-c-alert);
 }
 .crm-container #crm-notification-container div.ui-notify-message-style.alert,
 .crm-container #crm-notification-container div.ui-notify-message-style.warning {
-    border-color: var(--crm-warning);
+    border-color: var(--crm-c-warning);
 }
 .crm-container #crm-notification-container div.ui-notify-message-style.success {
-    border-color: var(--crm-success);
+    border-color: var(--crm-c-success);
 }
 .crm-container #crm-notification-container div.ui-notify-message-style.info {
-    border-color: var(--crm-info);
+    border-color: var(--crm-c-info);
 }
 .crm-container #crm-notification-container div.ui-notify-message-style.info {
-    border-color: var(--crm-info);
+    border-color: var(--crm-c-info);
 }
 #crm-notification-container div.ui-notify-message:last-child {
     margin-bottom: 0;

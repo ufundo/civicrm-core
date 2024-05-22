@@ -32,7 +32,7 @@
     border-radius: var(--crm-tab-roundness);
     border: 0 solid transparent;
     font-family: inherit;
-    color: var(--crm-text);
+    color: var(--crm-c-text);
     padding: 0;
 }
 .crm-container .ui-tabs .ui-tabs-nav li:hover,
@@ -92,8 +92,8 @@
 }
 .crm-container .ui-tabs ul.ui-tabs-nav .crm-count-0 a em,
 .crm-container #mainTabContainer ul.ui-tabs-nav .crm-count-0 a em {
-    background: var(--crm-background5);
-    color: var(--crm-light-text);
+    background: var(--crm-c-background5);
+    color: var(--crm-c-light-text);
 }
 .crm-container .ui-tabs ul li em:empty,
 .crm-container .nav-tabs .badge:empty { /* this is to keep the height of tabs with empty badges */
@@ -127,7 +127,7 @@
 #crm-container .nav-tabs > li.active > a, /* using # to occlude BS */
 .crm-container .nav-tabs > li.active > a:hover, 
 .crm-container .nav-tabs > li.active > a:focus {
-	color: var(--crm-text);
+	color: var(--crm-c-text);
 	background-color: var(--crm-tab-bg-hover);
 	border: 1px solid var(--crm-tab-border-col);
 	border-bottom-color: transparent;
@@ -160,7 +160,7 @@
 .crm-container .crm-contact-page #mainTabContainer .ui-tabs-nav li.ui-tabs-active a,
 .crm-container .crm-contact-page #mainTabContainer .ui-tabs-nav li:hover a,
 .crm-container .crm-contact-page #mainTabContainer .ui-tabs-nav li:focus a {
-    color: var(--crm-link);
+    color: var(--crm-c-link);
     background: var(--crm-dash-tab-bg-hover);
     border: var(--crm-tabs-border);
     border-bottom: 0 solid transparent;
@@ -221,11 +221,11 @@
 .crm-search .crm-search-admin-outer ul.nav-stacked li.active a {
     background-color: var(--crm-tab-bg-active);
     color: var(--crm-tab-col);
-    border: 1px solid var(--crm-gray-300);
+    border: 1px solid var(--crm-c-gray-300);
     border-right: 0 none;  
 }
 .crm-search .crm-search-admin-outer .crm-flex-4.panel {
-    border: 1px solid var(--crm-gray-300);
+    border: 1px solid var(--crm-c-gray-300);
 }
 .crm-search .crm-search-admin-outer .crm-flex-4.panel .panel-body {
     border-radius: var(--crm-roundness);

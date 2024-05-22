@@ -10,7 +10,7 @@
 
 #bootstrap-theme .help-block {
 	display: block;
-	color: var(--crm-text);
+	color: var(--crm-c-text);
 	font-style: var(--crm-italic-style);
 	font-family: var(--crm-font-italic);
 	margin: var(--crm-s) 0 var(--crm-m);
@@ -67,7 +67,7 @@
 
 #bootstrap-theme .btn-link {
 	font-weight: 400;
-	color: var(--crm-link);
+	color: var(--crm-c-link);
 	border-radius: 0;
 }
 #bootstrap-theme .btn-link, #bootstrap-theme .btn-link:active, #bootstrap-theme .btn-link.active, #bootstrap-theme .btn-link[disabled], fieldset[disabled] #bootstrap-theme .btn-link {
@@ -78,12 +78,12 @@
 	border-color: transparent;
 }
 #bootstrap-theme .btn-link:hover, #bootstrap-theme .btn-link:focus {
-	color: var(--crm-link-hover);
+	color: var(--crm-c-link-hover);
 	text-decoration: var(--crm-link-decoration);
 	background-color: transparent;
 }
 #bootstrap-theme .btn-link[disabled]:hover, #bootstrap-theme .btn-link[disabled]:focus, fieldset[disabled] #bootstrap-theme .btn-link:hover, fieldset[disabled] #bootstrap-theme .btn-link:focus {
-	color: var(--crm-gray-800);
+	color: var(--crm-c-gray-800);
 	text-decoration: none;
 }
 
@@ -114,46 +114,46 @@
 	cursor: pointer;
 }
 #bootstrap-theme .label-default {
-	background-color: var(--crm-text);
-    color: var(--crm-light-text);
+	background-color: var(--crm-c-text);
+    color: var(--crm-c-light-text);
 }
 #bootstrap-theme .label-default[href]:hover, #bootstrap-theme .label-default[href]:focus {
 	background-color: gray;
 }
 #bootstrap-theme .label-primary {
-	background: var(--crm-primary);
-    color: var(--crm-primary-text);
+	background: var(--crm-c-primary);
+    color: var(--crm-c-primary-text);
 }
 #bootstrap-theme .label-primary[href]:hover, #bootstrap-theme .label-primary[href]:focus {
-	background: var(--crm-primary-hover);
+	background: var(--crm-c-primary-hover);
 }
 #bootstrap-theme .label-success {
-	background: var(--crm-success);
-    color: var(--crm-success-text);
+	background: var(--crm-c-success);
+    color: var(--crm-c-success-text);
 }
 #bootstrap-theme .label-success[href]:hover, #bootstrap-theme .label-success[href]:focus {
-	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-success);
+	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-success);
 }
 #bootstrap-theme .label-info {
-	background: var(--crm-info);
-    color: var(--crm-info-text);
+	background: var(--crm-c-info);
+    color: var(--crm-c-info-text);
 }
 #bootstrap-theme .label-info[href]:hover, #bootstrap-theme .label-info[href]:focus {
-	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-info);
+	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-info);
 }
 #bootstrap-theme .label-warning {
-	background: var(--crm-warning);
-    color: var(--crm-warning-text);
+	background: var(--crm-c-warning);
+    color: var(--crm-c-warning-text);
 }
 #bootstrap-theme .label-warning[href]:hover, #bootstrap-theme .label-warning[href]:focus {
-	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-warning);
+	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-warning);
 }
 #bootstrap-theme .label-danger {
-	background: var(--crm-alert);
-    color: var(--crm-alert-text);
+	background: var(--crm-c-alert);
+    color: var(--crm-c-alert-text);
 }
 #bootstrap-theme .label-danger[href]:hover, #bootstrap-theme .label-danger[href]:focus {
-	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-alert);
+	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-alert);
 }
 
 /* P A N E L S */
@@ -287,19 +287,19 @@
 	padding: var(--crm-s) var(--crm-m);
 	margin-left: -1px;
 	line-height: 1.4;
-	color: var(--crm-link);
+	color: var(--crm-c-link);
 	text-decoration: none;
-	background-color: var(--crm-page-background);
-	border: 1px solid var(--crm-divider);
+	background-color: var(--crm-c-page-background);
+	border: 1px solid var(--crm-c-divider);
 }
 #bootstrap-theme .pagination > li > a:hover, 
 #bootstrap-theme .pagination > li > a:focus, 
 #bootstrap-theme .pagination > li > span:hover, 
 #bootstrap-theme .pagination > li > span:focus {
 	z-index: 2;
-	color: var(--crm-link-hover);
-	background-color: var(--crm-background);
-	border-color: var(--crm-background4);
+	color: var(--crm-c-link-hover);
+	background-color: var(--crm-c-background);
+	border-color: var(--crm-c-background4);
 }
 #bootstrap-theme .pagination > li:first-child > a, 
 #bootstrap-theme .pagination > li:first-child > span {
@@ -319,10 +319,10 @@
 #bootstrap-theme .pagination > .active > span:hover, 
 #bootstrap-theme .pagination > .active > span:focus {
 	z-index: 3;
-	color: var(--crm-primary-text);
+	color: var(--crm-c-primary-text);
 	cursor: default;
-	background-color: var(--crm-primary);
-	border-color: var(--crm-primary);
+	background-color: var(--crm-c-primary);
+	border-color: var(--crm-c-primary);
 }
 #bootstrap-theme .pagination > .disabled > span, 
 #bootstrap-theme .pagination > .disabled > span:hover, 
@@ -330,10 +330,10 @@
 #bootstrap-theme .pagination > .disabled > a, 
 #bootstrap-theme .pagination > .disabled > a:hover, 
 #bootstrap-theme .pagination > .disabled > a:focus {
-	color: var(--crm-inactive);
+	color: var(--crm-c-inactive);
 	cursor: not-allowed;
 	background-color: transparent;
-	border-color: var(--crm-inactive);
+	border-color: var(--crm-c-inactive);
 }
 #bootstrap-theme .pagination-lg > li > a, 
 #bootstrap-theme .pagination-lg > li > span {

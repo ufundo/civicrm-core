@@ -8,12 +8,12 @@
     max-width: 30rem;
     height: 7.25rem;
     overflow: auto;
-    border: 1px solid var(--crm-gray-500);
+    border: 1px solid var(--crm-c-gray-500);
 }
 .crm-container ul.crm-checkbox-list {
     list-style: none;
     margin: 0;
-    background-color: var(--crm-page-background);
+    background-color: var(--crm-c-page-background);
     width: 300px;
     max-width: 100%;
     max-height: 300px;
@@ -34,22 +34,22 @@
     margin: 0 0 0 var(--crm-s);
 }
 .crm-container ul.crm-checkbox-list li {
-    background-color: var(--crm-background2);
+    background-color: var(--crm-c-background2);
     padding-inline: var(--crm-s) var(--crm-m2);
     word-break: break-all;
 }
 tbody.scrollContent tr.alternateRow {
-    background-color: var(--crm-background3);
+    background-color: var(--crm-c-background3);
     padding-inline: var(--crm-s) var(--crm-m2)
 }
 .crm-container ul.crm-checkbox-list li:nth-child(2n) {
-    background-color: var(--crm-background3);
+    background-color: var(--crm-c-background3);
 }
 .crm-container ul.crm-checkbox-list li:has(input:checked) {
-    background-color: var(--crm-yellow-light);
+    background-color: var(--crm-c-yellow-light);
 }
 .crm-container ul.crm-checkbox-list li:nth-child(2n):has(input:checked) {
-    background-color: var(--crm-yellow-less-light);
+    background-color: var(--crm-c-yellow-less-light);
 }
 
 /* Action Links */
@@ -90,7 +90,7 @@ table.advmultiselect {
     list-style: none;
     margin: 0 0 20px;
     line-height: normal;
-    background-color: var(--crm-background);
+    background-color: var(--crm-c-background);
     border: 1px solid var(--crm-wizard-border-col);
     border-radius: var(--crm-wizard-radius);
     overflow: hidden;
@@ -113,7 +113,7 @@ table.advmultiselect {
     background-color: var(--crm-wizard-bg);
     border: 0;
     border-radius: 0;
-    color: var(--crm-text);
+    color: var(--crm-c-text);
     display: inline-block;
     font-weight: var(--crm-bold-weight);
     font-family: var(--crm-font-bold);
@@ -317,7 +317,7 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 /* Alpha filter */
 
 .crm-container div#alpha-filter {
-    background-color: var(--crm-blue-light);
+    background-color: var(--crm-c-blue-light);
     margin: var(--crm-r) 0;
     padding: var(--crm-s2) 0;
     text-align: left;
@@ -365,20 +365,20 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 .crm-container .panel-footer {
 	padding: var(--crm-padding-reg);
     background: var(--crm-panel-background);
-	border-top: 1px solid var(--crm-divider);
+	border-top: 1px solid var(--crm-c-divider);
 	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
     box-shadow: var(--crm-panel-shadow);
 }
 .crm-container .panel > .panel-heading + .panel-collapse > .panel-body {
-	border-top-color: var(--crm-gray-300);
+	border-top-color: var(--crm-c-gray-300);
 }
 .crm-container .panel > .panel-footer + .panel-collapse > .panel-body {
-	border-color: var(--crm-gray-300);
+	border-color: var(--crm-c-gray-300);
 }
 .crm-container .panel-default > .panel-heading {
-    color: var(--crm-text);
-    background-color: var(--crm-background2);
-	border-color: var(--crm-gray-300);
+    color: var(--crm-c-text);
+    background-color: var(--crm-c-background2);
+	border-color: var(--crm-c-gray-300);
 }
 #crm-container .panel-title {
     font-size: 1rem;
@@ -386,56 +386,56 @@ fieldset.crm-inactive-dashlet-fieldset > div {
     margin: 0;
 }
 .crm-container .panel-default {
-    border-color: var(--crm-divider);
+    border-color: var(--crm-c-divider);
 }
 .crm-container .panel-default > .panel-heading .badge {
 	color: var(--crm-text-light);
-	background-color: var(--crm-gray-500);
+	background-color: var(--crm-c-gray-500);
 }
 .crm-container .panel-primary > .panel-heading {
-	color: var(--crm-primary-text);
-	background-color: var(--crm-primary);
-	border-color: var(--crm-gray-300);
+	color: var(--crm-c-primary-text);
+	background-color: var(--crm-c-primary);
+	border-color: var(--crm-c-gray-300);
 }
 .crm-container .panel-primary > .panel-heading .badge,
 .crm-container .panel-primary > .panel-heading a {
-	color: var(--crm-primary-text);
+	color: var(--crm-c-primary-text);
 }
 .crm-container .panel-success > .panel-heading {
-	color: var(--crm-success);
-	background-color: var(--crm-green-light);
-	border-color: var(--crm-gray-300);
+	color: var(--crm-c-success);
+	background-color: var(--crm-c-green-light);
+	border-color: var(--crm-c-gray-300);
 }
 .crm-container .panel-success > .panel-heading .badge,
 .crm-container .panel-success > .panel-heading a {
-	color: var(--crm-success);
+	color: var(--crm-c-success);
 }
 .crm-container .panel-info > .panel-heading {
 	color: var(--crm-alert-text-info);
 	background-color: var(--crm-alert-background-info);
-	border-color: var(--crm-gray-300);
+	border-color: var(--crm-c-gray-300);
 }
 .crm-container .panel-info > .panel-heading .badge,
 .crm-container .panel-info > .panel-heading a {
 	color: var(--crm-alert-text-info);
 }
 .crm-container .panel-warning > .panel-heading {
-	color: var(--crm-warning-text);
-	background-color: var(--crm-warning);
-	border-color: var(--crm-gray-300);
+	color: var(--crm-c-warning-text);
+	background-color: var(--crm-c-warning);
+	border-color: var(--crm-c-gray-300);
 }
 .crm-container .panel-warning > .panel-heading .badge,
 .crm-container .panel-warning > .panel-heading a {
-	color: var(--crm-warning-text);
+	color: var(--crm-c-warning-text);
 }
 .crm-container .panel-danger > .panel-heading {
-	color: var(--crm-alert);
-	background-color: var(--crm-red-light);
-	border-color: var(--crm-gray-300);
+	color: var(--crm-c-alert);
+	background-color: var(--crm-c-red-light);
+	border-color: var(--crm-c-gray-300);
 }
 .crm-container .panel-danger > .panel-heading .badge,
 .crm-container .panel-danger > .panel-heading a {
-	color: var(--crm-alert);
+	color: var(--crm-c-alert);
 }
 
 /* Badge - from BS3 */
@@ -448,11 +448,11 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 	font-weight: var(--crm-bold-weight);
 	font-family: var(--crm-font-bold);
 	line-height: 1;
-	color: var(--crm-page-background);
+	color: var(--crm-c-page-background);
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
-	background-color: var(--crm-primary);
+	background-color: var(--crm-c-primary);
 	border-radius: var(--crm-m1);
 	position: relative;
 	top: -1px;
@@ -470,8 +470,8 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 }
 .list-group-item.active > .badge, 
 .nav-pills > .active > a > .badge {
-	color: var(--crm-link);
-	background-color: var(--crm-page-background);
+	color: var(--crm-c-link);
+	background-color: var(--crm-c-page-background);
 }
 .nav-pills > li > a > .badge {
 	margin-left: 3px;
@@ -507,9 +507,9 @@ fieldset.crm-inactive-dashlet-fieldset > div {
     border-color: transparent;
 }
 .crm-container #civicrm-footer .status.crm-error {
-    background-color: var(--crm-alert);
-    color: var(--crm-alert-text);
+    background-color: var(--crm-c-alert);
+    color: var(--crm-c-alert-text);
 }
 .crm-container #civicrm-footer .status.crm-error a {
-    color: var(--crm-alert-text);
+    color: var(--crm-c-alert-text);
 }

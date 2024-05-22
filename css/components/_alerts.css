@@ -31,14 +31,14 @@
 .crm-container .help a, 
 .crm-container .messages a,
 .crm-container .btn {
-    color: var(--crm-link);
+    color: var(--crm-c-link);
     text-decoration: var(--crm-link-decoration);
 }
 .crm-container .help a:hover,
 .crm-container .messages a:hover, 
 .crm-container .help a:focus,
 .crm-container .messages a:focus {
-	color: var(--crm-link-hover) !important; 
+	color: var(--crm-c-link-hover) !important; 
 	text-decoration: var(--crm-link-decoration-hover); /* important used for Drupal Claro */
 }
 
@@ -53,7 +53,7 @@
 	appearance: none;
     font-size: var(--crm-r1);
     line-height: 1;
-    color: var(--crm-darkest) !important;
+    color: var(--crm-c-darkest) !important;
     text-shadow: 0 1px 0 #fff;
     font-family: var(--crm-font-bold);
     font-weight: var(--crm-bold-weight);
