@@ -10,9 +10,19 @@
    DRUPAL
 *******************/
 
-/* Drupal 7 - body.crm-menubar */
+/* Drupal - body.page-civicrm */
 
-/* Drupal 8+ -  */
+/* D7 */
+body.page-civicrm > #page {
+    padding: 0;
+    margin: 0;
+    --crm-page-padding: 1rem 3rem;
+}
+body.page-civicrm div.status {
+    background-image: none;
+}
+
+/* D8+ */
 
 body.page-civicrm header.content-header {
     margin-bottom: 0;
@@ -24,6 +34,10 @@ body.page-civicrm main.page-content {
 body.page-civicrm header + div.layout-container {
     background-color: var(--crm-c-page-background) !important;
     margin: 0 !important; /* use of important vs some themes */
+}
+/* D7 Seven */
+body.page-civicrm > #branding {
+    background-color: var(--crm-c-page-background);
 }
 /* D9 Claro */
 

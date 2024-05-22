@@ -346,6 +346,7 @@ input.crm-form-checkbox) + label {
 }
 .crm-container .select2-container-multi {
     min-width: 96px;
+    max-width: 100%;
 }
 .crm-container select.form-control,
 .crm-container .select2-container-multi .select2-choices,
@@ -510,6 +511,18 @@ input.crm-form-checkbox) + label {
     border-top: 1px solid var(--crm-input-border-color);
     margin-top: var(--crm-m);
 }
+.crm-container .crm-search .select2-results .select2-result-label {
+    font-size: var(--crm-font-size);
+    padding: var(--crm-s) var(--crm-m);
+    font-weight: var(--crm-bold-weight);
+    font-family: var(--crm-font-bold);
+}
+.crm-container .crm-search .crm-select2-row-description p {
+    font-weight: normal;
+    font-family: var(--crm-font);
+    margin: 0;
+    padding: 0;
+  }
 
 /* Dates */
 

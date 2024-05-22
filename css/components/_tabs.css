@@ -102,7 +102,7 @@
     width: 0 !important;
     padding: 0
 } 
-.crm-container .ui-tabs-panel {
+.crm-container .ui-tabs .ui-tabs-panel {
     background: var(--crm-tab-bg-active);
     padding: var(--crm-tab-padding);
 }

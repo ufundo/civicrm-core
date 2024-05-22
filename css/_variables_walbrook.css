@@ -1,4 +1,4 @@
-/* River Lee branch: Hoxton Square (aka Shoreditch 2.0) */
+/* River Lea branch: Walbrook (after River Walbrook, which runs under Shoreditch, London) */
 
 @import url('_fonts.css'); 
 :root{    
@@ -40,7 +40,7 @@ color-scheme: light dark;
 --crm-c-red-light: #ecb0be;
 --crm-c-red-dark: var(--crm-c-text);
 --crm-c-amber: #e6ab5e;
---crm-amber-light: #fbf0e2;
+--crm-c-amber-light: #fbf0e2;
 --crm-c-yellow: #f8e80b;
 --crm-c-yellow-light: #ffffcc;
 --crm-c-yellow-less-light: #fffdb2;

@@ -346,6 +346,11 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     padding: 0;
     border: 0 solid transparent;
 }
+#bootstrap-theme.crm-search fieldset legend {
+	padding: 0;
+	font-size: inherit;
+	background-color: transparent;
+}
 #bootstrap-theme.crm-search .crm-search-admin-relative details > fieldset .form-inline:not(td) {
     background: var(--crm-c-drag-background);
     border-radius: var(--crm-roundness);
@@ -613,12 +618,25 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 
 /* New mailing */
-.crmMailing-preview .preview-contact,
-.crmMailing-preview .preview-group {
+.crm-container .crmMailing-preview {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.crm-container .crmMailing-preview .preview-popup,
+.crm-container .crmMailing-preview .preview-contact,
+.crm-container .crmMailing-preview .preview-group {
 	display: flex;
+	flex-direction: column;
 	height: auto;
 	align-items: center;
 	gap: var(--crm-m);
+	width: 100%;
+}
+.crmMailing .preview-popup, .crmMailing .preview-contact {
+	border-right: 1px solid var(--crm-c-divider);
+}
+.crm-container .crmMailing-preview .clear {
+	display: none;
 }
 /* Cases dashboard */
 .crm-container .crm-case-dashboard-switch-view-buttons {
