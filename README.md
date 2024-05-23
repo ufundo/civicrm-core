@@ -1,6 +1,6 @@
 # RiverLea Theme Framework
 
-Theme architecture for CiviCRM that separates visual/UI CSS from structural CSS using CSS variables. It currently has two variations, or 'streams': Hoxton, based on Shoreditch, and Abingdon, based on Grenwich. Edit civicrm.css file to swap between them.
+Theme architecture for CiviCRM that separates visual/UI CSS from structural CSS using CSS variables. It currently has two variations, or 'streams': Minetta and Walbrook, named after streams that run under Greenwich, NYC and Shoreditch, London.
 
 The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
@@ -33,6 +33,4 @@ cv en riverlea
 
 ## Usage
 
-After installing the extension, select it via Nav menu > Administer > Customize Data and Screens > Display Preferences, and save.
-
-In some instances, after upgrading CiviCRM, the theme defaults back to Civi's default theme and you will need to disable and re-enable the theme extension.
+After installing the extension, go to Nav menu > Administer > Customize Data and Screens > Display Preferences, and select which theme variation/stream you want (they start with the name 'Riverlea').
