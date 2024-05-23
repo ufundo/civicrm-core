@@ -199,6 +199,10 @@ trait DAOActionTrait {
         continue;
       }
       [$fieldName, $fkField] = explode('.', $key);
+      if ($record[$fieldName] ?? NULL) {
+        // dont need to resolve if already set explicitly
+        continue;
+      }
       $field = $this->entityFields()[$fieldName] ?? NULL;
       if (!$field || empty($field['fk_entity'])) {
         continue;
@@ -264,7 +268,7 @@ trait DAOActionTrait {
 
       // Match contact id to strings like "user_contact_id"
       // FIXME handle arrays for multi-value contact reference fields, etc.
-      if (in_array($field['data_type'], ['ContactReference', 'EntityReference']) && is_string($value) && !is_numeric($value)) {
+      if ($field['data_type'] === 'ContactReference' && is_string($value) && !is_numeric($value)) {
         // FIXME decouple from v3 API
         require_once 'api/v3/utils.php';
         $value = \_civicrm_api3_resolve_contactID($value);
