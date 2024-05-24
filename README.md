@@ -17,8 +17,8 @@ install it with the command-line tool [cv](https://github.com/civicrm/cv).
 
 ```bash
 cd <extension-dir>
-wget https://lab.civicrm.org/extensions/riverlea/-/archive/master/riverlea-riverlea.zip
-unzip riverlea-riverlea.zip
+wget https://lab.civicrm.org/extensions/riverlea/-/archive/main/riverlea-main.zip
+unzip riverlea-main.zip
 ```
 
 ## Installation (CLI, Git)
