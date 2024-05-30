@@ -1,12 +1,15 @@
+/* The Bootstrap typically bundled has been re-structured in River Lea:	
+	- Some of it that wasn't being used (e.g. Glyphicons, Carousels) is deleted / commented out
+	- Some of it is taken out of the #bootstrap-theme namespace and added to /components/ typically marked, e.g. 'BS alerts'
+	- Some of it has been taken out and put below with as much integration with the rest of River Lea's CSS variables.
+	- The rest of it sits in _bootstrap3.css, an ever-shrinking version of the original Civi Bootstrap file.
+*/
+
 @import url(_bootstrap3.css);
 
-/* NB: Where possible bootstrap classnames are defined with their CiviCRM-equivalent classnames in the component files, without namespacing (so usable anywhere). 
-   Where that's not possible, ie for Bootstrap elements that don't have a Civi equivalent (e.g. 'labels') they are listed here, with namespacing because of possible clashes. 
-   Over time, '_bootstrap.css' should become empty as Bootstrap elements are merged, added below, or dropped */
-
 /* 
-	  T Y P E 
-	  			*/
+	  TYPE 
+	  		*/
 
 #bootstrap-theme .help-block {
 	display: block;
@@ -18,8 +21,8 @@
 }
 
 /* 
-      A L E R T S
-                       */
+      ALERTS
+            	*/
 
 #bootstrap-theme .alert h4 {
     margin-top: 0;
@@ -60,8 +63,8 @@
 }
 
 /*
-      B U T T O N S
-                              */
+      BUTTONS
+                */
 
 /* Namespaced attributes (deprecate?) */
 
@@ -88,8 +91,8 @@
 }
 
 /* 
-    L A B E L S
-                    */
+    LABELS
+            */
 
 #bootstrap-theme .label {
 	display: inline;
@@ -156,7 +159,7 @@
 	background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-alert);
 }
 
-/* P A N E L S */
+/* PANELS */
 
 /* With list groups - https://getbootstrap.com/docs/3.4/components/#panels-list-group */
 
@@ -267,8 +270,8 @@
 }
 
 /* 
-	P A G I N A T I O N
-						*/
+	PAGINATION
+				*/
 
 
 #bootstrap-theme .pagination {

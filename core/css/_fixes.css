@@ -734,23 +734,23 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	grid-template-columns: 1fr 1fr;
 	gap: var(--crm-r);
 }
-#afGuiEditor .af-gui-columns fieldset:last-of-type {
+/* #afGuiEditor .af-gui-columns fieldset:last-of-type {
 	grid-column: 1 / span 2;
-}
+} */
 #afGuiEditor .af-gui-entity-values legend,
 #afGuiEditor .af-gui-entity-palette legend {
 	font-size: var(--crm-font-size);
 }
 #afGuiEditor-palette-config .panel-body {
-	padding: var(--crm-padding-reg);
+	padding: var(--crm-padding-reg) !important;
 }
 #afGuiEditor-palette-config .af-gui-entity-values hr {
 	display: none;
 }
 #afGuiEditor-palette-config .af-gui-entity-palette [type="search"] {
 	display: block;
-	top: 1rem;
-	width: calc(100% - 10px);
+	top: 1rem !important;
+	width: calc(100% - 10px) !important;
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
 	border-color: var(--crm-c-divider);
 }
@@ -782,7 +782,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	font-size: var(--crm-font-size);
 }
 #afGuiEditor-canvas [ui-sortable] {
-	margin-top: 5px;
+	margin-top: 5px !important;
 }
 #afGuiEditor .af-gui-container {
 	padding: var(--crm-m);
@@ -822,10 +822,8 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	padding-top: var(--crm-m);
 }
 #afGuiEditor .af-gui-element {
-	position: relative;
-	padding: 0 var(--crm-s) var(--crm-s);
-	display: block;
-	min-height: var(--crm-l);
+	padding: 0 var(--crm-s) var(--crm-s) !important;
+	min-height: var(--crm-l) !important;
 	background: var(--crm-c-background2);
 	border-radius: var(--crm-roundness);
 	margin-bottom: var(--crm-s2);

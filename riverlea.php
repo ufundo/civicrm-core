@@ -13,29 +13,7 @@ function riverlea_civicrm_config(&$config) {
 }
 
 /**
- * Supports multiple theme variations/streams.
- */
-
- function riverlea_civicrm_themes(&$themes) {
-  $themes['minetta'] = array(
-    'ext' => 'riverlea',
-    'title' => 'Riverlea: Minetta (~Greenwich)',
-    'prefix' => 'minetta/',
-  );
-  $themes['walbrook'] = array(
-    'ext' => 'riverlea',
-    'title' => 'Riverlea: Walbrook (~Shoreditch)',
-    'prefix' => 'walbrook/',
-  );
-  $themes['_riverlea_core_'] = array(
-    'ext' => 'riverlea',
-    'title' => 'Riverlea: base theme',
-    'prefix' => 'core/',
-  );
-}
-
-/**
- * Implements hook_civicrm_alterBundle(). Add Bootstrap.
+ * Implements hook_civicrm_alterBundle(). Not sure if this still does anything - remove?
  */
 
 function riverlea_civicrm_alterBundle(CRM_Core_Resources_Bundle $bundle) {

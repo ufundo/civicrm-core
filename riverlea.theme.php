@@ -7,5 +7,4 @@ return array (
   'prefix' => NULL,
   'url_callback' => '\\Civi\\Core\\Themes\\Resolvers::simple',
   'search_order' => ['riverlea', '_fallback_'],
-  'excludes' => ['css/bootstrap.css'],
 );
