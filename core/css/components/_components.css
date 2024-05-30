@@ -438,7 +438,7 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 	color: var(--crm-c-alert);
 }
 
-/* Badge - from BS3 */
+/* Badges - from BS3 */
 
 .crm-container .badge {
 	display: inline-block;
@@ -481,6 +481,80 @@ fieldset.crm-inactive-dashlet-fieldset > div {
 	color: white;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+/* BS .label - this becomes .badge in Bootstrap 4+ */
+
+.crm-container .label{
+    display:inline;
+    padding: var(--crm-padding-small);
+    font-size:75%;
+    font-weight:700;
+    line-height:1;
+    color:var(--crm-text-light);
+    text-align:center;
+    white-space:nowrap;
+    vertical-align:baseline;
+    border-radius: var(--crm-roundness);
+}
+.crm-container .label:empty{
+    display:none
+}
+.btn .crm-container .label{
+    position:relative;
+    top:-1px;
+}
+.crm-container a.label:hover,
+.crm-container a.label:focus{
+    color:#fff;
+    text-decoration:none;
+    cursor:pointer
+}
+.crm-container .label-default{
+    background-color: var(--crm-c-background4);
+}
+.crm-container .label-default[href]:hover,
+.crm-container .label-default[href]:focus{
+    background-color: var(--crm-c-background5)}
+.crm-container .label-primary{
+    background-color: var(--crm-c-primary);
+    color: var(--crm-c-primary-text);
+}
+.crm-container .label-primary[href]:hover,
+.crm-container .label-primary[href]:focus{
+    background-color: var(--crm-c-primary-hover);
+}
+.crm-container .label-success{
+    background-color: var(--crm-c-success);
+    color: var(--crm-c-success-text);
+}
+.crm-container .label-success[href]:hover,
+.crm-container .label-success[href]:focus{
+    background-color: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-success);
+}
+.crm-container .label-info{
+    background-color: var(--crm-c-info);
+    color: var(--crm-c-info-text);
+}
+.crm-container .label-info[href]:hover,
+.crm-container .label-info[href]:focus{
+   background-color: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-info);
+}
+.crm-container .label-warning{
+    background-color: var(--crm-c-warning);
+    color: var(--crm-c-warning-text);
+}
+.crm-container .label-warning[href]:hover,
+.crm-container .label-warning[href]:focus{
+    background-color:linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-warning);
+}
+.crm-container .label-danger{
+    background-color: var(--crm-c-alert);
+    color: var(--crm-c-alert-text);
+}
+.crm-container .label-danger[href]:hover,
+.crm-container .label-danger[href]:focus{
+    background-color:linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-alert);
 }
 
 /* Footer */
