@@ -18,6 +18,8 @@ class CRM_Standaloneusers_Upgrader extends CRM_Extension_Upgrader_Base {
    * @throws \CRM_Core_Exception
    */
   public function onInstall() {
+    CRM_Core_DAO::executeQuery("DROP TABLE civicrm_uf_match");
+
     $config = \CRM_Core_Config::singleton();
     // We generally only want to run on standalone. In theory, we might also run headless tests.
     if (!in_array(get_class($config->userPermissionClass), ['CRM_Core_Permission_Standalone', 'CRM_Core_Permission_Headless'])) {
