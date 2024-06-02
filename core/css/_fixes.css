@@ -178,7 +178,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 
 #crm-container a.button,
 .crm-container button,
-.crm-container .ui-button {
+.crm-container .ui-button:not(.ui-button-icon-only) {
 	display: inline-block;
 	text-align: var(--crm-btn-align);
 	white-space: nowrap;
