@@ -1,4 +1,5 @@
-/* River Lea branch: Walbrook (after River Walbrook, which runs under Shoreditch, London) */
+/* River Lea v0.4.
+   Walbrook (after River Walbrook, which runs under Shoreditch, London) */
 
 @import url('_fonts.css'); 
 :root{    
@@ -346,7 +347,7 @@ color-scheme: light dark;
 --crm-wizard-bg: var(--crm-c-background);
 }
 
-/* light/dark mode settings */
+/* light/dark mode settings - currently inactive
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -361,7 +362,8 @@ color-scheme: light dark;
         --crm-red-alert: #B24B4F;
         --crm-blue-info: #2C99A4;
 
-        /* And others */
+        /* And others 
         --crm-expand-border: 1px solid #fff;
     }
 }
+*/

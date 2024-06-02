@@ -82,7 +82,6 @@ body.page-civicrm > #branding {
     font-weight: inherit;
 }
 
-
 /******************
    JOOMLA
 *******************/
@@ -110,12 +109,18 @@ body.admin.com_civicrm.layout-default .crm-container details summary ~ * {
    WORDPRESS
 *******************/
 
+body.wp-admin #wpcontent {
+    padding-left: 0; /* resets WP margin */
+} 
 body.wp-admin {
-    --crm-page-padding: 1rem 2rem 1rem 1rem;
+    --crm-page-padding: 1rem 2rem;
     font-size: 100%;
 }
 body.wp-admin #crm-container {
     background: transparent;
+}
+body.wp-admin .breadcrumb {
+    display: none; /* removes breadcrumb */
 }
 
 /******************

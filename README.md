@@ -8,7 +8,8 @@ The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
 - 0.1 - proof-of-concept, Brunswick, empty theme structure doing just two things: for older CMS interfaces enforces a 100% font-size default to cascade the browser default font-size, and demonstrates a 1rem variable on top of that for some Civi body text sizes. The computed font-size of Civi paragraph and table text should show as 16px in Inspector (for standard setups).
 - 0.2 - adds a bunch of css variables for testing/dev, adds the entirity of the current Greenwich Bootstrap 3 build to start cutting it back, and adds a components directory with initial component 'accordions' (with animated exapnd/close + CSS variables). Separate components files will likely be merged when the extension is moving to testing, to reduce http requests.
-- 0.3 - Backdrop, Drupal7 + Seven, Drupal9 + Claro/Seven, Joomla 4, Standalone, WordPress. Loads with two theme variations/streams: Minetta and Walbrook. Does not cover: front-end layouts, < 1000px screens, Joomla 3, other Drupal admin themes, light/dark modes. CSS files restructure into `/core/css` and `[stream-name]/css/` with stream variables defined in `[stream-name]/css/_variables.css`.
+- 0.3 - Backdrop, Drupal7 + Seven, Drupal9 + Claro/Seven, Joomla 4, Standalone, WordPress. Loads with two theme variations/streams: Minetta and Walbrook. Does not cover: front-end layouts, < 1000px screens, Joomla 3, other Drupal admin themes, light/dark modes. 
+- 0.4 - CSS files restructure into `/core/css` and `/streams/[stream-name]/css/` with stream variables defined in `[stream-name]/css/_variables.css`. Variables files are version-numbered - 0.4 with this version. Version numbers should only increase when the CSS Variables in these files change name, are removed or added.
 
 ## Installation (CLI, Zip)
 
@@ -34,3 +35,29 @@ cv en riverlea
 ## Usage
 
 After installing the extension, go to Nav menu > Administer > Customize Data and Screens > Display Preferences, and select which theme variation/stream you want (they start with the name 'Riverlea').
+
+## Creating new 'streams'
+
+NB: this is an early alpha level release and the variables files are likely to change, so branched streams may go out of sync with the core variables. Compare the version number
+
+1. Duplicate the directory 'empty' in /streams/ and rename it the name of the stream.
+2. In riverlea.php add a theme array to the function 'riverlea_civicrm_themes(&$themes)'.
+3. Edit /streams/[streamname]/css/_variables.css with your custom css variables. You can link to other CSS files in this file.
+
+E.g. to add a stream called "System 7", you would name the directory 'system7', and add the following:
+
+```
+ function riverlea_civicrm_themes(&$themes) {
+  $themes['minetta'] = array(
+    'ext' => 'riverlea',
+    'title' => 'Riverlea: System 7',
+    'prefix' => 'streams/system7/',
+  );
+  $themes['minetta'] = array(
+    'ext' => 'riverlea',
+    'title' => 'Riverlea: Minetta (~Greenwich)',
+    'prefix' => 'streams/minetta/',
+  );
+  … 
+ }
+```

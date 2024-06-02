@@ -149,7 +149,7 @@
     right: var(--crm-r2);
     z-index: 999999;
 }
-.crm-container #crm-notification-container div.ui-notify-message-style {
+#crm-notification-container div.ui-notify-message-style {
     background: var(--crm-notify-background);
     box-shadow: var(--crm-popup-shadow);
     color: var(--crm-notify-col);
@@ -162,20 +162,17 @@
     border-style: solid;
     border-color: var(--crm-700-gray);
 }
-.crm-container #crm-notification-container div.ui-notify-message-style.error {
+#crm-notification-container div.ui-notify-message-style.error {
     border-color: var(--crm-c-alert);
 }
-.crm-container #crm-notification-container div.ui-notify-message-style.alert,
-.crm-container #crm-notification-container div.ui-notify-message-style.warning {
+#crm-notification-container div.ui-notify-message-style.alert,
+#crm-notification-container div.ui-notify-message-style.warning {
     border-color: var(--crm-c-warning);
 }
-.crm-container #crm-notification-container div.ui-notify-message-style.success {
+#crm-notification-container div.ui-notify-message-style.success {
     border-color: var(--crm-c-success);
 }
-.crm-container #crm-notification-container div.ui-notify-message-style.info {
-    border-color: var(--crm-c-info);
-}
-.crm-container #crm-notification-container div.ui-notify-message-style.info {
+#crm-notification-container div.ui-notify-message-style.info {
     border-color: var(--crm-c-info);
 }
 #crm-notification-container div.ui-notify-message:last-child {
@@ -199,6 +196,7 @@
     margin: 0 var(--crm-r);
     padding: var(--crm-m) 0 var(--crm-m) var(--crm-m);
     color: var(--crm-notify-col);
+    list-style: unset;
 }
 .crm-container #crm-notification-container div.ui-notify-message .notify-content p {
     color: var(--crm-notify-col);

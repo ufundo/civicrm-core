@@ -51,6 +51,10 @@ header, hgroup, main, menu, nav, section, summary) {
 .crm-container table {
     border-collapse: collapse;
 }
+.crm-container table tr,
+.crm-container table td {
+    height: unset;
+}
 
 /* JQueryUI resets */
 

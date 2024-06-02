@@ -1,4 +1,5 @@
-/* River Lea branch: Minetta (after Minetta Creek, which runs under Greenwich, New York) */
+/* River Lea v0.4.
+   Branch: Minetta (after Minetta Creek, which runs under Greenwich, New York) */
 
 :root { 
 
@@ -346,7 +347,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-wizard-bg: var(--crm-c-page-background);
 }
 
-/* light/dark mode settings */
+/* light/dark mode settings - currently inactive
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -356,8 +357,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
         --background3: var(--crm-c-gray-800);
         --background4: var(--crm-c-gray-700);
 
-        /* Not yet changing: */
-        --crm-rimary: var(--crm-c-dark-teal); 
+        /* Not yet changing: 
+        --crm-primary: var(--crm-c-dark-teal); 
         --crm-c-secondary: var(--crm-c-red);
         --crm-green-success: var(--crm-c-green);
         --crm-red-alert: var(--crm-c-red);
@@ -365,3 +366,4 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 
     }
 }
+*/
