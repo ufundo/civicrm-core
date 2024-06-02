@@ -107,12 +107,12 @@
     padding: var(--crm-dash-block-padding);
 }
 #crm-container div.crm-summary-row {
-    background-color: var(--crm-c-background);
+    background-color: var(--crm-c-background) !important; /* vs contactSummary.css */
 }
 #contact-summary div.crm-summary-row div.crm-label {
-    background-color: var(--crm-dash-label-bg);
-    color: var(--crm-c-text);
-    padding: var(--crm-m);
+    background-color: var(--crm-dash-label-bg) !important; /* vs contactSummary.css */
+    color: var(--crm-c-text) !important; /* vs contactSummary.css */
+    padding: var(--crm-m) !important; /* vs contactSummary.css */
     font-weight: var(--crm-bold-weight);
     font-family:  var(--crm-font-bold);
     font-size: var(--crm-font-size);
