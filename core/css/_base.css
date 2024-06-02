@@ -2,40 +2,49 @@
    RESETS
 *******************/
 
-.crm-container:where(span, applet, object,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center, dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark) {
-    all: unset;
-    display: revert;
-}
-.crm-container:where(article, aside, details, figcaption, figure, footer, 
-header, hgroup, main, menu, nav, section, summary) {
-    display: block;
-}
 .crm-container *,
 .crm-container *::before,
 .crm-container *::after {
     box-sizing: border-box;
 }
+#crm-container .hiddenElement,
+.crm-container .hiddenElement,
+.crm-container .collapse {
+	display: none;
+} 
 #crm-container .clear,
 .crm-container .clear {
 	clear: both;
 }
-/* Reapply the pointer cursor for anchor tags */
-.crm-container a, .crm-container button {
-    cursor: revert;
+.crm-container table,
+.crm-container th,
+.crm-container tr,
+.crm-container td,
+.crm-container details {
+	background-color: transparent;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    border-radius: unset;
+    height: unset;
+    color: inherit;
+    line-height: inherit;
+    font-family: inherit;
+    font-size: inherit;
+}
+.crm-container tr:hover, 
+.crm-container tr:focus {
+	background-color: transparent;
+}
+#crm-container .clear,
+.crm-container .clear {
+	clear: both;
 }
 /* Remove list styles (bullets/numbers) */
-.crm-container ol, .crm-container ul, .crm-container menu {
+.crm-container ol,
+.crm-container ul,
+.crm-container menu {
     list-style: none;
 }
 /* For images to not be able to exceed their container */
@@ -50,10 +59,6 @@ header, hgroup, main, menu, nav, section, summary) {
 }
 .crm-container table {
     border-collapse: collapse;
-}
-.crm-container table tr,
-.crm-container table td {
-    height: unset;
 }
 
 /* JQueryUI resets */
