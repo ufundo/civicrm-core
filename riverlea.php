@@ -35,41 +35,17 @@ function riverlea_civicrm_config(&$config) {
 }
 
 /**
- * Implements hook_civicrm_alterBundle(). Add Bootstrap.
+ * Implements hook_civicrm_alterBundle(). Add Bootstrap JS.
  */
 
 function riverlea_civicrm_alterBundle(CRM_Core_Resources_Bundle $bundle) {
   $theme = Civi::service('themes')->getActiveThemeKey();
-  if ($theme !== 'riverlea') {
-    return;
-  }
-
-  switch ($theme . ':' . $bundle->name) {
-    case 'riverlea:bootstrap3':
-      $bundle->clear();
-      $bundle->addStyleFile('riverlea', 'css/bootstrap3.css');
       $bundle->addScriptFile('riverlea', 'js/bootstrap.min.js', [
         'translate' => FALSE,
       ]);
-      $bundle->addScriptFile('riverlea', 'js/noConflict.js', [
-        'translate' => FALSE,
-      ]);
-      break;
+      $bundle->addScriptFile('riverlea', 'js/noConflict.js');
+      return $bundle ;
   }
-  if ($bundle->name == 'coreStyles') {
-    $bundle->filter(function($snippet) {
-      if ($snippet['name'] == 'civicrm:css/civicrm.css') {
-        $snippet['weight'] = 290;
-        return $snippet;
-      }
-      elseif (($snippet['name'] == 'civicrm:css/custom.css') or (strpos($snippet['name'], 'custom.css') !== false)) {
-        $snippet['weight'] = 300;
-        return $snippet;
-      }
-      return TRUE;
-    });
-  }
-}
 
 /**
  * Implements hook_civicrm_install().
