@@ -719,9 +719,9 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	width: fit-content !important;
 }
 #afGuiEditor .panel-heading ul.nav-tabs li > a {
-	font-size: var(--crm-font-size);
-	padding: var(--crm-s1) var(--crm-m2);
-	height: auto;
+	font-size: var(--crm-font-size) !important; /* vs api4-explorer.css */
+	padding: var(--crm-s1) var(--crm-m2) !important; /* vs api4-explorer.css */
+	height: auto !important; /* vs api4-explorer.css */
 }
 #afGuiEditor fieldset legend {
 	padding-top: var(--crm-s);

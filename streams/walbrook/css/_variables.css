@@ -77,7 +77,7 @@ color-scheme: light dark;
 --crm-c-info: var(--crm-c-blue);
 --crm-c-info-text: var(--crm-c-light-text);
 --crm-c-focus: var(--crm-blue-mid);
---crm-c-inactive: var(--crm-c-background5);
+--crm-c-inactive: var(--crm-c-background2);
 
 /* SHADOWS */
 --crm-block-shadow: 0 3px 18px 0 rgba(48,40,40,.25);
