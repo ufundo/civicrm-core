@@ -39,12 +39,20 @@ function riverlea_civicrm_config(&$config) {
  */
 
 function riverlea_civicrm_alterBundle(CRM_Core_Resources_Bundle $bundle) {
-  $theme = Civi::service('themes')->getActiveThemeKey();
-      $bundle->addScriptFile('riverlea', 'js/bootstrap.min.js', [
-        'translate' => FALSE,
-      ]);
-      $bundle->addScriptFile('riverlea', 'js/noConflict.js');
-      return $bundle ;
+  $themeKey = Civi::service('themes')->getActiveThemeKey();
+  $themeExt = Civi::service('themes')->get($themeKey)['ext'];
+  if ($themeExt !== 'riverlea') {
+    return;
+  }
+  if ($bundle->name === 'bootstrap3') {
+    $bundle->clear();
+    $bundle->addStyleFile('riverlea', 'css/bootstrap3.css');
+    $bundle->addScriptFile('riverlea', 'js/bootstrap.min.js', [
+      'translate' => FALSE,
+    ]);
+    $bundle->addScriptFile('riverlea', 'js/noConflict.js', [
+      'translate' => FALSE,
+    ]);
   }
 
 /**
