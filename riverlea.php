@@ -24,7 +24,7 @@ function riverlea_civicrm_config(&$config) {
   );
   $themes['walbrook'] = array(
     'ext' => 'riverlea',
-    'title' => 'Riverlea: Walbrook (~Shoreditch)',
+    'title' => 'Riverlea: Walbrook (~Shoreditch/Island)',
     'prefix' => 'streams/walbrook/',
   );
   $themes['_riverlea_core_'] = array(

@@ -81,6 +81,13 @@ body.page-civicrm > #branding {
 #block-seven-content .label {
     font-weight: inherit;
 }
+/* Bootstrap 4 */
+
+body.page-civicrm main > .container:has(#block-bootstrap4-content) {
+    max-width: 100%;
+    background: var(--crm-c-page-background);
+}
+
 
 /******************
    JOOMLA
@@ -121,6 +128,9 @@ body.admin.com_civicrm.layout-default .crm-container details summary ~ * {
 body.wp-admin #wpcontent {
     padding-left: 0; /* resets WP padding */
 } 
+body.wp-admin li {
+    margin: 0; /* resets WP li bottom margin */
+}
 body.wp-admin {
     --crm-page-padding: 1rem 2rem;
     font-size: 100%;

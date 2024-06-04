@@ -677,6 +677,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	display: flex;
 	align-items: center;
 	gap: var(--crm-m);
+	flex-wrap: wrap;
 }
 .crm-container .api4-explorer-row .nav-tabs {
 	border-bottom: 0;
@@ -697,10 +698,11 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	margin: 0;
 }
 #bootstrap-theme.api4-explorer-page .explorer-params-panel .panel-heading {
-	padding-top: 0;
+	padding: var(--crm-s) !important;  /* vs api4-explorer.css */
+	height: auto;
 }
 #bootstrap-theme.api4-explorer-page .explorer-params-panel .panel-heading button {
-	position: unset;
+	position: unset !important; /* vs api4-explorer.css */
 }
 #afGuiEditor-palette .form-group label {
 	width: 100%;
