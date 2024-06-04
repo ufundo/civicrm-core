@@ -106,7 +106,7 @@
 #contact-summary div.crm-clear {
     padding: var(--crm-dash-block-padding);
 }
-#crm-container div.crm-summary-row {
+.crm-container div.crm-summary-row {
     background-color: var(--crm-c-background) !important; /* vs contactSummary.css */
 }
 #contact-summary div.crm-summary-row div.crm-label {

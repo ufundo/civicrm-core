@@ -13,6 +13,7 @@
 .crm-container ul.crm-checkbox-list {
     list-style: none;
     margin: 0;
+    padding: 0;
     background-color: var(--crm-c-page-background);
     width: 300px;
     max-width: 100%;
