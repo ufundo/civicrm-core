@@ -54,7 +54,7 @@ function riverlea_civicrm_alterBundle(CRM_Core_Resources_Bundle $bundle) {
       'translate' => FALSE,
     ]);
   }
-
+}
 /**
  * Implements hook_civicrm_install().
  *
