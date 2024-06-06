@@ -10,7 +10,7 @@
 /* Reset */
 
 .crm-container .widget-content .crm-accordion-wrapper.collapsed .crm-accordion-header,
-#crm-container .widget-content .crm-accordion-header,
+.crm-container .widget-content .crm-accordion-header,
 .crm-container .crm-accordion-inner .crm-accordion-header, 
 .crm-container .crm-accordion-wrapper .crm-master-accordion-header, 
 .crm-container .crm-collapsible .collapsible-title,
@@ -89,7 +89,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	color: inherit;
 }
 
-/* Header  - NB: use of #crm-container is typically used to override external css files, e.g. dashboard.css */
+/* Header */
 
 .crm-container .crm-accordion-header,
 .crm-container .crm-collapsible .collapsible-title,
@@ -107,7 +107,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container .crm-collapsible.collapsed .collapsible-title {
 	border-radius: var(--crm-roundness);
 }
-#crm-container .widget-content .crm-accordion-header,
+.crm-container .widget-content .crm-accordion-header,
 .crm-container .crm-accordion-inner .crm-accordion-header,
 .crm-container .crm-collapsible .collapsible-title{
 	background-color: transparent;
@@ -140,7 +140,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	box-shadow: var(--crm-expand-body-box-shadow);
 	animation: crm-details-show .3s ease-in-out;
 }
-#crm-container .widget-content .crm-accordion-body,
+.crm-container .widget-content .crm-accordion-body,
 .crm-container .crm-collapsible .crm-summary-block {
 	padding: var(--crm-expand-body-padding);
 }
@@ -148,7 +148,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	border: var(--crm-expand-body2-border);
 	background-color: var(--crm-expand-body2-bg);
 }
-#crm-container summary label {
+.crm-container summary label {
 	color: inherit;
 	font-size: inherit;
 }
@@ -176,7 +176,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	  For buttons not using .crm-button or .btn or <button>
 *******************/
 
-#crm-container a.button,
+.crm-container a.button,
 .crm-container button,
 .crm-container .ui-button:not(.ui-button-icon-only) {
 	display: inline-block;
@@ -193,7 +193,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	user-select: none;
 	margin-bottom: 0;
 	background-color: var(--crm-c-primary);
-	color: var(--crm-c-primary-text) !important;
+	color: var(--crm-c-primary-text); /* Somewhere this needs to be !important but removing for now */
 	line-height: 1.5;
 	display: flex;
 	align-items: center;
@@ -213,7 +213,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     color: inherit;
     padding: 0;
 }
-#crm-container a.button,
+.crm-container a.button,
 .crm-container [type="button"] {
     background: var(--crm-c-secondary);
     color: var(--crm-c-secondary-text);
@@ -233,8 +233,8 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     font-weight: normal;
 	text-decoration: none;
 }
-#crm-container .crm-actions-ribbon a.button:not(.delete):hover,
-#crm-container .crm-actions-ribbon a.button:not(.delete):focus,
+.crm-container .crm-actions-ribbon a.button:not(.delete):hover,
+.crm-container .crm-actions-ribbon a.button:not(.delete):focus,
 .crm-container .action-link a.button:hover,
 .crm-container .action-link a.button:focus {
     background: var(--crm-c-secondary-hover);
@@ -265,7 +265,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     font-size: var(--crm-small-font-size);
     border-radius: var(--crm-roundness);
 } 
-#crm-container .btn-group-xs button {
+.crm-container .btn-group-xs button {
     padding: var(--crm-xs) var(--crm-s);
     font-size: var(--crm-small-font-size);
 }
@@ -414,7 +414,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 	padding-inline: var(--crm-expand-2-body-padding);
 	margin-bottom: var(--crm-expand-2-body-padding);
 }
-#crm-container .crm-add-address-wrapper {
+.crm-container .crm-add-address-wrapper {
 	height: auto;
 }
 
@@ -424,8 +424,8 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 	grid-template-columns: 1fr 1fr;
 	column-gap: var(--crm-dash-panel-padding);
 }
-#crm-container div.contactCardLeft,
-#crm-container div.contactCardRight {
+.crm-container div.contactCardLeft,
+.crm-container div.contactCardRight {
 	width: 100%;
 	display: block;
 	float: none;
@@ -440,14 +440,14 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 #crm-main-content-wrapper:has(.crm-contact-page) {
     box-shadow: var(--crm-block-shadow);
 }
-#crm-container div.crm-summary-contactname-block {
+.crm-container div.crm-summary-contactname-block {
     background: var(--crm-dash-header-bg);
     color: var(--crm-dash-header-col);
     min-height: 60px;
     padding: var(--crm-dash-header-padding);
     position: relative;
 }
-#crm-container #crm-contactname-content .crm-summary-display_name {
+.crm-container #crm-contactname-content .crm-summary-display_name {
     padding: var(--crm-dash-header-padding);
     font-size: var(--crm-dash-header-size);
     padding-inline: 0;
@@ -458,12 +458,12 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
     margin-bottom: 0;
     clear: both;
 }
-#crm-container #crm-contactname-content > .crm-inline-block-content {
+.crm-container #crm-contactname-content > .crm-inline-block-content {
     display: flex;
     gap: var(--crm-r);
     align-items: center;
 }
-#crm-container #crm-contactname-content .crm-edit-help {
+.crm-container #crm-contactname-content .crm-edit-help {
     order: 2;
     position: relative;
     height: var(--crm-l);
@@ -665,7 +665,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	display: flex;
 	align-items: center;
 }
-#crm-container .api4-explorer-row .panel-heading h3 {
+.crm-container .api4-explorer-row .panel-heading h3 {
 	background: transparent;
 }
 .crm-container .api4-explorer-row .explorer-code-panel .panel-heading {

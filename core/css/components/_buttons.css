@@ -62,14 +62,12 @@
     color: var(--crm-c-secondary-text);
 }
 .crm-container a.button.delete-button, 
-.crm-container a.button.delete, 
-#crm-container a.button.delete {
+.crm-container a.button.delete{
     background: var(--crm-cancel-color);
 }
 .crm-container a.button.delete-button:hover,
 .crm-container a.button.delete-button:focus,
-.crm-container a.button.delete:hover,
-#crm-container a.button.delete:hover {
+.crm-container a.button.delete:hover {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-cancel-color);
 }
 .crm-container .crm-button-type-cancel:hover,

@@ -115,7 +115,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container th a:focus {
     text-decoration: none;
 }
-#crm-container .crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon { 
+.crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon { 
     /* Bootstrap & SearchKit sort resets */
     position: initial;
     float: var(--crm-table-sort-float);
@@ -129,7 +129,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container a.sorting::after,
 .crm-container a.sorting_asc::after, 
 .crm-container a.sorting_desc::after,
-#crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon::before,
+.crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon::before,
 .crm-container table.dataTable thead th.sorting::before,
 .crm-container table.dataTable thead th.sorting_asc::before,
 .crm-container table.dataTable thead th.sorting_desc::before,
@@ -145,13 +145,13 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     position: relative;
 }
 .crm-container a.sorting_asc::after,
-#crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-asc::before,
+.crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-asc::before,
 .crm-container table.dataTable thead th.sorting_asc::before {
     content: var(--crm-icon-sort-asc);
     color: var(--crm-c-link);
 }
 .crm-container a.sorting_desc::after,
-#crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-desc::before,
+.crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-desc::before,
 .crm-container table.dataTable thead th.sorting_desc::before {  
     content: var(--crm-icon-sort-desc);
     color: var(--crm-c-link);

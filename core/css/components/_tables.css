@@ -142,7 +142,7 @@ table.dataTable.order-column.stripe tbody tr.extension-installed > .sorting_1 {
 .crm-container .crm-child-row > td:has(table) {
     padding: var(--crm-table-nested-padding);
 }
-#crm-container tr.crm-child-row:hover {
+.crm-container tr.crm-child-row:hover {
     background-color: transparent;
 }
 .crm-container tr.crm-child-row > td {
@@ -199,7 +199,7 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
     border: 1px solid var(--crm-c-gray-400);
     background-color: var(--crm-c-gray-050);
 }
-#crm-container tr.columnheader-dark th {
+.crm-container tr.columnheader-dark th {
     background-color: var(--crm-c-gray-700);
     color: var(--crm-c-light-text);
     border: 1px solid var(--crm-c-gray-800)
@@ -474,21 +474,21 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
 .crm-container table td.crm-search-col-type-buttons.text-right {
     flex-direction: row-reverse;
 }
-.crm-container th.crm-search-result-select button.btn,
-.crm-container th.crm-search-result-select button.btn:hover,
-.crm-container th.crm-search-result-select button.btn:focus {
+th.crm-search-result-select button.btn,
+th.crm-search-result-select button.btn:hover,
+th.crm-search-result-select button.btn:focus {
     background: transparent;
     padding: var(--crm-xs1) var(--crm-m1);
 }
-.crm-container th.crm-search-result-select button.btn i.crm-i {
+th.crm-search-result-select button.btn i.crm-i {
     color: var(--crm-c-text);
 }
-#crm-container th.crm-search-result-select button.btn.dropdown-toggle {
+th.crm-search-result-select button.btn.dropdown-toggle {
     border-radius: var(--crm-roundness);
     background-color: var(--crm-c-background4);
     padding: var(--crm-xs1) var(--crm-m1);
 }
-.crm-container .crm-search-display-table table {
+.crm-search-display-table table {
     border: var(--crm-table-outside-border);
     box-shadow: var(--crm-block-shadow);
 }
