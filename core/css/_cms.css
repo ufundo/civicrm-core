@@ -151,3 +151,6 @@ html.crm-standalone {
     --crm-page-padding: 1px 1vw;
     --crm-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",sans-serif; /* Adds fallback for base font */
 }
+html.crm-standalone body {
+    margin: unset;
+}
