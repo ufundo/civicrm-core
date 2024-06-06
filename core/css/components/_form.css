@@ -168,7 +168,8 @@
 .crm-container textarea:focus,
 .crm-container select.crm-form-multiselect:focus,
 .crm-container select.crm-form-select:focus, 
-.crm-container select[aria-controls]:focus {
+.crm-container select[aria-controls]:focus,
+.crm-container .select2-container-active *:focus {
     border-color: var(--crm-c-focus);
     outline: 0;
 }
