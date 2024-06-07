@@ -53,8 +53,8 @@ function _standalone_setup_scheme(): string {
 
     // Compute paths and urls
 
-    // get globals set in civicrm.standalone.php
-    global $appRootPath, $settingsPath;
+    // get global set in civicrm.standalone.php
+    global $appRootPath;
 
     // sometimes when using cv these global won't be set
     if (!$appRootPath) {
@@ -71,9 +71,13 @@ function _standalone_setup_scheme(): string {
         throw new \Exception("Can't locate Standalone root path as source path is not set.");
       }
     }
-    if (!$settingsPath) {
-      $settingsPath = implode(DIRECTORY_SEPARATOR, [$appRootPath, 'private', 'civicrm.settings.php']);
+
+    // this should be set in civicrm.standalone.php or cv bootstrap, but just in case we'll add a default
+    if (!defined('CIVICRM_SETTINGS_PATH')) {
+      define('CIVICRM_SETTINGS_PATH', implode(DIRECTORY_SEPARATOR, [$appRootPath, 'private', 'civicrm.settings.php']));
     }
+    // add to installer model
+    $model->settingsPath = CIVICRM_SETTINGS_PATH;
 
     // try to determine base url if we dont have already (e.g. from buildkit)
     // TODO:
@@ -86,9 +90,6 @@ function _standalone_setup_scheme(): string {
     // TODO: at the moment the installer will only work when app root = web root
     $model->paths['cms.root']['path'] = $appRootPath;
     $model->paths['cms.root']['url'] = $baseUrl = $model->cmsBaseUrl;
-
-    // we should already know settings path from civicrm.standalone.php
-    $model->settingsPath = $settingsPath;
 
     // private directories
     $model->paths['civicrm.private']['path'] = $privatePath = $appRootPath . '/private';
