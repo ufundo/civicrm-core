@@ -606,14 +606,14 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 .crm-container #extensions-addnew {
 	padding: 0;
 }
-/* .crm-container #extensions table.dataTable {
-	box-shadow: none;
-} */
 .crm-container #extensions table.dataTable summary {
 	padding: 0;
 	background-color: unset;
 	color: var(--crm-c-text);
 	font-weight: unset;
+}
+.crm-container #extensions table.dataTable summary a {
+	color: var(--crm-c-link);
 }
 
 /* New mailing */

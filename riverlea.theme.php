@@ -6,5 +6,6 @@ return array (
   'title' => 'RiverLea',
   'prefix' => NULL,
   'url_callback' => '\\Civi\\Core\\Themes\\Resolvers::simple',
-  'search_order' => ['riverlea', '_fallback_'],
+  'excludes'     => [ 'css/contactSummary.css', 'css/admin.css' ], // @todo redo 'css/dashboard.css'
+  'search_order' => ['_riverlea_core_', '_fallback_'],
 );

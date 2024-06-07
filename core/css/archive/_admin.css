@@ -1,0 +1,71 @@
+/* civicrm-core/css/admin.css - branched on 7 Jun 24 */
+
+/* Styles specific to admin pages/forms */
+
+/* Config Task List */
+#crm-container td.tasklist a {
+    font-weight: var(--crm-bold-weight);
+    font-family: var(--crm-font-bold);
+}  
+#crm-container table.selector td.tasklist {
+  border-right: 1px solid #dddddd;
+  width: 20%;
+}
+#crm-container td.tasklist a:link {
+  color: var(--crm-c-red);
+}
+#crm-container td.tasklist a:visited {
+  color: var(--crm-c-green);
+}
+
+/* Class for successful upgrade */
+.crm-container .upgrade-success {
+  background-color: var(--crm-alert-background-help);
+  color: var(--crm-alert-text-help);
+}
+
+/* Extension management */
+/* .crm-container .extension-upgradable {
+  background-color: #ffffcc !important;
+}
+.crm-container .extension-installed {
+  background-color: #ddffdd !important;
+} */
+.crm-container .extension-missing {
+  color: var(--crm-c-warning);
+}
+#crm-container .crm-extensions-upgrade {
+  background: var(--crm-alert-background-warning);
+  border: 1px solid var(--crm-alert-border-warning);
+  padding: var(--crm-padding-small);
+  border-radius: var(--crm-roundness);
+}
+.crm-container .crm-extensions-version {
+  white-space: nowrap;
+}
+.crm-container .crm-extensions-stage {
+  margin-left: var(--crm-s);
+}
+.crm-container .crm-extensions-stage.fa-flask {
+  color: var(--crm-c-warning);
+}
+.crm-container .crm-extensions-stage.fa-check-circle {
+  color: var(--crm-c-success);
+}
+
+
+@media screen and (min-width: 480px) {
+  #crm-container .admin-section-items {
+    column-count: 2;
+    column-gap: 1em;
+  }
+  #crm-container .admin-section-items dl {
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin: 0 1em;
+  }
+  #crm-container .admin-section-items dt {
+    font-weight: bold;
+  }
+}

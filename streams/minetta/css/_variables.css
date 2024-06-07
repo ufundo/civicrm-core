@@ -42,7 +42,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-c-red-dark: #b94a48 ;
 --crm-c-amber: #dd5600;;
 --crm-c-amber-light: #fbf0e2;
---crm-c-yellow: #ffff66;
+--crm-c-yellow: #fcfc5a;
 --crm-c-yellow-light: #ffffcc;
 --crm-c-yellow-less-light: #fffdb2;
 --crm-c-teal: #399389;
@@ -77,7 +77,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-c-info: var(--crm-c-blue-dark);
 --crm-c-info-text: var(--crm-c-light-text);
 --crm-c-focus: var(--crm-c-blue-dark);
---crm-c-inactive: var(--crm-c-background4);
+--crm-c-inactive: #696969;
 
 /* SHADOWS */
 --crm-block-shadow:;

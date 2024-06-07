@@ -21,16 +21,19 @@ function riverlea_civicrm_config(&$config) {
     'ext' => 'riverlea',
     'title' => 'Riverlea: Minetta (~Greenwich)',
     'prefix' => 'streams/minetta/',
+    'search_order' => array('minetta', '_riverlea_core_', '_fallback_'),
   );
   $themes['walbrook'] = array(
     'ext' => 'riverlea',
     'title' => 'Riverlea: Walbrook (~Shoreditch/Island)',
     'prefix' => 'streams/walbrook/',
+    'search_order' => array('walbrook', '_riverlea_core_', '_fallback_'),
   );
   $themes['_riverlea_core_'] = array(
     'ext' => 'riverlea',
     'title' => 'Riverlea: base theme',
     'prefix' => 'core/',
+    'search_order' => array('_riverlea_core_', '_fallback_'),
   );
 }
 
