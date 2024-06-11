@@ -698,7 +698,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	display: block;
 }
 #afGuiEditor #af_config_form_permission_operator {
-	width: 60px;
+	width: 60px !important;
 }
 #afGuiEditor #s2id_af_config_form_permission {
 	width: calc(100% - 65px) !important;
