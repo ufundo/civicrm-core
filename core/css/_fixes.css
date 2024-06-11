@@ -814,6 +814,14 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	font-size: var(--crm-font-size) !important;
 	padding: var(--crm-s);
 }
+#afGuiEditor .af-gui-container-type-fieldset,
+#afGuiEditor .af-gui-container,
+#afGuiEditor .af-gui-markup,
+#afGuiEditor .af-gui-text,
+#afGuiEditor .af-gui-button {
+	box-shadow: var(--crm-block-shadow);
+	margin-bottom: var(--crm-padding-small) !important;
+}
 .af-gui-edit-options-bar h4 {
 	font-size: var(--crm-font-size) !important;
 	margin: 0 !important;

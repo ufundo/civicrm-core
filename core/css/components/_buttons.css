@@ -129,12 +129,12 @@
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-warning);
     color: var(--crm-c-warning-text);
 }
-.crm-container .btn-success {
+.crm-container button.btn-success {
     background: var(--crm-c-success); 
     color: var(--crm-c-success-text);
 }
-.crm-container .btn-success:hover,
-.crm-container .btn-success:focus {
+.crm-container button.btn-success:hover,
+.crm-container button.btn-success:focus {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-success);
     color: var(--crm-c-success-text);
 }

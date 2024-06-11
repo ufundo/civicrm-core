@@ -89,15 +89,16 @@
 @media screen and (min-width: 480px) {
   #crm-container .admin-section-items {
     column-count: 2;
-    column-gap: 1em;
+    column-gap: var(--crm-padding-reg);
   }
   #crm-container .admin-section-items dl {
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
     break-inside: avoid;
-    margin: 0 1em;
+    margin: 0 var(--crm-padding-reg);
   }
   #crm-container .admin-section-items dt {
-    font-weight: bold;
+    font-weight: var(--crm-bold-weight);
+    font-family: var(--crm-font-bold);
   }
 }

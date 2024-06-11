@@ -42,20 +42,19 @@ After installing the extension, go to Nav menu > Administer > Customize Data and
 ### Stream directories
 Each ‘stream’ directory must contain afurther directory `css` which must contain `civicrm.css` and `_variables.css` as well as custom files such as fonts or images.
 
-They can also include replacement files for the Civi Core CSS files excluded in `riverlea.theme.php`. These CSS files only load when called by a template file, e.g. the Contact Dashboard template calls contactSummary.css, which then points to a file in `core/css/sections`
-
 ### Core directory
 
 Contains CSS files in:
-- the **components** directory for reusable anywhere UI elements, such as `_accordions` or `_tables.css`; 
-- the **sections** directory for section-specific files called by templates, e.g. APIExplorer or the home dashboard;
-- and the following in the **root** folder:
+- In the **core/css** directory are theme files marked with an underscore:
   - core/css/_base.css – resets, basic type, colours, links, positioning
   - core/css/_bootstrap.css – a Bootstrap subset
   - core/css/_bootstrap3.css – Bootstrap3, currently being migrated to other parts of the theme
   - core/css/_cms.css – resets and fixes specific to different CMSs
-  - core/css/_core.css - links to the UI components in the components directory.
   - core/css/_fixes.css - CSS that’s necessary *for now* but one day could go.
+  - core/css/_core.css - links to the UI components in the components directory:
+- in the **components** directory are reusable anywhere UI elements, such as `_accordions` or `_tables.css`; 
+- Also in the **core/css** directory are over-rides for core CiviCRM CSS files. such as `admin.css` or `dashboard.css`;
+- And parallel to that directory in **core/org.civicrm.afform_admin-ang** are  over-rides for Form Builder and Search Kit CSS.
 
 ## Creating new 'streams'
 

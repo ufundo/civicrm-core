@@ -1,0 +1,4 @@
+@import url(../../../core/css/sections/_afGuiEditor.css);
+.crm-container {
+    border: 1px solid green;
+}

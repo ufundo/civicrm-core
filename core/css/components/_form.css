@@ -404,6 +404,10 @@ input.crm-form-checkbox) + label {
     margin: 0;
     padding: 0;
     min-height: unset;
+    color: var(--crm-input-color);
+}
+.crm-container .select2-container-multi .select2-choices .select2-search-field input.select2-default {
+    color: var(--crm-input-color);
 }
 .select2-container-disabled a {
     box-shadow: none;
@@ -425,10 +429,10 @@ input.crm-form-checkbox) + label {
     display: flex;
     flex-flow: wrap;
     gap: var(--crm-s);
-    padding: var(--crm-s);
+    padding: 2px;
 }
 .select2-container-multi .select2-choices .select2-search-choice {
-    padding: var(--crm-xs) var(--crm-m) var(--crm-xs) var(--crm-r1);
+    padding: 1px var(--crm-m) 1px var(--crm-r1);
     margin: 0;
     position: relative;
     line-height: unset;
