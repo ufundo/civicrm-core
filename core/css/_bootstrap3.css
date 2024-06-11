@@ -1117,13 +1117,14 @@
 	color: black;
 }
 #bootstrap-theme h1 small, #bootstrap-theme h1 .small, #bootstrap-theme h2 small, #bootstrap-theme h2 .small, #bootstrap-theme h3 small, #bootstrap-theme h3 .small, #bootstrap-theme h4 small, #bootstrap-theme h4 .small, #bootstrap-theme h5 small, #bootstrap-theme h5 .small, #bootstrap-theme h6 small, #bootstrap-theme h6 .small, #bootstrap-theme .h1 small, #bootstrap-theme .h1 .small, #bootstrap-theme .h2 small, #bootstrap-theme .h2 .small, #bootstrap-theme .h3 small, #bootstrap-theme .h3 .small, #bootstrap-theme .h4 small, #bootstrap-theme .h4 .small, #bootstrap-theme .h5 small, #bootstrap-theme .h5 .small, #bootstrap-theme .h6 small, #bootstrap-theme .h6 .small {
-	font-weight: 400;
 	line-height: 1;
 	color: #999;
 }
-#bootstrap-theme h1, #bootstrap-theme .h1, #bootstrap-theme h2, #bootstrap-theme .h2, #bootstrap-theme h3, #bootstrap-theme .h3 {
+/* #bootstrap-theme h1, #bootstrap-theme .h1, #bootstrap-theme h2, #bootstrap-theme .h2, #bootstrap-theme h3, #bootstrap-theme .h3 {
 	margin-top: 20px;
 	margin-bottom: 10px;
+	font-weight: var(--crm-bold-weight);
+	font-family: var(--crm-font-bold);
 }
 #bootstrap-theme h1 small, #bootstrap-theme h1 .small, #bootstrap-theme .h1 small, #bootstrap-theme .h1 .small, #bootstrap-theme h2 small, #bootstrap-theme h2 .small, #bootstrap-theme .h2 small, #bootstrap-theme .h2 .small, #bootstrap-theme h3 small, #bootstrap-theme h3 .small, #bootstrap-theme .h3 small, #bootstrap-theme .h3 .small {
 	font-size: 65%;
@@ -1131,10 +1132,12 @@
 #bootstrap-theme h4, #bootstrap-theme .h4, #bootstrap-theme h5, #bootstrap-theme .h5, #bootstrap-theme h6, #bootstrap-theme .h6 {
 	margin-top: 10px;
 	margin-bottom: 10px;
+	font-weight: var(--crm-bold-weight);
+	font-family: var(--crm-font-bold);
 }
 #bootstrap-theme h4 small, #bootstrap-theme h4 .small, #bootstrap-theme .h4 small, #bootstrap-theme .h4 .small, #bootstrap-theme h5 small, #bootstrap-theme h5 .small, #bootstrap-theme .h5 small, #bootstrap-theme .h5 .small, #bootstrap-theme h6 small, #bootstrap-theme h6 .small, #bootstrap-theme .h6 small, #bootstrap-theme .h6 .small {
 	font-size: 75%;
-}
+} */
 #bootstrap-theme h1, #bootstrap-theme .h1 {
 	font-size: 36px;
 }
@@ -2341,7 +2344,7 @@
 	height: 30px;
 	line-height: 30px;
 }
-#bootstrap-theme .has-success .help-block, #bootstrap-theme .has-success .control-label, #bootstrap-theme .has-success .radio, #bootstrap-theme .has-success .checkbox, #bootstrap-theme .has-success .radio-inline, #bootstrap-theme .has-success .checkbox-inline, #bootstrap-theme .has-success.radio label, #bootstrap-theme .has-success.checkbox label, #bootstrap-theme .has-success.radio-inline label, #bootstrap-theme .has-success.checkbox-inline label {
+/* #bootstrap-theme .has-success .help-block, #bootstrap-theme .has-success .control-label, #bootstrap-theme .has-success .radio, #bootstrap-theme .has-success .checkbox, #bootstrap-theme .has-success .radio-inline, #bootstrap-theme .has-success .checkbox-inline, #bootstrap-theme .has-success.radio label, #bootstrap-theme .has-success.checkbox label, #bootstrap-theme .has-success.radio-inline label, #bootstrap-theme .has-success.checkbox-inline label {
 	color: #468847;
 }
 #bootstrap-theme .has-success .form-control {
@@ -2403,7 +2406,7 @@
 }
 #bootstrap-theme .has-error .form-control-feedback {
 	color: #b94a48;
-}
+} */
 #bootstrap-theme .has-feedback label ~ .form-control-feedback {
 	top: 25px;
 }
@@ -2840,17 +2843,17 @@
 	white-space: nowrap;
 	vertical-align: middle;
 }
-#bootstrap-theme .input-group-addon {
-	padding: 4px 8px;
-	font-size: 14px;
-	font-weight: 400;
-	line-height: 1;
-	color: #555;
-	text-align: center;
-	background-color: #eee;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
+/* #bootstrap-theme .input-group-addon {
+	padding: var(--crm-input-padding);
+	font-size: var(--crm-input-font-size);
+	font-weight: normal;
+	line-height: inherit;
+	color: var(--crm-input-color);
+	text-align: left;
+	background-color: var(--crm-input-background);
+	border: 1px solid var(--crm-input-border-color);
+	border-radius: var(--crm-roundness);
+} */
 #bootstrap-theme .input-group-addon.input-sm, #bootstrap-theme .input-group-sm > .input-group-addon.form-control, #bootstrap-theme .input-group-sm > .input-group-addon, #bootstrap-theme .input-group-sm > .input-group-btn > .input-group-addon.btn {
 	padding: 5px 10px;
 	font-size: 12px;

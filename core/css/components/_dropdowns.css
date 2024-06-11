@@ -118,7 +118,8 @@
     left: var(--crm-l);
     right: auto;
 }
-.crm-container .btn-group .dropdown-menu-right::before {
+.crm-container .btn-group .dropdown-menu-right::before,
+.crm-container .btn-group.pull-right .dropdown-menu::before  {
     right: var(--crm-r);
     left: auto;
 }

@@ -44,12 +44,16 @@
 .crm-button.disabled,
 .crm-container .btn.disabled,
 .crm-container .btn[disabled],
-.crm-container fieldset[disabled] .btn {
+.crm-container fieldset[disabled] .btn,
+.crm-container button.disabled {
 	cursor: not-allowed;
 	filter: alpha(opacity=65);
 	opacity: .65;
 	pointer-events: none;
 	box-shadow: none;
+}
+.crm-container button.disabled * {
+    color: var(--crm-c-primary-text);
 }
 .crm-button .crm-i::before,
 .crm-container .btn .crm-i::before {

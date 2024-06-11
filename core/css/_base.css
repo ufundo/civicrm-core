@@ -165,14 +165,46 @@
 .crm-contact-deceased, 
 .crm-container .status-warning,
 .crm-container .crm-error,
-.crm-container td.tasklist a:link {
+.crm-container td.tasklist a:link,
+#bootstrap-theme .has-error .help-block, 
+#bootstrap-theme .has-error .control-label, 
+#bootstrap-theme .has-error .radio, 
+#bootstrap-theme .has-error .checkbox, 
+#bootstrap-theme .has-error .radio-inline, 
+#bootstrap-theme .has-error .checkbox-inline, 
+#bootstrap-theme .has-error.radio label, 
+#bootstrap-theme .has-error.checkbox label, 
+#bootstrap-theme .has-error.radio-inline label, 
+#bootstrap-theme .has-error.checkbox-inline label {
     color: var(--crm-c-alert);
 }
 .crm-container .font-red {
     color: var(--crm-c-red-dark);
 }
-.crm-container td.tasklist a:visited {
+.crm-container td.tasklist a:visited,
+#bootstrap-theme .has-success .help-block, 
+#bootstrap-theme .has-success .control-label, 
+#bootstrap-theme .has-success .radio, 
+#bootstrap-theme .has-success .checkbox, 
+#bootstrap-theme .has-success .radio-inline, 
+#bootstrap-theme .has-success .checkbox-inline, 
+#bootstrap-theme .has-success.radio label, 
+#bootstrap-theme .has-success.checkbox label, 
+#bootstrap-theme .has-success.radio-inline label, 
+#bootstrap-theme .has-success.checkbox-inline label {
     color: var(--crm-c-success);
+}
+#bootstrap-theme .has-warning .help-block, 
+#bootstrap-theme .has-warning .control-label, 
+#bootstrap-theme .has-warning .radio, 
+#bootstrap-theme .has-warning .checkbox, 
+#bootstrap-theme .has-warning .radio-inline, 
+#bootstrap-theme .has-warning .checkbox-inline, 
+#bootstrap-theme .has-warning.radio label, 
+#bootstrap-theme .has-warning.checkbox label, 
+#bootstrap-theme .has-warning.radio-inline label, 
+#bootstrap-theme .has-warning.checkbox-inline label {
+	color: var(--crm-c-warning);
 }
 .crm-container .disabled, 
 .crm-container .crm-disabled, 
@@ -265,7 +297,7 @@
 }
 .crm-container .bg-warning {
 	background-color: var(--crm-c-warning);
-    color: var(--crm-c-warning-text);
+    color: var(--crm-c-warning-text) !important /* FormBuilder vs .disabled */;
 }
 .crm-container a.bg-warning:hover, 
 .crm-container a.bg-warning:focus {

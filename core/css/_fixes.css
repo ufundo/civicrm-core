@@ -697,11 +697,21 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	width: 100%;
 	display: block;
 }
+#afGuiEditor-palette .checkbox label {
+	padding: 0;
+}
+#afGuiEditor-palette .input-group:has(#af_config_redirect) {
+	display: grid;
+	grid-template-columns: 1fr 250px;
+}
+#afGuiEditor-palette #s2id_autogen3 {
+	min-width: 100% !important;
+}
 #afGuiEditor #af_config_form_permission_operator {
 	width: 60px !important;
 }
 #afGuiEditor #s2id_af_config_form_permission {
-	width: calc(100% - 65px) !important;
+	width: calc(100% - 66px) !important;
 }
 #afGuiEditor .panel-heading ul.nav-tabs li {
 	top: unset;
@@ -744,6 +754,10 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	width: calc(100% - 10px) !important;
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
 	border-color: var(--crm-c-divider);
+	padding: 0 var(--crm-s) !important;
+	height: unset !important;
+	font-size: var(--crm-input-font-size) !important;
+	margin: 0;
 }
 .af-gui-entity-palette-select-list {
 	border: 1px solid var(--crm-c-divider);
@@ -766,7 +780,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 /* AfEditor builder */
 
 #afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
-	color: var(--crm-dropdown-col);
+	color: var(--crm-dropdown-col) !important;
 }
 #afGuiEditor .af-gui-text-legend, 
 #afGuiEditor .af-gui-text-h3 {
@@ -776,7 +790,8 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	margin-top: 5px !important;
 }
 #afGuiEditor .af-gui-container {
-	padding: var(--crm-m);
+	padding: var(--crm-m) !important;
+	margin-top: 0 !important;
 }
 #afGuiEditor .af-gui-container.af-container-style-pane {
 	background: linear-gradient(to bottom, #f2f2f2 0 var(--crm-l), transparent var(--crm-l) 100%) no-repeat;
@@ -784,15 +799,33 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 #afGuiEditor .af-gui-content-editing-area .af-gui-edit-options-bar,
 #afGuiEditor-canvas [ui-sortable] .af-gui-bar  {
-	font-family: inherit;
+	font-family: inherit !important /* vs afGuiEditor.css */;
+	font-size: var(--crm-font-size) !important;
+	padding: var(--crm-s);
+}
+.af-gui-edit-options-bar h4 {
+	font-size: var(--crm-font-size) !important;
+	margin: 0 !important;
 }
 #afGuiEditor-canvas [ui-sortable] .af-gui-bar {
 	font-family: inherit;
 	height: var(--crm-l);
 	border-radius: var(--crm-roundness);
-	background-color: var(--crm-c-background3);
-	background: var(--crm-c-gray-300);
-	background-color: var(--crm-c-gray-300);
+	background-color: var(--crm-c-background4) !important;
+	padding-left: var(--crm-r2);
+	position: inherit !important;
+}
+#afGuiEditor-canvas .form-inline {
+	padding: 0;
+}
+.af-layout-inline .af-gui-bar {
+	margin: 0 -4px;
+	width: calc(100% + 8px) !important;
+}
+af-gui-container > .af-gui-bar,
+.af-gui-container-type-div > .af-gui-bar {
+	margin: calc(-1 * var(--crm-m)) calc(-1 * var(--crm-m)) var(--crm-m) calc(-1 * var(--crm-m));
+	width: calc(100% + var(--crm-r)) !important;
 }
 #afGuiEditor-canvas [ui-sortable] .af-gui-bar:has(~ .af-gui-field-input) {
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
@@ -800,14 +833,14 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 #afGuiEditor [ui-sortable] .af-gui-bar::before, 
 #afGuiEditor .af-gui-entity-palette-select-list [ui-sortable] > div:not(.disabled):hover::before, 
 #afGuiEditor af-gui-edit-options.af-gui-content-editing-area [ui-sortable] li::before {
-	height: var(--crm-r3);
-	left: 5px;
-}
-#afGuiEditor .af-gui-container-title {
-	top: calc(-1 * var(--crm-s3));
+	height: var(--crm-r3) !important;
+	left: 5px !important;
 }
 #afGuiEditor .af-gui-node-title {
-	margin: 0 var(--crm-m1);
+	position: absolute !important;
+	top: 0 !important;
+	font-size: var(--crm-font-size) !important;
+	color: inherit !important;
 }
 #afGuiEditor .af-gui-node-title + * {
 	padding-top: var(--crm-m);
@@ -823,9 +856,17 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	padding-top: 0;
 }
 #afGuiEditor .af-gui-markup {
-	padding: 40px 0 0;
+	padding: var(--crm-s) !important;
 }
-
+#afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
+	color: var(--crm-dropdown-col) !important;
+}
+#afGuiEditor .af-gui-layout.af-layout-cols {
+	column-gap: var(--crm-r);
+}
+#afGuiEditor .af-gui-layout.af-layout-inline > div {
+	margin-right: var(--crm-m);
+}
 /******************
     SEARCH
 *******************/
@@ -988,7 +1029,7 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	padding: 0;
 }
 #afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
-	padding: var(--crm-dropdown-padding);
+	padding: var(--crm-dropdown-padding) !important;
 }
 
 /******************
