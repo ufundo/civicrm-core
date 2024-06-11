@@ -194,18 +194,18 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     content: '\f096';
 }
 .crm-container .jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox::before, 
-.crm-container  .jstree-default .jstree-checked > .jstree-checkbox::before {
+.crm-container .jstree-default .jstree-checked > .jstree-checkbox::before {
     content: '\f046';
     color: var(--crm-c-success);
 }
-.jstree-default > .jstree-no-dots .jstree-closed > .jstree-ocl::before {
-    margin-top: 5px;
+.jstree-default > .jstree-no-dots .jstree-closed > .jstree-ocl::before,
+.jstree .jstree-closed > .jstree-ocl::before {
     display: block;
     content: '\f105';
     color: var(--crm-c-text);
 }
-.jstree-default > .jstree-no-dots .jstree-open > .jstree-ocl::before {
-    margin-top: 5px;
+.jstree-default > .jstree-no-dots .jstree-open > .jstree-ocl::before,
+.jstree .jstree-open > .jstree-ocl::before {
     display: block;
     content: '\f107';
     color: var(--crm-c-text);
@@ -214,9 +214,10 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     color: var(--crm-c-alert);
     font-weight: normal;
 }
-
+.crm-container #navigation-tree li.jstree-node {
+    background-image: none;
+}
 /* Resets icons with unwanted backgrounds */
-
 .crm-container a.crm-hover-button:has(span.icon) {
     background-color: transparent;
     padding: 0;

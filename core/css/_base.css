@@ -327,7 +327,7 @@
    POSITION
 *******************/
 
-.crm-container {
+#crm-container { /* applied to #crm not .crm to apply only once */
 	max-width: 100%;
 	padding: var(--crm-page-padding);
 }
