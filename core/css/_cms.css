@@ -130,6 +130,7 @@ body.wp-admin #wpcontent {
 } 
 body.wp-admin li {
     margin: 0; /* resets WP li bottom margin */
+    list-style: none;
 }
 body.wp-admin {
     --crm-page-padding: 1rem 2rem;

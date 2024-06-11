@@ -313,6 +313,9 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 .crm-container .ui-tabs ul.crm-extensions-tabs-list a em {
 	display: none;
 }
+#crm-status-list {
+	box-shadow: var(--crm-block-shadow);
+}
 
 /******************
     PAGES
@@ -600,20 +603,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	display: flex;
 	justify-content: flex-end;
 	padding: 0 0 var(--crm-l) 0;
-}
-/* extensions */
-.crm-container #extensions-main,
-.crm-container #extensions-addnew {
-	padding: 0;
-}
-.crm-container #extensions table.dataTable summary {
-	padding: 0;
-	background-color: unset;
-	color: var(--crm-c-text);
-	font-weight: unset;
-}
-.crm-container #extensions table.dataTable summary a {
-	color: var(--crm-c-link);
 }
 
 /* New mailing */

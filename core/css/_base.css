@@ -156,7 +156,6 @@
 .crm-container .del, 
 .crm-container .crm-is_deleted, 
 .crm-container table.caseSelector td.status-urgent, 
-.crm-container .font-red, 
 .crm-container p.error,
 .crm-container .status-removed, 
 .crm-container .status-overdue, 
@@ -167,7 +166,10 @@
 .crm-container .status-warning,
 .crm-container .crm-error,
 .crm-container td.tasklist a:link {
-    color: var(--crm-c-alert) !important;
+    color: var(--crm-c-alert);
+}
+.crm-container .font-red {
+    color: var(--crm-c-red-dark);
 }
 .crm-container td.tasklist a:visited {
     color: var(--crm-c-success);
@@ -178,7 +180,7 @@
 .crm-container .cancelled, 
 .crm-container .cancelled td, 
 .crm-container li.disabled a.ui-tabs-anchor {
-    color: var(--crm-c-inactive) !important;
+    color: var(--crm-c-inactive);
 }
 
 /* BS3 type styles */

@@ -37,9 +37,29 @@ cv en riverlea
 
 After installing the extension, go to Nav menu > Administer > Customize Data and Screens > Display Preferences, and select which theme variation/stream you want (they start with the name 'Riverlea').
 
+## File Structure
+
+### Stream directories
+Each ‘stream’ directory must contain afurther directory `css` which must contain `civicrm.css` and `_variables.css` as well as custom files such as fonts or images.
+
+They can also include replacement files for the Civi Core CSS files excluded in `riverlea.theme.php`. These CSS files only load when called by a template file, e.g. the Contact Dashboard template calls contactSummary.css, which then points to a file in `core/css/sections`
+
+### Core directory
+
+Contains CSS files in:
+- the **components** directory for reusable anywhere UI elements, such as `_accordions` or `_tables.css`; 
+- the **sections** directory for section-specific files called by templates, e.g. APIExplorer or the home dashboard;
+- and the following in the **root** folder:
+  - core/css/_base.css – resets, basic type, colours, links, positioning
+  - core/css/_bootstrap.css – a Bootstrap subset
+  - core/css/_bootstrap3.css – Bootstrap3, currently being migrated to other parts of the theme
+  - core/css/_cms.css – resets and fixes specific to different CMSs
+  - core/css/_core.css - links to the UI components in the components directory.
+  - core/css/_fixes.css - CSS that’s necessary *for now* but one day could go.
+
 ## Creating new 'streams'
 
-NB: this is an early alpha level release and the variables files are likely to change, so branched streams may go out of sync with the core variables. Compare the version number
+NB: Streams are going to keep changing during alpha stage, so branched streams will go out of sync with the core variables - don't use other than for testing/exploration at present, and always compare the version number of the _variables.css file.
 
 1. Duplicate the directory 'empty' in /streams/ and rename it the name of the stream.
 2. In riverlea.php add a theme array to the function 'riverlea_civicrm_themes(&$themes)'.

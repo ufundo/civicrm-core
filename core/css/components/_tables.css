@@ -75,7 +75,7 @@ table.dataTable.order-column.stripe tbody tr.extension-installed.odd > .sorting_
 }
 table.dataTable.display tbody tr.extension-installed.even > .sorting_1, 
 table.dataTable.order-column.stripe tbody tr.extension-installed.even > .sorting_1  {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05)) var(c-green-light);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05)) var(--crm-c-green-light);
 }
 .crm-container td,
 .crm-container table.dataTable thead td {
