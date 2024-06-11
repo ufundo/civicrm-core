@@ -128,12 +128,12 @@
 .crm-container .nav-tabs > li.active > a:hover, 
 .crm-container .nav-tabs > li.active > a:focus {
 	color: var(--crm-c-text);
-	background-color: var(--crm-tab-bg-hover);
+	background-color: var(--crm-tab-bg-hover) !important /* vs api4-explorer.css */;
 	border: 1px solid var(--crm-tab-border-col);
 	border-bottom-color: transparent;
 }
 .crm-container .nav-tabs > li.active > a {
-    background: var(--crm-tab-bg-active);
+    background-color;: var(--crm-tab-bg-active) !important /* vs api4-explorer.css */
 }
 .crm-container .panel-heading:has(.nav-tabs) {
     padding: var(--crm-s) var(--crm-m) 0 var(--crm-m);

@@ -64,6 +64,11 @@ body.page-civicrm > #branding {
 #block-claro-content .button:not(:focus) {
     box-shadow: none;
 }
+@media (max-width: 959px) {
+    #block-claro-content {
+        --crm-page-padding: 1rem;
+    }
+}
 /* D9 Seven */
 
 #block-seven-content {
@@ -136,7 +141,7 @@ body.wp-admin {
     --crm-page-padding: 1rem 2rem;
     font-size: 100%;
 }
-body.wp-admin .crm-container {
+body.wp-admin #crm-container {
     background: transparent;
 }
 body.wp-admin .crm-container:has(.crm-summary-contactname-block) .breadcrumb {

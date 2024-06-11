@@ -642,7 +642,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 /* API Explorer 4 */
 
 .crm-container .api4-explorer-row.crm-flex-box {
-	column-gap: var(--crm-padding-reg);
+	gap: var(--crm-padding-reg);
 	margin-bottom: var(--crm-padding-reg);
 }
 .crm-container .api4-explorer-row .explorer-params-panel,
@@ -655,7 +655,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	align-items: center;
 }
 .crm-container .api4-explorer-row .panel-heading h3 {
-	background: transparent;
+	background: transparent !important /* vs api4-explorer.css */;
 }
 .crm-container .api4-explorer-row .explorer-code-panel .panel-heading {
 	align-items: end;
@@ -682,9 +682,20 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	width: 100%;
 	align-self: end;
 }
+.api4-input {
+	display: flex;
+}
+.api4-input label {
+	display: flex;
+}
+#bootstrap-theme.api4-explorer-page form label {
+	min-width: var(--crm-big-input);
+}
+  
 /* resets on api4-explorer.css */
 #bootstrap-theme .api4-explorer-row > .panel {
-	margin: 0;
+	margin: 0 !important /* vs api4-explorer.css */;
+	min-height: inherit;
 }
 #bootstrap-theme.api4-explorer-page .explorer-params-panel .panel-heading {
 	padding: var(--crm-s) !important;  /* vs api4-explorer.css */
@@ -724,7 +735,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 #afGuiEditor fieldset legend {
 	padding-top: var(--crm-s);
-	font-size: var(--crm-r2);
+	font-size: var(--crm-r2) !important; /* vs api4-explorer.css */
 	margin-bottom: var(--crm-m);
 	color: var(--crm-c-text);
 	border-bottom: 1px solid var(--crm-c-divider);
