@@ -1,6 +1,20 @@
 /* CSS hacks to accommodate quirks and inconsistencies in the markup.
-   The end goal (Civi 7.0?) would be to remove these once the markup is
+   The end goal would be to remove these once the markup is
    consistent, and another  */
+
+/* Pre-5.76 fix for Core CSS files - 
+this can be removed/commented out from 5.76 onwards */
+
+@import url(admin.css);
+@import url(api4-explorer.css);
+@import url(contactSummary.css);
+@import url(dashboard.css);
+@import url(../org.civicrm.afform_admin-ang/afGuiEditor.css);
+@import url(../org.civicrm.search_kit-css/crmSearchAdmin.css);
+@import url(../org.civicrm.search_kit-css/crmSearchDisplay.css);
+@import url(../org.civicrm.search_kit-css/crmSearchDisplayGrid.css);
+@import url(../org.civicrm.search_kit-css/crmSearchDisplayTable.css);
+@import url(../org.civicrm.search_kit-css/crmSearchTasks.css);
 
 /******************
     ACCORDIONS
