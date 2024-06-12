@@ -83,7 +83,7 @@
 }
 /* Fieldset */
 .crm-container fieldset:not(.collapsed, .crm-inactive-dashlet-fieldset) {
-    padding: 0;
+    padding: var(--crm-fieldset-padding);
     margin: var(--crm-padding-reg) 0;
     border: 1px solid var(--crm-fieldset-border-color);
     border-width: var(--crm-fieldset-border);
@@ -91,7 +91,7 @@
 .crm-container fieldset legend {
     font-weight: var(--crm-bold-weight);
     font-family: var(--crm-font-bold);
-    padding-right: var(--crm-m);
+    padding-inline: var(--crm-m);
     color: var(--crm-c-text);
 }
 

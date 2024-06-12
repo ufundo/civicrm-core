@@ -83,13 +83,13 @@
 	box-sizing: content-box;
 	height: 0;
 }
-#bootstrap-theme pre {
+/* #bootstrap-theme pre {
 	overflow: auto;
 }
 #bootstrap-theme code, #bootstrap-theme kbd, #bootstrap-theme pre, #bootstrap-theme samp {
 	font-family: monospace, monospace;
 	font-size: 1em;
-}/* 
+}
 #bootstrap-theme button, #bootstrap-theme input, #bootstrap-theme optgroup, #bootstrap-theme select, #bootstrap-theme textarea {
 	color: inherit;
 	font: inherit;
@@ -123,14 +123,14 @@
 #bootstrap-theme input[type="number"]::-webkit-inner-spin-button, #bootstrap-theme input[type="number"]::-webkit-outer-spin-button {
 	height: auto;
 }
-#bootstrap-theme input[type="search"] {
+/* #bootstrap-theme input[type="search"] { /* causes prolems! */
 	-webkit-appearance: textfield;
 	box-sizing: content-box;
-}
+} */
 #bootstrap-theme input[type="search"]::-webkit-search-cancel-button, #bootstrap-theme input[type="search"]::-webkit-search-decoration {
 	-webkit-appearance: none;
 }
-#bootstrap-theme fieldset {
+/* #bootstrap-theme fieldset {
 	border: 1px solid #c0c0c0;
 	margin: 0 2px;
 	padding: .35em .625em .75em;
@@ -138,7 +138,7 @@
 #bootstrap-theme legend {
 	border: 0;
 	padding: 0;
-}
+} */
 #bootstrap-theme textarea {
 	overflow: auto;
 }
@@ -1034,14 +1034,16 @@
 	color: #555;
 	background-color: white;
 } */
-#bootstrap-theme input, #bootstrap-theme select, #bootstrap-theme textarea {
+/* REMOVING THE BELOW BECAUSE THE ID MAKES IT DOMINANT
+#bootstrap-theme input, #bootstrap-theme select, #bootstrap-theme textarea { REM
 	font-family: inherit;
 	font-size: inherit;
 	line-height: inherit;
-}#bootstrap-theme button {
+}
+#bootstrap-theme button {
 	font-family: inherit;
 	line-height: inherit;	
-}
+} */
 /* 
 #bootstrap-theme a {
 	color: #2786c2;
@@ -2114,6 +2116,7 @@
 	color: #999;
 	text-align: left;
 }
+/* API EXPLORER 4 clashes
 #bootstrap-theme fieldset {
 	min-width: 0;
 	padding: 0;
@@ -2130,7 +2133,7 @@
 	color: #555;
 	border: 0;
 	border-bottom: 1px solid #e5e5e5;
-}/*
+}
 #bootstrap-theme label {
 	display: inline-block;
 	max-width: 100%;

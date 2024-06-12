@@ -242,6 +242,7 @@ color-scheme: light dark;
 --crm-inline-edit-bg: var(--crm-c-background);
 --crm-fieldset-border-color: ;
 --crm-fieldset-border: 0;
+--crm-fieldset-padding: 0;
 
 /* TABS */
 --crm-tabs-bg: var(--crm-c-background2);

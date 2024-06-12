@@ -245,7 +245,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-inline-edit-border: 0 solid transparent;
 --crm-inline-edit-bg: var(--crm-c-background);
 --crm-fieldset-border-color: var(--crm-c-gray-400);
---crm-fieldset-border: 1px 0 0 0;
+--crm-fieldset-border: 1px;
+--crm-fieldset-padding: var(--crm-padding-reg);
 
 /* Tabs */
 --crm-tabs-bg: var(--crm-c-background4);

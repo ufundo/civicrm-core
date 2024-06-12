@@ -311,6 +311,9 @@
 .crm-container a.bg-danger:focus {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-alert);
 }
+.crm-container code, 
+.crm-container kbd, 
+.crm-container samp,
 .crm-container pre {
 	display: block;
 	padding: var(--crm-padding-small);
