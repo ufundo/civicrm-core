@@ -95,35 +95,6 @@
     color: var(--crm-c-text);
 }
 
-/* contact dashboard */
-
-#contact-summary .crm-summary-block {
-    background: var(--crm-dash-block-bg);
-    border-radius: var(--crm-roundness);
-    box-shadow: var(--crm-block-shadow);
-    margin-bottom: var(--crm-dash-panel-padding);
-}
-#contact-summary div.crm-clear {
-    padding: var(--crm-dash-block-padding);
-}
-.crm-container div.crm-summary-row {
-    background-color: var(--crm-c-background) !important; /* vs contactSummary.css */
-}
-#contact-summary div.crm-summary-row div.crm-label {
-    background-color: var(--crm-dash-label-bg) !important; /* vs contactSummary.css */
-    color: var(--crm-c-text) !important; /* vs contactSummary.css */
-    padding: var(--crm-m) !important; /* vs contactSummary.css */
-    font-weight: var(--crm-bold-weight);
-    font-family:  var(--crm-font-bold);
-    font-size: var(--crm-font-size);
-}
-div.crm-summary-row div.crm-content {
-    padding: var(--crm-m);
-}
-.crm-container div.contact_panel table {
-    width: auto;
-}
-
 /* Input */
 
 .crm-container input.form-control,

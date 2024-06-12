@@ -1,3 +1,7 @@
+/* Style rules for Dashboard.
+   Forked on 11 June 24. Called on main Civi dashboard home screen.
+   Status: merged (theme edits integrated) */
+
 #civicrm-dashboard > .crm-flex-box {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -8,6 +12,7 @@
     background-color: var(--crm-dashlet-bg);
     padding: var(--crm-dashlet-padding);
     box-shadow: var(--crm-popup-shadow);
+    margin-bottom: var(--crm-padding-reg);
 }
 .crm-container .ui-sortable-helper.crm-dashlet {
     box-shadow: var(--crm-block-shadow);
@@ -144,8 +149,8 @@ crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
 .crm-container #civicrm-news-feed .crm-accordion-body {
     padding: var(--crm-expand-body-padding);
 }
-/* Getting statrted */
 
+/* Getting statrted */
 #civicrm-getting-started table {
     box-shadow: none;
     border: 0 solid transparent;
@@ -156,7 +161,6 @@ crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
 }
 
 /* Activity dashlet */
-
 .crm-container .crm-dashlet table.activity-search-options {
     width: 100%;
 }
@@ -165,8 +169,8 @@ crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
     grid-template-columns: 1fr 1fr;
     border: 0 solid transparent;
 }
-/* Home dashboard */
 
+/* Add dashlet */
 fieldset.crm-inactive-dashlet-fieldset {
     padding: 0;
     border: 0;

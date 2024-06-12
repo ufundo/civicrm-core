@@ -1,5 +1,6 @@
 /* Style rules for Api4 Explorer
-   Forked on 12 June 24. Called on API4Explorer page only */
+   Forked on 12 June 24. Called on API4Explorer page only.
+   Status: merged. */
 
 .api4-explorer-row.crm-flex-box {
 	gap: var(--crm-padding-reg);
