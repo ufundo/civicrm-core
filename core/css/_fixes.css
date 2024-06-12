@@ -455,6 +455,9 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 /* CiviContribute dashboard */
 
+.crm-container #financial-type-id-1 input[type="checkbox"] {
+	margin: 3px 1px;
+}
 .crm-container #ContributionCharts #mainTabContainer {
     box-shadow: var(--crm-block-shadow);
 }
@@ -551,6 +554,15 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 	background: transparent;
 	padding: 0;
 }
+/* API3 explorer */
+
+#api-generated caption {
+	font-weight: var(--crm-bold-weight);
+	font-family: var(--crm-font-bold);
+}
+#api-generated tr td:first-of-type {
+	width: var(--crm-input-label-width);
+} 
 
 /******************
     SEARCH

@@ -298,17 +298,14 @@ table.advmultiselect {
 .crm-container .badge {
 	display: inline-block;
 	min-width: 10px;
-	padding: 3px 7px;
-	font-size: var(--crm-m2);
-	font-weight: var(--crm-bold-weight);
-	font-family: var(--crm-font-bold);
+	padding: var(--crm-s) var(--crm-m);
 	line-height: 1;
 	color: var(--crm-c-page-background);
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
 	background-color: var(--crm-c-primary);
-	border-radius: var(--crm-m1);
+	border-radius: var(--crm-m2);
 	position: relative;
 	top: -1px;
 }

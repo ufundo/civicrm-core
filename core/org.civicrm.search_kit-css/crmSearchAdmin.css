@@ -1,10 +1,7 @@
 /* Style rules for SearchKit Admin
-   Forked on 12 June 24. Called on SearchKit Admin page only
+   Forked on 12 June 24. Called on SearchKit Admin pages
    Status: not merged (theme edits at foot) */
 
-.crm-container {
-    border: 1px solid green;
-}
 .crm-search-nav-tabs {
     position: relative;
 }

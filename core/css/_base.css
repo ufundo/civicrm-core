@@ -318,8 +318,8 @@
 	display: block;
 	padding: var(--crm-padding-small);
 	margin: 0 0 var(--crm-padding-small);
-	font-size: var(--crm-font-size);
-	line-height: 1.4;
+	font-size: var(--crm-font-size) !important /* vs inline css on api3 */;
+	line-height: 1.4  !important /* vs inline css on api3 */;
 	color: var(--crm-c-text);
 	word-break: break-all;
 	word-wrap: break-word;

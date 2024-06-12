@@ -25,7 +25,7 @@
 .crm-container .form-layout-compressed td.label, 
 .crm-container .selector td.label, 
 .crm-container .form-layout-compressed th.label {
-    width: auto;
+    width: var(--crm-input-label-width);
     text-align: right;
     padding-right: var(--crm-m2);
     font-family: var(--crm-input-label-font);
@@ -66,6 +66,9 @@
     font-size: var(--crm-input-label-size);
     display: inline-block;
     margin-bottom: var(--crm-s);
+}
+.crm-container .form-layout label {
+    width: var(--crm-input-label-width);
 }
 .crm-container .description:not(#help),
 .crm-container td.description {
@@ -277,6 +280,7 @@ input.crm-form-checkbox + label,
 .crm-container input[type="radio"] + label[for] {
     margin: 0 var(--crm-m) 0 var(--crm-s);
     cursor: var(--crm-hover-clickable);
+    width: unset;
 }
 .crm-container [type="checkbox"], 
 .crm-container [type="radio"] {
@@ -330,7 +334,7 @@ input.crm-form-checkbox) + label {
     border: 1px solid var(--crm-input-border-color);   
     border-radius: var(--crm-input-border-radius);
     box-shadow: var(--crm-input-box-shadow);
-    height: var(--crm-input-height);
+    height: var(--crm-input-height) !important /* vs select2.min.css */;
     padding: var(--crm-xs1) var(--crm-r2) var(--crm-xs1) var(--crm-m);
     font-size: var(--crm-input-font-size);
 }
@@ -400,7 +404,8 @@ input.crm-form-checkbox) + label {
     display: flex;
     flex-flow: wrap;
     gap: var(--crm-s);
-    padding: 2px;
+    padding: 2px var(--crm-s);
+    align-items: center;
 }
 .select2-container-multi .select2-choices .select2-search-choice {
     padding: 1px var(--crm-m) 1px var(--crm-r1);
@@ -416,9 +421,9 @@ input.crm-form-checkbox) + label {
     background-color: var(--crm-form-select-bg);
     background-image: none;
 }
-.select2-container-multi .select2-search-choice-close {
+/* .select2-container-multi .select2-search-choice-close {
     top: var(--crm-m);
-}
+} */
 .select2-container-multi .select2-choices .select2-search-choice p {
     margin: 0;
 }

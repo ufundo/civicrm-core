@@ -234,6 +234,7 @@ color-scheme: light dark;
 --crm-input-label-weight: var(--crm-bold-weight);
 --crm-input-label-font: var(--crm-font-bold);
 --crm-input-label-size: var(--crm-font-size);
+--crm-input-label-width: var(--crm-big-input);
 --crm-input-description: var(--crm-c-gray-700);
 --crm-input-dropdown-icon: "\f107";
 --crm-input-radio-color: var(--crm-c-primary);

@@ -2985,10 +2985,10 @@
 #bootstrap-theme .nav-pills > li + li {
 	margin-left: 2px;
 }
-#bootstrap-theme .nav-pills > li.active > a, #bootstrap-theme .nav-pills > li.active > a:hover, #bootstrap-theme .nav-pills > li.active > a:focus {
+/* #bootstrap-theme .nav-pills > li.active > a, #bootstrap-theme .nav-pills > li.active > a:hover, #bootstrap-theme .nav-pills > li.active > a:focus {
 	color: white;
 	background-color: black;
-}
+} */
 #bootstrap-theme .nav-stacked > li {
 	float: none;
 }

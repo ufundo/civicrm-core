@@ -63,7 +63,7 @@
 	display: flex;
 }
 .api4-explorer-page form label {
-	min-width: var(--crm-big-input);
+	min-width: var(--crm-input-label-size);
 }
 .api4-explorer-page form .checkbox-inline > label {
 	min-width: unset;
