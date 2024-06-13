@@ -1139,7 +1139,7 @@
 }
 #bootstrap-theme h4 small, #bootstrap-theme h4 .small, #bootstrap-theme .h4 small, #bootstrap-theme .h4 .small, #bootstrap-theme h5 small, #bootstrap-theme h5 .small, #bootstrap-theme .h5 small, #bootstrap-theme .h5 .small, #bootstrap-theme h6 small, #bootstrap-theme h6 .small, #bootstrap-theme .h6 small, #bootstrap-theme .h6 .small {
 	font-size: 75%;
-} */
+}
 #bootstrap-theme h1, #bootstrap-theme .h1 {
 	font-size: 36px;
 }
@@ -1157,7 +1157,7 @@
 }
 #bootstrap-theme h6, #bootstrap-theme .h6 {
 	font-size: 12px;
-}
+} */
 #bootstrap-theme p {
 	margin: 0 0 10px;
 }
@@ -3357,10 +3357,11 @@
 	#bootstrap-theme .navbar-right ~ .navbar-right {
 		margin-right: 0;
 	}}
-#bootstrap-theme .navbar-default {
-	background-color: black;
-	border-color: black;
-}
+/* #bootstrap-theme .navbar-default {
+	background-color: var(--crm-c-darkest);
+	border-color: var(--crm-c-darkest);
+	color: var(--crm-c-light-text);
+} */
 #bootstrap-theme .navbar-default .navbar-brand {
 	color: white;
 }

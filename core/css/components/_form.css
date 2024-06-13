@@ -194,14 +194,6 @@ input.crm-form-entityref {
     border-color: transparent;
     background: none;
 }
-#crm-contactname-content .crm-edit-help {
-    background: var(--crm-c-background2) !important;
-    border-bottom-left-radius: var(--crm-dash-roundness);
-    color: var(--crm-c-text);
-    padding: var(--crm-s) var(--crm-m2);
-    border-bottom: var(--crm-inline-edit-border);
-    border-left: var(--crm-inline-edit-border);
-}
 .crm-container .crm-editable-form {
     display: flex;
 }

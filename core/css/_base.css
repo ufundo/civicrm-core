@@ -378,6 +378,21 @@
     flex: 1;
     min-width: 0;
 }
+.crm-container .crm-flex-1 {
+    flex: 1;
+}
+.crm-container .crm-flex-2 {
+    flex: 2;
+}
+.crm-container .crm-flex-3 {
+    flex: 3;
+}
+.crm-container .crm-flex-4 {
+    flex: 4;
+}
+.crm-container .crm-flex-5 {
+    flex: 5;
+}
 .crm-container .css_right,
 .crm-container .float-right {
     float: right;

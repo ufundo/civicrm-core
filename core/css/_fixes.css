@@ -391,8 +391,19 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 .crm-container #crm-contactname-content .crm-edit-help {
     order: 2;
-    position: relative;
-    height: var(--crm-l);
+	margin-left: auto;
+	color: transparent;
+	padding: 0;
+}
+.crm-container #crm-contactname-content .crm-edit-help .crm-i {
+	color: var(--crm-c-light-text);
+	float: right;
+	margin: var(--crm-xs) 0 0 var(--crm-m);
+}
+.crm-container #crm-contactname-content .crm-edit-help:hover,
+.crm-edit-ready .crm-summary-block .crm-inline-edit:hover .crm-edit-help {
+	color: var(--crm-c-light-text);
+	background-color: transparent !important; /* vs contactSummary.css */
 }
 .crm-actions-ribbon ul#actions {
     list-style: none;
@@ -956,6 +967,45 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 
 /* FORM BUILDER */
 
+#afGuiEditor fieldset {
+	min-width: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+#afGuiEditor fieldset legend {
+	padding: var(--crm-s) 0 0 0;
+	margin-bottom: var(--crm-s);
+	border-bottom: 1px solid var(--crm-c-divider);
+	width: 100%;
+	font-size: var(--crm-font-size);
+}
+#afGuiEditor .panel-heading {
+	height: auto;
+	padding: var(--crm-m) var(--crm-m) 0 !important;
+	border-bottom: 1px solid var(--crm-c-divider) !important;
+}
+#afGuiEditor .panel-heading ul.nav-tabs {
+	margin-bottom: -1px;
+}
+#afGuiEditor .panel-heading ul.nav-tabs li {
+	top: 0;
+}
+/* Editor Palette */
+
+#afGuiEditor-palette,
+#afGuiEditor-canvas  {
+	flex: 1;
+}
+#afGuiEditor-palette input, 
+#afGuiEditor-palette textarea, 
+#afGuiEditor-palette select {
+	width: 100%;
+}
+#afGuiEditor-palette input[type="checkbox"],
+#afGuiEditor-palette input[type="radio"] {
+	width: auto;
+}
 #afGuiEditor-palette .form-group label {
 	width: 100%;
 	display: block;
@@ -977,13 +1027,14 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	width: calc(100% - 66px) !important;
 }
 #afGuiEditor .panel-heading ul.nav-tabs li {
-	top: unset;
+	top: unset !important;
 	width: fit-content !important;
 }
 #afGuiEditor .panel-heading ul.nav-tabs li > a {
 	font-size: var(--crm-font-size) !important; /* vs api4-explorer.css */
 	padding: var(--crm-s1) var(--crm-m2) !important; /* vs api4-explorer.css */
 	height: auto !important; /* vs api4-explorer.css */
+	min-height: 39px;
 }
 /*#afGuiEditor fieldset legend {
 	padding-top: var(--crm-s);
@@ -1001,32 +1052,31 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 /* #afGuiEditor .af-gui-columns fieldset:last-of-type {
 	grid-column: 1 / span 2;
 } */
-#afGuiEditor .af-gui-entity-values legend,
-#afGuiEditor .af-gui-entity-palette legend {
-	font-size: var(--crm-font-size);
-}
 #afGuiEditor-palette-config .panel-body {
 	padding: var(--crm-padding-reg) !important;
 }
 #afGuiEditor-palette-config .af-gui-entity-values hr {
 	display: none;
 }
+#afGuiEditor .af-gui-entity-palette legend {
+	margin: 0 !important;
+	border-bottom: 0;
+}
 #afGuiEditor-palette-config .af-gui-entity-palette [type="search"] {
-	display: block;
-	top: 1rem !important;
-	width: calc(100% - 10px) !important;
+	top: 0 !important;
+	width: 100% !important;
 	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
 	border-color: var(--crm-c-divider);
-	padding: 0 var(--crm-s) !important;
+	padding: var(--crm-s2) !important;
 	height: unset !important;
 	font-size: var(--crm-input-font-size) !important;
 	margin: 0;
+	border-bottom: 0;
 }
 .af-gui-entity-palette-select-list {
 	border: 1px solid var(--crm-c-divider);
-	border-radius: var(--crm-roundness);
+	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	padding: var(--crm-s);
-	margin-top: var(--crm-l);
 }
 #afGuiEditor-palette-config .af-gui-entity-palette .input-group {
 	margin-top: var(--crm-s);
