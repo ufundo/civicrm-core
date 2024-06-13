@@ -34,8 +34,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-c-gray-025: #fbfafa;
 --crm-c-blue: #bce8f1;
 --crm-c-blue-light: #d9edf7;
---crm-c-blue-dark: #4294bd;
---crm-c-blue-darker: #327293;
+--crm-c-blue-dark: #297292;
+--crm-c-blue-darker: #215c76;
 --crm-c-purple: #4d4d69;
 --crm-c-purple-dark: #3e3e54;
 --crm-c-green: #d6e9c6;
@@ -121,6 +121,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 /* TYPE */
 --crm-font-size: var(--crm-r);
 --crm-small-font-size: var(--crm-m2);
+--crm-type-line-height: 1.5;
 --crm-link-decoration: none;
 --crm-link-decoration-hover: underline;
 --crm-heading-bg: var(--crm-c-blue-light);

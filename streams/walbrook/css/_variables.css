@@ -117,6 +117,7 @@ color-scheme: light dark;
 /* TYPE */
 --crm-font-size: var(--crm-r);
 --crm-small-font-size: var(--crm-m2);
+--crm-type-line-height: 1.5;
 --crm-link-decoration: none;
 --crm-link-decoration-hover: none;
 --crm-heading-bg: var(--crm-c-background3);

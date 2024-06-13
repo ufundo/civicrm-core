@@ -130,19 +130,22 @@ body.admin.com_civicrm.layout-default .crm-container details summary ~ * {
    WORDPRESS
 *******************/
 
+body.wp-admin {
+    --crm-page-padding: 1rem 2rem;
+    font-size: 100%;
+}
 body.wp-admin #wpcontent {
     padding-left: 0; /* resets WP padding */
 } 
-body.wp-admin li {
+body.wp-admin .crm-container li {
     margin: 0; /* resets WP li bottom margin */
     list-style: none;
 }
 body.wp-admin div.ui-notify-message .notify-content li {
     list-style: unset;
 }
-body.wp-admin {
-    --crm-page-padding: 1rem 2rem;
-    font-size: 100%;
+body.wp-admin .crm-container p {
+    margin: 0;
 }
 body.wp-admin #crm-container {
     background: var(--crm-c-page-background);
