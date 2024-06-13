@@ -198,6 +198,13 @@ tbody .crm-row-child:not(:has(~ .crm-row-child)) td {
     border: none;
     padding: var(--crm-table-padding);
 }
+.crm-container .crm-form-block > .form-layout-compressed { 
+    /* handles double box/border issue when table is in a form block, 
+    e.g. civicrm/member/add?reset=1&action=add&context=standalone */
+    box-shadow: none;
+    border: 0 solid transparent;
+    background: transparent;
+}
 
 /* Report table */
 
