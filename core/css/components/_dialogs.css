@@ -82,7 +82,7 @@
     background: var(--crm-c-background);
     color: var(--crm-c-text);
     height: auto !important;
-    margin: var(--crm-dialog-padding) 0 var(--crm-xxl);
+    margin: var(--crm-dialog-padding) 0 calc(var(--crm-btn-height) + var(--crm-m) + var(--crm-m));
     position: static;
     z-index: 1;
     padding: var(--crm-dialog-body-padding);
@@ -161,6 +161,10 @@
     border-width: var(--crm-notify-accent-border);
     border-style: solid;
     border-color: var(--crm-700-gray);
+}
+#crm-notification-container div.ui-notify-message-style a {
+    color: var(--crm-notify-col);
+    text-decoration: underline;
 }
 #crm-notification-container div.ui-notify-message-style.error {
     border-color: var(--crm-c-alert);

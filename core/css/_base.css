@@ -57,9 +57,12 @@
     padding: 0;
 }
 .crm-container .ui-widget,
-.crm-container .ui-widget:where(input,select,textarea,button) {
-    font-family: inherit;
-    font-size: inherit;
+.crm-container .ui-widget input, 
+.crm-container .ui-widget select, 
+.crm-container .ui-widget textarea, 
+.crm-container .ui-widget button {
+    font-family: inherit !important;
+    font-size: inherit !important;
 }
 .crm-container .ui-button-icon-only .ui-icon {
     position: initial;

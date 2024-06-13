@@ -177,6 +177,10 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container .status-warning {
 	color: var(--crm-c-alert);
 }
+.crm-container .alert.alert-info.font-red { /* for when an info alert wants to be a danger alert! */
+	background-color: var(--crm-alert-background-danger);
+	border-color: var(--crm-alert-border-danger);
+}
 
 /******************
     BUTTONS
@@ -567,7 +571,15 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 #api-generated tr td:first-of-type {
 	width: var(--crm-input-label-width);
 } 
+/* Display Preferences */
 
+tr.crm-preferences-display-form-block-contact_edit_options td:has(table) {
+	padding: 0;
+}
+
+tr.crm-preferences-display-form-block-contact_edit_options td table {
+	width: auto !important;
+}
 /******************
     SEARCH
 *******************/
@@ -656,10 +668,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 #mainTabContainer .form-group.pull-right  > .btn-group {
     margin-bottom: var(--crm-m2);
-}
-/* Search */
-.crm-search-display-pager {
-    padding: 0 var(--crm-r) var(--crm-r) var(--crm-r);
 }
 /* Contact dashboard page */
 .crm-actions-ribbon .crm-next-action,
@@ -905,6 +913,13 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 .crm-search-display button.dropdown-toggle {
 	white-space: nowrap;
 	font-size: var(--crm-font-size);
+}
+.crm-contact-page .crm-search-display .form-group.pull-right {
+	display: flex !important;
+	gap: var(--crm-m);
+}
+.crm-contact-page .crm-search-display-pager {
+    padding: 0 var(--crm-r) var(--crm-r) var(--crm-r);
 }
 
 /* .crmSearchDisplayTable.css */
