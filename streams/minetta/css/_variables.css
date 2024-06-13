@@ -287,7 +287,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dash-tab-count-col: var(--crm-c-text);
 --crm-dash-panel-padding: var(--crm-m);
 --crm-dash-edit-border: 2px dashed var(--crm-c-gray-300);
---crm-dash-block-padding: var(--crm-s) 0;
+--crm-dash-block-padding: 0;
 --crm-dash-block-bg: ;
 --crm-dash-block-radius: var(--crm-roundness);
 --crm-dash-label-bg: var(--crm-c-background2);

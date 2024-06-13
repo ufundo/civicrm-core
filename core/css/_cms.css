@@ -137,12 +137,15 @@ body.wp-admin li {
     margin: 0; /* resets WP li bottom margin */
     list-style: none;
 }
+body.wp-admin div.ui-notify-message .notify-content li {
+    list-style: unset;
+}
 body.wp-admin {
     --crm-page-padding: 1rem 2rem;
     font-size: 100%;
 }
 body.wp-admin #crm-container {
-    background: transparent;
+    background: var(--crm-c-page-background);
 }
 body.wp-admin .crm-container:has(.crm-summary-contactname-block) .breadcrumb {
     display: none; /* Hides breadcrumb on contact dashboard */

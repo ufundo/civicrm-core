@@ -29,7 +29,7 @@
     gap: var(--crm-s);
 }
 .crm-container ul.crm-checkbox-list li input {
-    margin: 0;
+    margin: 3px 1px;
 }
 .listing-box input.crm-form-checkbox {
     margin: 0 0 0 var(--crm-s);

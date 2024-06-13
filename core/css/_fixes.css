@@ -7,14 +7,7 @@ this can be removed/commented out from 5.76 onwards */
 
 @import url(admin.css);
 @import url(api4-explorer.css);
-@import url(contactSummary.css);
 @import url(dashboard.css);
-@import url(../org.civicrm.afform_admin-ang/afGuiEditor.css);
-@import url(../org.civicrm.search_kit-css/crmSearchAdmin.css);
-@import url(../org.civicrm.search_kit-css/crmSearchDisplay.css);
-@import url(../org.civicrm.search_kit-css/crmSearchDisplayGrid.css);
-@import url(../org.civicrm.search_kit-css/crmSearchDisplayTable.css);
-@import url(../org.civicrm.search_kit-css/crmSearchTasks.css);
 
 /******************
     ACCORDIONS
@@ -469,9 +462,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 }
 /* CiviContribute dashboard */
 
-.crm-container #financial-type-id-1 input[type="checkbox"] {
-	margin: 3px 1px;
-}
 .crm-container #ContributionCharts #mainTabContainer {
     box-shadow: var(--crm-block-shadow);
 }
@@ -764,10 +754,10 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 .crm-container .af-layout-inline ~ .btn-group.pull-right {
 	margin: var(--crm-padding-reg) 0;
 }
-.crm-container .crm-search-display-table  .form-inline {
+/* .crm-container .crm-search-display-table  .form-inline {
 	display: flex;
 	gap: var(--crm-padding-reg);
-}
+} */
 .crm-container .crm-search-display-table .form-inline .form-group.pull-right {
 	margin-left: auto;
 }
@@ -778,4 +768,336 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 .crm-container #tab-surveys,
 .crm-container #tab-petitions {
 	padding: var(--crm-tab-padding)
+}
+
+/******************
+	CORE EXTENSIONS
+*******************/
+
+/* SEARCH KIT 
+   .crm-search-admin */
+
+.crm-search .crm-search-nav-tabs > div.btn-group {
+    top: calc(-1 * var(--crm-m));
+}
+.crm-search .dropdown-menu li .form-inline {
+	padding: 0;
+}
+.crm-search .crm-search-admin-relative textarea {
+    width: 100%;
+}
+.crm-search .crm-search-admin-relative .api4-clause-group-sortable {
+    margin: var(--crm-r) 0;
+}
+.crm-search .crm-search-admin-relative details { /* only way to target settings accordions */
+    border: var(--crm-expand-body-border);
+    border-radius: var(--crm-roundness);
+}
+.crm-search .crm-search-admin-relative details > summary {
+    background: var(--crm-expand-header-bg);
+    color: var(--crm-expand-header-color);
+    padding: var(--crm-padding-small) var(--crm-padding-reg);
+}
+.crm-search .crm-search-admin-relative details > fieldset {
+    padding: 0;
+    border: 0 solid transparent;
+}
+.crm-search fieldset legend {
+	padding: 0;
+	font-size: inherit;
+	background-color: transparent;
+}
+.crm-search .crm-search-admin-relative details > fieldset .form-inline:not(td) {
+    background: var(--crm-c-drag-background);
+    border-radius: var(--crm-roundness);
+    margin-bottom: var(--crm-s2);
+    padding: var(--crm-padding-small) var(--crm-padding-reg);
+}
+.crm-search .crm-search-admin-relative details > fieldset fieldset,
+.crm-search crm-search-admin-display fieldset .form-inline > fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0 solid transparent;
+}
+.crm-search crm-search-admin-link-group {
+    background: var(--crm-c-background2);
+}
+.crm-search crm-search-admin-link-group table {
+    margin: var(--crm-padding-reg);
+	max-width: calc(100% - var(--crm-padding-reg) - var(--crm-padding-reg));
+	box-shadow: none;
+}
+.crm-search ul.nav-stacked li:last-of-type {
+    margin-top: var(--crm-r);
+}
+.crm-search ul.nav-stacked li:has(.btn-xs) a {
+    padding-right: 5ch;
+}
+.crm-search .crm-search-admin-edit-columns {
+    padding: 0;
+    border: 0 solid transparent;
+}
+.crm-search fieldset.crm-draggable {
+    background-color: var(--crm-c-drag-background);
+    border-radius: var(--crm-roundness);
+    border: 0 solid transparent !important;
+    padding: var(--crm-padding-small);
+    margin: var(--crm-m)0 ;
+}
+.crm-search .crm-search-admin-edit-columns details {
+    background-color: var(--crm-c-page-background);
+    border-radius: var(--crm-roundness);
+    border: 0;
+}
+.crm-search .crm-search-admin-edit-columns details summary {
+    background: var(--crm-expand-header2-bg);
+    color: var(--crm-expand-header2-color);
+    padding: var(--crm-padding-reg);
+}
+.crm-search .crm-search-admin-edit-columns details > *:not(summary) {
+    padding-inline: var(--crm-padding-reg);
+}
+.crm-search .crm-search-admin-edit-columns details > *:first-child {
+    padding-bottom: var(--crm-padding-reg);
+}
+.crm-search .crm-search-admin-edit-columns details > *:last-child {
+    padding-bottom: var(--crm-padding-reg);
+}
+.crm-search details label {
+    min-width: var(--crm-input-size)
+}
+.crm-search-admin-main-tabs button.btn-xs {
+	background: transparent;
+	color: var(--crm-c-text);
+	font-size: var(--crm-font-size);
+}
+#bootstrap-theme .crm-search-display-control {
+	right: 4px !important;
+}
+#bootstrap-theme .crm-search-display-control + .crm-search-display-control {
+	right: 28px !important;
+}
+#bootstrap-theme.crm-search .api4-clause-badge,
+#bootstrap-theme.crm-search .api4-clause-badge .btn {
+	font-size: var(--crm-input-font-size);
+}
+/* .crmSearchDisplay */
+.crm-search-display th.crm-sortable-col {
+	cursor: pointer;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+.crm-search-display th i.fa-sort-desc,
+.crm-search-display th i.fa-sort-asc {
+	color: var(--crm-c-primary);
+}
+.crm-search-display th:not(:hover) i.fa-sort {
+	opacity: .5;
+}
+.crm-search input.ng-invalid,
+.crm-search-display input.ng-invalid,
+.crm-search-task-dialog input.ng-invalid {
+	border-color: var(--crm-c-warning);
+}
+#crm-search-results-page-size {
+	width: 60px;
+}
+.crm-search-display button.dropdown-toggle {
+	white-space: nowrap;
+	font-size: var(--crm-font-size);
+}
+
+/* .crmSearchDisplayTable.css */
+
+#bootstrap-theme .crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon {
+	position: unset !important;
+	line-height: var(--crm-r1);
+}
+#bootstrap-theme .crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon + .crm-search-display-table-column-label {
+	margin-left: 0 !important;
+}
+
+/* FORM BUILDER */
+
+#afGuiEditor-palette .form-group label {
+	width: 100%;
+	display: block;
+}
+#afGuiEditor-palette .checkbox label {
+	padding: 0;
+}
+#afGuiEditor-palette .input-group:has(#af_config_redirect) {
+	display: grid;
+	grid-template-columns: 1fr 250px;
+}
+#afGuiEditor-palette #s2id_autogen3 {
+	min-width: 100% !important;
+}
+#afGuiEditor #af_config_form_permission_operator {
+	width: 60px !important;
+}
+#afGuiEditor #s2id_af_config_form_permission {
+	width: calc(100% - 66px) !important;
+}
+#afGuiEditor .panel-heading ul.nav-tabs li {
+	top: unset;
+	width: fit-content !important;
+}
+#afGuiEditor .panel-heading ul.nav-tabs li > a {
+	font-size: var(--crm-font-size) !important; /* vs api4-explorer.css */
+	padding: var(--crm-s1) var(--crm-m2) !important; /* vs api4-explorer.css */
+	height: auto !important; /* vs api4-explorer.css */
+}
+/*#afGuiEditor fieldset legend {
+	padding-top: var(--crm-s);
+	font-size: var(--crm-r2)
+	margin-bottom: var(--crm-m);
+	color: var(--crm-c-text);
+	border-bottom: 1px solid var(--crm-c-divider);
+	line-height: 1;
+} */
+#afGuiEditor .af-gui-columns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--crm-r);
+}
+/* #afGuiEditor .af-gui-columns fieldset:last-of-type {
+	grid-column: 1 / span 2;
+} */
+#afGuiEditor .af-gui-entity-values legend,
+#afGuiEditor .af-gui-entity-palette legend {
+	font-size: var(--crm-font-size);
+}
+#afGuiEditor-palette-config .panel-body {
+	padding: var(--crm-padding-reg) !important;
+}
+#afGuiEditor-palette-config .af-gui-entity-values hr {
+	display: none;
+}
+#afGuiEditor-palette-config .af-gui-entity-palette [type="search"] {
+	display: block;
+	top: 1rem !important;
+	width: calc(100% - 10px) !important;
+	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
+	border-color: var(--crm-c-divider);
+	padding: 0 var(--crm-s) !important;
+	height: unset !important;
+	font-size: var(--crm-input-font-size) !important;
+	margin: 0;
+}
+.af-gui-entity-palette-select-list {
+	border: 1px solid var(--crm-c-divider);
+	border-radius: var(--crm-roundness);
+	padding: var(--crm-s);
+	margin-top: var(--crm-l);
+}
+#afGuiEditor-palette-config .af-gui-entity-palette .input-group {
+	margin-top: var(--crm-s);
+}
+#afGuiEditor .af-gui-field-input-type-chainselect .input-group .dropdown-toggle, 
+#afGuiEditor .af-gui-field-input-type-select .input-group .dropdown-toggle, 
+#afGuiEditor-palette-config .af-gui-entity-palette .input-group .btn,
+#afGuiEditor-canvas-body .af-gui-field-input .input-group .btn {
+	padding: var(--crm-s) var(--crm-m1);
+}
+#afGuiEditor .panel-body {
+	width: 100%;
+}
+/* AfEditor builder */
+
+#afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
+	color: var(--crm-dropdown-col) !important;
+}
+#afGuiEditor .af-gui-text-legend, 
+#afGuiEditor .af-gui-text-h3 {
+	font-size: var(--crm-font-size);
+}
+#afGuiEditor-canvas [ui-sortable] {
+	margin-top: 5px !important;
+}
+#afGuiEditor .af-gui-container {
+	padding: var(--crm-m) !important;
+	margin-top: 0 !important;
+}
+#afGuiEditor .af-gui-container.af-container-style-pane {
+	background: linear-gradient(to bottom, #f2f2f2 0 var(--crm-l), transparent var(--crm-l) 100%) no-repeat;
+	border-radius: var(--crm-roundness);
+}
+#afGuiEditor .af-gui-content-editing-area .af-gui-edit-options-bar,
+#afGuiEditor-canvas [ui-sortable] .af-gui-bar  {
+	font-family: inherit !important /* vs afGuiEditor.css */;
+	font-size: var(--crm-font-size) !important;
+	padding: var(--crm-s);
+}
+#afGuiEditor .af-gui-container-type-fieldset,
+#afGuiEditor .af-gui-container,
+#afGuiEditor .af-gui-markup,
+#afGuiEditor .af-gui-text,
+#afGuiEditor .af-gui-button {
+	box-shadow: var(--crm-block-shadow);
+	margin-bottom: var(--crm-padding-small) !important;
+}
+.af-gui-edit-options-bar h4 {
+	font-size: var(--crm-font-size) !important;
+	margin: 0 !important;
+}
+#afGuiEditor-canvas [ui-sortable] .af-gui-bar {
+	font-family: inherit;
+	height: var(--crm-l);
+	border-radius: var(--crm-roundness);
+	background-color: var(--crm-c-background4) !important;
+	padding-left: var(--crm-r2);
+	position: inherit !important;
+}
+#afGuiEditor-canvas .form-inline {
+	padding: 0;
+}
+.af-layout-inline .af-gui-bar {
+	margin: 0 -4px;
+	width: calc(100% + 8px) !important;
+}
+af-gui-container > .af-gui-bar,
+.af-gui-container-type-div > .af-gui-bar {
+	margin: calc(-1 * var(--crm-m)) calc(-1 * var(--crm-m)) var(--crm-m) calc(-1 * var(--crm-m));
+	width: calc(100% + var(--crm-r)) !important;
+}
+#afGuiEditor-canvas [ui-sortable] .af-gui-bar:has(~ .af-gui-field-input) {
+	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
+}
+#afGuiEditor [ui-sortable] .af-gui-bar::before, 
+#afGuiEditor .af-gui-entity-palette-select-list [ui-sortable] > div:not(.disabled):hover::before, 
+#afGuiEditor af-gui-edit-options.af-gui-content-editing-area [ui-sortable] li::before {
+	height: var(--crm-r3) !important;
+	left: 5px !important;
+}
+#afGuiEditor .af-gui-node-title {
+	position: absolute !important;
+	top: 0 !important;
+	font-size: var(--crm-font-size) !important;
+	color: inherit !important;
+}
+#afGuiEditor .af-gui-node-title + * {
+	padding-top: var(--crm-m);
+}
+#afGuiEditor .af-gui-element {
+	padding: 0 var(--crm-s) var(--crm-s) !important;
+	min-height: var(--crm-l) !important;
+	background: var(--crm-c-background2);
+	border-radius: var(--crm-roundness);
+	margin-bottom: var(--crm-s2);
+}
+#afGuiEditor .af-gui-content-editing-area:has(.ng-hide) {
+	padding-top: 0;
+}
+#afGuiEditor .af-gui-markup {
+	padding: var(--crm-s) !important;
+}
+#afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
+	color: var(--crm-dropdown-col) !important;
+}
+#afGuiEditor .af-gui-layout.af-layout-cols {
+	column-gap: var(--crm-r);
+}
+#afGuiEditor .af-gui-layout.af-layout-inline > div {
+	margin-right: var(--crm-m);
 }

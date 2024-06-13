@@ -63,7 +63,7 @@
 	display: flex;
 }
 .api4-explorer-page form label {
-	min-width: var(--crm-input-label-size);
+	min-width: var(--crm-input-label-width);
 }
 .api4-explorer-page form .checkbox-inline > label {
 	min-width: unset;
@@ -83,9 +83,16 @@
 .api4-explorer-page .explorer-code-panel pre {
     word-break: break-all;
     white-space: pre-wrap;
+    min-height: var(--crm-xxl);
 }
 .api4-explorer-page .explorer-code-panel .panel-heading > .nav li a {
     text-transform: uppercase;
+}
+.api4-explorer-page .explorer-code-panel .alert-warning i.crm-i {
+    font-family: inherit; /* Fix for unclosed icon tag */
+}
+.api4-explorer-page .explorer-code-panel .alert-warning i.crm-i::before {
+    font: normal normal normal 14px/1 FontAwesome; /* Fix for unclosed icon tag */
 }
 
 /* Results panel */
