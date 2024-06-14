@@ -83,13 +83,13 @@
 	box-sizing: content-box;
 	height: 0;
 }
-#bootstrap-theme pre {
+/* #bootstrap-theme pre {
 	overflow: auto;
 }
 #bootstrap-theme code, #bootstrap-theme kbd, #bootstrap-theme pre, #bootstrap-theme samp {
 	font-family: monospace, monospace;
 	font-size: 1em;
-}/* 
+}
 #bootstrap-theme button, #bootstrap-theme input, #bootstrap-theme optgroup, #bootstrap-theme select, #bootstrap-theme textarea {
 	color: inherit;
 	font: inherit;
@@ -123,14 +123,14 @@
 #bootstrap-theme input[type="number"]::-webkit-inner-spin-button, #bootstrap-theme input[type="number"]::-webkit-outer-spin-button {
 	height: auto;
 }
-#bootstrap-theme input[type="search"] {
+/* #bootstrap-theme input[type="search"] { /* causes prolems! */
 	-webkit-appearance: textfield;
 	box-sizing: content-box;
-}
+} */
 #bootstrap-theme input[type="search"]::-webkit-search-cancel-button, #bootstrap-theme input[type="search"]::-webkit-search-decoration {
 	-webkit-appearance: none;
 }
-#bootstrap-theme fieldset {
+/* #bootstrap-theme fieldset {
 	border: 1px solid #c0c0c0;
 	margin: 0 2px;
 	padding: .35em .625em .75em;
@@ -138,7 +138,7 @@
 #bootstrap-theme legend {
 	border: 0;
 	padding: 0;
-}
+} */
 #bootstrap-theme textarea {
 	overflow: auto;
 }
@@ -1034,14 +1034,16 @@
 	color: #555;
 	background-color: white;
 } */
-#bootstrap-theme input, #bootstrap-theme select, #bootstrap-theme textarea {
+/* REMOVING THE BELOW BECAUSE THE ID MAKES IT DOMINANT
+#bootstrap-theme input, #bootstrap-theme select, #bootstrap-theme textarea { REM
 	font-family: inherit;
 	font-size: inherit;
 	line-height: inherit;
-}#bootstrap-theme button {
+}
+#bootstrap-theme button {
 	font-family: inherit;
 	line-height: inherit;	
-}
+} */
 /* 
 #bootstrap-theme a {
 	color: #2786c2;
@@ -1117,13 +1119,14 @@
 	color: black;
 }
 #bootstrap-theme h1 small, #bootstrap-theme h1 .small, #bootstrap-theme h2 small, #bootstrap-theme h2 .small, #bootstrap-theme h3 small, #bootstrap-theme h3 .small, #bootstrap-theme h4 small, #bootstrap-theme h4 .small, #bootstrap-theme h5 small, #bootstrap-theme h5 .small, #bootstrap-theme h6 small, #bootstrap-theme h6 .small, #bootstrap-theme .h1 small, #bootstrap-theme .h1 .small, #bootstrap-theme .h2 small, #bootstrap-theme .h2 .small, #bootstrap-theme .h3 small, #bootstrap-theme .h3 .small, #bootstrap-theme .h4 small, #bootstrap-theme .h4 .small, #bootstrap-theme .h5 small, #bootstrap-theme .h5 .small, #bootstrap-theme .h6 small, #bootstrap-theme .h6 .small {
-	font-weight: 400;
 	line-height: 1;
 	color: #999;
 }
-#bootstrap-theme h1, #bootstrap-theme .h1, #bootstrap-theme h2, #bootstrap-theme .h2, #bootstrap-theme h3, #bootstrap-theme .h3 {
+/* #bootstrap-theme h1, #bootstrap-theme .h1, #bootstrap-theme h2, #bootstrap-theme .h2, #bootstrap-theme h3, #bootstrap-theme .h3 {
 	margin-top: 20px;
 	margin-bottom: 10px;
+	font-weight: var(--crm-bold-weight);
+	font-family: var(--crm-font-bold);
 }
 #bootstrap-theme h1 small, #bootstrap-theme h1 .small, #bootstrap-theme .h1 small, #bootstrap-theme .h1 .small, #bootstrap-theme h2 small, #bootstrap-theme h2 .small, #bootstrap-theme .h2 small, #bootstrap-theme .h2 .small, #bootstrap-theme h3 small, #bootstrap-theme h3 .small, #bootstrap-theme .h3 small, #bootstrap-theme .h3 .small {
 	font-size: 65%;
@@ -1131,6 +1134,8 @@
 #bootstrap-theme h4, #bootstrap-theme .h4, #bootstrap-theme h5, #bootstrap-theme .h5, #bootstrap-theme h6, #bootstrap-theme .h6 {
 	margin-top: 10px;
 	margin-bottom: 10px;
+	font-weight: var(--crm-bold-weight);
+	font-family: var(--crm-font-bold);
 }
 #bootstrap-theme h4 small, #bootstrap-theme h4 .small, #bootstrap-theme .h4 small, #bootstrap-theme .h4 .small, #bootstrap-theme h5 small, #bootstrap-theme h5 .small, #bootstrap-theme .h5 small, #bootstrap-theme .h5 .small, #bootstrap-theme h6 small, #bootstrap-theme h6 .small, #bootstrap-theme .h6 small, #bootstrap-theme .h6 .small {
 	font-size: 75%;
@@ -1152,7 +1157,7 @@
 }
 #bootstrap-theme h6, #bootstrap-theme .h6 {
 	font-size: 12px;
-}
+} */
 #bootstrap-theme p {
 	margin: 0 0 10px;
 }
@@ -2111,6 +2116,7 @@
 	color: #999;
 	text-align: left;
 }
+/* API EXPLORER 4 clashes
 #bootstrap-theme fieldset {
 	min-width: 0;
 	padding: 0;
@@ -2127,7 +2133,7 @@
 	color: #555;
 	border: 0;
 	border-bottom: 1px solid #e5e5e5;
-}/*
+}
 #bootstrap-theme label {
 	display: inline-block;
 	max-width: 100%;
@@ -2341,7 +2347,7 @@
 	height: 30px;
 	line-height: 30px;
 }
-#bootstrap-theme .has-success .help-block, #bootstrap-theme .has-success .control-label, #bootstrap-theme .has-success .radio, #bootstrap-theme .has-success .checkbox, #bootstrap-theme .has-success .radio-inline, #bootstrap-theme .has-success .checkbox-inline, #bootstrap-theme .has-success.radio label, #bootstrap-theme .has-success.checkbox label, #bootstrap-theme .has-success.radio-inline label, #bootstrap-theme .has-success.checkbox-inline label {
+/* #bootstrap-theme .has-success .help-block, #bootstrap-theme .has-success .control-label, #bootstrap-theme .has-success .radio, #bootstrap-theme .has-success .checkbox, #bootstrap-theme .has-success .radio-inline, #bootstrap-theme .has-success .checkbox-inline, #bootstrap-theme .has-success.radio label, #bootstrap-theme .has-success.checkbox label, #bootstrap-theme .has-success.radio-inline label, #bootstrap-theme .has-success.checkbox-inline label {
 	color: #468847;
 }
 #bootstrap-theme .has-success .form-control {
@@ -2403,7 +2409,7 @@
 }
 #bootstrap-theme .has-error .form-control-feedback {
 	color: #b94a48;
-}
+} */
 #bootstrap-theme .has-feedback label ~ .form-control-feedback {
 	top: 25px;
 }
@@ -2840,17 +2846,17 @@
 	white-space: nowrap;
 	vertical-align: middle;
 }
-#bootstrap-theme .input-group-addon {
-	padding: 4px 8px;
-	font-size: 14px;
-	font-weight: 400;
-	line-height: 1;
-	color: #555;
-	text-align: center;
-	background-color: #eee;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
+/* #bootstrap-theme .input-group-addon {
+	padding: var(--crm-input-padding);
+	font-size: var(--crm-input-font-size);
+	font-weight: normal;
+	line-height: inherit;
+	color: var(--crm-input-color);
+	text-align: left;
+	background-color: var(--crm-input-background);
+	border: 1px solid var(--crm-input-border-color);
+	border-radius: var(--crm-roundness);
+} */
 #bootstrap-theme .input-group-addon.input-sm, #bootstrap-theme .input-group-sm > .input-group-addon.form-control, #bootstrap-theme .input-group-sm > .input-group-addon, #bootstrap-theme .input-group-sm > .input-group-btn > .input-group-addon.btn {
 	padding: 5px 10px;
 	font-size: 12px;
@@ -2979,10 +2985,10 @@
 #bootstrap-theme .nav-pills > li + li {
 	margin-left: 2px;
 }
-#bootstrap-theme .nav-pills > li.active > a, #bootstrap-theme .nav-pills > li.active > a:hover, #bootstrap-theme .nav-pills > li.active > a:focus {
+/* #bootstrap-theme .nav-pills > li.active > a, #bootstrap-theme .nav-pills > li.active > a:hover, #bootstrap-theme .nav-pills > li.active > a:focus {
 	color: white;
 	background-color: black;
-}
+} */
 #bootstrap-theme .nav-stacked > li {
 	float: none;
 }
@@ -3351,10 +3357,11 @@
 	#bootstrap-theme .navbar-right ~ .navbar-right {
 		margin-right: 0;
 	}}
-#bootstrap-theme .navbar-default {
-	background-color: black;
-	border-color: black;
-}
+/* #bootstrap-theme .navbar-default {
+	background-color: var(--crm-c-darkest);
+	border-color: var(--crm-c-darkest);
+	color: var(--crm-c-light-text);
+} */
 #bootstrap-theme .navbar-default .navbar-brand {
 	color: white;
 }

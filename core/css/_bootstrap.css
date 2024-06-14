@@ -19,6 +19,24 @@
 	margin: var(--crm-s) 0 var(--crm-m);
 	font-size: var(--crm-font-small-size);
 }
+/* #bootstrap-theme h1, #bootstrap-theme .h1, #bootstrap-theme h2, #bootstrap-theme .h2, #bootstrap-theme h3, #bootstrap-theme .h3 {
+	margin-top: var(--crm-r2);
+	margin-bottom: var(--crm-m1);
+	font-weight: var(--crm-bold-weight);
+	font-family: var(--crm-font-bold);
+} */
+#bootstrap-theme h1 small, #bootstrap-theme h1 .small, #bootstrap-theme .h1 small, #bootstrap-theme .h1 .small, #bootstrap-theme h2 small, #bootstrap-theme h2 .small, #bootstrap-theme .h2 small, #bootstrap-theme .h2 .small, #bootstrap-theme h3 small, #bootstrap-theme h3 .small, #bootstrap-theme .h3 small, #bootstrap-theme .h3 .small {
+	font-size: 65%;
+}
+#bootstrap-theme h4, #bootstrap-theme .h4, #bootstrap-theme h5, #bootstrap-theme .h5, #bootstrap-theme h6, #bootstrap-theme .h6 {
+	margin-top: var(--crm-m1);
+	margin-bottom: var(--crm-m1);
+	font-weight: var(--crm-bold-weight);
+	font-family: var(--crm-font-bold);
+}
+#bootstrap-theme h4 small, #bootstrap-theme h4 .small, #bootstrap-theme .h4 small, #bootstrap-theme .h4 .small, #bootstrap-theme h5 small, #bootstrap-theme h5 .small, #bootstrap-theme .h5 small, #bootstrap-theme .h5 .small, #bootstrap-theme h6 small, #bootstrap-theme h6 .small, #bootstrap-theme .h6 small, #bootstrap-theme .h6 .small {
+	font-size: 75%;
+}
 
 /* 
       ALERTS
@@ -66,7 +84,7 @@
       BUTTONS
                 */
 
-/* Namespaced attributes (deprecate?) */
+/* Namespaced attributes */
 
 #bootstrap-theme .btn-link {
 	font-weight: 400;
@@ -89,12 +107,66 @@
 	color: var(--crm-c-gray-800);
 	text-decoration: none;
 }
+#bootstrap-theme .input-group-addon {
+	padding: var(--crm-input-padding);
+	font-size: var(--crm-input-font-size);
+	font-weight: normal;
+	line-height: inherit;
+	color: var(--crm-input-color);
+	text-align: left;
+	background-color: var(--crm-input-background);
+	width: 100%;
+	border-radius: var(--crm-roundness);
+}
+#bootstrap-theme .has-success .form-control {
+	border-color: var(--crm-c-green-dark);
+}
+#bootstrap-theme .has-success .form-control:focus {
+	border-color: var(--crm-c-green-dark);
+}
+#bootstrap-theme .has-success .input-group-addon {
+	color: var(--crm-c-green-dark);
+	background-color: var(--crm-c-green-light);
+	border-color: var(--crm-c-green);
+}
+#bootstrap-theme .has-success .form-control-feedback {
+	color: var(--crm-c-green);
+}
+#bootstrap-theme .has-warning .form-control {
+	border-color: var(--crm-c-warning);
+}
+#bootstrap-theme .has-warning .form-control:focus {
+	border-color: var(--crm-c-warning);
+}
+#bootstrap-theme .has-warning .input-group-addon {
+	color: var(--crm-c-warning);
+	background-color: var(--crm-c-amber-light);
+	border-color: var(--crm-c-warning);
+}
+#bootstrap-theme .has-warning .form-control-feedback {
+	color: var(--crm-c-warning);
+}
+#bootstrap-theme .has-error .form-control,
+#bootstrap-theme .has-error .form-control a.select2-default {
+	border-color: var(--crm-c-alert);
+}
+#bootstrap-theme .has-error .form-control:focus {
+	border-color:  var(--crm-c-alert);
+}
+#bootstrap-theme .has-error .input-group-addon {
+	color:  var(--crm-c-alert);
+	background-color: # var(--crm-c-red-light);
+	border-color:  var(--crm-c-alert);
+}
+#bootstrap-theme .has-error .form-control-feedback {
+	color:  var(--crm-c-alert);
+}
 
 /* 
     LABELS
             */
 
-#bootstrap-theme .label {
+/* #bootstrap-theme .label {
 	display: inline;
 	padding: var(--crm-btn-small-padding);
 	font-weight: var(--crm-bold-weight);
@@ -103,7 +175,7 @@
 	white-space: nowrap;
 	vertical-align: baseline;
 	border-radius: var(--crm-roundness);
-}
+} */
 #bootstrap-theme .label:empty {
 	display: none;
 }
@@ -273,7 +345,6 @@
 	PAGINATION
 				*/
 
-
 #bootstrap-theme .pagination {
 	display: inline-block;
 	padding-left: 0;
@@ -369,4 +440,13 @@
 #bootstrap-theme .pagination-sm > li:last-child > span {
 	border-top-right-radius: calc(0.75 * var(--crm-roundness));
 	border-bottom-right-radius: calc(0.75 * var(--crm-roundness));
+}
+
+/*
+	NAV
+			*/
+#bootstrap-theme .navbar-default {
+	background-color: var(--crm-c-darkest);
+	border-color: var(--crm-c-darkest);
+	color: var(--crm-c-light-text);
 }

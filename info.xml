@@ -12,11 +12,11 @@
     <url desc="Main Extension Page">https://lab.civicrm.org/extensions/brunswick</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
-  <releaseDate>2024-02-06</releaseDate>
-  <version>0.4</version>
+  <releaseDate>2024-14-06</releaseDate>
+  <version>0.5</version>
   <develStage>alpha</develStage>
   <compatibility>
-    <ver>5.69</ver>
+    <ver>5.72</ver>
   </compatibility>
   <comments>A cross-CMS CiviCRM admin theme framework.</comments>
   <classloader>

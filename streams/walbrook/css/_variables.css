@@ -77,7 +77,7 @@ color-scheme: light dark;
 --crm-c-info: var(--crm-c-blue);
 --crm-c-info-text: var(--crm-c-light-text);
 --crm-c-focus: var(--crm-blue-mid);
---crm-c-inactive: var(--crm-c-background2);
+--crm-c-inactive: #696969;
 
 /* SHADOWS */
 --crm-block-shadow: 0 3px 18px 0 rgba(48,40,40,.25);
@@ -117,6 +117,7 @@ color-scheme: light dark;
 /* TYPE */
 --crm-font-size: var(--crm-r);
 --crm-small-font-size: var(--crm-m2);
+--crm-type-line-height: 1.5;
 --crm-link-decoration: none;
 --crm-link-decoration-hover: none;
 --crm-heading-bg: var(--crm-c-background3);
@@ -205,7 +206,7 @@ color-scheme: light dark;
 --crm-alert-background-help: var(--crm-c-green-light);
 --crm-alert-border-help: var(--crm-c-green);
 --crm-alert-text-help: var(--crm-c-text);
---crm-alert-background-warning: var(--crm-amber-light);
+--crm-alert-background-warning: var(--crm-c-amber-light);
 --crm-alert-border-warning: var(--crm-c-amber);
 --crm-alert-text-warning: var(--crm-c-text);
 --crm-alert-background-info: var(--crm-c-primary);
@@ -234,6 +235,7 @@ color-scheme: light dark;
 --crm-input-label-weight: var(--crm-bold-weight);
 --crm-input-label-font: var(--crm-font-bold);
 --crm-input-label-size: var(--crm-font-size);
+--crm-input-label-width: var(--crm-big-input);
 --crm-input-description: var(--crm-c-gray-700);
 --crm-input-dropdown-icon: "\f107";
 --crm-input-radio-color: var(--crm-c-primary);
@@ -242,6 +244,7 @@ color-scheme: light dark;
 --crm-inline-edit-bg: var(--crm-c-background);
 --crm-fieldset-border-color: ;
 --crm-fieldset-border: 0;
+--crm-fieldset-padding: 0;
 
 /* TABS */
 --crm-tabs-bg: var(--crm-c-background2);

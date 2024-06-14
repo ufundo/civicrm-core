@@ -1,5 +1,9 @@
-/* River Lea v0.4.
-   Branch: Minetta (after Minetta Creek, which runs under Greenwich, New York) */
+/*
+    Name: Minetta;
+    Riverlea version: 0.5;
+    Front, back or both: back; 
+    Description: Generic CiviCRM UI, somewhat familiar to users of CiviCRM since 2014. Named after Minetta Creek, which runs under Greenwich, New York;
+*/
 
 :root { 
 
@@ -30,8 +34,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-c-gray-025: #fbfafa;
 --crm-c-blue: #bce8f1;
 --crm-c-blue-light: #d9edf7;
---crm-c-blue-dark: #4294bd;
---crm-c-blue-darker: #327293;
+--crm-c-blue-dark: #297292;
+--crm-c-blue-darker: #215c76;
 --crm-c-purple: #4d4d69;
 --crm-c-purple-dark: #3e3e54;
 --crm-c-green: #d6e9c6;
@@ -42,7 +46,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-c-red-dark: #b94a48 ;
 --crm-c-amber: #dd5600;;
 --crm-c-amber-light: #fbf0e2;
---crm-c-yellow: #ffff66;
+--crm-c-yellow: #fcfc5a;
 --crm-c-yellow-light: #ffffcc;
 --crm-c-yellow-less-light: #fffdb2;
 --crm-c-teal: #399389;
@@ -77,7 +81,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-c-info: var(--crm-c-blue-dark);
 --crm-c-info-text: var(--crm-c-light-text);
 --crm-c-focus: var(--crm-c-blue-dark);
---crm-c-inactive: var(--crm-c-background4);
+--crm-c-inactive: #696969;
 
 /* SHADOWS */
 --crm-block-shadow:;
@@ -117,6 +121,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 /* TYPE */
 --crm-font-size: var(--crm-r);
 --crm-small-font-size: var(--crm-m2);
+--crm-type-line-height: 1.5;
 --crm-link-decoration: none;
 --crm-link-decoration-hover: underline;
 --crm-heading-bg: var(--crm-c-blue-light);
@@ -234,6 +239,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-input-label-weight: bold;
 --crm-input-label-font: var(--crm-font);
 --crm-input-label-size: var(--crm-font-size);
+--crm-input-label-width: var(--crm-big-input);
 --crm-input-description: var(--crm-c-gray-700);
 --crm-input-dropdown-icon: "\f107";
 --crm-input-radio-color: var(--crm-c-focus);
@@ -241,7 +247,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-inline-edit-border: 0 solid transparent;
 --crm-inline-edit-bg: var(--crm-c-background);
 --crm-fieldset-border-color: var(--crm-c-gray-400);
---crm-fieldset-border: 1px 0 0 0;
+--crm-fieldset-border: 1px;
+--crm-fieldset-padding: var(--crm-padding-reg);
 
 /* Tabs */
 --crm-tabs-bg: var(--crm-c-background4);
@@ -281,7 +288,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dash-tab-count-col: var(--crm-c-text);
 --crm-dash-panel-padding: var(--crm-m);
 --crm-dash-edit-border: 2px dashed var(--crm-c-gray-300);
---crm-dash-block-padding: var(--crm-s) 0;
+--crm-dash-block-padding: 0;
 --crm-dash-block-bg: ;
 --crm-dash-block-radius: var(--crm-roundness);
 --crm-dash-label-bg: var(--crm-c-background2);

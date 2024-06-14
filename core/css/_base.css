@@ -7,12 +7,10 @@
 .crm-container *::after {
     box-sizing: border-box;
 }
-#crm-container .hiddenElement,
 .crm-container .hiddenElement,
 .crm-container .collapse {
-	display: none;
+	display: none !important /* needs to hide items further down the cascade */;
 } 
-#crm-container .clear,
 .crm-container .clear {
 	clear: both;
 }
@@ -37,10 +35,6 @@
 .crm-container tr:focus {
 	background-color: transparent;
 }
-#crm-container .clear,
-.crm-container .clear {
-	clear: both;
-}
 /* Remove list styles (bullets/numbers) */
 .crm-container ol,
 .crm-container ul,
@@ -51,11 +45,6 @@
 .crm-container img {
     max-inline-size: 100%;
     max-block-size: 100%;
-}
-#crm-container .hiddenElement,
-.crm-container .hiddenElement,
-.crm-container .collapse {
-    display: none;
 }
 .crm-container table {
     border-collapse: collapse;
@@ -68,9 +57,12 @@
     padding: 0;
 }
 .crm-container .ui-widget,
-.crm-container .ui-widget:where(input,select,textarea,button) {
-    font-family: inherit;
-    font-size: inherit;
+.crm-container .ui-widget input, 
+.crm-container .ui-widget select, 
+.crm-container .ui-widget textarea, 
+.crm-container .ui-widget button {
+    font-family: inherit !important;
+    font-size: inherit !important;
 }
 .crm-container .ui-button-icon-only .ui-icon {
     position: initial;
@@ -112,7 +104,7 @@
 
 /* Set Default Type */
 
-.crm-container, #crm-container {
+.crm-container {
     font-family: var(--crm-font);
     font-size: var(--crm-font-size);
     color: var(--crm-c-text);
@@ -124,6 +116,7 @@
 .crm-container p,
 .crm-container ul {
     font-size: var(--crm-font-size);
+    line-height: var(--crm-type-line-height);
     color: var(--crm-c-text);
 }
 
@@ -167,7 +160,6 @@
 .crm-container .del, 
 .crm-container .crm-is_deleted, 
 .crm-container table.caseSelector td.status-urgent, 
-.crm-container .font-red, 
 .crm-container p.error,
 .crm-container .status-removed, 
 .crm-container .status-overdue, 
@@ -177,11 +169,46 @@
 .crm-contact-deceased, 
 .crm-container .status-warning,
 .crm-container .crm-error,
-.crm-container td.tasklist a:link {
-    color: var(--crm-c-alert) !important;
+.crm-container td.tasklist a:link,
+#bootstrap-theme .has-error .help-block, 
+#bootstrap-theme .has-error .control-label, 
+#bootstrap-theme .has-error .radio, 
+#bootstrap-theme .has-error .checkbox, 
+#bootstrap-theme .has-error .radio-inline, 
+#bootstrap-theme .has-error .checkbox-inline, 
+#bootstrap-theme .has-error.radio label, 
+#bootstrap-theme .has-error.checkbox label, 
+#bootstrap-theme .has-error.radio-inline label, 
+#bootstrap-theme .has-error.checkbox-inline label {
+    color: var(--crm-c-alert);
 }
-#crm-container td.tasklist a:visited {
+.crm-container .font-red {
+    color: var(--crm-c-red-dark);
+}
+.crm-container td.tasklist a:visited,
+#bootstrap-theme .has-success .help-block, 
+#bootstrap-theme .has-success .control-label, 
+#bootstrap-theme .has-success .radio, 
+#bootstrap-theme .has-success .checkbox, 
+#bootstrap-theme .has-success .radio-inline, 
+#bootstrap-theme .has-success .checkbox-inline, 
+#bootstrap-theme .has-success.radio label, 
+#bootstrap-theme .has-success.checkbox label, 
+#bootstrap-theme .has-success.radio-inline label, 
+#bootstrap-theme .has-success.checkbox-inline label {
     color: var(--crm-c-success);
+}
+#bootstrap-theme .has-warning .help-block, 
+#bootstrap-theme .has-warning .control-label, 
+#bootstrap-theme .has-warning .radio, 
+#bootstrap-theme .has-warning .checkbox, 
+#bootstrap-theme .has-warning .radio-inline, 
+#bootstrap-theme .has-warning .checkbox-inline, 
+#bootstrap-theme .has-warning.radio label, 
+#bootstrap-theme .has-warning.checkbox label, 
+#bootstrap-theme .has-warning.radio-inline label, 
+#bootstrap-theme .has-warning.checkbox-inline label {
+	color: var(--crm-c-warning);
 }
 .crm-container .disabled, 
 .crm-container .crm-disabled, 
@@ -189,7 +216,7 @@
 .crm-container .cancelled, 
 .crm-container .cancelled td, 
 .crm-container li.disabled a.ui-tabs-anchor {
-    color: var(--crm-c-inactive) !important;
+    color: var(--crm-c-inactive);
 }
 
 /* BS3 type styles */
@@ -260,40 +287,43 @@
 	background-color: var(--crm-c-success);
     color: var(--crm-c-success-text);
 }
-#crm-container a.bg-success:hover, 
-#crm-container a.bg-success:focus {
+.crm-container a.bg-success:hover, 
+.crm-container a.bg-success:focus {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-success);
 }
-#crm-container .bg-info {
+.crm-container .bg-info {
 	background-color: var(--crm-c-info);
     color: var(--crm-c-info-text);
 }
-#crm-container a.bg-info:hover, 
-#crm-container a.bg-info:focus {
+.crm-container a.bg-info:hover, 
+.crm-container a.bg-info:focus {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-info-text);
 }
-#crm-container .bg-warning {
+.crm-container .bg-warning {
 	background-color: var(--crm-c-warning);
-    color: var(--crm-c-warning-text);
+    color: var(--crm-c-warning-text) !important /* FormBuilder vs .disabled */;
 }
-#crm-container a.bg-warning:hover, 
-#crm-container a.bg-warning:focus {
+.crm-container a.bg-warning:hover, 
+.crm-container a.bg-warning:focus {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-warning);
 }
-#crm-container .bg-danger {
+.crm-container .bg-danger {
 	background-color: var(--crm-c-alert);
     color: var(--crm-c-alert-text);
 }
-#crm-container a.bg-danger:hover, 
-#crm-container a.bg-danger:focus {
+.crm-container a.bg-danger:hover, 
+.crm-container a.bg-danger:focus {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-alert);
 }
+.crm-container code, 
+.crm-container kbd, 
+.crm-container samp,
 .crm-container pre {
 	display: block;
 	padding: var(--crm-padding-small);
 	margin: 0 0 var(--crm-padding-small);
-	font-size: var(--crm-font-size);
-	line-height: 1.4;
+	font-size: var(--crm-font-size) !important /* vs inline css on api3 */;
+	line-height: 1.4  !important /* vs inline css on api3 */;
 	color: var(--crm-c-text);
 	word-break: break-all;
 	word-wrap: break-word;
@@ -336,7 +366,7 @@
    POSITION
 *******************/
 
-#crm-container {
+#crm-container { /* applied to #crm not .crm to apply only once */
 	max-width: 100%;
 	padding: var(--crm-page-padding);
 }
@@ -347,6 +377,21 @@
 .crm-container .crm-flex-box > * {
     flex: 1;
     min-width: 0;
+}
+.crm-container .crm-flex-1 {
+    flex: 1;
+}
+.crm-container .crm-flex-2 {
+    flex: 2;
+}
+.crm-container .crm-flex-3 {
+    flex: 3;
+}
+.crm-container .crm-flex-4 {
+    flex: 4;
+}
+.crm-container .crm-flex-5 {
+    flex: 5;
 }
 .crm-container .css_right,
 .crm-container .float-right {

@@ -30,7 +30,8 @@
 .crm-event-links-list-inner, 
 .crm-contribpage-links-list-inner, 
 .crm-contact-actions-list-inner,
-.crm-participant-list-inner {
+.crm-participant-list-inner,
+.vakata-context {
     background-color: var(--crm-c-secondary);
     border-radius: var(--crm-roundness);
     box-shadow: var(--crm-popup-shadow);
@@ -117,7 +118,8 @@
     left: var(--crm-l);
     right: auto;
 }
-.crm-container .btn-group .dropdown-menu-right::before {
+.crm-container .btn-group .dropdown-menu-right::before,
+.crm-container .btn-group.pull-right .dropdown-menu::before  {
     right: var(--crm-r);
     left: auto;
 }
@@ -184,8 +186,8 @@
     width: 700px;
     margin-bottom: 0;
 }
-#crm-container .crm-tooltip table, 
-#crm-container .crm-tooltip table tr td {
+.crm-container .crm-tooltip table, 
+.crm-container .crm-tooltip table tr td {
     background-color: var(--crm-c-background);
     border: none;
     color: var(--crm-c-text);
@@ -198,7 +200,7 @@
 .crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr > td.crm-section {
     padding: var(--crm-s) 0;
 }
-#crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(1) > td {
+.crm-container .crm-tooltip-wrapper .crm-tooltip .crm-table-group-summary > tbody > tr:nth-child(1) > td {
     background: var(--crm-c-background2);
     color: var(--crm-c-text);
     font-size: var(--crm-r1);
@@ -348,15 +350,15 @@
 	bottom: 100%;
 	margin-bottom: 2px;
 }
-#crm-container .nav-tabs .dropdown-menu {
+.crm-container .nav-tabs .dropdown-menu {
     margin-top: -1px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
-#crm-container .open > .dropdown-menu {
+.crm-container .open > .dropdown-menu {
     display: block;
 }
-#crm-container .dropdown-menu {
+.crm-container .dropdown-menu {
     position: absolute;
     top: 100%;
     /* left: 0; */
@@ -375,11 +377,11 @@
     border-radius: var(--crm-roundness);
     box-shadow: var(--crm-popup-shadow);
 }
-#crm-container .dropdown-menu.dropdown-menu-right {
+.crm-container .dropdown-menu.dropdown-menu-right {
     right: 0;
     left: unset;
 }
-#crm-container .dropdown-menu li input {
+.crm-container .dropdown-menu li input {
     width: -moz-available;
 }
 @media (min-width: 768px) {
@@ -391,4 +393,42 @@
 		left: 0;
 		right: auto;
 	}
+}
+
+/* JsTree Dropdown - all of Vakata Context, from jstree/dist has to be overwritten with !important */
+
+.vakata-context {
+    min-width: var(--crm-dropdown-width);
+    background-color: var(--crm-dropdown-bg) !important;
+    border: 1px solid var(--crm-dropdown-border) !important;
+    border-radius: var(--crm-roundness);
+    box-shadow: var(--crm-popup-shadow) !important;
+    padding: var(--crm-dropdown-padding) !important;
+}
+.vakata-context li > a {
+    line-height: unset !important;
+    color: var(--crm-dropdown-col) !important;
+    text-shadow: none !important;
+    font-weight: normal !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: var(--crm-roundness) !important;
+}
+.vakata-context li > a:hover,
+.vakata-context .vakata-context-hover > a {
+    background-color: var(--crm-dropdown-hover-bg) !important;
+    box-shadow: none !important;
+    color: var(--crm-dropdown-hover) !important;
+}
+.vakata-context li > a > i {
+    margin: 0 !important;
+    line-height: inherit !important;
+    height: inherit !important;
+}
+.vakata-context li > a .vakata-contextmenu-sep {
+    border-left: 0 !important;
+    background: transparent !important;
+    height: auto !important;
+    width: auto !important;
+    margin: 0 !important;
 }

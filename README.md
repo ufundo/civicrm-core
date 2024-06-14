@@ -9,7 +9,8 @@ The extension is licensed under [AGPL-3.0](LICENSE.txt).
 - 0.1 - proof-of-concept, Brunswick, empty theme structure doing just two things: for older CMS interfaces enforces a 100% font-size default to cascade the browser default font-size, and demonstrates a 1rem variable on top of that for some Civi body text sizes. The computed font-size of Civi paragraph and table text should show as 16px in Inspector (for standard setups).
 - 0.2 - adds a bunch of css variables for testing/dev, adds the entirity of the current Greenwich Bootstrap 3 build to start cutting it back, and adds a components directory with initial component 'accordions' (with animated exapnd/close + CSS variables). Separate components files will likely be merged when the extension is moving to testing, to reduce http requests.
 - 0.3 - Backdrop, Drupal7 + Seven, Drupal9 + Claro/Seven, Joomla 4, Standalone, WordPress. Loads with two theme variations/streams: Minetta and Walbrook. Does not cover: front-end layouts, < 1000px screens, Joomla 3, other Drupal admin themes, light/dark modes. 
-- 0.4 - CSS files restructure into `/core/css` and `/streams/[stream-name]/css/` with stream variables defined in `[stream-name]/css/_variables.css`. Variables files are version-numbered - 0.4 with this version. Version numbers should only increase when the CSS Variables in these files change name, are removed or added.
+- 0.4 - CSS files restructure into `/core/css` and `/streams/[stream-name]/css/` with stream variables defined in `[stream-name]/css/_variables.css`. Variables files are version-numbered - 0.4 with this version. *Version numbers should only increase when the CSS Variables in these files change name, are removed or added*.
+- 0.5 - Over 50 UI and accessibility issues fixed following testing in CiviCamp Hamburg - with many thanks to Guillaume Sorel, Thomas Renner, Rositza Dikova, Luciano Spiegel & Peter Reck and the organisers - as well as Rich Lott and the Core Team. Instances of `#crm-container` removed or replaced with `.crm-container` which changes some cascade order. Preparation for overwriting other core CiviCRM CSS files from v0.6 which will require CiviCRM 5.75. Version compatibility raised to 5.72 from 5.69 because of Search Kit Builder interface changes: if that interface isn't used then compatibility before 5.69 should be fine.
 
 ## Installation (CLI, Zip)
 
@@ -36,22 +37,50 @@ cv en riverlea
 
 After installing the extension, go to Nav menu > Administer > Customize Data and Screens > Display Preferences, and select which theme variation/stream you want (they start with the name 'Riverlea').
 
+## File Structure
+
+### Stream directories
+Each ‘stream’ directory must contain afurther directory `css` which must contain `civicrm.css` and `_variables.css` as well as custom files such as fonts or images.
+
+### Core directory
+
+Contains CSS files in:
+- In the **core/css** directory are theme files marked with an underscore:
+  - core/css/_base.css – resets, basic type, colours, links, positioning
+  - core/css/_bootstrap.css – a Bootstrap subset
+  - core/css/_bootstrap3.css – Bootstrap3, currently being migrated to other parts of the theme
+  - core/css/_cms.css – resets and fixes specific to different CMSs
+  - core/css/_fixes.css - CSS that’s necessary *for now* but one day could go.
+  - core/css/_core.css - links to the UI components in the components directory:
+- in the **components** directory are reusable anywhere UI elements, such as `_accordions` or `_tables.css`; 
+- Also in the **core/css** directory are over-rides for core CiviCRM CSS files. such as `admin.css` or `dashboard.css`;
+
+## Roadmap
+
+- Restructure files to overwrite CiviCRM core & angular module CSS Frontend following (https://github.com/civicrm/civicrm-core/pull/30397). This should reduce overall CSS loads/file size and the use of `!Important` declarations. Will require CiviCRM 5.75.
+- Front-end testing & fixes.
+- Document streams.
+- Migrate Finsbury Park (and others) to a stream.
+
+v0.7 - Front-end
+
+
 ## Creating new 'streams'
 
-NB: this is an early alpha level release and the variables files are likely to change, so branched streams may go out of sync with the core variables. Compare the version number
+NB: Streams will be deleted when you upgrade an extension so keep a copy of your changes. Streams are also going to keep changing during alpha stage, so branched streams will go out of sync with the core variables - so don't use other than for testing/exploration, and always compare the version number of the _variables.css file.
 
 1. Duplicate the directory 'empty' in /streams/ and rename it the name of the stream.
-2. In riverlea.php add a theme array to the function 'riverlea_civicrm_themes(&$themes)'.
+2. In riverlea.php add a theme array to the function `riverlea_civicrm_themes(&$themes)`.
 3. Edit /streams/[streamname]/css/_variables.css with your custom css variables. You can link to other CSS files in this file.
 
-E.g. to add a stream called "System 7", you would name the directory 'system7', and add the following:
+E.g. to add a stream called "Vimur", you would name the directory 'vimur', and add the following:
 
 ```
  function riverlea_civicrm_themes(&$themes) {
   $themes['minetta'] = array(
     'ext' => 'riverlea',
-    'title' => 'Riverlea: System 7',
-    'prefix' => 'streams/system7/',
+    'title' => 'Riverlea: Vimur',
+    'prefix' => 'streams/vimur/',
   );
   $themes['minetta'] = array(
     'ext' => 'riverlea',

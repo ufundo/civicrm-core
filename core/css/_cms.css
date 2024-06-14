@@ -58,11 +58,19 @@ body.page-civicrm > #branding {
     --crm-page-padding: 3rem;
     --crm-page-width: calc(100% - var(--crm-page-padding) - var(--crm-page-padding));
 }
-#block-claro-content .crm-container:where(.form-item, p, .help p, .button) {
+#block-claro-content .crm-container .form-item, 
+#block-claro-content .crm-container p,
+#block-claro-content .crm-container .help p, 
+#block-claro-content .crm-container .button {
     margin: 0;
 }
 #block-claro-content .button:not(:focus) {
     box-shadow: none;
+}
+@media (max-width: 959px) {
+    #block-claro-content {
+        --crm-page-padding: 1rem;
+    }
 }
 /* D9 Seven */
 
@@ -87,7 +95,6 @@ body.page-civicrm main > .container:has(#block-bootstrap4-content) {
     max-width: 100%;
     background: var(--crm-c-page-background);
 }
-
 
 /******************
    JOOMLA
@@ -125,21 +132,36 @@ body.admin.com_civicrm.layout-default .crm-container details summary ~ * {
    WORDPRESS
 *******************/
 
-body.wp-admin #wpcontent {
-    padding-left: 0; /* resets WP padding */
-} 
-body.wp-admin li {
-    margin: 0; /* resets WP li bottom margin */
-}
 body.wp-admin {
     --crm-page-padding: 1rem 2rem;
     font-size: 100%;
 }
+body.wp-admin #wpcontent {
+    padding-left: 0; /* resets WP padding */
+} 
+body.wp-admin .crm-container li {
+    margin: 0; /* resets WP li bottom margin */
+    list-style: none;
+}
+body.wp-admin div.ui-notify-message .notify-content li {
+    list-style: unset;
+}
+body.wp-admin .crm-container p {
+    margin: 0;
+}
+body.wp-admin .crm-container input, 
+body.wp-admin .crm-container select {
+    margin: 0;
+}
 body.wp-admin #crm-container {
-    background: transparent;
+    background: var(--crm-c-page-background);
 }
 body.wp-admin .crm-container:has(.crm-summary-contactname-block) .breadcrumb {
     display: none; /* Hides breadcrumb on contact dashboard */
+}
+body.wp-admin.wp-core-ui .crm-container select {
+    -webkit-appearance: auto;
+    appearance: auto; /* Resets WP's own select UI */
 }
 
 /******************
