@@ -905,7 +905,10 @@ details + .crm-content-block:has(.dataTables_wrapper) {
     padding-bottom: var(--crm-padding-reg);
 }
 .crm-search details label {
-    min-width: var(--crm-input-size)
+    min-width: var(--crm-input-label-width);
+}
+.crm-search details label:has(~ a.helpicon) {
+	min-width: calc(var(--crm-input-label-width) - 19px);
 }
 .crm-search-admin-main-tabs button.btn-xs {
 	background: transparent;
