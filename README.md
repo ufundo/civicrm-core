@@ -10,7 +10,7 @@ The extension is licensed under [AGPL-3.0](LICENSE.txt).
 - 0.2 - adds a bunch of css variables for testing/dev, adds the entirity of the current Greenwich Bootstrap 3 build to start cutting it back, and adds a components directory with initial component 'accordions' (with animated exapnd/close + CSS variables). Separate components files will likely be merged when the extension is moving to testing, to reduce http requests.
 - 0.3 - Backdrop, Drupal7 + Seven, Drupal9 + Claro/Seven, Joomla 4, Standalone, WordPress. Loads with two theme variations/streams: Minetta and Walbrook. Does not cover: front-end layouts, < 1000px screens, Joomla 3, other Drupal admin themes, light/dark modes. 
 - 0.4 - CSS files restructure into `/core/css` and `/streams/[stream-name]/css/` with stream variables defined in `[stream-name]/css/_variables.css`. Variables files are version-numbered - 0.4 with this version. *Version numbers should only increase when the CSS Variables in these files change name, are removed or added*.
-- 0.5 - Various fixes follow testing in CiviCamp Hamburg. Instances of `#crm-container` removed or replaced with `.crm-container` - which will impact the cascade order of elements and so have breaking changes (which is why this is being done now, and on a new release version / branch). Version compatibility number raised to 5.72 from 5.69 because of Search Kit Builder interface changes: if that interface isn't used then compatibility before 5.69 should be fine. 
+- 0.5 - Over 50 UI and accessibility issues fixed following testing in CiviCamp Hamburg - with many thanks to Guillaume Sorel, Thomas Renner, Rositza Dikova, Luciano Spiegel & Peter Reck and the organisers - as well as Rich Lott and the Core Team. Instances of `#crm-container` removed or replaced with `.crm-container` which changes some cascade order. Preparation for overwriting other core CiviCRM CSS files from v0.6 which will require CiviCRM 5.75. Version compatibility raised to 5.72 from 5.69 because of Search Kit Builder interface changes: if that interface isn't used then compatibility before 5.69 should be fine.
 
 ## Installation (CLI, Zip)
 
@@ -54,24 +54,33 @@ Contains CSS files in:
   - core/css/_core.css - links to the UI components in the components directory:
 - in the **components** directory are reusable anywhere UI elements, such as `_accordions` or `_tables.css`; 
 - Also in the **core/css** directory are over-rides for core CiviCRM CSS files. such as `admin.css` or `dashboard.css`;
-- And parallel to that directory in **core/org.civicrm.afform_admin-ang** are  over-rides for Form Builder and Search Kit CSS.
+
+## Roadmap
+
+- Restructure files to overwrite CiviCRM core & angular module CSS Frontend following (https://github.com/civicrm/civicrm-core/pull/30397). This should reduce overall CSS loads/file size and the use of `!Important` declarations. Will require CiviCRM 5.75.
+- Front-end testing & fixes.
+- Document streams.
+- Migrate Finsbury Park (and others) to a stream.
+
+v0.7 - Front-end
+
 
 ## Creating new 'streams'
 
-NB: Streams are going to keep changing during alpha stage, so branched streams will go out of sync with the core variables - don't use other than for testing/exploration at present, and always compare the version number of the _variables.css file.
+NB: Streams will be deleted when you upgrade an extension so keep a copy of your changes. Streams are also going to keep changing during alpha stage, so branched streams will go out of sync with the core variables - so don't use other than for testing/exploration, and always compare the version number of the _variables.css file.
 
 1. Duplicate the directory 'empty' in /streams/ and rename it the name of the stream.
-2. In riverlea.php add a theme array to the function 'riverlea_civicrm_themes(&$themes)'.
+2. In riverlea.php add a theme array to the function `riverlea_civicrm_themes(&$themes)`.
 3. Edit /streams/[streamname]/css/_variables.css with your custom css variables. You can link to other CSS files in this file.
 
-E.g. to add a stream called "System 7", you would name the directory 'system7', and add the following:
+E.g. to add a stream called "Vimur", you would name the directory 'vimur', and add the following:
 
 ```
  function riverlea_civicrm_themes(&$themes) {
   $themes['minetta'] = array(
     'ext' => 'riverlea',
-    'title' => 'Riverlea: System 7',
-    'prefix' => 'streams/system7/',
+    'title' => 'Riverlea: Vimur',
+    'prefix' => 'streams/vimur/',
   );
   $themes['minetta'] = array(
     'ext' => 'riverlea',
