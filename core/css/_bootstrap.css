@@ -166,7 +166,7 @@
     LABELS
             */
 
-#bootstrap-theme .label {
+/* #bootstrap-theme .label {
 	display: inline;
 	padding: var(--crm-btn-small-padding);
 	font-weight: var(--crm-bold-weight);
@@ -175,7 +175,7 @@
 	white-space: nowrap;
 	vertical-align: baseline;
 	border-radius: var(--crm-roundness);
-}
+} */
 #bootstrap-theme .label:empty {
 	display: none;
 }

@@ -27,7 +27,7 @@
 .crm-container .form-layout-compressed th.label {
     width: var(--crm-input-label-width);
     text-align: right;
-    padding-right: var(--crm-m2);
+    padding: var(--crm-m2) var(--crm-m2) 0 0;
     font-family: var(--crm-input-label-font);
     font-weight: var(--crm-input-label-weight);
 }
@@ -67,6 +67,9 @@
     display: inline-block;
     margin-bottom: var(--crm-s);
 }
+.crm-container .form-layout td.label label {
+    margin-bottom: 0;
+}
 .crm-container .form-layout label {
     width: var(--crm-input-label-width);
 }
@@ -97,7 +100,12 @@
     padding-inline: var(--crm-m);
     color: var(--crm-c-text);
 }
-
+/* Required Mark */
+.crm-container .required-mark::after {
+    color: var(--crm-c-alert);
+    content: "*";
+    margin-left: var(--crm-s);
+}
 /* Input */
 
 .crm-container input.form-control,
@@ -109,6 +117,7 @@ input.crm-form-password,
 .crm-container textarea, 
 select.crm-form-multiselect,
 select.crm-form-select, 
+.crm-container .ui-widget input,
 .crm-container select[aria-controls],
 .ui-datepicker .ui-datepicker-header select {
     transition: var(--crm-input-active-ani);
@@ -546,7 +555,7 @@ input.crm-form-checkbox) + label {
     margin-top: var(--crm-m);
 }
 .crm-container .select2-results .select2-result-label {
-    font-size: var(--crm-font-size);
+    font-size: var(--crm-input-font-size);
     padding: var(--crm-s) var(--crm-m);
     font-weight: var(--crm-bold-weight);
     font-family: var(--crm-font-bold);
@@ -554,6 +563,7 @@ input.crm-form-checkbox) + label {
 .crm-container .crm-select2-row-description p {
     font-weight: normal;
     font-family: var(--crm-font);
+    font-size: var(--crm-input-font-size);
     margin: 0;
     padding: 0;
   }

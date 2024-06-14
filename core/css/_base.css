@@ -9,7 +9,7 @@
 }
 .crm-container .hiddenElement,
 .crm-container .collapse {
-	display: none;
+	display: none !important /* needs to hide items further down the cascade */;
 } 
 .crm-container .clear {
 	clear: both;

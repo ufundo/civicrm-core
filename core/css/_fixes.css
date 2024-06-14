@@ -216,6 +216,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 [type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover,
 [type="button"]:focus, [type="reset"]:focus, [type="submit"]:focus {
     background: var(--crm-c-primary-hover);
+	color: var(--crm-c-primary-text);
 	text-decoration: none;
 }
 .crm-button > input[type="button"],
@@ -236,6 +237,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container [type="button"]:hover,
 .crm-container [type="button"]:focus {
     background: var(--crm-c-secondary-hover);
+	color: var(--crm-c-secondary-text);
 }
 .crm-actions-ribbon a.button,
 .crm-container .action-link a.button {
@@ -275,6 +277,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     padding: var(--crm-xs) var(--crm-s);
     font-size: var(--crm-small-font-size);
     border-radius: var(--crm-roundness);
+	height: auto;
 } 
 .crm-container .btn-group-xs button {
     padding: var(--crm-xs) var(--crm-s);
@@ -560,18 +563,28 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 .crm-container .crmMailing-preview .clear {
 	display: none;
 }
-/* Cases dashboard */
+/* CiviCase  */
 .crm-container .crm-case-dashboard-switch-view-buttons {
 	margin-left: auto;
 	display: flex;
 }
 .crm-container .crm-case-caseview-form-block table {
 	width: 100% !important;
+	border: 0;
+}
+.crm-container .crm-case-caseview-form-block table#searchOptions {
+	width: auto !important;
 }
 .crm-case-form-block h3,
 .crm-case-caseview-form-block h3 {
 	background: transparent;
 	padding: 0;
+}
+.crm-case-activity-form-block-followup_activity_type_id .crm-form-date-wrapper {
+	display: inline-block;
+}
+.crm-case-activity-form-block table.form-layout-compressed {
+	width: 100%;
 }
 /* API3 explorer */
 
@@ -811,6 +824,40 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	padding: var(--crm-btn-padding);
 }
 
+/* Mosaico (all importants vs the extension css) */
+
+.crm-mosaico-wizard .crm_wizard__body .form-group {
+	max-width: 100% !important;
+}
+.crm-mosaico-page .from-group .btn {
+	padding: var(--crm-padding-small);
+	height: auto;
+}
+.crm-mosaico-page .select2-container {
+	min-width: var(--crm-big-input);
+}
+.mosaico-templates-wrapper {
+	margin: 0 !important;
+}
+.mosaico-templates-wrapper .form-inline {
+	padding: var(--crm-padding-reg) 0 0 var(--crm-padding-reg);
+}
+.crm-mosaico-modal-panel {
+	margin: 0 !important;
+}
+.modal-dialog:has(.crm-mosaico-page) {
+	width: 100% !important;
+}
+.ui-widget-content.modal-dialog .crm-mosaico-page .panel {
+	border: 0;
+}
+.ui-widget-content.modal-dialog .crm-mosaico-page .panel .tab-pane {
+	border: 1px solid var(--crm-tab-border-col);
+	border-top: 0;
+	padding: var(--crm-tab-padding);
+	background-color: var(--crm-tab-bg-active);
+	border-radius: 0 0 var(--crm-tab-roundness) var(--crm-tab-roundness);
+}
 /******************
 	CORE EXTENSIONS
 *******************/

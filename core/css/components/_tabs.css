@@ -47,7 +47,7 @@
     background: var(--crm-tab-bg-active);
     border: var(--crm-tab-border-active); 
     border-bottom: 0 solid transparent;
-    margin: 0 0 -1px;
+    margin: 0 0 -2px;
     padding: 0;
 }
 .crm-container .ui-helper-clearfix::before, 
