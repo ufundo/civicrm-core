@@ -159,6 +159,10 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	color: inherit;
 	font-size: inherit;
 }
+.crm-container details table.dataTable {
+	width: 100% !important; /* dev/user-interface/-/issues/73 */
+	box-sizing: border-box;
+}
 
 /******************
     ALERTS
@@ -567,10 +571,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 .crm-container .crm-case-dashboard-switch-view-buttons {
 	margin-left: auto;
 	display: flex;
-}
-.crm-container .crm-case-caseview-form-block table {
-	width: 100% !important;
-	border: 0;
 }
 .crm-container .crm-case-caseview-form-block table#searchOptions {
 	width: auto !important;
