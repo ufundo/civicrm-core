@@ -237,6 +237,9 @@ input.crm-form-entityref {
     box-shadow: var(--crm-block-shadow);
     margin-bottom: var(--crm-dash-panel-padding);
 }
+#contact-summary .crm-summary-block .crm-summary-block {
+    box-shadow: none;
+}
 #contact-summary div.crm-clear {
     padding: var(--crm-dash-block-padding);
 }
