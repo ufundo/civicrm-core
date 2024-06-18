@@ -72,6 +72,9 @@
     margin-left: auto;
     float: right;
 }
+.crm-container .ui-widget-content {
+    color: inherit;
+}
 .crm-container .ui-widget.ui-widget-content,
 .ui-tabs .ui-tabs-nav li {
     border: 0;

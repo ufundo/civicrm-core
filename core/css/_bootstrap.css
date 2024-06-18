@@ -33,6 +33,7 @@
 	margin-bottom: var(--crm-m1);
 	font-weight: var(--crm-bold-weight);
 	font-family: var(--crm-font-bold);
+	color: var(--crm-c-text);
 }
 #bootstrap-theme h4 small, #bootstrap-theme h4 .small, #bootstrap-theme .h4 small, #bootstrap-theme .h4 .small, #bootstrap-theme h5 small, #bootstrap-theme h5 .small, #bootstrap-theme .h5 small, #bootstrap-theme .h5 .small, #bootstrap-theme h6 small, #bootstrap-theme h6 .small, #bootstrap-theme .h6 small, #bootstrap-theme .h6 .small {
 	font-size: 75%;

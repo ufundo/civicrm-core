@@ -1,5 +1,9 @@
-/* River Lea v0.4.
-   Walbrook (after River Walbrook, which runs under Shoreditch, London) */
+/*
+    Name: Walbrook;
+    Riverlea version: 0.6;
+    Front, back or both: back; 
+    Description: Based on Shoreditch theme. Named after after River Walbrook, which runs under Shoreditch, London;
+*/
 
 @import url('_fonts.css'); 
 :root{    
@@ -245,6 +249,7 @@ color-scheme: light dark;
 --crm-fieldset-border-color: ;
 --crm-fieldset-border: 0;
 --crm-fieldset-padding: 0;
+--crm-checkbox-list-col: var(--crm-c-text);
 
 /* TABS */
 --crm-tabs-bg: var(--crm-c-background2);
@@ -350,23 +355,43 @@ color-scheme: light dark;
 --crm-wizard-bg: var(--crm-c-background);
 }
 
-/* light/dark mode settings - currently inactive
+/* light/dark mode settings */
 
 @media (prefers-color-scheme: dark) {
     :root {
         --crm-c-text: #fff;
-        --crm-c-background: #0a0a0a;
-        --crm-c-background2: #222;
-        --crm-c-background3: #555;
-        --crm-c-background4: #262626;
-        --crm-c-primary: #43757A; 
-        --crm-c-secondary: #B24B4F;
+        --crm-c-link: var(--crm-c-amber);
+        --crm-c-link-hover: var(--crm-c-amber-light);
+        --crm-c-text-light: var(--crm-c-darkest);
+        --crm-c-background: var(--crm-c-gray-900);
+        --crm-c-page-background: var(--crm-c-gray-900); 
+        --crm-c-background2: var(--crm-c-gray-900); 
+        --crm-c-background3: var(--crm-c-gray-800);
+        --crm-c-background4: var(--crm-c-gray-700);
+        --crm-c-secondary: var(--crm-c-blue); 
         --crm-c-success: #58a458;
         --crm-red-alert: #B24B4F;
         --crm-blue-info: #2C99A4;
 
-        /* And others 
-        --crm-expand-border: 1px solid #fff;
+        /* And others */
+        --crm-block-shadow: 0 3px 18px 0 rgba(0,0,0);
+        --crm-dash-block-bg: var(--crm-c-background2);
+        --crm-dash-label-bg: transparent;
+        --crm-dash-tabs-bg: var(--crm-c-gray-800);
+        --crm-expand-border: 1px solid var(--crm-c-gray-500);
+        --crm-tabs-border: 1px solid var(--crm-c-gray-500);
+        --crm-table-outside-border: 1px solid var(--crm-c-gray-500);
+        --crm-table-row-border: 1px solid var(--crm-c-gray-500);
+        --crm-input-border-color: var(--crm-c-gray-500);
+        --crm-table-odd-row: var(--crm-c-gray-800);
+        --crm-table-odd-hover: var(--crm-c-gray-700);
+        --crm-table-even-row: var(--crm-c-gray-700);
+        --crm-table-even-hover: var(--crm-c-gray-600);
+        --crm-alert-text-help: var(--crm-c-text-light);
+        --crm-alert-text-warning: var(--crm-c-text-light);
+        --crm-c-inactive: var(--crm-c-gray-400);
+        --crm-input-color: var(--crm-c-text);
+        --crm-input-description: var(--crm-c-gray-300);
+        --crm-checkbox-list-col: var(--crm-c-text-light);
     }
 }
-*/
