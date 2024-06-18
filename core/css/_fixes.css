@@ -586,6 +586,9 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 .crm-case-activity-form-block table.form-layout-compressed {
 	width: 100%;
 }
+.crm-case-form-block-medium_id td.view-value label {
+	width: auto;
+}
 /* API3 explorer */
 
 #api-generated caption {

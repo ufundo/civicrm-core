@@ -145,7 +145,7 @@
 #crm-notification-container {
     width: 350px;
     position: fixed;
-    top: 100px;
+    top: 64px;
     right: var(--crm-r2);
     z-index: 999999;
 }

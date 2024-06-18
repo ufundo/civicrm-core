@@ -87,6 +87,12 @@
 .crm-search-display .form-inline {
     padding: var(--crm-padding-reg) 0;
 }
+.crm-container td.label:has(.helpicon) {
+    display: flex;
+    gap: var(--crm-m);
+    align-items: center;
+    padding-right: 0;
+}
 /* Fieldset */
 .crm-container fieldset:not(.collapsed, .crm-inactive-dashlet-fieldset) {
     padding: var(--crm-fieldset-padding);
