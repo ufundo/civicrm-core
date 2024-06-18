@@ -167,16 +167,21 @@
     LABELS
             */
 
-/* #bootstrap-theme .label {
+#bootstrap-theme .label-primary,
+#bootstrap-theme .label-warning,
+#bootstrap-theme .label-success,
+#bootstrap-theme .label-default,
+#bootstrap-theme .label-info,
+#bootstrap-theme .label-danger {
 	display: inline;
 	padding: var(--crm-btn-small-padding);
 	font-weight: var(--crm-bold-weight);
-	color: white;
+	color: var(--crm-c-light-text);
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: baseline;
 	border-radius: var(--crm-roundness);
-} */
+}
 #bootstrap-theme .label:empty {
 	display: none;
 }
@@ -185,7 +190,7 @@
 	top: -1px;
 }
 #bootstrap-theme a.label:hover, #bootstrap-theme a.label:focus {
-	color: white;
+	color: var(--crm-c-light-text);
 	text-decoration: none;
 	cursor: pointer;
 }
@@ -194,7 +199,7 @@
     color: var(--crm-c-light-text);
 }
 #bootstrap-theme .label-default[href]:hover, #bootstrap-theme .label-default[href]:focus {
-	background-color: gray;
+	background-color: var(--crm-c-background4);
 }
 #bootstrap-theme .label-primary {
 	background: var(--crm-c-primary);

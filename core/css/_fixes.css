@@ -228,6 +228,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     background: transparent;
     color: inherit;
     padding: 0;
+	border: 0;
 }
 .crm-container a.button,
 .crm-container [type="button"] {

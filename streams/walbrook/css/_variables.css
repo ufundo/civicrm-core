@@ -138,13 +138,21 @@ color-scheme: light dark;
 --crm-btn-border: 0 solid transparent;
 --crm-btn-txt-transform: uppercase;
 --crm-btn-radius: 2px;
---crm-btn-padding: var(--crm-m) var(--crm-r2);
+--crm-btn-padding-block: var(--crm-m); /* padding for top and bottom, one value */
+--crm-btn-padding-inline: var(--crm-r2); /* padding for left and right, one value */
 --crm-btn-small-padding: var(--crm-s1) var(--crm-m1);
 --crm-btn-large-padding: var(--crm-m) var(--crm-r);
 --crm-btn-align: center;
 --crm-btn-height: 40px;
 --crm-btn-icon-spacing: var(--crm-s);
---crm-cancel-color: var(--crm-c-alert);
+--crm-btn-icon-size: auto;
+--crm-btn-cancel-bg: var(--crm-c-alert);
+--crm-btn-info-bg: var(--crm-c-info);
+--crm-btn-warning-bg: var(--crm-c-warning);
+--crm-btn-success-bg: var(--crm-c-success);
+--crm-btn-alert-bg: var(--crm-c-alert);
+--crm-btn-icon-bg: ;
+--crm-btn-icon-border: ;
 
 /* TABLES */
 --crm-table-outside-border: 1px solid var(--crm-c-gray-100);
@@ -344,6 +352,10 @@ color-scheme: light dark;
 --crm-icon-sort: "\f0dc";
 --crm-icon-sort-desc: "\f0dd";
 --crm-icon-sort-asc: "\f0de";
+--crm-icon-alert-color: inherit;
+--crm-icon-success-color: inherit;
+--crm-icon-warning-color: inherit;
+--crm-icon-info-color: inherit;
 
 /* Wizard */
 --crm-wizard-width: auto;
