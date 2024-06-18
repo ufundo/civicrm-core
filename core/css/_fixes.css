@@ -387,7 +387,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 }
 div.crm-summary-contactname-block + .crm-actions-ribbon {
     color: var(--crm-dash-header-col);
-    background-color: var(--crm-dash-header-bg);
+    background-color: var(--crm-dash-header-bg2);
     margin-bottom: 0;
     clear: both;
 }
@@ -419,7 +419,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
     gap: var(--crm-m);
     margin: 0;
     padding: var(--crm-dash-header-padding);
-    background: rgba(256,256,256,0.1);
 }
 .crm-search-col-type-field  span.ng-scope a {
     display: flex;

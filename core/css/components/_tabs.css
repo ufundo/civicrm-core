@@ -151,9 +151,11 @@
     flex-direction: var(--crm-dash-tabs-flow);
     border-radius: var(--crm-dash-roundness) var(--crm-dash-roundness) 0 0;
     gap: var(--crm-dash-tabs-gap);
-    box-shadow: var(--crm-block-shadow);
     padding: var(--crm-dash-tabs-padding);
     border: 0 solid transparent;
+}
+#mainTabContainer .crm-contact-tabs-list ~ .ui-tabs-panel {
+    box-shadow: var(--crm-dash-box-shadow);
 }
 .crm-contact-page #mainTabContainer .ui-tabs-nav li {
     background: var(--crm-dash-tab-bg);

@@ -287,6 +287,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dash-icon-size: var(--crm-r);
 --crm-dash-tab-count-bg: rgba(0,0,0,0.1);
 --crm-dash-tab-count-col: var(--crm-c-text);
+--crm-dash-box-shadow: 0;
 --crm-dash-panel-padding: var(--crm-m);
 --crm-dash-edit-border: 2px dashed var(--crm-c-gray-300);
 --crm-dash-block-padding: 0;
@@ -294,6 +295,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dash-block-radius: var(--crm-roundness);
 --crm-dash-label-bg: var(--crm-c-background2);
 --crm-dash-header-bg: var(--crm-c-page-background);
+--crm-dash-header-bg2: transparent;
 --crm-dash-header-col: var(--crm-c-text);
 --crm-dash-header-size: var(--crm-r3);
 --crm-dash-header-padding: 0 0 var(--crm-r) 0; 
