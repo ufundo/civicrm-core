@@ -54,7 +54,7 @@
 .crm-container .ui-helper-clearfix::after {
     display: none;
 }
-.crm-container .ui-tabs ul.ui-tabs-nav a {
+.crm-container .ui-tabs ul.ui-tabs-nav a:not(.button) {
     color: var(--crm-tab-col);
     padding: var(--crm-tab-padding);
 	font-weight: var(--crm-tab-weight);
