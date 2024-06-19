@@ -267,7 +267,7 @@ color-scheme: light dark;
 --crm-tab-bg: var(--crm-c-background2);
 --crm-tab-bg-hover: var(--crm-c-background);
 --crm-tab-bg-active: var(--crm-c-background);
---crm-tab-hang: -2px; /* lip to extend tab flush with active region - set to 0 for no lip */
+--crm-tab-hang: 0 0 -1px 0; /* lip to extend tab flush with active region - set to 0 for no lip */
 --crm-tab-padding: var(--crm-m2) var(--crm-r1) var(--crm-m);
 --crm-tab-col: var(--crm-c-text);
 --crm-tab-weight: normal;
@@ -289,7 +289,7 @@ color-scheme: light dark;
 --crm-dash-tabs-bg: var(--crm-c-background);
 --crm-dash-tabs-padding: ;
 --crm-dash-tab-bg: transparent;
---crm-dash-tab-bg-hover: var(--crm-c-background);
+--crm-dash-tab-bg-hover: var(--crm-c-background3);
 --crm-dash-tab-padding: var(--crm-r) var(--crm-r1);
 --crm-dash-tab-border: var(--crm-dash-border);
 --crm-dash-tab-border-hover: ;
@@ -299,7 +299,7 @@ color-scheme: light dark;
 --crm-dash-tab-count-col: var(--crm-c-light-text);
 --crm-dash-tab-width: 100%;
 --crm-dash-tab-align: none;
---crm-dash-tab-hang: var(--crm-tab-hang); /* lip to extend tab flush with active region - set to 0 for no lip */
+--crm-dash-tab-hang: 0; /* lip to extend tab flush with active region - set to 0 for no lip */
 --crm-dash-tab-radius: var(--crm-dash-roundness);
 --crm-dash-icon-size: var(--crm-m2);
 --crm-dash-box-shadow: inset 0 3px 18px -5px rgba(0, 0, 0, 0.25);

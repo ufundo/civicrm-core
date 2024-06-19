@@ -68,12 +68,12 @@
 }
 .crm-container a.button.delete-button, 
 .crm-container a.button.delete{
-    background: var(--crm-btn-cancel-color);
+    background: var(--crm-btn-cancel-bg);
 }
 .crm-container a.button.delete-button:hover,
 .crm-container a.button.delete-button:focus,
 .crm-container a.button.delete:hover {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-cancel-color);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-btn-cancel-bg);
 }
 .crm-container .crm-button-type-cancel:hover,
 .crm-container .crm-button-type-cancel:focus,
@@ -116,7 +116,7 @@
     margin: 0 var(--crm-btn-icon-spacing) 0 0;
     opacity: 1;
     text-shadow: none;
-    padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
+    padding: var(--crm-btn-padding-block) var(--crm-btn-icon-spacing) var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
     height: calc(var(--crm-btn-height) - 2px);
     min-width: var(--crm-btn-height);
 }

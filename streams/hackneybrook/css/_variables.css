@@ -144,7 +144,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-btn-large-padding: var(--crm-m) var(--crm-r);
 --crm-btn-align: center;
 --crm-btn-height: 31px;
---crm-btn-icon-spacing: var(--crm-m);
+--crm-btn-icon-spacing: var(--crm-s);
 --crm-btn-icon-size: var(--crm-btn-height);
 --crm-btn-cancel-bg: ;
 --crm-btn-info-bg: ;
