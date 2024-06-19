@@ -122,7 +122,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     color: var(--crm-icon-info-color);
 }
 
-/* Warning icon */
+/* Warning icon */  
 
 .crm-container .btn-warning .crm-i::before {
     color: var(--crm-icon-warning-color);

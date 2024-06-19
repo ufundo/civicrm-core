@@ -63,7 +63,7 @@
     color: var(--crm-c-text);
     font-family: var(--crm-input-label-font);
     font-weight: var(--crm-input-label-weight);
-    font-size: var(--crm-input-label-size);
+    font-size: var(--crm-input-label-size) !important; /* vs civiMail/ang/crmMailing.css */
     display: inline-block;
     margin-bottom: var(--crm-s);
 }
