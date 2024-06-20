@@ -56,10 +56,10 @@
 .crm-container button.disabled * {
     color: var(--crm-c-primary-text);
 }
-.crm-button .crm-i::before,
+/* .crm-button .crm-i::before,
 .crm-container .btn .crm-i::before {
     margin-right: var(--crm-btn-icon-spacing);
-}
+} */
 .crm-container .crm-button-type-cancel,
 .crm-form-submit .cancel.crm-button,
 .crm-container button.ui-button:has(.fa-times) {
@@ -113,7 +113,8 @@
     border-right: var(--crm-btn-icon-border);
     height: auto;
     line-height: inherit;
-    margin: 0 var(--crm-btn-icon-spacing) 0 0;
+    /* margin: 0 var(--crm-btn-icon-spacing) 0 0; */
+    margin: 0;
     opacity: 1;
     text-shadow: none;
     padding: var(--crm-btn-padding-block) var(--crm-btn-icon-spacing) var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
@@ -129,8 +130,10 @@
 .crm-button > input[type="submit"]:has(i.crm-i),
 .crm-button:has(i.crm-i),
 .crm-container .btn:has(i.crm-i),
-.crm-container .btn-group > .btn + .dropdown-toggle:has(i.crm-i) {
+.crm-container .btn-group > .btn + .dropdown-toggle:has(i.crm-i),
+.crm-container button.ui-button:has(.ui-button-icon) {
     padding: 0 var(--crm-btn-padding-inline) 0 0;
+    display: inline-block;
 }
 /* BS3 colour options */
 
@@ -225,7 +228,7 @@
     border-radius: var(--crm-btn-radius);
     color: var(--crm-c-link);
     cursor: var(--crm-hover-clickable);
-    padding: var(--crm-btn-padding);
+    padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
     background-color: var(--crm-c-primary);
     color: var(--crm-c-primary-text);
 }
@@ -248,7 +251,7 @@
     margin-inline: var(--crm-m);
 }
 .crm-container .crm-submit-buttons .crm-hover-button {
-    padding: var(--crm-btn-padding);
+    padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
 }
 .crm-container .crm-hover-button.crm-clear-link,
 .crm-container .crm-hover-button.crm-close-accordion {

@@ -325,6 +325,10 @@ color-scheme: light dark;
 --crm-dialog-header-bg: var(--crm-c-background2);
 --crm-dialog-header-col: var(--crm-c-text);
 --crm-dialog-header-size: var(--crm-r1);
+--crm-dialog-header-padding: var(--crm-m1) var(--crm-r);
+--crm-dialog-header-radius: var(--crm-dialog-radius);
+--crm-dialog-header-border-col: transparent transparent var(--crm-c-gray-300) transparent; /* set a border color for each side of the header */
+--crm-dialog-body-bg: var(--crm-c-background);
 --crm-dialog-body-padding: var(--crm-m);
 
 /* Dashlet */
