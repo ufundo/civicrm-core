@@ -402,7 +402,7 @@
 	color: var(--crm-c-primary-text);
 	cursor: default;
 	background-color: var(--crm-c-primary);
-	border-color: var(--crm-c-primary);
+	border-color: var(--crm-c-divider);
 }
 #bootstrap-theme .pagination > .disabled > span, 
 #bootstrap-theme .pagination > .disabled > span:hover, 
@@ -413,7 +413,7 @@
 	color: var(--crm-c-inactive);
 	cursor: not-allowed;
 	background-color: transparent;
-	border-color: var(--crm-c-inactive);
+	border-color: var(--crm-c-divider);
 }
 #bootstrap-theme .pagination-lg > li > a, 
 #bootstrap-theme .pagination-lg > li > span {

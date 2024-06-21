@@ -113,8 +113,7 @@
     border-right: var(--crm-btn-icon-border);
     height: auto;
     line-height: inherit;
-    /* margin: 0 var(--crm-btn-icon-spacing) 0 0; */
-    margin: 0;
+    margin: 0 var(--crm-btn-icon-spacing) 0 0;
     opacity: 1;
     text-shadow: none;
     padding: var(--crm-btn-padding-block) var(--crm-btn-icon-spacing) var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
@@ -122,8 +121,10 @@
     min-width: var(--crm-btn-height);
 }
 .crm-container .btn-xs .crm-i {
-    height: calc(var(--crm-btn-height) - var(--crm-btn-padding-block)) !important;
-  }
+    padding: var(--crm-btn-small-padding) !important;
+    height: auto !important;
+    min-width: auto !important;
+}
 .crm-container a.button:has(i.crm-i), 
 .crm-container button:has(i.crm-i),
 .crm-button > input[type="button"]:has(i.crm-i), 

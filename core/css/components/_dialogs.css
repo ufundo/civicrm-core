@@ -154,7 +154,7 @@
     background: var(--crm-notify-background);
     box-shadow: var(--crm-popup-shadow);
     color: var(--crm-notify-col);
-    border-radius: var(--crm-roundness);
+    border-radius: var(--crm-notify-radius);
     padding: var(--crm-notify-padding);
     margin-bottom: var(--crm-r);
     max-height: 600px;

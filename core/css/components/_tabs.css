@@ -181,7 +181,6 @@
 /* makes style for nav tabs distinct from tabs inside tabs panels */
 .crm-contact-page #mainTabContainer .crm-contact-tabs-list li {
     background: var(--crm-dash-tab-bg);
-    border: var(--crm-dash-tab-border-hover);
     margin: var(--crm-dash-tab-hang);
     white-space: nowrap;
 }
