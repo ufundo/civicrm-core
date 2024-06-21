@@ -14,6 +14,7 @@
     padding: var(--crm-dashlet-padding);
     box-shadow: var(--crm-popup-shadow);
     margin-bottom: var(--crm-padding-reg);
+    border: var(--crm-dashlet-border);
 }
 .crm-container .ui-sortable-helper.crm-dashlet {
     box-shadow: var(--crm-block-shadow);
@@ -59,7 +60,7 @@ crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
 }
 .crm-container .crm-dashlet-content {
     background: var(--crm-dashlet-bg);
-    padding: var(--crm-dashlet-padding) 0 !important;
+    padding: var(--crm-dashlet-content-padding);
     overflow: auto;
 }
 .crm-container .crm-dashlet .crm-accordion-body {
@@ -140,6 +141,7 @@ crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
 .crm-container #civicrm-news-feed ul.ui-tabs-nav a {
     border-radius: var(--crm-tab-roundness);
     background: var(--crm-dashlet-tab-bg);
+    border-bottom: 1px solid transparent;
 }
 .crm-container #civicrm-news-feed ul.ui-tabs-nav a:hover,
 .crm-container #civicrm-news-feed ul.ui-tabs-nav a:focus,
@@ -149,6 +151,7 @@ crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
 }
 .crm-container #civicrm-news-feed .ui-tabs-panel {
 	padding: 0;
+    background: transparent;
 }
 .crm-container #civicrm-news-feed .crm-accordion-body {
     padding: var(--crm-expand-body-padding);

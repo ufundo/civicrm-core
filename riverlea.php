@@ -29,6 +29,12 @@ function riverlea_civicrm_config(&$config) {
     'prefix' => 'streams/walbrook/',
     'search_order' => array('walbrook', '_riverlea_core_', '_fallback_'),
   );
+  $themes['hackneybrook'] = array(
+    'ext' => 'riverlea',
+    'title' => 'Riverlea: Hackney Brook (~Finsbury Park)',
+    'prefix' => 'streams/hackneybrook/',
+    'search_order' => array('hackneybrook', '_riverlea_core_', '_fallback_'),
+  );
   $themes['_riverlea_core_'] = array(
     'ext' => 'riverlea',
     'title' => 'Riverlea: base theme',

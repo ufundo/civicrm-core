@@ -202,7 +202,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	cursor: pointer;
 	background-image: none;
 	border: var(--crm-btn-border);
-	padding: var(--crm-btn-padding);
+	padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
 	font-size: var(--crm-font-size);
 	border-radius: var(--crm-btn-radius);
 	user-select: none;
@@ -211,7 +211,8 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	color: var(--crm-c-primary-text); /* Somewhere this needs to be !important but removing for now */
 	line-height: 1.5;
 	display: flex;
-	align-items: center;
+	/* align-items: center; */
+	height: var(--crm-btn-height);
 	width: fit-content;
 	gap: var(--crm-btn-icon-spacing); /* last four lines centre icons */
 }
@@ -228,6 +229,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     background: transparent;
     color: inherit;
     padding: 0;
+	border: 0;
 }
 .crm-container a.button,
 .crm-container [type="button"] {
@@ -257,10 +259,16 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     background: var(--crm-c-secondary-hover);
 	text-decoration: none;
 }
-/* .crm-container .ui-tabs ul.ui-tabs-nav a.button { /* resets styles for buttons on a tab banner 
-	padding: var(--crm-btn-padding);
-	line-height: 1.5;
-} */
+
+/* Icon alignment */
+
+.crm-container .ui-button-icon-space {
+    display: none;
+}
+.crm-container a.btn i.crm-i,
+.crm-container button.btn i.crm-i {
+    margin-right: var(--crm-btn-icon-spacing);
+}
 
 /* Small buttons */
 
@@ -387,7 +395,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 }
 div.crm-summary-contactname-block + .crm-actions-ribbon {
     color: var(--crm-dash-header-col);
-    background-color: var(--crm-dash-header-bg);
+    background-color: var(--crm-dash-header-bg2);
     margin-bottom: 0;
     clear: both;
 }
@@ -419,7 +427,6 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
     gap: var(--crm-m);
     margin: 0;
     padding: var(--crm-dash-header-padding);
-    background: rgba(256,256,256,0.1);
 }
 .crm-search-col-type-field  span.ng-scope a {
     display: flex;
@@ -815,17 +822,21 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	grid-column: 1 / span 5;
 	text-align: right;
 }
-.crm-container .crm-contact-summary-edit-layout a.crm-hover-button {
+.crm-contact-summary-edit-layout a.crm-hover-button {
 	background: var(--crm-c-primary);
 	color: var(--crm-c-primary-text) !important;
-	padding: var(--crm-btn-padding);
+	padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
 	line-height: var(--crm-btn-height);
 }
-.crm-container .crm-contact-summary-edit-layout a.crm-hover-button:hover {
+.crm-contact-summary-edit-layout a.crm-hover-button:hover {
 	background: var(--crm-c-primary-hover);
 	color: var(--crm-c-primary-text) !important;
-	padding: var(--crm-btn-padding);
+	padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
 }
+#contactLayoutEditor .panel-heading .btn {
+	padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
+}
+
 
 /* Mosaico (all importants vs the extension css) */
 

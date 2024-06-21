@@ -47,7 +47,7 @@
     background: var(--crm-tab-bg-active);
     border: var(--crm-tab-border-active); 
     border-bottom: 0 solid transparent;
-    margin: 0 0 -2px;
+    margin: var(--crm-tab-hang);
     padding: 0;
 }
 .crm-container .ui-helper-clearfix::before, 
@@ -107,7 +107,7 @@
     padding: var(--crm-tab-padding);
 }
 .crm-container .crm-contact-page .ui-tabs-panel {
-    background: transparent;
+    background: var(--crm-dash-panel-bg);
 }
 /* Bootstrap tabs */
 
@@ -149,44 +149,25 @@
 .crm-contact-page #mainTabContainer .crm-contact-tabs-list {
     background: var(--crm-dash-tabs-bg);
     flex-direction: var(--crm-dash-tabs-flow);
-    border-radius: var(--crm-dash-roundness) var(--crm-dash-roundness) 0 0
+    border-radius: var(--crm-dash-roundness) var(--crm-dash-roundness) 0 0;
     gap: var(--crm-dash-tabs-gap);
-    box-shadow: var(--crm-block-shadow);
     padding: var(--crm-dash-tabs-padding);
+    border: 0 solid transparent;
 }
-.crm-contact-page #mainTabContainer .ui-tabs-nav li {
-    background: var(--crm-dash-tab-bg);
+#mainTabContainer .crm-contact-tabs-list ~ .ui-tabs-panel {
+    box-shadow: var(--crm-dash-box-shadow);
 }
-.crm-contact-page #mainTabContainer .ui-tabs-nav li.ui-tabs-active a,
-.crm-contact-page #mainTabContainer .ui-tabs-nav li:hover a,
-.crm-contact-page #mainTabContainer .ui-tabs-nav li:focus a {
-    color: var(--crm-c-link);
-    background: var(--crm-dash-tab-bg-hover);
-    border: var(--crm-tabs-border);
-    border-bottom: 0 solid transparent;
+/* .crm-contact-page #mainTabContainer .ui-tabs-nav li.ui-tabs-active a {
     margin-bottom: -1px;
-}
-.crm-contact-page #mainTabContainer .ui-tabs-nav li .ui-tabs-anchor {
-    display: grid;
-    grid-template-columns: min-content auto;
-    width: 100%;
-    padding: var(--crm-tab-padding);
-    gap: var(--crm-m);
-    align-items: center;
-    border-radius: var(--crm-dash-roundness);
-}
+} 
+.crm-contact-page #mainTabContainer .ui-tabs-nav li {
+    white-space: unset;
+}*/
 .crm-contact-page #mainTabContainer .ui-tabs-nav li .ui-tabs-anchor:has(.crm-i) {
     grid-template-columns: min-content auto min-content;
 }
-.crm-contact-page #mainTabContainer .ui-tabs-nav.crm-contact-tabs-list li .ui-tabs-anchor  {
-    padding: var(--crm-dash-tab-padding);
-    border: var(--crm-dash-tab-border);
-}
 .crm-contact-page #mainTabContainer .ui-tabs-nav li .ui-tabs-anchor i {
     font-size: var(--crm-dash-icon-size);
-}
-.crm-contact-page #mainTabContainer .ui-tabs-nav li.ui-tabs-active {
-    border: 0 solid transparent;
 }
 .crm-contact-page #secondaryTabContainer {
     border: var(--crm-tab-2-border);
@@ -194,7 +175,41 @@
 #mainTabContainer .crm-contact-tabs-list ~ .ui-tabs-panel {
     flex-grow: 1;
     padding: var(--crm-dash-panel-padding);
+    border: var(--crm-dash-panel-border);
+    border-radius: var(--crm-dash-roundness);
 }
+/* makes style for nav tabs distinct from tabs inside tabs panels */
+.crm-contact-page #mainTabContainer .crm-contact-tabs-list li {
+    background: var(--crm-dash-tab-bg);
+    margin: var(--crm-dash-tab-hang);
+    white-space: nowrap;
+}
+.crm-contact-page #mainTabContainer .crm-contact-tabs-list li .ui-tabs-anchor {
+    display: grid;
+    grid-template-columns: min-content auto;
+    width: var(--crm-dash-tab-width);
+    gap: var(--crm-m);
+    align-items: center;
+    border-radius: var(--crm-dash-roundness);
+    float: var(--crm-dash-tab-align);
+    border-radius: var(--crm-dash-tab-radius);
+}
+.crm-contact-page #mainTabContainer .crm-contact-tabs-list li .ui-tabs-anchor  {
+    padding: var(--crm-dash-tab-padding);
+    border: var(--crm-dash-tab-border);
+}
+.crm-contact-page #mainTabContainer .ui-tabs-nav.crm-contact-tabs-list li.ui-tabs-active a,
+.crm-contact-page #mainTabContainer .ui-tabs-nav.crm-contact-tabs-list li:hover a,
+.crm-contact-page #mainTabContainer .ui-tabs-nav.crm-contact-tabs-list li:focus a {
+    color: var(--crm-c-link);
+    background: var(--crm-dash-tab-bg-hover);
+    border: var(--crm-dash-tab-border-hover);
+    border-width: var(--crm-dash-tab-border-width);
+    /* border-bottom: 0 solid transparent; */
+}
+/* .crm-contact-page #mainTabContainer .ui-tabs-nav.crm-contact-tabs-list li.ui-tabs-active {
+    border: 0 solid transparent;
+} */
 
 /* SearchKit tabs */
 

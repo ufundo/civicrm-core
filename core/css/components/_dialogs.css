@@ -15,13 +15,14 @@
 .crm-container.ui-dialog .ui-dialog-titlebar, 
 .crm-container .ui-dialog .ui-dialog-titlebar {
     border: 0;
-    border-bottom: 1px solid var(--crm-c-gray-300) !important;
+    border: 1px solid transparent;
+    border-color: var(--crm-dialog-header-border-col);
     box-shadow: var(--crm-bottom-shadow);
     color: var(--crm-dialog-header-col);
     background: var(--crm-dialog-header-bg);
     font-size: var(--crm-dialog-header-size);
-    border-radius: var(--crm-dialog-radius);
-    padding: var(--crm-m1) var(--crm-r);
+    border-radius: var(--crm-dialog-header-radius);
+    padding: var(--crm-dialog-header-padding);
     position: relative;
     overflow: auto;
     display: flex;
@@ -79,7 +80,7 @@
 .crm-container.ui-dialog .ui-dialog-content {
     max-height: calc(100vh - 280px) !important;
     border-radius: var(--crm-dialog-radius);
-    background: var(--crm-c-background);
+    background: var(--crm-dialog-body-bg);
     color: var(--crm-c-text);
     height: auto !important;
     margin: var(--crm-dialog-padding) 0 calc(var(--crm-btn-height) + var(--crm-m) + var(--crm-m));
@@ -153,7 +154,7 @@
     background: var(--crm-notify-background);
     box-shadow: var(--crm-popup-shadow);
     color: var(--crm-notify-col);
-    border-radius: var(--crm-roundness);
+    border-radius: var(--crm-notify-radius);
     padding: var(--crm-notify-padding);
     margin-bottom: var(--crm-r);
     max-height: 600px;

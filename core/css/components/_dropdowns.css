@@ -32,10 +32,11 @@
 .crm-contact-actions-list-inner,
 .crm-participant-list-inner,
 .vakata-context {
-    background-color: var(--crm-c-secondary);
+    background-color: var(--crm-dropdown-2-bg);
+    color: var(--crm-dropdown-2-col);
     border-radius: var(--crm-roundness);
     box-shadow: var(--crm-popup-shadow);
-    padding: var(--crm-padding-small);
+    padding: var(--crm-dropdown-2-padding);
     min-width: var(--crm-dropdown-width);
 }
 .ac_results::before {
@@ -46,7 +47,7 @@
     height: 0px;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid var(--crm-c-secondary);
+    border-bottom: 5px solid var(--crm-dropdown-2-bg);
     top: -5px;
     left: 12px;
 }

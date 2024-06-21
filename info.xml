@@ -2,7 +2,7 @@
 <extension key="riverlea" type="module">
   <file>riverlea</file>
   <name>RiverLea CiviCRM Theme Framework</name>
-  <description>CiviCRM Theme package with CSS Variable defined variations ('streams'). Includes Minetta (~Greenwich) and Walbrook (~Shoreditch).</description>
+  <description>CiviCRM Theme package with CSS Variable defined variations ('streams'). Includes Minetta (~Greenwich), Walbrook (~Shoreditch) HackneyBrook (~Finsbury Park).</description>
   <license>AGPL-3.0</license>
   <maintainer>
     <author>Nicol Wistreich</author>
@@ -12,8 +12,8 @@
     <url desc="Main Extension Page">https://lab.civicrm.org/extensions/brunswick</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
-  <releaseDate>2024-14-06</releaseDate>
-  <version>0.5</version>
+  <releaseDate>2024-21-06</releaseDate>
+  <version>0.6</version>
   <develStage>alpha</develStage>
   <compatibility>
     <ver>5.72</ver>

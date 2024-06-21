@@ -72,6 +72,16 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     text-decoration: none;
 }
 
+/* Check icon */
+
+.crm-container .crm-button .crm-i.fa-check::before,
+.crm-container .btn .crm-i.fa-check::before,
+.crm-container .crm-button .crm-i.fa-check-circle::before,
+.crm-container .btn .crm-i.fa-check-circle::before,
+.crm-container .btn-success .crm-i::before {
+    color: var(--crm-icon-success-color);
+}
+
 /* Close icon */
 #crm-notification-container .ui-notify-message a.ui-notify-cross,
 div.civicrm-community-messages a.civicrm-community-message-dismiss,
@@ -100,6 +110,23 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     opacity: 1;
     transition: 0.2s;
 }
+.crm-container .crm-button .crm-i.fa-times::before,
+.crm-container .btn-danger .crm-i::before {
+    color: var(--crm-icon-alert-color);
+}
+
+/* Info icon */
+
+.crm-container .crm-button .crm-i.fa-info::before,
+.crm-container .btn-info .crm-i::before {
+    color: var(--crm-icon-info-color);
+}
+
+/* Warning icon */  
+
+.crm-container .btn-warning .crm-i::before {
+    color: var(--crm-icon-warning-color);
+}
 
 /* Table sorting icons */
 .crm-container tr a.sorting, 
@@ -108,7 +135,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container table.dataTable thead th.sorting,
 .crm-container table.dataTable thead th.sorting_asc,
 .crm-container table.dataTable thead th.sorting_desc  {
-    background: none;
+    background-image: none;
     color: var(--crm-c-text);
 }
 .crm-container th a:hover,
@@ -162,13 +189,14 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container .delete-icon {
     background-image: none;
 }
-.crm-container .delete-icon::before {
+.crm-container .delete-icon::before,
+.crm-container .crm-i.fa-trash::before {
     content: "\f1f8";
-    color: var(--crm-c-text);
+    color: var(--crm-icon-alert-color);
 }
 .crm-container .delete-icon:hover::before,
 .crm-container .delete-icon:focus::before {
-    color: var(--crm-c-alert);
+    color: var(--crm-icon-alert-color);
 }
 
 /* Jqueery UI icons (tags) */

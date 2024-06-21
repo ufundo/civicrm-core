@@ -33,6 +33,7 @@
 	margin-bottom: var(--crm-m1);
 	font-weight: var(--crm-bold-weight);
 	font-family: var(--crm-font-bold);
+	color: var(--crm-c-text);
 }
 #bootstrap-theme h4 small, #bootstrap-theme h4 .small, #bootstrap-theme .h4 small, #bootstrap-theme .h4 .small, #bootstrap-theme h5 small, #bootstrap-theme h5 .small, #bootstrap-theme .h5 small, #bootstrap-theme .h5 .small, #bootstrap-theme h6 small, #bootstrap-theme h6 .small, #bootstrap-theme .h6 small, #bootstrap-theme .h6 .small {
 	font-size: 75%;
@@ -166,16 +167,21 @@
     LABELS
             */
 
-/* #bootstrap-theme .label {
+#bootstrap-theme .label-primary,
+#bootstrap-theme .label-warning,
+#bootstrap-theme .label-success,
+#bootstrap-theme .label-default,
+#bootstrap-theme .label-info,
+#bootstrap-theme .label-danger {
 	display: inline;
 	padding: var(--crm-btn-small-padding);
 	font-weight: var(--crm-bold-weight);
-	color: white;
+	color: var(--crm-c-light-text);
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: baseline;
 	border-radius: var(--crm-roundness);
-} */
+}
 #bootstrap-theme .label:empty {
 	display: none;
 }
@@ -184,7 +190,7 @@
 	top: -1px;
 }
 #bootstrap-theme a.label:hover, #bootstrap-theme a.label:focus {
-	color: white;
+	color: var(--crm-c-light-text);
 	text-decoration: none;
 	cursor: pointer;
 }
@@ -193,7 +199,7 @@
     color: var(--crm-c-light-text);
 }
 #bootstrap-theme .label-default[href]:hover, #bootstrap-theme .label-default[href]:focus {
-	background-color: gray;
+	background-color: var(--crm-c-background4);
 }
 #bootstrap-theme .label-primary {
 	background: var(--crm-c-primary);
@@ -396,7 +402,7 @@
 	color: var(--crm-c-primary-text);
 	cursor: default;
 	background-color: var(--crm-c-primary);
-	border-color: var(--crm-c-primary);
+	border-color: var(--crm-c-divider);
 }
 #bootstrap-theme .pagination > .disabled > span, 
 #bootstrap-theme .pagination > .disabled > span:hover, 
@@ -407,7 +413,7 @@
 	color: var(--crm-c-inactive);
 	cursor: not-allowed;
 	background-color: transparent;
-	border-color: var(--crm-c-inactive);
+	border-color: var(--crm-c-divider);
 }
 #bootstrap-theme .pagination-lg > li > a, 
 #bootstrap-theme .pagination-lg > li > span {

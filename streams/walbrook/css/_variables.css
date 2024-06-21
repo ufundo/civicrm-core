@@ -1,5 +1,9 @@
-/* River Lea v0.4.
-   Walbrook (after River Walbrook, which runs under Shoreditch, London) */
+/*
+    Name: Walbrook;
+    Riverlea version: 0.6;
+    Front, back or both: back; 
+    Description: Based on Shoreditch theme. Named after after River Walbrook, which runs under Shoreditch, London;
+*/
 
 @import url('_fonts.css'); 
 :root{    
@@ -134,13 +138,21 @@ color-scheme: light dark;
 --crm-btn-border: 0 solid transparent;
 --crm-btn-txt-transform: uppercase;
 --crm-btn-radius: 2px;
---crm-btn-padding: var(--crm-m) var(--crm-r2);
+--crm-btn-padding-block: var(--crm-m); /* padding for top and bottom, one value */
+--crm-btn-padding-inline: var(--crm-r2); /* padding for left and right, one value */
 --crm-btn-small-padding: var(--crm-s1) var(--crm-m1);
 --crm-btn-large-padding: var(--crm-m) var(--crm-r);
 --crm-btn-align: center;
 --crm-btn-height: 40px;
 --crm-btn-icon-spacing: var(--crm-s);
---crm-cancel-color: var(--crm-c-alert);
+--crm-btn-icon-size: auto;
+--crm-btn-cancel-bg: var(--crm-c-alert);
+--crm-btn-info-bg: var(--crm-c-info);
+--crm-btn-warning-bg: var(--crm-c-warning);
+--crm-btn-success-bg: var(--crm-c-success);
+--crm-btn-alert-bg: var(--crm-c-alert);
+--crm-btn-icon-bg: ;
+--crm-btn-icon-border: ;
 
 /* TABLES */
 --crm-table-outside-border: 1px solid var(--crm-c-gray-100);
@@ -245,6 +257,7 @@ color-scheme: light dark;
 --crm-fieldset-border-color: ;
 --crm-fieldset-border: 0;
 --crm-fieldset-padding: 0;
+--crm-checkbox-list-col: var(--crm-c-text);
 
 /* TABS */
 --crm-tabs-bg: var(--crm-c-background2);
@@ -253,7 +266,8 @@ color-scheme: light dark;
 --crm-tabs-gap: var(--crm-s);
 --crm-tab-bg: var(--crm-c-background2);
 --crm-tab-bg-hover: var(--crm-c-background);
---crm-tab-bg-active: var(--crm-c-background);
+--crm-tab-bg-active: var(--crm-c-page-background);
+--crm-tab-hang: 0 0 -1px 0; /* lip to extend tab flush with active region - set to 0 for no lip */
 --crm-tab-padding: var(--crm-m2) var(--crm-r1) var(--crm-m);
 --crm-tab-col: var(--crm-c-text);
 --crm-tab-weight: normal;
@@ -275,20 +289,30 @@ color-scheme: light dark;
 --crm-dash-tabs-bg: var(--crm-c-background);
 --crm-dash-tabs-padding: ;
 --crm-dash-tab-bg: transparent;
---crm-dash-tab-bg-hover: var(--crm-c-page-background);
+--crm-dash-tab-bg-hover: var(--crm-c-background3);
 --crm-dash-tab-padding: var(--crm-r) var(--crm-r1);
 --crm-dash-tab-border: var(--crm-dash-border);
+--crm-dash-tab-border-hover: ;
+--crm-dash-tab-border-width: 0; /* to remove border on one side for hanging tabs */
 --crm-dash-tab-col: ;
---crm-dash-icon-size: var(--crm-m2);
 --crm-dash-tab-count-bg: var(--crm-c-primary);
 --crm-dash-tab-count-col: var(--crm-c-light-text);
+--crm-dash-tab-width: 100%;
+--crm-dash-tab-align: none;
+--crm-dash-tab-hang: 0 0 -1px 0; /* lip to extend tab flush with active region - set to 0 for no lip */
+--crm-dash-tab-radius: var(--crm-dash-roundness);
+--crm-dash-icon-size: var(--crm-m2);
+--crm-dash-box-shadow: inset 0 3px 18px -5px rgba(0, 0, 0, 0.25);
 --crm-dash-panel-padding: var(--crm-r2);
+--crm-dash-panel-bg: transparent;
+--crm-dash-panel-border: 0;
 --crm-dash-edit-border: 1px solid var(--crm-c-gray-900);
 --crm-dash-block-padding: var(--crm-m2);
 --crm-dash-block-bg: var(--crm-c-background);
 --crm-dash-block-radius: var(--crm-roundness);
 --crm-dash-label-bg: var(--crm-c-background);
 --crm-dash-header-bg: var(--crm-c-gray-900);
+--crm-dash-header-bg2: var(--crm-c-gray-800);
 --crm-dash-header-col: var(--crm-c-light-text);
 --crm-dash-header-size: var(--crm-l);
 --crm-dash-header-padding: var(--crm-r) var(--crm-r1);
@@ -301,14 +325,21 @@ color-scheme: light dark;
 --crm-dialog-header-bg: var(--crm-c-background2);
 --crm-dialog-header-col: var(--crm-c-text);
 --crm-dialog-header-size: var(--crm-r1);
+--crm-dialog-header-padding: var(--crm-m1) var(--crm-r);
+--crm-dialog-header-radius: var(--crm-dialog-radius);
+--crm-dialog-header-border-col: transparent transparent var(--crm-c-gray-300) transparent; /* set a border color for each side of the header */
+--crm-dialog-body-bg: var(--crm-c-background);
 --crm-dialog-body-padding: var(--crm-m);
 
 /* Dashlet */
+--crm-dashlet-border: ;
 --crm-dashlet-bg: var(--crm-c-background);
 --crm-dashlet-padding: 0;
+--crm-dashlet-content-padding: var(--crm-m);
 --crm-dashlet-header-bg: var(--crm-c-secondary);
 --crm-dashlet-header-col: var(--crm-c-light-text);
 --crm-dashlet-header-padding: var(--crm-padding-reg);
+--crm-dashlet-content-padding: var(--crm-dashlet-padding) 0;
 --crm-dashlet-tabs-bg: var(--crm-c-background);
 --crm-dashlet-tab-bg: var(--crm-c-background);
 --crm-dashlet-tab-active: var(--crm-expand-header-bg);
@@ -322,12 +353,16 @@ color-scheme: light dark;
 --crm-dropdown-hover-bg: var(--crm-c-page-background);
 --crm-dropdown-border: 0;
 --crm-dropdown-width: 180px;
+--crm-dropdown-2-bg: var(--crm-c-secondary);
+--crm-dropdown-2-col: var(--crm-c-text);
+--crm-dropdown-2-padding: var(--crm-padding-small);
 
 /* Notifications */
 --crm-notify-background: var(--crm-c-background);
 --crm-notify-padding: var(--crm-m2);
 --crm-notify-col: var(--crm-c-text);
 --crm-notify-accent-border: 0 0 0 3px; /* adds a border to one/several sides of the notification - set to 0 for none */
+--crm-notify-radius: var(--crm-roundness);
 
 /* Icons */
 --crm-icon-alert: "\f06a";
@@ -337,6 +372,10 @@ color-scheme: light dark;
 --crm-icon-sort: "\f0dc";
 --crm-icon-sort-desc: "\f0dd";
 --crm-icon-sort-asc: "\f0de";
+--crm-icon-alert-color: inherit;
+--crm-icon-success-color: inherit;
+--crm-icon-warning-color: inherit;
+--crm-icon-info-color: inherit;
 
 /* Wizard */
 --crm-wizard-width: auto;
@@ -350,23 +389,45 @@ color-scheme: light dark;
 --crm-wizard-bg: var(--crm-c-background);
 }
 
-/* light/dark mode settings - currently inactive
+/* light/dark mode settings */
 
 @media (prefers-color-scheme: dark) {
     :root {
         --crm-c-text: #fff;
-        --crm-c-background: #0a0a0a;
-        --crm-c-background2: #222;
-        --crm-c-background3: #555;
-        --crm-c-background4: #262626;
-        --crm-c-primary: #43757A; 
-        --crm-c-secondary: #B24B4F;
+        --crm-c-link: var(--crm-c-amber);
+        --crm-c-link-hover: var(--crm-c-amber-light);
+        --crm-c-text-light: var(--crm-c-darkest);
+        --crm-c-background: var(--crm-c-gray-900);
+        --crm-c-page-background: var(--crm-c-gray-900); 
+        --crm-c-background2: var(--crm-c-gray-900); 
+        --crm-c-background3: var(--crm-c-gray-800);
+        --crm-c-background4: var(--crm-c-gray-700);
+        --crm-c-secondary: var(--crm-c-blue); 
         --crm-c-success: #58a458;
         --crm-red-alert: #B24B4F;
         --crm-blue-info: #2C99A4;
 
-        /* And others 
-        --crm-expand-border: 1px solid #fff;
+        /* And others */
+        --crm-block-shadow: 0 3px 18px 0 rgba(0,0,0);
+        --crm-dash-block-bg: var(--crm-c-background2);
+        --crm-dash-label-bg: transparent;
+        --crm-dash-tabs-bg: var(--crm-c-gray-800);
+        --crm-dash-box-shadow: inset 0 3px 18px -5px rgba(0, 0, 0);
+        --crm-dash-header-bg2: var(--crm-dash-tabs-bg);
+        --crm-expand-border: 1px solid var(--crm-c-gray-500);
+        --crm-tabs-border: 1px solid var(--crm-c-gray-500);
+        --crm-table-outside-border: 1px solid var(--crm-c-gray-500);
+        --crm-table-row-border: 1px solid var(--crm-c-gray-500);
+        --crm-input-border-color: var(--crm-c-gray-500);
+        --crm-table-odd-row: var(--crm-c-gray-800);
+        --crm-table-odd-hover: var(--crm-c-gray-700);
+        --crm-table-even-row: var(--crm-c-gray-700);
+        --crm-table-even-hover: var(--crm-c-gray-600);
+        --crm-alert-text-help: var(--crm-c-text-light);
+        --crm-alert-text-warning: var(--crm-c-text-light);
+        --crm-c-inactive: var(--crm-c-gray-400);
+        --crm-input-color: var(--crm-c-text);
+        --crm-input-description: var(--crm-c-gray-300);
+        --crm-checkbox-list-col: var(--crm-c-text-light);
     }
 }
-*/

@@ -11,7 +11,7 @@
     cursor: pointer;
     background-image: none;
     border: var(--crm-btn-border);
-    padding: var(--crm-btn-padding);
+    padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
     font-size: var(--crm-r);
     border-radius: var(--crm-btn-radius);
     user-select: none;
@@ -25,8 +25,8 @@
 .crm-container .btn:focus,
 .crm-container .crm-button:hover,
 .crm-container .crm-button:focus,
-.crm-container .crm-container .btn:hover,
-.crm-container .crm-container .btn:focus {
+.crm-container .btn:hover,
+.crm-container .btn:focus {
     background: var(--crm-c-primary-hover);
     color: var(--crm-c-primary-text);
     text-decoration: none;
@@ -56,10 +56,10 @@
 .crm-container button.disabled * {
     color: var(--crm-c-primary-text);
 }
-.crm-button .crm-i::before,
+/* .crm-button .crm-i::before,
 .crm-container .btn .crm-i::before {
     margin-right: var(--crm-btn-icon-spacing);
-}
+} */
 .crm-container .crm-button-type-cancel,
 .crm-form-submit .cancel.crm-button,
 .crm-container button.ui-button:has(.fa-times) {
@@ -68,12 +68,12 @@
 }
 .crm-container a.button.delete-button, 
 .crm-container a.button.delete{
-    background: var(--crm-cancel-color);
+    background: var(--crm-btn-cancel-bg);
 }
 .crm-container a.button.delete-button:hover,
 .crm-container a.button.delete-button:focus,
 .crm-container a.button.delete:hover {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-cancel-color);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-btn-cancel-bg);
 }
 .crm-container .crm-button-type-cancel:hover,
 .crm-container .crm-button-type-cancel:focus,
@@ -84,9 +84,6 @@
 
 /* Icons */
 
-.crm-container .button .crm-i {
-    padding-right: var(--crm-m);
-}
 .crm-container #crmIconPicker a.ui-button {
     color: var(--crm-c-text) !important;
     background: transparent;
@@ -99,53 +96,92 @@
     grid-template-columns: repeat(30,1fr);
     gap: var(--crm-m);
 }
-
+.crm-container .crm-button i.crm-i,
+.crm-container a.button i.crm-i,
+#crm-container button i.crm-i,
+.crm-container a.button:link i.crm-i,
+.crm-container a.button:visited i.crm-i,
+.crm-container input.form-submit i.crm-i,
+#crm-container input[type="button"] i.crm-i,
+.crm-container input[type="submit"] i.crm-i,
+#crm-container input.form-submit-inline i.crm-i,
+#crm-container .crm-button i.crm-i,
+.crm-container .ui-dialog-buttonset .ui-button .ui-icon,
+.crm-container .btn i.crm-i {
+    background-color: var(--crm-btn-icon-bg);
+    border-radius: var(--crm-btn-radius) 0 0 var(--crm-btn-radius);
+    border-right: var(--crm-btn-icon-border);
+    height: auto;
+    line-height: inherit;
+    margin: 0 var(--crm-btn-icon-spacing) 0 0;
+    opacity: 1;
+    text-shadow: none;
+    padding: var(--crm-btn-padding-block) var(--crm-btn-icon-spacing) var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
+    height: calc(var(--crm-btn-height) - 2px);
+    min-width: var(--crm-btn-height);
+}
+.crm-container .btn-xs .crm-i {
+    padding: var(--crm-btn-small-padding) !important;
+    height: auto !important;
+    min-width: auto !important;
+}
+.crm-container a.button:has(i.crm-i), 
+.crm-container button:has(i.crm-i),
+.crm-button > input[type="button"]:has(i.crm-i), 
+.crm-button > input[type="submit"]:has(i.crm-i),
+.crm-button:has(i.crm-i),
+.crm-container .btn:has(i.crm-i),
+.crm-container .btn-group > .btn + .dropdown-toggle:has(i.crm-i),
+.crm-container button.ui-button:has(.ui-button-icon) {
+    padding: 0 var(--crm-btn-padding-inline) 0 0;
+    display: inline-block;
+}
 /* BS3 colour options */
 
 .crm-container .btn-secondary {
     background: var(--crm-c-secondary); 
     color: var(--crm-c-secondary-text);
 }
-.crm-container .btn-secondary:hover,
-.crm-container .btn-secondary:focus {
+.crm-container .btn.btn-secondary:hover,
+.crm-container .btn.btn-secondary:focus {
     background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-secondary); /* darkening fallback if hover state not set */
     background: var(--crm-c-secondary-hover);
     color: var(--crm-c-secondary-text);
 }
 .crm-container .btn-info {
-    background: var(--crm-c-info); 
+    background: var(--crm-btn-info-bg); 
     color: var(--crm-c-info-text);
 }
-.crm-container .btn-info:hover,
-.crm-container .btn-info:focus {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-info);
+.crm-container .btn.btn-info:hover,
+.crm-container .btn.btn-info:focus {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-btn-info-bg);
     color: var(--crm-c-info-text);
 }
 .crm-container .btn-warning {
-    background: var(--crm-c-warning); 
+    background: var(--crm-btn-warning-bg); 
     color: var(--crm-c-warning-text);
 }
-.crm-container .btn-warning:hover,
-.crm-container .btn-warning:focus {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-warning);
+.crm-container .btn.btn-warning:hover,
+.crm-container .btn.btn-warning:focus {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-btn-warning-bg);
     color: var(--crm-c-warning-text);
 }
-.crm-container button.btn-success {
-    background: var(--crm-c-success); 
+.crm-container .btn-success {
+    background: var(--crm-btn-success-bg); 
     color: var(--crm-c-success-text);
 }
-.crm-container button.btn-success:hover,
-.crm-container button.btn-success:focus {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-success);
+.crm-container .btn.btn-success:hover,
+.crm-container .btn.btn-success:focus {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-btn-success-bg);
     color: var(--crm-c-success-text);
 }
 .crm-container .btn-danger {
-    background: var(--crm-c-alert); 
+    background: var(--crm-btn-alert-bg); 
     color: var(--crm-c-alert-text);
 }
-.crm-container .btn-danger:hover,
-.crm-container .btn-danger:focus {
-    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-alert);
+.crm-container .btn.btn-danger:hover,
+.crm-container .btn.btn-danger:focus {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-btn-alert-bg);
     color: var(--crm-c-alert-text);
 }
 
@@ -193,7 +229,7 @@
     border-radius: var(--crm-btn-radius);
     color: var(--crm-c-link);
     cursor: var(--crm-hover-clickable);
-    padding: var(--crm-btn-padding);
+    padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
     background-color: var(--crm-c-primary);
     color: var(--crm-c-primary-text);
 }
@@ -216,7 +252,7 @@
     margin-inline: var(--crm-m);
 }
 .crm-container .crm-submit-buttons .crm-hover-button {
-    padding: var(--crm-btn-padding);
+    padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
 }
 .crm-container .crm-hover-button.crm-clear-link,
 .crm-container .crm-hover-button.crm-close-accordion {

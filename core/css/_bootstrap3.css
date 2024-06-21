@@ -1116,11 +1116,9 @@
 }
 #bootstrap-theme h1, #bootstrap-theme h2, #bootstrap-theme h3, #bootstrap-theme h4, #bootstrap-theme h5, #bootstrap-theme h6, #bootstrap-theme .h1, #bootstrap-theme .h2, #bootstrap-theme .h3, #bootstrap-theme .h4, #bootstrap-theme .h5, #bootstrap-theme .h6 {
 	line-height: 1.2;
-	color: black;
 }
 #bootstrap-theme h1 small, #bootstrap-theme h1 .small, #bootstrap-theme h2 small, #bootstrap-theme h2 .small, #bootstrap-theme h3 small, #bootstrap-theme h3 .small, #bootstrap-theme h4 small, #bootstrap-theme h4 .small, #bootstrap-theme h5 small, #bootstrap-theme h5 .small, #bootstrap-theme h6 small, #bootstrap-theme h6 .small, #bootstrap-theme .h1 small, #bootstrap-theme .h1 .small, #bootstrap-theme .h2 small, #bootstrap-theme .h2 .small, #bootstrap-theme .h3 small, #bootstrap-theme .h3 .small, #bootstrap-theme .h4 small, #bootstrap-theme .h4 .small, #bootstrap-theme .h5 small, #bootstrap-theme .h5 .small, #bootstrap-theme .h6 small, #bootstrap-theme .h6 .small {
 	line-height: 1;
-	color: #999;
 }
 /* #bootstrap-theme h1, #bootstrap-theme .h1, #bootstrap-theme h2, #bootstrap-theme .h2, #bootstrap-theme h3, #bootstrap-theme .h3 {
 	margin-top: 20px;

@@ -54,6 +54,13 @@ body.page-civicrm > #branding {
 }
 /* D9 Claro */
 
+body.page-civicrm {
+    color: unset;
+}
+body.page-civicrm .breadcrumb__item, 
+body.page-civicrm .breadcrumb__link {
+    color: var(--crm-c-text);
+}
 #block-claro-content {
     --crm-page-padding: 3rem;
     --crm-page-width: calc(100% - var(--crm-page-padding) - var(--crm-page-padding));
