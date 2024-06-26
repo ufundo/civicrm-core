@@ -277,7 +277,7 @@
     --crm-tab-roundness: var(--crm-roundness);
     --crm-tab-border-col: var(--crm-c-gray-400);
     --crm-tab-border-active: 0 solid transparent;
-    --crm-tab-2-border: var(--crm-dash-border);
+    --crm-tabs-2-border: var(--crm-dash-border);
     
     /* Contact dashboard */
     --crm-dash-border: 1px solid var(--crm-tab-border-col);

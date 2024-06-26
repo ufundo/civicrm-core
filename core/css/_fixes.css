@@ -763,14 +763,11 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 .crm-container .crm-case-filter-upcoming {
 	padding-bottom: var(--crm-padding-reg);
 }
-/* Contrib dashboard / form builder */
+/* Contrib dashboard / form builder
 #ContributionCharts .ui-tabs-nav .button,
 #afGuiEditor-canvas .panel-heading .form-inline .btn {
 	padding: var(--crm-btn-small-padding);
-}
-#afGuiEditor-canvas .panel-heading .form-inline {
-	padding: 0;
-}
+} */
 #afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
 	padding: var(--crm-dropdown-padding) !important;
 }
@@ -1202,6 +1199,15 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 }
 #afGuiEditor-canvas .form-inline {
 	padding: 0;
+}
+#afGuiEditor-canvas .panel-heading .af-gui-canvas-control-buttons button.btn-default {
+	padding: 0;
+	--crm-btn-height: 32px;
+}
+#afGuiEditor-canvas .af-gui-canvas-control-buttons button.btn-default i.crm-i {
+	margin: 0;
+	border: 0;
+	padding: var(--crm-s);
 }
 .af-layout-inline .af-gui-bar {
 	margin: 0 -4px;

@@ -32,7 +32,6 @@
 .crm-container #extensions-main,
 .crm-container #extensions-addnew.ui-tabs-panel {
 	padding: 0;
-	border: var(--crm-tabs-border);
 	border-top: 0;
 }
 .crm-container #extensions-main table.dataTable,

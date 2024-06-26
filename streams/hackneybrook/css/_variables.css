@@ -262,7 +262,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 /* Tabs */
 --crm-tabs-bg: var(--crm-c-background4);
 --crm-tabs-padding: var(--crm-s);
---crm-tabs-border: ;
+--crm-tabs-border: 1px solid var(--crm-c-divider);
 --crm-tabs-gap: var(--crm-s);
 --crm-tab-bg: var(--crm-c-background2);
 --crm-tab-bg-hover: var(--crm-c-page-background);
@@ -277,7 +277,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-tab-roundness: var(--crm-roundness);
 --crm-tab-border-col: var(--crm-c-gray-400);
 --crm-tab-border-active: 0 solid transparent;
---crm-tab-2-border: var(--crm-dash-border);
+--crm-tabs-2-border: var(--crm-tabs-border);
 
 /* Contact dashboard */
 --crm-dash-border: 0;

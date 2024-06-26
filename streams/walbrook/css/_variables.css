@@ -266,7 +266,7 @@ color-scheme: light dark;
 --crm-tabs-gap: var(--crm-s);
 --crm-tab-bg: var(--crm-c-background2);
 --crm-tab-bg-hover: var(--crm-c-background);
---crm-tab-bg-active: var(--crm-c-page-background);
+--crm-tab-bg-active: var(--crm-c-background);
 --crm-tab-hang: 0 0 -1px 0; /* lip to extend tab flush with active region - set to 0 for no lip */
 --crm-tab-padding: var(--crm-m2) var(--crm-r1) var(--crm-m);
 --crm-tab-col: var(--crm-c-text);
@@ -277,7 +277,7 @@ color-scheme: light dark;
 --crm-tab-roundness: var(--crm-roundness);
 --crm-tab-border-col: var(--crm-c-gray-300);
 --crm-tab-border-active: 1px solid var(--crm-c-gray-300);
---crm-tab-2-border: 0 solid transparent;
+--crm-tabs-2-border: 0 solid transparent;
 
 /* CONTACT DASHBOARD */
 --crm-dash-border: 0 solid transparent;
