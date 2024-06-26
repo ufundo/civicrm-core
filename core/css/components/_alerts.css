@@ -11,6 +11,16 @@
     padding: var(--crm-alert-padding);
     border-radius: var(--crm-roundness);
 }
+.crm-container .help p,
+.crm-container .status p,
+.crm-container .messages p,
+.crm-container .alert p,
+.crm-container .help li,
+.crm-container .status li,
+.crm-container .messages li,
+.crm-container .alert li {
+    color: var(--crm-alert-text-help);
+}
 .crm-container .status,
 .crm-container .alert-warning,
 .crm-container .messages.warning {

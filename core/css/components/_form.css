@@ -305,7 +305,7 @@ div.crm-inline-edit.form {
     background: var(--crm-inline-edit-bg);
 }
 #crm-contactname-content.crm-inline-edit.form {
-    background: var(--crm-inline-edit-bg);
+    background: var(--crm-inline-edit-bg) !important /* vs contactSummary */;
 }
 .crm-inline-edit.form td {
     background: transparent;
@@ -317,6 +317,7 @@ div.crm-inline-edit.form {
     padding: var(--crm-dash-block-padding);
     display: flex;
     color: var(--crm-c-text);
+    background-color: var(--crm-inline-edit-bg) !important /* vs contactSummary */;
 }
 table.crm-inline-edit-form td, 
 div.crm-inline-edit-form {
