@@ -235,10 +235,10 @@
     margin-top: var(--crm-r);
 }
 .crm-search .crm-search-admin-outer ul.nav-stacked li.active a {
-    background-color: var(--crm-tab-bg-active);
-    color: var(--crm-tab-col);
-    border: 1px solid var(--crm-c-gray-300);
-    border-right: 0 none;  
+    background-color: var(--crm-tab-bg-active) !important; /* vs crmSearchAdmin.css */
+    color: var(--crm-tab-col) !important;
+    border: 1px solid var(--crm-c-gray-300) !important;
+    border-right: 0 none !important;
 }
 .crm-search .crm-search-admin-outer .crm-flex-4.panel {
     border: 1px solid var(--crm-c-gray-300);

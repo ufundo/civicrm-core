@@ -247,8 +247,8 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 }
 .crm-actions-ribbon a.button,
 .crm-container .action-link a.button {
-    background: var(--crm-c-secondary);
-    color: var(--crm-c-secondary-text);
+    background: var(--crm-c-primary);
+    color: var(--crm-c-primary-text);
     font-weight: normal;
 	text-decoration: none;
 }
@@ -256,7 +256,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container .crm-actions-ribbon a.button:not(.delete):focus,
 .crm-container .action-link a.button:hover,
 .crm-container .action-link a.button:focus {
-    background: var(--crm-c-secondary-hover);
+    background: var(--crm-c-primary-hover);
 	text-decoration: none;
 }
 
@@ -360,6 +360,9 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 }
 
 /* Contact dashboard page */
+.page-civicrm-contact #crm-container {
+	padding: var(--crm-m1) var(--crm-r);
+}
 .crm-container div.contact_panel {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -387,6 +390,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     min-height: 60px;
     padding: var(--crm-dash-header-padding);
     position: relative;
+	margin-left: var(--crm-dash-heading-inset);
 }
 .crm-container #crm-contactname-content .crm-summary-display_name {
     padding: var(--crm-dash-header-padding);
@@ -398,6 +402,7 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
     background-color: var(--crm-dash-header-bg2);
     margin-bottom: 0;
     clear: both;
+	margin-left: var(--crm-dash-heading-inset);
 }
 .crm-container #crm-contactname-content > .crm-inline-block-content {
     display: flex;
@@ -902,9 +907,9 @@ details + .crm-content-block:has(.dataTables_wrapper) {
     border: 0 solid transparent;
 }
 .crm-search fieldset legend {
-	padding: 0;
-	font-size: inherit;
-	background-color: transparent;
+	padding: 0 !important /* vs crmSearchAdmin.css */;
+	font-size: inherit !important;
+	background-color: transparent !important;
 }
 .crm-search .crm-search-admin-relative details > fieldset .form-inline:not(td) {
     background: var(--crm-c-drag-background);
@@ -1182,7 +1187,7 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 #afGuiEditor .af-gui-markup,
 #afGuiEditor .af-gui-text,
 #afGuiEditor .af-gui-button {
-	box-shadow: var(--crm-block-shadow);
+	box-shadow: var(--crm-block-shadow) !important;
 	margin-bottom: var(--crm-padding-small) !important;
 }
 .af-gui-edit-options-bar h4 {

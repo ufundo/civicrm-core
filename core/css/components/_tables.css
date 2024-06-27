@@ -25,10 +25,13 @@
 }
 .crm-container table:not(thead) tr {
     border-bottom: var(--crm-table-row-border);
+    background-color: transparent;
 }
 .crm-container .odd-row,
 .crm-container .odd, 
-tbody.scrollContent {
+tbody.scrollContent,
+.crm-container table.dataTable.stripe tbody tr.odd, 
+.crm-container table.dataTable.display tbody tr.odd {
     background-color: var(--crm-table-odd-row);
 }
 .crm-container table.dataTable.hover tbody tr.odd:hover, 
