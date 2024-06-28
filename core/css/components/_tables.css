@@ -138,6 +138,10 @@ table.dataTable.order-column.stripe tbody tr.extension-installed.even > .sorting
 .crm-container .crm-case-caseview-form-block table {
     box-shadow: none;
 }
+.crm-container .dataTables_wrapper,
+.crm-container .form-item:has(> table) { /* simple fix-all for making many tables scroll when needed */
+    overflow-x: auto;
+}
 
 /* Data Tables */
 

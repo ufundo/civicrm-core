@@ -26,7 +26,7 @@
 .crm-container .selector td.label, 
 .crm-container .form-layout-compressed th.label {
     width: var(--crm-input-label-width);
-    text-align: right;
+    text-align: var(--crm-input-label-align);
     padding: var(--crm-m2) var(--crm-m2) 0 0;
     font-family: var(--crm-input-label-font);
     font-weight: var(--crm-input-label-weight);
@@ -92,6 +92,7 @@
     gap: var(--crm-m);
     align-items: center;
     padding-right: 0;
+    justify-content: var(--crm-input-label-align);
 }
 /* Fieldset */
 .crm-container fieldset:not(.collapsed, .crm-inactive-dashlet-fieldset) {
@@ -265,7 +266,9 @@ input.crm-form-entityref {
     width: auto;
 }
 #crm-container div.crm-summary-block .crm-edit-help {
-    display: block !important; 
+    display: block !important; /* vs contactSummary.css */
+    background-color: transparent !important;
+    border-radius: 0 !important;
 }
 #contact-summary .crm-edit-help {
     float: right;
@@ -632,6 +635,7 @@ input.crm-form-checkbox) + label {
     min-width: 30ch;
     padding: var(--crm-m1);
     width: auto;
+    z-index: 100001 !important; /* vs menubar for datepickers in modals */ 
 }
 .ui-datepicker .ui-datepicker-header {
     border: 0;
@@ -692,7 +696,7 @@ input.crm-form-checkbox) + label {
     border: 0;
     font-size: var(--crm-small-font-size);
     opacity: 1;
-    padding: var(--crm-m);
+    padding: var(--crm-s);
 }
 .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.35;

@@ -250,12 +250,6 @@
 
 /* Responsive - using Bootstrap viewports */
 
-@media (max-width: 990px) {
-    .crm-container:has(.crm-contact-page) {
-        padding: 0;
-        width: 100%;
-    }
-}
 @media (max-width: 768px) {
     .crm-container #mainTabContainer {
         flex-direction: column;
@@ -264,6 +258,9 @@
         width: 100%;
         flex-direction: row;
         justify-content: space-between;
+    }
+    #mainTabContainer .crm-contact-tabs-list li {
+        flex-grow: 1;
     }
     .crm-actions-ribbon ul#actions {
         display: flex;

@@ -327,6 +327,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     border-top: 0 solid transparent;
     border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	background: var(--crm-tab-bg-active);
+	overflow-x: auto;
 }
 .crm-search > .ng-scope > .form-inline {
     border: 1px solid var(--crm-tab-border-col);
@@ -397,6 +398,7 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     padding: var(--crm-dash-header-padding);
     position: relative;
 	margin-left: var(--crm-dash-heading-inset);
+	overflow-x: auto;
 }
 .crm-container #crm-contactname-content .crm-summary-display_name {
     padding: var(--crm-dash-header-padding);
@@ -1008,7 +1010,6 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 /* .crmSearchDisplay */
 .crm-search-display th.crm-sortable-col {
 	cursor: pointer;
-	white-space: nowrap;
 	vertical-align: middle;
 }
 .crm-search-display th i.fa-sort-desc,
