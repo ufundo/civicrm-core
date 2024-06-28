@@ -75,7 +75,7 @@
 
 /* Body */
 .crm-container.ui-dialog .ui-dialog-content[id*="crm-ajax-dialog"] {
-    background: var(--crm-c-background);
+    background: var(--crm-dialog-body-bg);
 }
 .crm-container.ui-dialog .ui-dialog-content {
     max-height: calc(100vh - 280px) !important;
@@ -161,7 +161,7 @@
     overflow: auto;
     border-width: var(--crm-notify-accent-border);
     border-style: solid;
-    border-color: var(--crm-700-gray);
+    border-color: transparent;
 }
 #crm-notification-container div.ui-notify-message-style a {
     color: var(--crm-notify-col);

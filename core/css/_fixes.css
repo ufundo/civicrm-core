@@ -320,12 +320,18 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 *******************/
 
 .afadmin-list .nav-tabs + .form-inline + table,
-.crm-search-nav-tabs ~ .ng-scope,
-.afadmin-list > .form-inline {
+/* .crm-search-nav-tabs ~ .ng-scope, */
+.afadmin-list > .form-inline,
+.crm-search-display.crm-search-display-table {
     border: 1px solid var(--crm-tab-border-col);
     border-top: 0 solid transparent;
     border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	background: var(--crm-tab-bg-active);
+}
+.crm-search > .ng-scope > .form-inline {
+    border: 1px solid var(--crm-tab-border-col);
+	border-radius: 0;
+	border-width: 0 1px 0 1px;;
 }
 .afadmin-list > .form-inline {
 	border-radius: 0;
@@ -881,9 +887,20 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 /* SEARCH KIT 
    .crm-search-admin */
 
+.crm-search-admin-search-listing-buttons {
+	display: flex !important; /* vs .crmSearchAdmin */
+}
+.crm-search-admin-search-listing-buttons .btn-primary {
+	background-color: var(--crm-c-secondary);
+	color: var(--crm-c-secondary-text);
+}
+.crm-search-admin-search-listing-buttons .btn-primary:hover {
+	background-color: var(--crm-c-secondary-hover);
+}
 .crm-search .crm-search-nav-tabs > div.btn-group {
     top: calc(-1 * var(--crm-m));
 }
+
 .crm-search .dropdown-menu li .form-inline {
 	padding: 0;
 }
@@ -1144,6 +1161,9 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	padding: var(--crm-s);
 }
+#afGuiEditor .af-gui-entity-palette-select-list [ui-sortable] > div:not(.disabled):hover {
+	background-color: var(--crm-c-background4);
+}
 #afGuiEditor-palette-config .af-gui-entity-palette .input-group {
 	margin-top: var(--crm-s);
 }
@@ -1198,7 +1218,7 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	font-family: inherit;
 	height: var(--crm-l);
 	border-radius: var(--crm-roundness);
-	background-color: var(--crm-c-background4) !important;
+	background-color: var(--crm-c-background3) !important;
 	padding-left: var(--crm-r2);
 	position: inherit !important;
 }

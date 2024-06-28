@@ -1,7 +1,7 @@
 /* Style rules for Dashboard.
    Forked on 11 June 24. Called on main Civi dashboard home screen.
    Status: merged (theme edits integrated)
-   NB - all Important Declarations can be removed for > 5.76 */
+   NB - all Important Declarations can be removed for > 5.75 */
 
 #civicrm-dashboard > .crm-flex-box {
     display: grid;
@@ -59,7 +59,7 @@ crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
     height: calc(100% - 1em);
 }
 .crm-container .crm-dashlet-content {
-    background: var(--crm-dashlet-bg);
+    background: var(--crm-dashlet-bg) !important /*vs dashboard.css*/;
     padding: var(--crm-dashlet-content-padding);
     overflow: auto;
 }
@@ -184,7 +184,7 @@ fieldset.crm-inactive-dashlet-fieldset {
     margin-bottom: var(--crm-r);
 }
 fieldset.crm-inactive-dashlet-fieldset > div {
-    background-color: #fff;
+    background-color: var(--crm-c-background2) !important
     box-shadow: var(--crm-popup-shadow);
     border-radius: var(--crm-dashlet-radius);
     display: flex;

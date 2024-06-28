@@ -7,7 +7,7 @@
 .crm-container table.form-layout-compressed td,
 .crm-form-block .crm-section {
     padding: var(--crm-m) var(--crm-s);
-    border: none;
+    border: none !important /* vs contactSummary.css */;
     height: auto;
 }
 .crm-container div.form-layout-compressed {
@@ -244,8 +244,8 @@ input.crm-form-entityref {
     padding: var(--crm-dash-block-padding);
 }
 .crm-container div.crm-summary-row {
-    background-color: var(--crm-c-background) !important; /* vs contactSummary.css */
-    border-top: 1px solid var(--crm-c-background) !important; /* vs contactSummary.css */
+    background-color: var(--crm-dash-summary-row-bg) !important; /* vs contactSummary.css */
+    border-top: 1px solid var(--crm-dash-summary-row-bg) !important; /* vs contactSummary.css */
     display: flex;
 }
 #contact-summary div.crm-summary-row div.crm-label {
@@ -275,6 +275,9 @@ input.crm-form-entityref {
     float: right;
     color: var(--crm-c-text);
     margin: var(--crm-xs) 0 0 var(--crm-m);
+}
+#contact-summary .crm-inline-edit {
+    border: 2px dashed transparent !important /*vs contactSummary.css*/;
 }
 #contact-summary .crm-inline-edit:hover .crm-edit-help {
     color: var(--crm-c-text);
@@ -320,8 +323,9 @@ div.crm-inline-edit.form {
     background-color: var(--crm-inline-edit-bg) !important /* vs contactSummary */;
 }
 table.crm-inline-edit-form td, 
-div.crm-inline-edit-form {
-    background-color: transparent;
+div.crm-inline-edit-form,
+#crm-container div.crm-inline-edit.form {
+    background-color: transparent !important /*vs contactSummary.css*/;
 }
 div.crm-inline-edit-form div.crm-clear {
     padding: var(--crm-m) 0 0;
