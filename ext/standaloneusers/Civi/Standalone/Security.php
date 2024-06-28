@@ -218,7 +218,7 @@ class Security {
 
     $user = $this->loadUserByName($name);
 
-    if (!$this->checkPassword($password, $user['password'] ?? '')) {
+    if (!$this->checkPassword($password, $user['hashed_password'] ?? '')) {
       return FALSE;
     }
 
