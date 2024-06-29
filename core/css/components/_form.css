@@ -7,7 +7,7 @@
 .crm-container table.form-layout-compressed td,
 .crm-form-block .crm-section {
     padding: var(--crm-m) var(--crm-s);
-    border: none;
+    border: none !important /* vs contactSummary.css */;
     height: auto;
 }
 .crm-container div.form-layout-compressed {
@@ -26,7 +26,7 @@
 .crm-container .selector td.label, 
 .crm-container .form-layout-compressed th.label {
     width: var(--crm-input-label-width);
-    text-align: right;
+    text-align: var(--crm-input-label-align);
     padding: var(--crm-m2) var(--crm-m2) 0 0;
     font-family: var(--crm-input-label-font);
     font-weight: var(--crm-input-label-weight);
@@ -92,6 +92,7 @@
     gap: var(--crm-m);
     align-items: center;
     padding-right: 0;
+    justify-content: var(--crm-input-label-align);
 }
 /* Fieldset */
 .crm-container fieldset:not(.collapsed, .crm-inactive-dashlet-fieldset) {
@@ -244,8 +245,8 @@ input.crm-form-entityref {
     padding: var(--crm-dash-block-padding);
 }
 .crm-container div.crm-summary-row {
-    background-color: var(--crm-c-background) !important; /* vs contactSummary.css */
-    border-top: 1px solid var(--crm-c-background) !important; /* vs contactSummary.css */
+    background-color: var(--crm-dash-summary-row-bg) !important; /* vs contactSummary.css */
+    border-top: 1px solid var(--crm-dash-summary-row-bg) !important; /* vs contactSummary.css */
     display: flex;
 }
 #contact-summary div.crm-summary-row div.crm-label {
@@ -265,7 +266,9 @@ input.crm-form-entityref {
     width: auto;
 }
 #crm-container div.crm-summary-block .crm-edit-help {
-    display: block !important; 
+    display: block !important; /* vs contactSummary.css */
+    background-color: transparent !important;
+    border-radius: 0 !important;
 }
 #contact-summary .crm-edit-help {
     float: right;
@@ -275,6 +278,9 @@ input.crm-form-entityref {
     float: right;
     color: var(--crm-c-text);
     margin: var(--crm-xs) 0 0 var(--crm-m);
+}
+#contact-summary .crm-inline-edit {
+    border: 2px dashed transparent !important /*vs contactSummary.css*/;
 }
 #contact-summary .crm-inline-edit:hover .crm-edit-help {
     color: var(--crm-c-text);
@@ -305,7 +311,7 @@ div.crm-inline-edit.form {
     background: var(--crm-inline-edit-bg);
 }
 #crm-contactname-content.crm-inline-edit.form {
-    background: var(--crm-inline-edit-bg);
+    background: var(--crm-inline-edit-bg) !important /* vs contactSummary */;
 }
 .crm-inline-edit.form td {
     background: transparent;
@@ -317,10 +323,12 @@ div.crm-inline-edit.form {
     padding: var(--crm-dash-block-padding);
     display: flex;
     color: var(--crm-c-text);
+    background-color: var(--crm-inline-edit-bg) !important /* vs contactSummary */;
 }
 table.crm-inline-edit-form td, 
-div.crm-inline-edit-form {
-    background-color: transparent;
+div.crm-inline-edit-form,
+#crm-container div.crm-inline-edit.form {
+    background-color: transparent !important /*vs contactSummary.css*/;
 }
 div.crm-inline-edit-form div.crm-clear {
     padding: var(--crm-m) 0 0;
@@ -360,10 +368,11 @@ input.crm-form-checkbox + label,
     cursor: var(--crm-hover-clickable);
     width: unset;
 }
-.crm-container [type="checkbox"], 
-.crm-container [type="radio"] {
+.crm-container input[type="checkbox"], 
+.crm-container input[type="radio"] {
     accent-color: var(--crm-input-radio-color);
     margin: -2px 4px 0 0;
+    width: inherit;
 }
 /* Checkbox/radio fields with n-per-line. See https://lab.civicrm.org/dev/core/-/issues/4985 */
 .crm-container .crm-multiple-checkbox-radio-options {
@@ -499,6 +508,7 @@ input.crm-form-checkbox) + label {
     user-select: none;
     background-color: var(--crm-form-select-bg);
     background-image: none;
+    box-shadow: none;
 }
 /* .select2-container-multi .select2-search-choice-close {
     top: var(--crm-m);
@@ -625,6 +635,7 @@ input.crm-form-checkbox) + label {
     min-width: 30ch;
     padding: var(--crm-m1);
     width: auto;
+    z-index: 100001 !important; /* vs menubar for datepickers in modals */ 
 }
 .ui-datepicker .ui-datepicker-header {
     border: 0;
@@ -685,7 +696,7 @@ input.crm-form-checkbox) + label {
     border: 0;
     font-size: var(--crm-small-font-size);
     opacity: 1;
-    padding: var(--crm-m);
+    padding: var(--crm-s);
 }
 .ui-datepicker-calendar .ui-state-disabled {
     opacity: 0.35;

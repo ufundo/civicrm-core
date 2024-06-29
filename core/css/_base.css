@@ -32,7 +32,9 @@
     font-size: inherit;
 }
 .crm-container tr:hover, 
-.crm-container tr:focus {
+.crm-container tr:focus,
+.crm-container table.dataTable.hover tbody tr:hover, 
+.crm-container table.dataTable.display tbody tr:hover {
 	background-color: transparent;
 }
 /* Remove list styles (bullets/numbers) */
@@ -330,7 +332,7 @@
 	color: var(--crm-c-text);
 	word-break: break-all;
 	word-wrap: break-word;
-	background-color: whitesmoke;
+    background-color: var(--crm-c-background3);
 	border: 1px solid var(--crm-c-background4);
 	border-radius: var(--crm-roundness);
 }

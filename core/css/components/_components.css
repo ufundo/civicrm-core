@@ -251,7 +251,7 @@ table.advmultiselect {
 .crm-container .panel-primary > .panel-heading {
 	color: var(--crm-c-primary-text);
 	background-color: var(--crm-c-primary);
-	border-color: var(--crm-c-gray-300);
+	border-color: var(--crm-panel-border-col);
 }
 .crm-container .panel-primary > .panel-heading .badge,
 .crm-container .panel-primary > .panel-heading a {
@@ -260,7 +260,7 @@ table.advmultiselect {
 .crm-container .panel-success > .panel-heading {
 	color: var(--crm-c-success);
 	background-color: var(--crm-c-green-light);
-	border-color: var(--crm-c-gray-300);
+	border-color:var(--crm-panel-border-col);
 }
 .crm-container .panel-success > .panel-heading .badge,
 .crm-container .panel-success > .panel-heading a {
@@ -269,7 +269,7 @@ table.advmultiselect {
 .crm-container .panel-info > .panel-heading {
 	color: var(--crm-alert-text-info);
 	background-color: var(--crm-alert-background-info);
-	border-color: var(--crm-c-gray-300);
+	border-color: var(--crm-panel-border-col);
 }
 .crm-container .panel-info > .panel-heading .badge,
 .crm-container .panel-info > .panel-heading a {
@@ -278,7 +278,7 @@ table.advmultiselect {
 .crm-container .panel-warning > .panel-heading {
 	color: var(--crm-c-warning-text);
 	background-color: var(--crm-c-warning);
-	border-color: var(--crm-c-gray-300);
+	border-color: var(--crm-panel-border-col);
 }
 .crm-container .panel-warning > .panel-heading .badge,
 .crm-container .panel-warning > .panel-heading a {
@@ -287,7 +287,7 @@ table.advmultiselect {
 .crm-container .panel-danger > .panel-heading {
 	color: var(--crm-c-alert);
 	background-color: var(--crm-c-red-light);
-	border-color: var(--crm-c-gray-300);
+	border-color: var(--crm-panel-border-col);
 }
 .crm-container .panel-danger > .panel-heading .badge,
 .crm-container .panel-danger > .panel-heading a {
