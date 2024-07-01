@@ -64,6 +64,7 @@ class StandaloneScaffold {
 
     $files = [
       'civicrm.standalone.php.txt' => 'civicrm.standalone.php',
+      'civicrm.config.php.standalone' => 'civicrm.config.php',
       'index.php.txt' => 'index.php',
       'htaccess.txt' => '.htaccess',
     ];
