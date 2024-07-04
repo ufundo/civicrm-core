@@ -104,7 +104,7 @@
 .crm-container fieldset legend {
     font-weight: var(--crm-bold-weight);
     font-family: var(--crm-font-bold);
-    padding-inline: var(--crm-m);
+    padding-inline: var(--crm-s);
     color: var(--crm-c-text);
 }
 /* Required Mark */
@@ -373,6 +373,7 @@ input.crm-form-checkbox + label,
     accent-color: var(--crm-input-radio-color);
     margin: -2px 4px 0 0;
     width: inherit;
+    appearance: auto;
 }
 /* Checkbox/radio fields with n-per-line. See https://lab.civicrm.org/dev/core/-/issues/4985 */
 .crm-container .crm-multiple-checkbox-radio-options {
@@ -425,16 +426,26 @@ input.crm-form-checkbox) + label {
     padding: var(--crm-xs1) var(--crm-r2) var(--crm-xs1) var(--crm-m);
     font-size: var(--crm-input-font-size);
     color: var(--crm-input-color);
+    display: flex;
+    align-items: center;
 }
 .crm-container .select2-container .select2-choice .select2-arrow {
     background: var(--crm-input-background);
     border-left-color: var(--crm-input-border-color);  
     border-radius: 0 var(--crm-input-border-radius) var(--crm-input-border-radius) 0;
-    text-align: center;
     width: var(--crm-r3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .crm-container .select2-container .select2-choice .select2-arrow b {
     display: none;
+}
+.select2-container.select2-allowclear .select2-choice abbr {
+    position: relative;
+    margin-left: auto;
+    right: var(--crm-r);
+    top: auto;
 }
 .crm-container .select2-container-multi .select2-choices::before,
 .crm-container .select2-container .select2-choice .select2-arrow::before {
@@ -444,15 +455,10 @@ input.crm-form-checkbox) + label {
     color: var(--crm-c-text);
     background: none;
     content: var(--crm-input-dropdown-icon);
-    right: 0;
-    top: var(--crm-s);
-    display: block;
-    height: var(--crm-r);
-    position: absolute;
-    width: var(--crm-r2);
 }
-.crm-container .select2-container .select2-choice .select2-arrow::before {
-    top: var(--crm-xs);
+.crm-container .select2-container-multi .select2-choices::before {
+    margin-left: auto;
+    order: 1;
 }
 .crm-container .select2-dropdown-open .select2-choice, 
 .crm-container .select2-dropdown-open .select2-choices {

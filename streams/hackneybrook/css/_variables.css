@@ -1,8 +1,8 @@
 /*
     Name: HackneyBrook;
-    Front, back or both: back; 
+    Front, back or both: both; 
     Description: named after the Hackney Brook, a tributary of the River Lea that ran through Finsbury Park;
-    Riverlea version: 0.7;
+    Riverlea version: 0.8;
 */
 
 :root { 
@@ -349,11 +349,11 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 
 /* Button dropdowns */
 --crm-dropdown-padding: var(--crm-s);
---crm-dropdown-bg: var(--crm-c-secondary-hover);
+--crm-dropdown-bg: var(--crm-c-page-background);
 --crm-dropdown-col: var(--crm-c-text);
 --crm-dropdown-hover: var(--crm-c-text);
---crm-dropdown-hover-bg: var(--crm-c-page-background);
---crm-dropdown-border: 0;
+--crm-dropdown-hover-bg: var(--crm-c-secondary-hover);
+--crm-dropdown-border: var(--crm-btn-border);
 --crm-dropdown-width: 180px;
 --crm-dropdown-2-bg: var(--crm-c-background3);
 --crm-dropdown-2-col: var(--crm-c-text);
@@ -389,6 +389,30 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-wizard-active-bg: var(--crm-c-link);
 --crm-wizard-border-col: var(--crm-c-divider);
 --crm-wizard-bg: var(--crm-c-page-background);
+
+/* Frontend */
+--crm-f-form-width: 700px;
+--crm-f-box-shadow: var(--crm-block-shadow);
+--crm-f-fieldset-bg: var(--crm-c-background);
+--crm-f-fieldset-padding: var(--crm-r);
+--crm-f-fieldset-margin: 0 0 var(--crm-padding-reg) 0;
+--crm-f-fieldset-border: 0;
+--crm-f-legend-align: ;
+--crm-f-legend-size: var(--crm-r2);
+--crm-f-form-padding: var(--crm-padding-reg);
+--crm-f-form-layout: block; /* 'grid' = inline, 'block' = stacked */
+--crm-f-label-position: ;
+--crm-f-label-align: left;
+--crm-f-label-width: 200px;
+--crm-f-label-weight: bold;
+--crm-f-input-radius: var(--crm-roundness);
+--crm-f-input-padding: var(--crm-r2) var(--crm-m2);
+--crm-f-input-font-size: var(--crm-r1);
+--crm-f-input-width: 100%;
+--crm-f-form-focus-bg: var(--crm-c-green);
+--crm-f-form-error-bg: var(--crm-c-red);
+--crm-f-logo-height: 40px;
+--crm-f-logo-align: center; /* left, right or center */
 }
 
 /* light/dark mode settings */
