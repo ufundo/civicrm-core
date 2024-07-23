@@ -141,6 +141,7 @@
 
 /* Dashboard */
 
+
 .crm-contact-page #mainTabContainer.ui-tabs {
     border: var(--crm-dash-border);
     display: var(--crm-dash-direction);
@@ -158,12 +159,6 @@
 #mainTabContainer .crm-contact-tabs-list ~ .ui-tabs-panel {
     box-shadow: var(--crm-dash-box-shadow);
 }
-/* .crm-contact-page #mainTabContainer .ui-tabs-nav li.ui-tabs-active a {
-    margin-bottom: -1px;
-} 
-.crm-contact-page #mainTabContainer .ui-tabs-nav li {
-    white-space: unset;
-}*/
 .crm-contact-page #mainTabContainer .ui-tabs-nav li .ui-tabs-anchor:has(.crm-i) {
     grid-template-columns: min-content auto min-content;
 }
@@ -179,11 +174,9 @@
     border: var(--crm-dash-panel-border);
     border-radius: var(--crm-dash-roundness);
 }
-/* makes style for nav tabs distinct from tabs inside tabs panels */
 .crm-contact-page #mainTabContainer .crm-contact-tabs-list li {
     background: var(--crm-dash-tab-bg);
     margin: var(--crm-dash-tab-hang);
-    white-space: nowrap;
 }
 .crm-contact-page #mainTabContainer .crm-contact-tabs-list li .ui-tabs-anchor {
     display: grid;
@@ -191,11 +184,8 @@
     width: var(--crm-dash-tab-width);
     gap: var(--crm-m);
     align-items: center;
-    border-radius: var(--crm-dash-roundness);
     float: var(--crm-dash-tab-align);
     border-radius: var(--crm-dash-tab-radius);
-}
-.crm-contact-page #mainTabContainer .crm-contact-tabs-list li .ui-tabs-anchor  {
     padding: var(--crm-dash-tab-padding);
     border: var(--crm-dash-tab-border);
 }
