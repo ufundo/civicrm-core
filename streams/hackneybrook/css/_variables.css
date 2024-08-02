@@ -2,10 +2,13 @@
     Name: HackneyBrook;
     Front, back or both: both; 
     Description: named after the Hackney Brook, a tributary of the River Lea that ran through Finsbury Park;
-    Riverlea version: 0.8;
+    Riverlea version: 0.9;
 */
 
 :root { 
+
+--crm-release: '0.9.24'; 
+--crm-version: 'Hackney, v' var(--crm-release);
 
 /* FONTS */
 --crm-system-fonts:;
@@ -64,8 +67,9 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-c-background2: var(--crm-c-gray-050);
 --crm-c-background3: var(--crm-c-gray-100);
 --crm-c-background4: var(--crm-c-gray-200);
---crm-c-background5: var(--crm-c-gray-500);
+--crm-c-background5: var(--crm-c-gray-700);
 --crm-c-drag-background: var(--crm-c-background3);
+--crm-c-code-background: var(--crm-c-background3);
 --crm-c-primary: var(--crm-c-gray-025);
 --crm-c-primary-hover:var(--crm-c-gray-050);
 --crm-c-primary-text: var(--crm-c-text);
@@ -78,7 +82,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-c-alert-text: var(--crm-c-text);
 --crm-c-warning: var(--crm-c-amber);
 --crm-c-warning-text:var(--crm-c-text);
---crm-c-info: var(--crm-c-blue-dark);
+--crm-c-info: var(--crm-c-blue-darker);
 --crm-c-info-text: var(--crm-c-text);
 --crm-c-focus: var(--crm-c-blue-dark);
 --crm-c-inactive: #696969;
@@ -110,8 +114,8 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-l: 2rem;
 --crm-xl: 3rem;
 --crm-xxl: 4rem;
---crm-big-input: 15em;
---crm-huge-input: 25em;
+--crm-big-input: 15rem;
+--crm-huge-input: 25rem;
 --crm-padding-reg: var(--crm-r);
 --crm-padding-small: var(--crm-s);
 --crm-padding-inset: var(--crm-m);
@@ -223,7 +227,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-alert-text-warning: var(--crm-c-text);
 --crm-alert-background-info: var(--crm-c-blue-light);
 --crm-alert-border-info: var(--crm-c-blue);
---crm-alert-text-info: var(--crm-c-blue-dark);
+--crm-alert-text-info: var(--crm-c-blue-darker);
 --crm-alert-background-danger: var(--crm-c-red-light);
 --crm-alert-border-danger: var(--crm-c-red);
 --crm-alert-text-danger: var(--crm-c-red-dark);
@@ -319,6 +323,11 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
 --crm-dash-header-col: var(--crm-c-text);
 --crm-dash-header-size: var(--crm-r3);
 --crm-dash-header-padding: 0 0 var(--crm-r) 0; 
+--crm-dash-image-size: 100px;
+--crm-dash-image-radius: 200px;
+--crm-dash-image-justify: start; /* choose from start (left), end (right), center, and space-between (spread out) */
+--crm-dash-image-direction: row; /* choose from row and row-reverse to get the image on the right, column stacks it */
+
 
 /* Dialog */
 --crm-dialog-bg: var(--crm-c-page-background);
@@ -428,6 +437,7 @@ color-scheme: light dark; /* check to use simpler syntax late-2024 (Edge+iOS Saf
         --crm-c-background2:var(--crm-c-gray-800); 
         --crm-c-background3: var(--crm-c-gray-700);
         --crm-c-background4: var(--crm-c-gray-600);
+        --crm-c-code-background: var(--crm-c-gray-200);
         --crm-c-primary: var(--crm-c-gray-800);
         --crm-c-secondary: var(--crm-c-gray-800);
         --crm-c-primary-hover: var(--crm-c-gray-900);

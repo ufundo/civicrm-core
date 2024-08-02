@@ -4,32 +4,10 @@ require_once 'riverlea.civix.php';
 use CRM_riverlea_ExtensionUtil as E;
 
 /**
- * Implements hook_civicrm_config().
- *
- * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_config/
- */
-function riverlea_civicrm_config(&$config) {
-  _riverlea_civix_civicrm_config($config);
-
-  $themeKey = Civi::service('themes')->getActiveThemeKey();
-  $themeExt = Civi::service('themes')->get($themeKey)['ext'];
-  if ($themeExt !== 'riverlea') {
-    return;
-  }
-
-  // A riverlea theme is active
-  if (Civi::settings()->get('riverlea_hide_cms_menubar')) {
-    // If CMS is not WordPress/Joomla the setting won't exist so we won't get here
-    // @todo: Uncomment the below line when we have one (see example in theisland theme)
-    // Civi::resources()->addStyle(file_get_contents(E::path('css/' . mb_strtolower(CIVICRM_UF) . '-menubar.css')));
-  }
-}
-
-/**
  * Supports multiple theme variations/streams.
  */
 
- function riverlea_civicrm_themes(&$themes) {
+function riverlea_civicrm_themes(&$themes) {
   $themes['minetta'] = array(
     'ext' => 'riverlea',
     'title' => 'Riverlea: Minetta (~Greenwich)',
@@ -75,6 +53,14 @@ function riverlea_civicrm_alterBundle(CRM_Core_Resources_Bundle $bundle) {
     $bundle->addScriptFile('riverlea', 'js/noConflict.js', [
       'translate' => FALSE,
     ]);
+  }
+  if ($bundle->name === 'coreResources') {
+    $bundle->filter(function ($res) {
+        if (strpos($res['name'] ?? '', 'bower_components/font-awesome') !== FALSE) {
+            return FALSE;
+        }
+        return TRUE;
+    });
   }
 }
 /**

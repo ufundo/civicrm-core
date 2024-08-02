@@ -3,7 +3,7 @@
 .crm-container .replace-plain::before,
 .crm-container .crm-i {
     display: inline-block;
-    font: normal normal normal 14px/1 FontAwesome;
+    /* font: normal normal normal 14px/1 FontAwesome; */
     font-size: inherit;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
@@ -43,6 +43,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container .messages.crm-empty-table::before {
     font-family: "FontAwesome";
     font-style: normal;
+    font-weight: normal ;
     text-rendering: auto;
     font-size: var(--crm-font-size);
     margin: 0 var(--crm-m) 0 0;

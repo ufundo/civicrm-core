@@ -2,13 +2,6 @@
    The end goal would be to remove these once the markup is
    consistent, and another  */
 
-/* Pre-5.76 fix for Core CSS files - 
-this can be removed/commented out from 5.76 onwards */
-
-@import url(admin.css);
-@import url(api4-explorer.css);
-@import url(dashboard.css);
-
 /******************
     ACCORDIONS
     From Civi 5.72 these are only needed for extensions
@@ -191,8 +184,8 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	  For buttons not using .crm-button or .btn or <button>
 *******************/
 
-.crm-container a.button,
-.crm-container button,
+/* .crm-container a.button,
+.crm-container button, */
 .crm-container .ui-button:not(.ui-button-icon-only) {
 	display: inline-block;
 	text-align: var(--crm-btn-align);
@@ -217,9 +210,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	gap: var(--crm-btn-icon-spacing); /* last four lines centre icons */
 }
 .crm-container .ui-button:hover,
-.crm-container .ui-button:focus,
-[type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover,
-[type="button"]:focus, [type="reset"]:focus, [type="submit"]:focus {
+.crm-container .ui-button:focus {
     background: var(--crm-c-primary-hover);
 	color: var(--crm-c-primary-text);
 	text-decoration: none;
@@ -231,17 +222,21 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     padding: 0;
 	border: 0;
 }
-.crm-container a.button,
-.crm-container [type="button"] {
+.crm-container a.button {
     background: var(--crm-c-secondary);
     color: var(--crm-c-secondary-text);
+	border: var(--crm-btn-border);
     font-weight: normal;
 	text-decoration: none;
+	line-height: inherit;
+}
+.crm-container a.button span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .crm-container a.button:hover,
-.crm-container a.button:focus,
-.crm-container [type="button"]:hover,
-.crm-container [type="button"]:focus {
+.crm-container a.button:focus {
     background: var(--crm-c-secondary-hover);
 	color: var(--crm-c-secondary-text);
 }
@@ -258,6 +253,10 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container .action-link a.button:focus {
     background: var(--crm-c-primary-hover);
 	text-decoration: none;
+}
+.crm-config-backend-form-block > div { /* makes cleanup cache buttons flow inline */
+	display: flex;
+	gap: var(--crm-flex-gap);
 }
 
 /* Icon alignment */
@@ -292,8 +291,17 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
     padding: var(--crm-xs) var(--crm-s);
     font-size: var(--crm-small-font-size);
 }
+/* select all 'checkbox' on table th */
 .crm-container button.btn:has(.fa-square-o) {
-	padding-inline: var(--crm-m);
+	padding-inline: 0;
+	border-right: 0;
+}
+.crm-container i.crm-i.fa-square-o {
+	margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /******************
@@ -317,14 +325,12 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 *******************/
 
 .afadmin-list .nav-tabs + .form-inline + table,
-/* .crm-search-nav-tabs ~ .ng-scope, */
 .afadmin-list > .form-inline,
-.crm-search .crm-search-display.crm-search-display-table {
+crm-search-admin-search-listing .crm-search-display.crm-search-display-table {
     border: 1px solid var(--crm-tab-border-col);
     border-top: 0 solid transparent;
     border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	background: var(--crm-tab-bg-active);
-	/* overflow-x: auto; */
 }
 .crm-search > .ng-scope > .form-inline {
     border: 1px solid var(--crm-tab-border-col);
@@ -363,94 +369,12 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 	height: auto;
 }
 
-/* Contact dashboard page */
-.page-civicrm-contact #crm-container {
-	padding: var(--crm-m1) var(--crm-r);
-}
-.crm-container div.contact_panel {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	column-gap: var(--crm-dash-panel-padding);
-}
-.crm-container div.contactCardLeft,
-.crm-container div.contactCardRight {
-	width: 100%;
-	display: block;
-	float: none;
-	clear: none;
-}  
-#mainTabContainer .crm-summary-block .crm-container-snippet table {
-	box-shadow: none;
-	border: 0;
-	padding: 0;
-	margin: 0;
-}
-#crm-main-content-wrapper:has(.crm-contact-page) {
-    box-shadow: var(--crm-block-shadow);
-}
-.crm-container div.crm-summary-contactname-block {
-    background: var(--crm-dash-header-bg);
-    color: var(--crm-dash-header-col);
-    min-height: 60px;
-    padding: var(--crm-dash-header-padding);
-    position: relative;
-	margin-left: var(--crm-dash-heading-inset);
-	overflow-x: auto;
-	margin-top: 0 !important /* vs contactSummary.css */;
-}
-.crm-container #crm-contactname-content .crm-summary-display_name {
-    padding: var(--crm-dash-header-padding);
-    font-size: var(--crm-dash-header-size);
-    padding-inline: 0;
-}
-div.crm-summary-contactname-block + .crm-actions-ribbon {
-    color: var(--crm-dash-header-col);
-    background-color: var(--crm-dash-header-bg2);
-    margin-bottom: 0;
-    clear: both;
-	margin-left: var(--crm-dash-heading-inset);
-}
-.crm-container #crm-contactname-content > .crm-inline-block-content {
-    display: flex;
-    gap: var(--crm-r);
-    align-items: center;
-}
-.crm-container #crm-contactname-content .crm-edit-help {
-    order: 2;
-	margin-left: auto;
-	color: transparent;
-	padding: 0;
-}
-.crm-container #crm-contactname-content .crm-edit-help .crm-i {
-	color: var(--crm-c-light-text);
-	float: right;
-	margin: var(--crm-xs) 0 0 var(--crm-m);
-}
-.crm-container #crm-contactname-content .crm-edit-help:hover,
-.crm-edit-ready .crm-summary-block .crm-inline-edit:hover .crm-edit-help {
-	color: var(--crm-c-light-text);
-	background-color: transparent !important; /* vs contactSummary.css */
-}
-.crm-actions-ribbon ul#actions {
-    list-style: none;
-    display: grid;
-    grid-template-columns: min-content min-content auto min-content min-content;
-    gap: var(--crm-m);
-    margin: 0;
-    padding: var(--crm-dash-header-padding);
-}
-.crm-search-col-type-field  span.ng-scope a {
-    display: flex;
-    gap: var(--crm-btn-icon-spacing);
-    align-items: center;   
-}
+/* Tag mgmt page */
+
 #mainTabContainer #tagtree {
 	max-height: 100%;
 	overflow: inherit;
 }
-
-/* Tag mgmt page */
-
 .crm-container .tag-tree-wrapper {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -781,14 +705,6 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 .crm-container .crm-case-filter-upcoming {
 	padding-bottom: var(--crm-padding-reg);
 }
-/* Contrib dashboard / form builder
-#ContributionCharts .ui-tabs-nav .button,
-#afGuiEditor-canvas .panel-heading .form-inline .btn {
-	padding: var(--crm-btn-small-padding);
-} */
-#afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
-	padding: var(--crm-dropdown-padding) !important;
-}
 
 /******************
 	RESPONSIVE
@@ -895,419 +811,13 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	CORE EXTENSIONS
 *******************/
 
-/* SEARCH KIT 
-   .crm-search-admin */
-
-.crm-search-admin-search-listing-buttons {
-	display: flex !important; /* vs .crmSearchAdmin */
-}
-.crm-search-admin-search-listing-buttons .btn-primary {
-	background-color: var(--crm-c-secondary);
-	color: var(--crm-c-secondary-text);
-}
-.crm-search-admin-search-listing-buttons .btn-primary:hover {
-	background-color: var(--crm-c-secondary-hover);
-}
-.crm-search .crm-search-nav-tabs > div.btn-group {
-    top: calc(-1 * var(--crm-m));
-}
-
-.crm-search .dropdown-menu li .form-inline {
-	padding: 0;
-}
-.crm-search .crm-search-admin-relative textarea {
-    width: 100%;
-}
-.crm-search .crm-search-admin-relative .api4-clause-group-sortable {
-    margin: var(--crm-r) 0;
-}
-.crm-search .crm-search-admin-relative details { /* only way to target settings accordions */
-    border: var(--crm-expand-body-border);
-    border-radius: var(--crm-roundness);
-}
-.crm-search .crm-search-admin-relative details > summary {
-    background: var(--crm-expand-header-bg);
-    color: var(--crm-expand-header-color);
-    padding: var(--crm-padding-small) var(--crm-padding-reg);
-}
-.crm-search .crm-search-admin-relative details > fieldset {
-    padding: 0;
-    border: 0 solid transparent;
-}
-.crm-search fieldset legend {
-	padding: 0 !important /* vs crmSearchAdmin.css */;
-	font-size: inherit !important;
-	background-color: transparent !important;
-}
-.crm-search .crm-search-admin-relative details > fieldset .form-inline:not(td) {
-    background: var(--crm-c-drag-background);
-    border-radius: var(--crm-roundness);
-    margin-bottom: var(--crm-s2);
-    padding: var(--crm-padding-small) var(--crm-padding-reg);
-}
-.crm-search .crm-search-admin-relative details > fieldset fieldset,
-.crm-search crm-search-admin-display fieldset .form-inline > fieldset {
-    margin: 0;
-    padding: 0;
-    border: 0 solid transparent;
-}
-.crm-search crm-search-admin-link-group {
-    background: var(--crm-c-background2);
-}
-.crm-search crm-search-admin-link-group table {
-    margin: var(--crm-padding-reg);
-	max-width: calc(100% - var(--crm-padding-reg) - var(--crm-padding-reg));
-	box-shadow: none;
-}
-.crm-search ul.nav-stacked li:last-of-type {
-    margin-top: var(--crm-r);
-}
-.crm-search ul.nav-stacked li:has(.btn-xs) a {
-    padding-right: 5ch;
-}
-.crm-search .crm-search-admin-edit-columns {
-    padding: 0;
-    border: 0 solid transparent;
-}
-.crm-search fieldset.crm-draggable {
-    background-color: var(--crm-c-drag-background) !important;
-    border-radius: var(--crm-roundness);
-    border: 0 solid transparent !important;
-    padding: var(--crm-padding-small) !important;
-    margin: var(--crm-m)0 ;
-}
-.crm-search .crm-search-admin-edit-columns details {
-    background-color: var(--crm-c-page-background);
-    border-radius: var(--crm-roundness);
-    border: 0;
-}
-.crm-search .crm-search-admin-edit-columns details summary {
-    background: var(--crm-expand-header2-bg);
-    color: var(--crm-expand-header2-color);
-    padding: var(--crm-padding-reg);
-}
-.crm-search .crm-search-admin-edit-columns details > *:not(summary) {
-    padding-inline: var(--crm-padding-reg);
-}
-.crm-search .crm-search-admin-edit-columns details > *:first-child {
-    padding-bottom: var(--crm-padding-reg);
-}
-.crm-search .crm-search-admin-edit-columns details > *:last-child {
-    padding-bottom: var(--crm-padding-reg);
-}
-.crm-search details label {
-    min-width: var(--crm-input-label-width);
-}
-.crm-search details label:has(~ a.helpicon) {
-	min-width: calc(var(--crm-input-label-width) - 19px);
-}
-.crm-search-admin-main-tabs button.btn-xs {
-	background: transparent;
-	color: var(--crm-c-text);
-	font-size: var(--crm-font-size);
-}
-#bootstrap-theme .crm-search-display-control {
-	right: 4px !important;
-}
-#bootstrap-theme .crm-search-display-control + .crm-search-display-control {
-	right: 28px !important;
-}
-#bootstrap-theme.crm-search .api4-clause-badge,
-#bootstrap-theme.crm-search .api4-clause-badge .btn {
-	font-size: var(--crm-input-font-size);
-}
-/* .crmSearchDisplay */
-.crm-search-display th.crm-sortable-col {
-	cursor: pointer;
-	vertical-align: middle;
-}
-.crm-search-display th i.fa-sort-desc,
-.crm-search-display th i.fa-sort-asc {
-	color: var(--crm-c-primary);
-}
-.crm-search-display th:not(:hover) i.fa-sort {
-	opacity: .5;
-}
-.crm-search input.ng-invalid,
-.crm-search-display input.ng-invalid,
-.crm-search-task-dialog input.ng-invalid {
-	border-color: var(--crm-c-warning);
-}
-#crm-search-results-page-size {
-	width: 60px;
-}
-.crm-search-display button.dropdown-toggle {
-	white-space: nowrap;
-	font-size: var(--crm-font-size);
-}
-.crm-contact-page .crm-search-display .form-group.pull-right {
-	display: flex !important;
-	gap: var(--crm-m);
-}
-.crm-contact-page .crm-search-display-pager {
-    padding: 0 var(--crm-r) var(--crm-r) var(--crm-r);
-}
-
-/* .crmSearchDisplayTable.css */
-
-#bootstrap-theme .crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon {
-	position: unset !important;
-	line-height: var(--crm-r1);
-}
-#bootstrap-theme .crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon + .crm-search-display-table-column-label {
-	margin-left: 0 !important;
-}
-
-/* FORM BUILDER */
-
-#afGuiEditor fieldset {
-	min-width: 0;
-	padding: 0;
-	margin: 0;
-	border: 0;
-}
-#afGuiEditor fieldset legend {
-	padding: var(--crm-s) 0 0 0;
-	margin-bottom: var(--crm-s);
-	border-bottom: 1px solid var(--crm-c-divider);
-	width: 100%;
-	font-size: var(--crm-font-size);
-}
-#afGuiEditor .panel-heading {
-	height: auto;
-	padding: var(--crm-m) var(--crm-m) 0 !important;
-	border-bottom: 1px solid var(--crm-c-divider) !important;
-}
-#afGuiEditor .panel-heading ul.nav-tabs {
-	margin-bottom: -1px;
-}
-#afGuiEditor .panel-heading ul.nav-tabs li {
-	top: 0;
-}
-/* Editor Palette */
-
-#afGuiEditor-palette,
-#afGuiEditor-canvas  {
-	flex: 1;
-	--crm-btn-height: 32px;
-	--crm-btn-padding-block: var(--crm-s);
-	--crm-btn-padding-inline: var(--crm-m);
-}
-#afGuiEditor-palette input, 
-#afGuiEditor-palette textarea, 
-#afGuiEditor-palette select {
-	width: 100%;
-}
-#afGuiEditor-palette input[type="checkbox"],
-#afGuiEditor-palette input[type="radio"] {
-	width: auto;
-}
-#afGuiEditor-palette .form-group label {
-	width: 100%;
-	display: block;
-}
-#afGuiEditor-palette .checkbox label {
-	padding: 0;
-}
-#afGuiEditor-palette .input-group:has(#af_config_redirect) {
-	display: grid;
-	grid-template-columns: 1fr 250px;
-}
-#afGuiEditor-palette #s2id_autogen3 {
-	min-width: 100% !important;
-}
-#afGuiEditor #af_config_form_permission_operator {
-	width: 60px !important;
-}
-#afGuiEditor #s2id_af_config_form_permission {
-	width: calc(100% - 66px) !important;
-}
-#afGuiEditor .panel-heading ul.nav-tabs li {
-	top: unset !important;
-	width: fit-content !important;
-}
-#afGuiEditor .panel-heading ul.nav-tabs li > a {
-	font-size: var(--crm-font-size) !important; /* vs api4-explorer.css */
-	padding: var(--crm-s1) var(--crm-m2) !important; /* vs api4-explorer.css */
-	height: auto !important; /* vs api4-explorer.css */
-	min-height: 39px;
-}
-#afGuiEditor .af-gui-columns {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: var(--crm-r);
-}
-/* #afGuiEditor .af-gui-columns fieldset:last-of-type {
-	grid-column: 1 / span 2;
-} */
-#afGuiEditor-palette-config .panel-body {
-	padding: var(--crm-padding-reg) !important;
-}
-#afGuiEditor-palette-config .af-gui-entity-values hr {
-	display: none;
-}
-#afGuiEditor .af-gui-entity-palette legend {
-	margin: 0 !important;
-	border-bottom: 0;
-}
-#afGuiEditor-palette-config .af-gui-entity-palette [type="search"] {
-	top: 0 !important;
-	width: 100% !important;
-	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
-	border-color: var(--crm-c-divider);
-	padding: var(--crm-s2) !important;
-	height: unset !important;
-	font-size: var(--crm-input-font-size) !important;
-	margin: 0;
-	border-bottom: 0;
-}
-.af-gui-entity-palette-select-list {
-	border: 1px solid var(--crm-c-divider);
-	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
-	padding: var(--crm-s);
-}
-#afGuiEditor .af-gui-entity-palette-select-list [ui-sortable] > div:not(.disabled):hover {
-	background-color: var(--crm-c-background4);
-}
-#afGuiEditor-palette-config .af-gui-entity-palette .input-group {
-	margin-top: var(--crm-s);
-}
-#afGuiEditor .af-gui-field-input-type-chainselect .input-group .dropdown-toggle, 
-#afGuiEditor .af-gui-field-input-type-select .input-group .dropdown-toggle, 
-#afGuiEditor-palette-config .af-gui-entity-palette .input-group .btn,
-#afGuiEditor-canvas-body .af-gui-field-input .input-group .btn {
-	padding: var(--crm-s) var(--crm-m1);
-}
-#afGuiEditor .panel-body {
-	width: 100%;
-}
-/* AfEditor builder */
-
-#afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
-	color: var(--crm-dropdown-col) !important;
-}
-#afGuiEditor .af-gui-text-legend, 
-#afGuiEditor .af-gui-text-h3 {
-	font-size: var(--crm-font-size);
-}
-#afGuiEditor-canvas [ui-sortable] {
-	margin-top: 5px !important;
-}
-#afGuiEditor .af-gui-container {
-	padding: var(--crm-m) !important;
-	margin-top: 0 !important;
-}
-#afGuiEditor .af-gui-container.af-container-style-pane {
-	background: linear-gradient(to bottom, #f2f2f2 0 var(--crm-l), transparent var(--crm-l) 100%) no-repeat;
-	border-radius: var(--crm-roundness);
-}
-#afGuiEditor .af-gui-content-editing-area .af-gui-edit-options-bar,
-#afGuiEditor-canvas [ui-sortable] .af-gui-bar  {
-	font-family: inherit !important /* vs afGuiEditor.css */;
-	font-size: var(--crm-font-size) !important;
-	padding: var(--crm-s);
-}
-#afGuiEditor .af-gui-container-type-fieldset,
-#afGuiEditor .af-gui-container,
-#afGuiEditor .af-gui-markup,
-#afGuiEditor .af-gui-text,
-#afGuiEditor .af-gui-button {
-	box-shadow: var(--crm-block-shadow) !important;
-	margin-bottom: var(--crm-padding-small) !important;
-}
-#afGuiEditor-canvas .panel-heading .pull-right .btn {
-	max-height: var(--crm-l);
-	display: flex;
-	align-items: center;
-}
-.af-gui-edit-options-bar h4 {
-	font-size: var(--crm-font-size) !important;
-	margin: 0 !important;
-}
-#afGuiEditor-canvas [ui-sortable] .af-gui-bar {
-	font-family: inherit;
-	height: var(--crm-l);
-	border-radius: var(--crm-roundness);
-	background-color: var(--crm-c-background3) !important;
-	padding-left: var(--crm-r2);
-	position: inherit !important;
-}
-#afGuiEditor-canvas .form-inline {
-	padding: 0;
-}
-#afGuiEditor-canvas .panel-heading .af-gui-canvas-control-buttons button.btn-default {
-	padding: 0;
-	--crm-btn-height: 32px;
-}
-#afGuiEditor-canvas .dropdown-toggle {
-	padding: 1px;
-}
-#afGuiEditor-canvas .af-gui-canvas-control-buttons button.btn-default i.crm-i,
-#afGuiEditor-canvas .dropdown-toggle i.crm-i {
-	margin: 0;
-	border: 0;
-	padding: var(--crm-s);
-}
-.af-layout-inline .af-gui-bar {
-	margin: 0 -4px;
-	width: calc(100% + 8px) !important;
-}
-af-gui-container > .af-gui-bar,
-.af-gui-container-type-div > .af-gui-bar {
-	margin: calc(-1 * var(--crm-m)) calc(-1 * var(--crm-m)) var(--crm-m) calc(-1 * var(--crm-m));
-	width: calc(100% + var(--crm-r)) !important;
-}
-#afGuiEditor-canvas [ui-sortable] .af-gui-bar:has(~ .af-gui-field-input) {
-	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
-}
-#afGuiEditor [ui-sortable] .af-gui-bar::before, 
-#afGuiEditor .af-gui-entity-palette-select-list [ui-sortable] > div:not(.disabled):hover::before, 
-#afGuiEditor af-gui-edit-options.af-gui-content-editing-area [ui-sortable] li::before {
-	height: var(--crm-r3) !important;
-	left: 5px !important;
-}
-#afGuiEditor .af-gui-node-title {
-	position: absolute !important;
-	top: 0 !important;
-	font-size: var(--crm-font-size) !important;
-	color: inherit !important;
-}
-#afGuiEditor .af-gui-node-title + * {
-	padding-top: var(--crm-m);
-}
-#afGuiEditor .af-gui-element {
-	padding: 0 var(--crm-s) var(--crm-s) !important;
-	min-height: var(--crm-l) !important;
-	background: var(--crm-c-background2);
-	border-radius: var(--crm-roundness);
-	margin-bottom: var(--crm-s2);
-}
-#afGuiEditor .af-gui-content-editing-area:has(.ng-hide) {
-	padding-top: 0;
-}
-#afGuiEditor .af-gui-markup {
-	padding: var(--crm-s) !important;
-}
-#afGuiEditor .dropdown-menu li .af-gui-field-select-in-dropdown {
-	color: var(--crm-dropdown-col) !important;
-}
-#afGuiEditor .af-gui-layout.af-layout-cols {
-	column-gap: var(--crm-r);
-}
-#afGuiEditor .af-gui-layout.af-layout-inline > div {
-	margin-right: var(--crm-m);
-}
-.af-admin-edit-form-link .btn.dropdown-toggle { /* the cog icon to edit forms */
-	background: transparent;
-	color: var(--crm-c-text);
-	height: unset;
-	padding: 0 !important;
-	border: 0;
-}
-.af-admin-edit-form-link .btn.dropdown-toggle i.crm-i {
-	background: transparent;
-	border: 0;
-}
 .af-container.af-layout-cols { /* vs afCore */
 	column-gap: var(--crm-m);
 }
+
+/******************
+	FONT AWESOME 6 - Icon Picker fix
+	ref https://lab.civicrm.org/extensions/riverlea/-/issues/28
+*******************/
+
+.ui-icon.fa-glass:before{content:"\f000"}.ui-icon.fa-envelope-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-envelope-o:before{content:"\f0e0"}.ui-icon.fa-star-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-star-o:before{content:"\f005"}.ui-icon.fa-close:before,.ui-icon.fa-remove:before{content:"\f00d"}.ui-icon.fa-gear:before{content:"\f013"}.ui-icon.fa-trash-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-trash-o:before{content:"\f2ed"}.ui-icon.fa-home:before{content:"\f015"}.ui-icon.fa-file-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-o:before{content:"\f15b"}.ui-icon.fa-clock-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-clock-o:before{content:"\f017"}.ui-icon.fa-arrow-circle-o-down{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-arrow-circle-o-down:before{content:"\f358"}.ui-icon.fa-arrow-circle-o-up{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-arrow-circle-o-up:before{content:"\f35b"}.ui-icon.fa-play-circle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-play-circle-o:before{content:"\f144"}.ui-icon.fa-repeat:before,.ui-icon.fa-rotate-right:before{content:"\f01e"}.ui-icon.fa-refresh:before{content:"\f021"}.ui-icon.fa-list-alt{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-list-alt:before{content:"\f022"}.ui-icon.fa-dedent:before{content:"\f03b"}.ui-icon.fa-video-camera:before{content:"\f03d"}.ui-icon.fa-picture-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-picture-o:before{content:"\f03e"}.ui-icon.fa-photo{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-photo:before{content:"\f03e"}.ui-icon.fa-image{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-image:before{content:"\f03e"}.ui-icon.fa-map-marker:before{content:"\f3c5"}.ui-icon.fa-pencil-square-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-pencil-square-o:before{content:"\f044"}.ui-icon.fa-edit{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-edit:before{content:"\f044"}.ui-icon.fa-share-square-o:before{content:"\f14d"}.ui-icon.fa-check-square-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-check-square-o:before{content:"\f14a"}.ui-icon.fa-arrows:before{content:"\f0b2"}.ui-icon.fa-times-circle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-times-circle-o:before{content:"\f057"}.ui-icon.fa-check-circle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-check-circle-o:before{content:"\f058"}.ui-icon.fa-mail-forward:before{content:"\f064"}.ui-icon.fa-expand:before{content:"\f424"}.ui-icon.fa-compress:before{content:"\f422"}.ui-icon.fa-eye,.ui-icon.fa-eye-slash{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-warning:before{content:"\f071"}.ui-icon.fa-calendar:before{content:"\f073"}.ui-icon.fa-arrows-v:before{content:"\f338"}.ui-icon.fa-arrows-h:before{content:"\f337"}.ui-icon.fa-bar-chart-o:before,.ui-icon.fa-bar-chart:before{content:"\e0e3"}.ui-icon.fa-twitter-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-twitter-square:before{content:"\f081"}.ui-icon.fa-facebook-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-facebook-square:before{content:"\f082"}.ui-icon.fa-gears:before{content:"\f085"}.ui-icon.fa-thumbs-o-up{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-thumbs-o-up:before{content:"\f164"}.ui-icon.fa-thumbs-o-down{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-thumbs-o-down:before{content:"\f165"}.ui-icon.fa-heart-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-heart-o:before{content:"\f004"}.ui-icon.fa-sign-out:before{content:"\f2f5"}.ui-icon.fa-linkedin-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-linkedin-square:before{content:"\f08c"}.ui-icon.fa-thumb-tack:before{content:"\f08d"}.ui-icon.fa-external-link:before{content:"\f35d"}.ui-icon.fa-sign-in:before{content:"\f2f6"}.ui-icon.fa-github-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-github-square:before{content:"\f092"}.ui-icon.fa-lemon-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-lemon-o:before{content:"\f094"}.ui-icon.fa-square-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-square-o:before{content:"\f0c8"}.ui-icon.fa-bookmark-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-bookmark-o:before{content:"\f02e"}.ui-icon.fa-facebook,.ui-icon.fa-twitter{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-facebook:before{content:"\f39e"}.ui-icon.fa-facebook-f{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-facebook-f:before{content:"\f39e"}.ui-icon.fa-github{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-credit-card{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-feed:before{content:"\f09e"}.ui-icon.fa-hdd-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hdd-o:before{content:"\f0a0"}.ui-icon.fa-hand-o-right{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-o-right:before{content:"\f0a4"}.ui-icon.fa-hand-o-left{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-o-left:before{content:"\f0a5"}.ui-icon.fa-hand-o-up{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-o-up:before{content:"\f0a6"}.ui-icon.fa-hand-o-down{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-o-down:before{content:"\f0a7"}.ui-icon.fa-globe:before{content:"\f57d"}.ui-icon.fa-tasks:before{content:"\f828"}.ui-icon.fa-arrows-alt:before{content:"\f31e"}.ui-icon.fa-group:before{content:"\f0c0"}.ui-icon.fa-chain:before{content:"\f0c1"}.ui-icon.fa-cut:before{content:"\f0c4"}.ui-icon.fa-files-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-files-o:before{content:"\f0c5"}.ui-icon.fa-floppy-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-floppy-o:before{content:"\f0c7"}.ui-icon.fa-save{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-save:before{content:"\f0c7"}.ui-icon.fa-navicon:before,.ui-icon.fa-reorder:before{content:"\f0c9"}.ui-icon.fa-magic:before{content:"\e2ca"}.ui-icon.fa-pinterest,.ui-icon.fa-pinterest-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-pinterest-square:before{content:"\f0d3"}.ui-icon.fa-google-plus-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-google-plus-square:before{content:"\f0d4"}.ui-icon.fa-google-plus{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-google-plus:before{content:"\f0d5"}.ui-icon.fa-money:before{content:"\f3d1"}.ui-icon.fa-unsorted:before{content:"\f0dc"}.ui-icon.fa-sort-desc:before{content:"\f0dd"}.ui-icon.fa-sort-asc:before{content:"\f0de"}.ui-icon.fa-linkedin{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-linkedin:before{content:"\f0e1"}.ui-icon.fa-rotate-left:before{content:"\f0e2"}.ui-icon.fa-legal:before{content:"\f0e3"}.ui-icon.fa-dashboard:before,.ui-icon.fa-tachometer:before{content:"\f625"}.ui-icon.fa-comment-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-comment-o:before{content:"\f075"}.ui-icon.fa-comments-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-comments-o:before{content:"\f086"}.ui-icon.fa-flash:before{content:"\f0e7"}.ui-icon.fa-clipboard:before{content:"\f0ea"}.ui-icon.fa-lightbulb-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-lightbulb-o:before{content:"\f0eb"}.ui-icon.fa-exchange:before{content:"\f362"}.ui-icon.fa-cloud-download:before{content:"\f0ed"}.ui-icon.fa-cloud-upload:before{content:"\f0ee"}.ui-icon.fa-bell-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-bell-o:before{content:"\f0f3"}.ui-icon.fa-cutlery:before{content:"\f2e7"}.ui-icon.fa-file-text-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-text-o:before{content:"\f15c"}.ui-icon.fa-building-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-building-o:before{content:"\f1ad"}.ui-icon.fa-hospital-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hospital-o:before{content:"\f0f8"}.ui-icon.fa-tablet:before{content:"\f3fa"}.ui-icon.fa-mobile-phone:before,.ui-icon.fa-mobile:before{content:"\f3cd"}.ui-icon.fa-circle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-circle-o:before{content:"\f111"}.ui-icon.fa-mail-reply:before{content:"\f3e5"}.ui-icon.fa-github-alt{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-folder-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-folder-o:before{content:"\f07b"}.ui-icon.fa-folder-open-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-folder-open-o:before{content:"\f07c"}.ui-icon.fa-smile-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-smile-o:before{content:"\f118"}.ui-icon.fa-frown-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-frown-o:before{content:"\f119"}.ui-icon.fa-meh-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-meh-o:before{content:"\f11a"}.ui-icon.fa-keyboard-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-keyboard-o:before{content:"\f11c"}.ui-icon.fa-flag-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-flag-o:before{content:"\f024"}.ui-icon.fa-mail-reply-all:before{content:"\f122"}.ui-icon.fa-star-half-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-star-half-o:before{content:"\f5c0"}.ui-icon.fa-star-half-empty{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-star-half-empty:before{content:"\f5c0"}.ui-icon.fa-star-half-full{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-star-half-full:before{content:"\f5c0"}.ui-icon.fa-code-fork:before{content:"\f126"}.ui-icon.fa-chain-broken:before,.ui-icon.fa-unlink:before{content:"\f127"}.ui-icon.fa-calendar-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-calendar-o:before{content:"\f133"}.ui-icon.fa-css3,.ui-icon.fa-html5,.ui-icon.fa-maxcdn{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-unlock-alt:before{content:"\f09c"}.ui-icon.fa-minus-square-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-minus-square-o:before{content:"\f146"}.ui-icon.fa-level-up:before{content:"\f3bf"}.ui-icon.fa-level-down:before{content:"\f3be"}.ui-icon.fa-pencil-square:before{content:"\f14b"}.ui-icon.fa-external-link-square:before{content:"\f360"}.ui-icon.fa-compass{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-caret-square-o-down{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-caret-square-o-down:before{content:"\f150"}.ui-icon.fa-toggle-down{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-toggle-down:before{content:"\f150"}.ui-icon.fa-caret-square-o-up{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-caret-square-o-up:before{content:"\f151"}.ui-icon.fa-toggle-up{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-toggle-up:before{content:"\f151"}.ui-icon.fa-caret-square-o-right{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-caret-square-o-right:before{content:"\f152"}.ui-icon.fa-toggle-right{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-toggle-right:before{content:"\f152"}.ui-icon.fa-eur:before,.ui-icon.fa-euro:before{content:"\f153"}.ui-icon.fa-gbp:before{content:"\f154"}.ui-icon.fa-dollar:before,.ui-icon.fa-usd:before{content:"\24"}.ui-icon.fa-inr:before,.ui-icon.fa-rupee:before{content:"\e1bc"}.ui-icon.fa-cny:before,.ui-icon.fa-jpy:before,.ui-icon.fa-rmb:before,.ui-icon.fa-yen:before{content:"\f157"}.ui-icon.fa-rouble:before,.ui-icon.fa-rub:before,.ui-icon.fa-ruble:before{content:"\f158"}.ui-icon.fa-krw:before,.ui-icon.fa-won:before{content:"\f159"}.ui-icon.fa-bitcoin,.ui-icon.fa-btc{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-bitcoin:before{content:"\f15a"}.ui-icon.fa-file-text:before{content:"\f15c"}.ui-icon.fa-sort-alpha-asc:before{content:"\f15d"}.ui-icon.fa-sort-alpha-desc:before{content:"\f881"}.ui-icon.fa-sort-amount-asc:before{content:"\f884"}.ui-icon.fa-sort-amount-desc:before{content:"\f160"}.ui-icon.fa-sort-numeric-asc:before{content:"\f162"}.ui-icon.fa-sort-numeric-desc:before{content:"\f886"}.ui-icon.fa-youtube-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-youtube-square:before{content:"\f431"}.ui-icon.fa-xing,.ui-icon.fa-xing-square,.ui-icon.fa-youtube{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-xing-square:before{content:"\f169"}.ui-icon.fa-youtube-play{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-youtube-play:before{content:"\f167"}.ui-icon.fa-adn,.ui-icon.fa-bitbucket,.ui-icon.fa-bitbucket-square,.ui-icon.fa-dropbox,.ui-icon.fa-flickr,.ui-icon.fa-instagram,.ui-icon.fa-stack-overflow{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-bitbucket-square:before{content:"\f171"}.ui-icon.fa-tumblr,.ui-icon.fa-tumblr-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-tumblr-square:before{content:"\f174"}.ui-icon.fa-long-arrow-down:before{content:"\f309"}.ui-icon.fa-long-arrow-up:before{content:"\f30c"}.ui-icon.fa-long-arrow-left:before{content:"\f30a"}.ui-icon.fa-long-arrow-right:before{content:"\f30b"}.ui-icon.fa-android,.ui-icon.fa-apple,.ui-icon.fa-dribbble,.ui-icon.fa-foursquare,.ui-icon.fa-gittip,.ui-icon.fa-gratipay,.ui-icon.fa-linux,.ui-icon.fa-skype,.ui-icon.fa-trello,.ui-icon.fa-windows{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-gittip:before{content:"\f184"}.ui-icon.fa-sun-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-sun-o:before{content:"\f185"}.ui-icon.fa-moon-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-moon-o:before{content:"\f186"}.ui-icon.fa-pagelines,.ui-icon.fa-renren,.ui-icon.fa-stack-exchange,.ui-icon.fa-vk,.ui-icon.fa-weibo{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-arrow-circle-o-right{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-arrow-circle-o-right:before{content:"\f35a"}.ui-icon.fa-arrow-circle-o-left{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-arrow-circle-o-left:before{content:"\f359"}.ui-icon.fa-caret-square-o-left{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-caret-square-o-left:before{content:"\f191"}.ui-icon.fa-toggle-left{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-toggle-left:before{content:"\f191"}.ui-icon.fa-dot-circle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-dot-circle-o:before{content:"\f192"}.ui-icon.fa-vimeo-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-vimeo-square:before{content:"\f194"}.ui-icon.fa-try:before,.ui-icon.fa-turkish-lira:before{content:"\e2bb"}.ui-icon.fa-plus-square-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-plus-square-o:before{content:"\f0fe"}.ui-icon.fa-openid,.ui-icon.fa-slack,.ui-icon.fa-wordpress{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-bank:before,.ui-icon.fa-institution:before{content:"\f19c"}.ui-icon.fa-mortar-board:before{content:"\f19d"}.ui-icon.fa-google,.ui-icon.fa-reddit,.ui-icon.fa-reddit-square,.ui-icon.fa-yahoo{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-reddit-square:before{content:"\f1a2"}.ui-icon.fa-behance,.ui-icon.fa-behance-square,.ui-icon.fa-delicious,.ui-icon.fa-digg,.ui-icon.fa-drupal,.ui-icon.fa-joomla,.ui-icon.fa-pied-piper-alt,.ui-icon.fa-pied-piper-pp,.ui-icon.fa-stumbleupon,.ui-icon.fa-stumbleupon-circle{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-behance-square:before{content:"\f1b5"}.ui-icon.fa-steam,.ui-icon.fa-steam-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-steam-square:before{content:"\f1b7"}.ui-icon.fa-automobile:before{content:"\f1b9"}.ui-icon.fa-cab:before{content:"\f1ba"}.ui-icon.fa-deviantart,.ui-icon.fa-soundcloud,.ui-icon.fa-spotify{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-file-pdf-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-pdf-o:before{content:"\f1c1"}.ui-icon.fa-file-word-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-word-o:before{content:"\f1c2"}.ui-icon.fa-file-excel-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-excel-o:before{content:"\f1c3"}.ui-icon.fa-file-powerpoint-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-powerpoint-o:before{content:"\f1c4"}.ui-icon.fa-file-image-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-image-o:before{content:"\f1c5"}.ui-icon.fa-file-photo-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-photo-o:before{content:"\f1c5"}.ui-icon.fa-file-picture-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-picture-o:before{content:"\f1c5"}.ui-icon.fa-file-archive-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-archive-o:before{content:"\f1c6"}.ui-icon.fa-file-zip-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-zip-o:before{content:"\f1c6"}.ui-icon.fa-file-audio-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-audio-o:before{content:"\f1c7"}.ui-icon.fa-file-sound-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-sound-o:before{content:"\f1c7"}.ui-icon.fa-file-video-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-video-o:before{content:"\f1c8"}.ui-icon.fa-file-movie-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-movie-o:before{content:"\f1c8"}.ui-icon.fa-file-code-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-file-code-o:before{content:"\f1c9"}.ui-icon.fa-codepen,.ui-icon.fa-jsfiddle,.ui-icon.fa-vine{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-life-bouy:before,.ui-icon.fa-life-buoy:before,.ui-icon.fa-life-saver:before,.ui-icon.fa-support:before{content:"\f1cd"}.ui-icon.fa-circle-o-notch:before{content:"\f1ce"}.ui-icon.fa-ra,.ui-icon.fa-rebel{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-ra:before{content:"\f1d0"}.ui-icon.fa-resistance{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-resistance:before{content:"\f1d0"}.ui-icon.fa-empire,.ui-icon.fa-ge{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-ge:before{content:"\f1d1"}.ui-icon.fa-git-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-git-square:before{content:"\f1d2"}.ui-icon.fa-git,.ui-icon.fa-hacker-news,.ui-icon.fa-y-combinator-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-y-combinator-square:before{content:"\f1d4"}.ui-icon.fa-yc-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-yc-square:before{content:"\f1d4"}.ui-icon.fa-qq,.ui-icon.fa-tencent-weibo,.ui-icon.fa-wechat,.ui-icon.fa-weixin{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-wechat:before{content:"\f1d7"}.ui-icon.fa-send:before{content:"\f1d8"}.ui-icon.fa-paper-plane-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-paper-plane-o:before{content:"\f1d8"}.ui-icon.fa-send-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-send-o:before{content:"\f1d8"}.ui-icon.fa-circle-thin{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-circle-thin:before{content:"\f111"}.ui-icon.fa-header:before{content:"\f1dc"}.ui-icon.fa-futbol-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-futbol-o:before{content:"\f1e3"}.ui-icon.fa-soccer-ball-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-soccer-ball-o:before{content:"\f1e3"}.ui-icon.fa-slideshare,.ui-icon.fa-twitch,.ui-icon.fa-yelp{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-newspaper-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-newspaper-o:before{content:"\f1ea"}.ui-icon.fa-cc-amex,.ui-icon.fa-cc-discover,.ui-icon.fa-cc-mastercard,.ui-icon.fa-cc-paypal,.ui-icon.fa-cc-stripe,.ui-icon.fa-cc-visa,.ui-icon.fa-google-wallet,.ui-icon.fa-paypal{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-bell-slash-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-bell-slash-o:before{content:"\f1f6"}.ui-icon.fa-trash:before{content:"\f2ed"}.ui-icon.fa-copyright{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-eyedropper:before{content:"\f1fb"}.ui-icon.fa-area-chart:before{content:"\f1fe"}.ui-icon.fa-pie-chart:before{content:"\f200"}.ui-icon.fa-line-chart:before{content:"\f201"}.ui-icon.fa-lastfm,.ui-icon.fa-lastfm-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-lastfm-square:before{content:"\f203"}.ui-icon.fa-angellist,.ui-icon.fa-ioxhost{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-cc{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-cc:before{content:"\f20a"}.ui-icon.fa-ils:before,.ui-icon.fa-shekel:before,.ui-icon.fa-sheqel:before{content:"\f20b"}.ui-icon.fa-buysellads,.ui-icon.fa-connectdevelop,.ui-icon.fa-dashcube,.ui-icon.fa-forumbee,.ui-icon.fa-leanpub,.ui-icon.fa-sellsy,.ui-icon.fa-shirtsinbulk,.ui-icon.fa-simplybuilt,.ui-icon.fa-skyatlas{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-diamond{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-diamond:before{content:"\f3a5"}.ui-icon.fa-intersex:before,.ui-icon.fa-transgender:before{content:"\f224"}.ui-icon.fa-transgender-alt:before{content:"\f225"}.ui-icon.fa-facebook-official{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-facebook-official:before{content:"\f09a"}.ui-icon.fa-pinterest-p,.ui-icon.fa-whatsapp{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-hotel:before{content:"\f236"}.ui-icon.fa-medium,.ui-icon.fa-viacoin,.ui-icon.fa-y-combinator,.ui-icon.fa-yc{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-yc:before{content:"\f23b"}.ui-icon.fa-expeditedssl,.ui-icon.fa-opencart,.ui-icon.fa-optin-monster{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-battery-4:before,.ui-icon.fa-battery:before{content:"\f240"}.ui-icon.fa-battery-3:before{content:"\f241"}.ui-icon.fa-battery-2:before{content:"\f242"}.ui-icon.fa-battery-1:before{content:"\f243"}.ui-icon.fa-battery-0:before{content:"\f244"}.ui-icon.fa-object-group,.ui-icon.fa-object-ungroup,.ui-icon.fa-sticky-note-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-sticky-note-o:before{content:"\f249"}.ui-icon.fa-cc-diners-club,.ui-icon.fa-cc-jcb{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-clone{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hourglass-o:before{content:"\f254"}.ui-icon.fa-hourglass-1:before{content:"\f251"}.ui-icon.fa-hourglass-2:before{content:"\f252"}.ui-icon.fa-hourglass-3:before{content:"\f253"}.ui-icon.fa-hand-rock-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-rock-o:before{content:"\f255"}.ui-icon.fa-hand-grab-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-grab-o:before{content:"\f255"}.ui-icon.fa-hand-paper-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-paper-o:before{content:"\f256"}.ui-icon.fa-hand-stop-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-stop-o:before{content:"\f256"}.ui-icon.fa-hand-scissors-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-scissors-o:before{content:"\f257"}.ui-icon.fa-hand-lizard-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-lizard-o:before{content:"\f258"}.ui-icon.fa-hand-spock-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-spock-o:before{content:"\f259"}.ui-icon.fa-hand-pointer-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-pointer-o:before{content:"\f25a"}.ui-icon.fa-hand-peace-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-hand-peace-o:before{content:"\f25b"}.ui-icon.fa-registered{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-creative-commons,.ui-icon.fa-gg,.ui-icon.fa-gg-circle,.ui-icon.fa-odnoklassniki,.ui-icon.fa-odnoklassniki-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-odnoklassniki-square:before{content:"\f264"}.ui-icon.fa-chrome,.ui-icon.fa-firefox,.ui-icon.fa-get-pocket,.ui-icon.fa-internet-explorer,.ui-icon.fa-opera,.ui-icon.fa-safari,.ui-icon.fa-wikipedia-w{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-television:before{content:"\f26c"}.ui-icon.fa-500px,.ui-icon.fa-amazon,.ui-icon.fa-contao{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-calendar-plus-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-calendar-plus-o:before{content:"\f271"}.ui-icon.fa-calendar-minus-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-calendar-minus-o:before{content:"\f272"}.ui-icon.fa-calendar-times-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-calendar-times-o:before{content:"\f273"}.ui-icon.fa-calendar-check-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-calendar-check-o:before{content:"\f274"}.ui-icon.fa-map-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-map-o:before{content:"\f279"}.ui-icon.fa-commenting:before{content:"\f4ad"}.ui-icon.fa-commenting-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-commenting-o:before{content:"\f4ad"}.ui-icon.fa-houzz,.ui-icon.fa-vimeo{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-vimeo:before{content:"\f27d"}.ui-icon.fa-black-tie,.ui-icon.fa-edge,.ui-icon.fa-fonticons,.ui-icon.fa-reddit-alien{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-credit-card-alt:before{content:"\f09d"}.ui-icon.fa-codiepie,.ui-icon.fa-fort-awesome,.ui-icon.fa-mixcloud,.ui-icon.fa-modx,.ui-icon.fa-product-hunt,.ui-icon.fa-scribd,.ui-icon.fa-usb{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-pause-circle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-pause-circle-o:before{content:"\f28b"}.ui-icon.fa-stop-circle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-stop-circle-o:before{content:"\f28d"}.ui-icon.fa-bluetooth,.ui-icon.fa-bluetooth-b,.ui-icon.fa-envira,.ui-icon.fa-gitlab,.ui-icon.fa-wheelchair-alt,.ui-icon.fa-wpbeginner,.ui-icon.fa-wpforms{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-wheelchair-alt:before{content:"\f368"}.ui-icon.fa-question-circle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-question-circle-o:before{content:"\f059"}.ui-icon.fa-volume-control-phone:before{content:"\f2a0"}.ui-icon.fa-asl-interpreting:before{content:"\f2a3"}.ui-icon.fa-deafness:before,.ui-icon.fa-hard-of-hearing:before{content:"\f2a4"}.ui-icon.fa-glide,.ui-icon.fa-glide-g{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-signing:before{content:"\f2a7"}.ui-icon.fa-viadeo,.ui-icon.fa-viadeo-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-viadeo-square:before{content:"\f2aa"}.ui-icon.fa-snapchat,.ui-icon.fa-snapchat-ghost{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-snapchat-ghost:before{content:"\f2ab"}.ui-icon.fa-snapchat-square{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-snapchat-square:before{content:"\f2ad"}.ui-icon.fa-first-order,.ui-icon.fa-google-plus-official,.ui-icon.fa-pied-piper,.ui-icon.fa-themeisle,.ui-icon.fa-yoast{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-google-plus-official:before{content:"\f2b3"}.ui-icon.fa-google-plus-circle{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-google-plus-circle:before{content:"\f2b3"}.ui-icon.fa-fa,.ui-icon.fa-font-awesome{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-fa:before{content:"\f2b4"}.ui-icon.fa-handshake-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-handshake-o:before{content:"\f2b5"}.ui-icon.fa-envelope-open-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-envelope-open-o:before{content:"\f2b6"}.ui-icon.fa-linode{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-address-book-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-address-book-o:before{content:"\f2b9"}.ui-icon.fa-vcard:before{content:"\f2bb"}.ui-icon.fa-address-card-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-address-card-o:before{content:"\f2bb"}.ui-icon.fa-vcard-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-vcard-o:before{content:"\f2bb"}.ui-icon.fa-user-circle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-user-circle-o:before{content:"\f2bd"}.ui-icon.fa-user-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-user-o:before{content:"\f007"}.ui-icon.fa-id-badge{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-drivers-license:before{content:"\f2c2"}.ui-icon.fa-id-card-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-id-card-o:before{content:"\f2c2"}.ui-icon.fa-drivers-license-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-drivers-license-o:before{content:"\f2c2"}.ui-icon.fa-free-code-camp,.ui-icon.fa-quora,.ui-icon.fa-telegram{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-thermometer-4:before,.ui-icon.fa-thermometer:before{content:"\f2c7"}.ui-icon.fa-thermometer-3:before{content:"\f2c8"}.ui-icon.fa-thermometer-2:before{content:"\f2c9"}.ui-icon.fa-thermometer-1:before{content:"\f2ca"}.ui-icon.fa-thermometer-0:before{content:"\f2cb"}.ui-icon.fa-bathtub:before,.ui-icon.fa-s15:before{content:"\f2cd"}.ui-icon.fa-window-maximize,.ui-icon.fa-window-restore{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-times-rectangle:before{content:"\f410"}.ui-icon.fa-window-close-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-window-close-o:before{content:"\f410"}.ui-icon.fa-times-rectangle-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-times-rectangle-o:before{content:"\f410"}.ui-icon.fa-bandcamp,.ui-icon.fa-eercast,.ui-icon.fa-etsy,.ui-icon.fa-grav,.ui-icon.fa-imdb,.ui-icon.fa-ravelry{font-family:"Font Awesome 6 Brands";font-weight:400}.ui-icon.fa-eercast:before{content:"\f2da"}.ui-icon.fa-snowflake-o{font-family:"Font Awesome 6 Free";font-weight:400}.ui-icon.fa-snowflake-o:before{content:"\f2dc"}.ui-icon.fa-meetup,.ui-icon.fa-superpowers,.ui-icon.fa-wpexplorer{font-family:"Font Awesome 6 Brands";font-weight:400}

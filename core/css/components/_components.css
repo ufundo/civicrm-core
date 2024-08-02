@@ -67,6 +67,9 @@ tbody.scrollContent tr.alternateRow {
 .crm-container .CRM_Event_Form_SearchEvent .action-link {
     padding: 0 0 var(--crm-padding-reg) 0;
 }
+.crm-container .action-link:has(.crm-uplang-refresh) {
+    padding-top: 0;
+}
 
 /* Advanced multi-select */
 
@@ -353,6 +356,10 @@ table.advmultiselect {
     padding: var(--crm-m2);
     text-align: center;
     font-size: var(--crm-m2);
+}
+#civicrm-footer::after {
+    content: var(--crm-version);
+    float: right;
 }
 .crm-container #civicrm-footer .status {
     border-radius: var(--crm-roundness);

@@ -25,8 +25,8 @@
 .crm-container .btn:focus,
 .crm-container .crm-button:hover,
 .crm-container .crm-button:focus,
-.crm-container .btn:hover,
-.crm-container .btn:focus {
+[type="button"]:hover, [type="reset"]:hover, [type="submit"]:hover,
+[type="button"]:focus, [type="reset"]:focus, [type="submit"]:focus  {
     background: var(--crm-c-primary-hover);
     color: var(--crm-c-primary-text);
     text-decoration: none;
@@ -91,15 +91,19 @@
     height: var(--crm-r);
     display: inline-block;
 }
-.crm-container #crmIconPicker {
+#crmIconPicker .icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--crm-m);
+}
+/* .crm-container #crmIconPicker {
     display: grid;
     grid-template-columns: repeat(30,1fr);
     gap: var(--crm-m);
-}
+} */
 .crm-container .crm-button i.crm-i,
 .crm-container a.button i.crm-i,
 .crm-container button i.crm-i,
-.crm-container a.button:link i.crm-i,
 .crm-container a.button:visited i.crm-i,
 .crm-container input.form-submit i.crm-i,
 .crm-container input[type="button"] i.crm-i,
@@ -111,14 +115,23 @@
     background-color: var(--crm-btn-icon-bg);
     border-radius: var(--crm-btn-radius) 0 0 var(--crm-btn-radius);
     border-right: var(--crm-btn-icon-border);
-    height: auto;
     line-height: inherit;
     margin: 0 var(--crm-btn-icon-spacing) 0 0;
     opacity: 1;
     text-shadow: none;
     padding: var(--crm-btn-padding-block) var(--crm-btn-icon-spacing) var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
-    height: calc(var(--crm-btn-height) - 2px);
+    height: auto;
     min-width: var(--crm-btn-height);
+}
+.crm-container button i.crm-i,
+.crm-container .btn i.crm-i {
+    height: calc(var(--crm-btn-height) - 2px);
+}
+.crm-container a.button i.crm-i,
+.crm-container .crm-button:not(.btn) i.crm-i {
+    height: calc(var(--crm-btn-height) - 2px);
+    display: flex;
+    align-items: center;
 }
 .crm-container .btn.btn-xs .crm-i {
     padding: var(--crm-btn-small-padding) !important;
@@ -126,18 +139,43 @@
     min-width: auto !important;
     margin-right: calc(var(--crm-btn-icon-spacing) * 0.7);
 }
-.crm-container a.button:has(i.crm-i), 
+/* .crm-container a.button:has(i.crm-i), 
 .crm-container button:has(i.crm-i),
 .crm-button > input[type="button"]:has(i.crm-i), 
-.crm-button > input[type="submit"]:has(i.crm-i),
+.crm-button > input[type="submit"]:has(i.crm-i), */
 .crm-container button.dropdown-toggle.btn-xs:has(i.crm-i),
-.crm-button:has(i.crm-i),
 .crm-container .btn:has(i.crm-i),
 .crm-container .btn-group > .btn + .dropdown-toggle:has(i.crm-i),
 .crm-container button.ui-button:has(.ui-button-icon) {
     padding: 0 var(--crm-btn-padding-inline) 0 0;
     display: inline-block;
 }
+.crm-container a.button:has(i.crm-i), 
+.crm-container button:has(i.crm-i),
+.crm-button:has(i.crm-i),
+.crm-button > input[type="button"]:has(i.crm-i), 
+.crm-button > input[type="submit"]:has(i.crm-i),
+.form-inline .btn-success.pull-right:has(i.crm-i) /* Api4exp */ {
+    padding: 0 var(--crm-btn-padding-inline) 0 0;
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+}
+.crm-button > input[type="button"]:has(i.crm-i), 
+.crm-button > input[type="submit"]:has(i.crm-i) {
+    padding: 0;
+}
+.crm-container .form-inline .btn-group button:has(i.crm-i),
+.crm-search-admin-main-tabs li .btn.btn-secondary.dropdown-toggle,
+.crm-container .form-inline .btn-group button i.crm-i,
+.form-inline .btn-success.pull-right i.crm-i,
+.crm-search-admin-main-tabs li .btn.btn-secondary.dropdown-toggle i.crm-i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* BS3 colour options */
 
 .crm-container .btn-secondary {
@@ -201,11 +239,17 @@
 	font-size: var(--crm-m2);
 	line-height: 1.5;
 	border-radius: var(--crm-btn-radius);
+    height: auto;
 }
 .crm-container .btn-xs, .crm-container .btn-group-xs > .btn {
 	padding: var(--crm-xs) var(--crm-s2);
 	font-size: var(--crm-m2);
 	border-radius: var(--crm-btn-radius);
+    height: auto;
+}
+.crm-container .btn-sm i.crm-i, .crm-container .btn-group-sm > .btn i.crm-i,
+.crm-container .btn-xs i.crm-i, .crm-container .btn-group-xs > .btn i.crm-i {
+    height: auto;
 }
 .crm-container .btn-block {
 	display: block;
@@ -223,7 +267,7 @@
     padding: var(--crm-s);
     display: flex;
     align-items: center;
-    gap: var(--crm-s);
+    gap: var(--crm-flex-gap);
 }
 
 /* Hover buttons (plain text, button shows on hover) */
@@ -412,9 +456,9 @@
 .crm-container .btn-group.open .dropdown-toggle.btn-link {
 	box-shadow: none;
 }
-.crm-container .btn .caret {
+/* .crm-container .btn .caret {
 	margin-left: 0;
-}
+} */
 .crm-container .btn-lg .caret, .crm-container .btn-group-lg > .btn .caret {
 	border-width: 5px 5px 0;
 	border-bottom-width: 0;
