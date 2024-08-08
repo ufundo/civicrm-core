@@ -70,9 +70,9 @@
                 .shareTitle(false)
                 .compose(yAxisColumns.map((col) => {
 
-                    const subChart = (col.seriesType === 'bar')
-                        ? dc.barChart(displayCtrl.chart)
-                        : dc.lineChart(displayCtrl.chart);
+                    const subChart = (col.seriesType === 'bar') ?
+                        dc.barChart(displayCtrl.chart) :
+                        dc.lineChart(displayCtrl.chart);
 
                     subChart
                         .dimension(displayCtrl.dimension)
