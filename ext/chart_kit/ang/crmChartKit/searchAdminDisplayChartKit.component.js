@@ -308,7 +308,7 @@
                         return;
                     }
                     const optionKeys = this.getColumnConfigOptionKeys(col, configKey);
-                    this.display.settings.columns[colIndex][configKey] = optionKeys.length ? optionKeys[0] : null;
+                    this.display.settings.columns[colIndex][configKey] = optionKeys[0] ?? null;
                 });
             };
 

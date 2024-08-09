@@ -235,7 +235,7 @@
 
                     // load in cap if implemented by chart type
                     if (this.chart.cap) {
-                        this.chart.cap(this.settings.maxSegments ? this.settings.maxSegments : null);
+                        this.chart.cap(this.settings.maxSegments ?? null);
                     }
                     // load in ordering if implement by chart type
                     if (this.chart.ordering) {
@@ -376,7 +376,7 @@
 
                 this.chart
                     .margins(this.settings.format.padding)
-                    .clipPadding(this.settings.format.padding.clip ? this.settings.format.padding : 20);
+                    .clipPadding(this.settings.format.padding.clip ?? 20);
             };
 
 
@@ -390,7 +390,7 @@
                 legend.highlightSelected(true);
 
                 if (this.settings.showLegend === 'right') {
-                    legend.x(this.settings.format.width - legend.itemWidth() - (this.settings.format.padding.right ? this.settings.format.padding.right : this.settings.format.padding.outer))
+                    legend.x(this.settings.format.width - legend.itemWidth() - (this.settings.format.padding.right ?? this.settings.format.padding.outer))
                 }
                 this.chart.legend(legend);
             };
@@ -407,9 +407,9 @@
 
             this.getXColumn = () => this.getColumnsForAxis('x')[0];
 
-            this.getOrderColumn = () => this.getColumns()[parseInt(this.settings.chartOrderColIndex ? this.settings.chartOrderColIndex : 0)];
+            this.getOrderColumn = () => this.getColumns()[parseInt(this.settings.chartOrderColIndex ?? 0)];
 
-            this.getOrderDirection = () => (this.settings.chartOrderDir ? this.settings.chartOrderDir : 'ASC');
+            this.getOrderDirection = () => (this.settings.chartOrderDir ?? 'ASC');
 
             this.getOrderAccessor = () => {
                 const orderColValueAccessor = this.getValueAccessor(this.getOrderColumn());
