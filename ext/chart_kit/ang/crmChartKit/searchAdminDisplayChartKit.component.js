@@ -92,7 +92,10 @@
 
                 // merge axis defaults into the axes array
                 Object.keys(axes).forEach((key) => {
-                    axes[key] = Object.assign({}, this.axisDefaults(), axes[key]);
+                    axes[key] = {
+                        ...this.axisDefaults(),
+                        ...axes[key]
+                    };
                 });
 
                 this.axes = axes;
@@ -104,19 +107,18 @@
                 const baseSettings = this.getInitialDisplaySettings();
                 const typeSettings = this.getInitialDisplaySettingsForChartType();
 
-                this.display.settings = Object.assign(
-                    {},
-                    baseSettings,
-                    typeSettings,
-                    this.display.settings
-                );
+                this.display.settings = {
+                    ...baseSettings,
+                    ...typeSettings,
+                    ...this.display.settings
+                };
 
-                this.display.settings.format = Object.assign(
-                    {},
-                    baseSettings.format,
-                    typeSettings.format,
-                    this.display.settings.format
-                );
+                // merge in at format level too
+                this.display.settings.format = {
+                    ...baseSettings.format,
+                    ...typeSettings.format,
+                    ...this.display.settings.format
+                };
 
                 // populate starting column for each axis
                 Object.keys(this.getAxes()).forEach(axisKey => {
