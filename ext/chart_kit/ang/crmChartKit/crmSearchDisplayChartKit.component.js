@@ -390,7 +390,15 @@
                 legend.highlightSelected(true);
 
                 if (this.settings.showLegend === 'right') {
-                    legend.x(this.settings.format.width - legend.itemWidth() - (this.settings.format.padding.right ?? this.settings.format.padding.outer))
+                    // depends on chart type which padding keys are set
+                    // (potential bug: if you set right padding on an axis chart, then switch to a chart without a right axis setting,
+                    // it will keep using the right padding value, which you can no longer edit
+                    const rightPadding = this.settings.format.padding.right ?? this.settings.format.padding.outer;
+                    legend.x(
+                        this.settings.format.width
+                        - legend.itemWidth()
+                        - rightPadding
+                    );
                 }
                 this.chart.legend(legend);
             };
