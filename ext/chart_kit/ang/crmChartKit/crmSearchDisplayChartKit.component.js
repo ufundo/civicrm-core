@@ -488,7 +488,7 @@
             };
 
             this.renderColumnValue = (dataPointValue, col) => {
-                const value = dataPointValue[col.index] ?? null;
+                const value = dataPointValue[col.index] ? dataPointValue[col.index] : null;
 
                 if (!value && value !== 0) {
                     return null;
@@ -575,7 +575,7 @@
 
                 columns.forEach((col) => {
                     // use user-assigned color or pick one from the default color scheme
-                    finalColors[col.label] = col.color ?? defaultColors(col.label);
+                    finalColors[col.label] = col.color ? col.color : defaultColors(col.label);
                 });
 
                 // mapping function from our dict
@@ -583,7 +583,7 @@
             };
 
             this.downloadImageUrl = (mime, url, ext) => {
-                const filename = (this.settings.format.title ?? 'chart').replace(/[^a-zA-Z0-9-]+/g, '') + '.' + ext;
+                const filename = (this.settings.format.title ? this.settings.format.title : 'chart').replace(/[^a-zA-Z0-9-]+/g, '') + '.' + ext;
                 const downloadLink = document.createElement('a');
                 downloadLink.download = filename;
                 downloadLink.href = url;
