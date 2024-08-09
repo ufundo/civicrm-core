@@ -369,7 +369,7 @@
                 searchColumnOptions = searchColumnOptions.filter((key) => !alreadyUsedKeys.includes(key));
 
                 // if there are any left, set the first
-                this.display.settings.columns[colIndex].key = searchColumnOptions.length ? searchColumnOptions[0] : null;
+                this.display.settings.columns[colIndex].key = searchColumnOptions[0] ?? null;
 
                 // trigger loading column settings
                 this.onColumnSearchColumnChange(colIndex);

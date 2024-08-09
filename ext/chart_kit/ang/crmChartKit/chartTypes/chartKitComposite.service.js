@@ -58,7 +58,7 @@
                     if ((col.axis === 'y') && (targetColIndex !== colIndex)) {
                         return null;
                     }
-                    return d[colIndex] ? d[colIndex] : null;
+                    return d[colIndex] ?? null;
                 });
             };
 
@@ -70,7 +70,9 @@
                 .shareTitle(false)
                 .compose(yAxisColumns.map((col) => {
 
-                    const subChart = ((col.seriesType === 'bar') ? dc.barChart : dc.lineChart)(displayCtrl.chart);
+                    const subChart = (col.seriesType === 'bar') ?
+                        dc.barChart(displayCtrl.chart) :
+                        dc.lineChart(displayCtrl.chart);
 
                     subChart
                         .dimension(displayCtrl.dimension)
