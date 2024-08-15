@@ -550,8 +550,7 @@
                         return this.renderDataValue(mean, col);
                     case 'percentage_sum':
                     case 'percentage_count':
-                        // TODO would we ever need to call renderDataValue here? before or after division?
-                        const percentage = Math.floor(100 * value / this.columnTotals[col.index]);
+                        const percentage = this.renderDataValue(100 * value / this.columnTotals[col.index], col);
                         return `${percentage}%`;
                     default:
                         return this.renderDataValue(value, col);
