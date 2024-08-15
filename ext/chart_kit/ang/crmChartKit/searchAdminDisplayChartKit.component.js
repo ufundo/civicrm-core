@@ -273,6 +273,10 @@
             this.getColumnDataLabelFormatterOptions = (col) => {
                 const options = this.getAxisDataLabelFormatterOptions(col.axis);
 
+                // percentages will usually need rounding
+                if (col.reduceType === 'percentage_sum' || col.reduceType === 'percentage_count') {
+                    return ['round', 'none'];
+                }
                 // categorical will often be rendered to string, which
                 // dont like being formatted
                 if (col.scaleType === 'categorical') {
@@ -287,6 +291,7 @@
                     // TODO support fancy date formatting?
                     return ['none'];
                 }
+
 
                 return options;
             };
