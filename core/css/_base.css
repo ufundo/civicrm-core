@@ -176,6 +176,13 @@
     margin: var(--crm-heading-margin);
 }
 
+/* Definition lists */
+
+dl dd, dl dl {
+    margin-block-end: var(--crm-m1);
+    margin-inline-start: var(--crm-r1);
+}
+
 /* Practical colors */
 
 .crm-container .del,
@@ -297,8 +304,8 @@
 .crm-container h6 {
     color: var(--crm-c-text);
 }
-.crm-container code, 
-.crm-container kbd, 
+.crm-container code,
+.crm-container kbd,
 .crm-container samp,
 .crm-container pre {
 	display: block;
