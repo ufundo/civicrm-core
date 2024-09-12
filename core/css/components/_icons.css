@@ -2,10 +2,6 @@
     padding: var(--crm-s) var(--crm-m) var(--crm-s) 0;
     float: left;
 }
-.crm-container .crm-i:hover,
-.crm-container .crm-i:focus {
-    color: var(--crm-c-text);
-}
 .crm-container button.btn-xs:has(.fa-times),
 .crm-container .crm-hover-button:has(.crm-i),
 .crm-container .crm-hover-button:has(.crm-i):hover,
@@ -67,12 +63,9 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 }
 
 /* Check icon */
-
-.crm-container .crm-button .crm-i.fa-check::before,
-.crm-container .btn .crm-i.fa-check::before,
-.crm-container .crm-button .crm-i.fa-check-circle::before,
-.crm-container .btn .crm-i.fa-check-circle::before,
-.crm-container .btn-success .crm-i::before {
+.crm-container .crm-i.fa-check,
+.crm-container .crm-i.fa-check-circle,
+.crm-container .btn-success .crm-i {
     color: var(--crm-icon-success-color);
 }
 
@@ -104,27 +97,30 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     opacity: 1;
     transition: 0.2s;
 }
-.crm-container .crm-button .crm-i.fa-times::before,
-.crm-container .btn-danger .crm-i::before {
+.crm-container .crm-i.fa-times,
+.crm-container .btn-danger .crm-i,
+.crm-container button .fa-times {
     color: var(--crm-icon-alert-color);
+}
+.crm-container .crm-dashlet-header a.fa-times {
+    color: var(--crm-dashlet-header-col);
 }
 
 /* Info icon */
-
-.crm-container .crm-button .crm-i.fa-info::before,
+.crm-container .crm-i.fa-info,
 .crm-container .btn-info .crm-i::before {
     color: var(--crm-icon-info-color);
 }
 
-/* Warning icon */  
-
+/* Warning icon */
+.crm-container .crm-i.fa-warning,
 .crm-container .btn-warning .crm-i::before {
     color: var(--crm-icon-warning-color);
 }
 
 /* Table sorting icons */
-.crm-container tr a.sorting, 
-.crm-container tr a.sorting_asc, 
+.crm-container tr a.sorting,
+.crm-container tr a.sorting_asc,
 .crm-container tr a.sorting_desc,
 .crm-container table.dataTable thead th.sorting,
 .crm-container table.dataTable thead th.sorting_asc,
@@ -137,7 +133,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container th a:focus {
     text-decoration: none;
 }
-.crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon { 
+.crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon {
     /* Bootstrap & SearchKit sort resets */
     position: initial;
     float: var(--crm-table-sort-float);
@@ -149,7 +145,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
     font: normal normal normal var(--crm-dash-icon-size)/inherit FontAwesome;
 }
 .crm-container a.sorting::after,
-.crm-container a.sorting_asc::after, 
+.crm-container a.sorting_asc::after,
 .crm-container a.sorting_desc::after,
 .crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon::before,
 .crm-container table.dataTable thead th.sorting::before,
@@ -174,13 +170,12 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 }
 .crm-container a.sorting_desc::after,
 .crm-container th.crm-sortable-col i.crm-search-table-column-sort-icon.fa-sort-desc::before,
-.crm-container table.dataTable thead th.sorting_desc::before {  
+.crm-container table.dataTable thead th.sorting_desc::before {
     content: var(--crm-icon-sort-desc);
     color: var(--crm-c-link);
 }
 
 /* Trash icons */
-
 .crm-container .delete-icon {
     background-image: none;
 }
@@ -195,7 +190,6 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 }
 
 /* Jqueery UI icons (tags) */
-
 .crm-container .jstree-wholerow-ul {
     display: flex;
     flex-direction: column;
@@ -216,7 +210,7 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container .jstree-default .jstree-checkbox::before {
     content: '\f096';
 }
-.crm-container .jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox::before, 
+.crm-container .jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox::before,
 .crm-container .jstree-default .jstree-checked > .jstree-checkbox::before {
     content: '\f046';
     color: var(--crm-c-success);
@@ -240,15 +234,46 @@ div.civicrm-community-messages a.civicrm-community-message-dismiss::before,
 .crm-container #navigation-tree li.jstree-node {
     background-image: none;
 }
+
 /* Resets icons with unwanted backgrounds */
 .crm-container a.crm-hover-button:has(span.icon) {
     background-color: transparent;
     padding: 0;
 }
+
 /* Spinners */
 .crm-container button i.crm-i.fa-spinner,
 .crm-container .btn i.crm-i.fa-spinner {
     padding: 0;
     background: transparent;
     border: 0;
+}
+
+/* Icon picker - vs crm-iconPicker.css */
+#crmIconPicker .icon-ctrls {
+    display: flex;
+}
+#crmIconPicker .icon-ctrls > button {
+    float: none;
+    margin-left: auto;
+    display: flex;
+}
+#crmIconPicker a.ui-button .ui-icon {
+    margin-top: 0;
+    font-size: var(--crm-r2);
+}
+#crmIconPicker .icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--crm-m2);
+    margin-top: 1rem;
+}
+#crmIconPicker a.ui-button {
+    color: var(--crm-c-text) !important;
+    background: transparent;
+    width: var(--crm-r2);
+    height: var(--crm-r2);
+    border: 0;
+    padding: 0;
+    display: inline-block;
 }

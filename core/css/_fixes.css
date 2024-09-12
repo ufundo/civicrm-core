@@ -11,8 +11,8 @@
 
 .crm-container .widget-content .crm-accordion-wrapper.collapsed .crm-accordion-header,
 .crm-container .widget-content .crm-accordion-header,
-.crm-container .crm-accordion-inner .crm-accordion-header, 
-.crm-container .crm-accordion-wrapper .crm-master-accordion-header, 
+.crm-container .crm-accordion-inner .crm-accordion-header,
+.crm-container .crm-accordion-wrapper .crm-master-accordion-header,
 .crm-container .crm-collapsible .collapsible-title,
 .crm-container .collapsed .crm-accordion-header,
 .crm-container .crm-accordion-header{
@@ -31,13 +31,14 @@
 
 /* Expand/collapse icons */
 
-.crm-container .crm-accordion-header::before, 
+.crm-container .crm-accordion-header::before,
 details.af-collapsible > .af-title::before,
 .crm-dashlet-header .crm-dashlet-collapse.fa-caret-down::before,
 .crm-dashlet-header .crm-dashlet-collapse.fa-caret-right::before,
 .crm-container .crm-master-accordion-header:before,
 .crm-container .expanded::before,
 .crm-container a.collapsed::before,
+.crm-container .crm-collapsible .collapsible-title::before,
 .crm-container a.crm-expand-row:not(.expanded)::before,
 .crm-container .civicrm-community-messages .crm-collapsible .collapsible-title::before,
 .crm-container .show-children.collapsed::before {
@@ -53,20 +54,21 @@ details.af-collapsible > .af-title::before,
 	content: var(--crm-expand-icon);
 	cursor: var(--crm-hover-clickable);
 }
-.crm-container .collapsed .collapsible-title::before,
-.crm-container .collapsed .crm-accordion-header::before, 
+.crm-container .collapsed .crm-accordion-header::before,
 .crm-accordion-wrapper.collapsed .crm-master-accordion-header:before,
 .crm-dashlet-header .crm-dashlet-collapse.fa-caret-right::before,
-details.af-collapsible.af-collapsed > .af-title::before, 
+details.af-collapsible.af-collapsed > .af-title::before,
 .crm-container a.collapsed:not(.expanded)::before,
 .crm-container a.crm-expand-row::before,
+.crm-container .crm-collapsible.collapsed .collapsible-title::before,
 .crm-container .civicrm-community-messages .crm-collapsible.collapsed .collapsible-title::before {
     transform: none;
 	transform-origin: center center;
 	transition: var(--crm-expand-transition);
 }
-.crm-container .crm-accordion-header::before, 
+.crm-container .crm-accordion-header::before,
 details.af-collapsible[open] > .af-title::before,
+.crm-container .crm-collapsible .collapsible-title::before,
 .crm-dashlet-header .crm-dashlet-collapse.fa-caret-down::before,
 .crm-container .crm-master-accordion-header:before,
 .crm-container a.collapsed::before,
@@ -97,15 +99,14 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 .crm-container span.collapsed:not(.show-children) {
 	cursor: var(--crm-hover-clickable);
 	padding: var(--crm-expand-header-padding);
-	border-radius: var(--crm-roundness) var(--crm-roundness) 0 0;
+	border-radius: var(--crm-expand-radius) var(--crm-expand-radius) 0 0;
 	background-color: var(--crm-expand-header-bg);
 	font-weight: var(--crm-expand-header-weight);
 	color: var(--crm-expand-header-color);
-} 
+}
 .crm-container .crm-accordion-wrapper.collapsed .crm-accordion-header,
-/* .af-collapsible.af-collapsed > .af-title, */
 .crm-container .crm-collapsible.collapsed .collapsible-title {
-	border-radius: var(--crm-roundness);
+	border-radius: var(--crm-expand-radius);
 }
 .crm-container .widget-content .crm-accordion-header,
 .crm-container .crm-accordion-inner .crm-accordion-header,
@@ -122,31 +123,37 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	background-color: var(--crm-expand-header-bg-active);
 }
 .crm-container .crm-accordion-wrapper .crm-master-accordion-header {
-	background-color: var(--crm-expand-header2-bg);
-	font-weight: var(--crm-expand-header2-weight);
-	color: var(--crm-expand-header2-color);
+	font-family: var(--crm-expand2-header-font);
+	font-weight: var(--crm-expand2-header-weight);
+	background-color: var(--crm-expand2-header-bg);
+	color: var(--crm-expand2-header-color);
+	border: var(--crm-expand2-header-border);
+	border-width: var(--crm-expand2-header-border-width);
+	padding: var(--crm-expand2-header-padding);
 }
 .crm-container .crm-accordion-wrapper .crm-master-accordion-header:hover,
 .crm-container .crm-accordion-wrapper .crm-master-accordion-header:focus {
-	background-color: var(--crm-expand-header2-bg);
+	background-color: var(--crm-expand2-header-bg-active);
 }
 /* Body */
 
 .crm-container .crm-accordion-wrapper .crm-accordion-body {
-	border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
+	border-radius: 0 0 var(--crm-expand-radius) var(--crm-expand-radius);
 	border: var(--crm-expand-border);
 	padding: var(--crm-expand-body-padding);
 	background-color: var(--crm-expand-body-bg);
 	box-shadow: var(--crm-expand-body-box-shadow);
-	animation: crm-details-show .3s ease-in-out;
 }
 .crm-container .widget-content .crm-accordion-body,
 .crm-container .crm-collapsible .crm-summary-block {
 	padding: var(--crm-expand-body-padding);
 }
 .crm-container .crm-master-accordion-header + .crm-accordion-body {
-	border: var(--crm-expand-body2-border);
-	background-color: var(--crm-expand-body2-bg);
+	padding: var(--crm-expand2-body-padding);
+	background: var(--crm-expand2-body-bg);
+	border: var(--crm-expand2-border);
+	border-width: var(--crm-expand2-border-width);
+	border-radius: 0 0 var(--crm-expand-radius) var(--crm-expand-radius);
 }
 .crm-container summary label {
 	color: inherit;
@@ -161,16 +168,16 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     ALERTS
 *******************/
 
-.crm-container del, 
-.crm-container .ui-icons_deleted, 
-.crm-container table.caseSelector td.status-urgent, 
-.crm-container .font-red, 
-.crm-container .status-removed, 
-.crm-container .status-overdue, 
-.crm-container .status-fatal, 
-.crm-container .status-hold, 
-.crm-container .status-past, 
-.crm-contact-deceased, 
+.crm-container del,
+.crm-container .ui-icons_deleted,
+.crm-container table.caseSelector td.status-urgent,
+.crm-container .font-red,
+.crm-container .status-removed,
+.crm-container .status-overdue,
+.crm-container .status-fatal,
+.crm-container .status-hold,
+.crm-container .status-past,
+.crm-contact-deceased,
 .crm-container .status-warning {
 	color: var(--crm-c-alert);
 }
@@ -184,11 +191,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	  For buttons not using .crm-button or .btn or <button>
 *******************/
 
-/* .crm-container a.button,
-.crm-container button, */
 .crm-container .ui-button:not(.ui-button-icon-only) {
-	display: inline-block;
-	text-align: var(--crm-btn-align);
 	white-space: nowrap;
 	vertical-align: middle;
 	touch-action: manipulation;
@@ -201,13 +204,12 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	user-select: none;
 	margin-bottom: 0;
 	background-color: var(--crm-c-primary);
-	color: var(--crm-c-primary-text); /* Somewhere this needs to be !important but removing for now */
+	color: var(--crm-c-primary-text);
 	line-height: 1.5;
 	display: flex;
-	/* align-items: center; */
 	height: var(--crm-btn-height);
 	width: fit-content;
-	gap: var(--crm-btn-icon-spacing); /* last four lines centre icons */
+	gap: var(--crm-btn-icon-spacing);
 }
 .crm-container .ui-button:hover,
 .crm-container .ui-button:focus {
@@ -221,6 +223,7 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     color: inherit;
     padding: 0;
 	border: 0;
+	box-shadow: none;
 }
 .crm-container a.button {
     background: var(--crm-c-secondary);
@@ -230,7 +233,9 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
     font-weight: normal;
 	text-decoration: none;
 	line-height: inherit;
+	border-radius: var(--crm-btn-radius);
 	display: flex !important; /* vs contact dashboard edit */
+	gap: var(--crm-btn-icon-spacing);
 }
 .crm-container a.button span {
 	display: flex;
@@ -264,44 +269,42 @@ a.crm-expand-row:hover,a.crm-expand-row:focus {
 	display: flex !important; /* odd inline styled button on display preferences page */
 }
 
-/* Icon alignment */
-
-.crm-container .ui-button-icon-space {
-    display: none;
-}
-
 /* Small buttons */
 
 .crm-container .btn-xs,
 .crm-container button.dropdown-toggle.btn-xs,
 .crm-container .crm-accordion-header a.crm-hover-button,
-.crm-container .crm-form-date-wrapper a.crm-hover-button, 
-.crm-container .btn-group-xs > .btn, 
-body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLink.btn-group-xs > .form-link, 
-.crm-container .crm-search-form-block.btn-group-xs > a, 
-.crm-container .crm-search-form-block.btn-group-xs > span, 
-.page-civicrm-admin.page-civicrm-a .crmCaseType .btn-group-xs > .crm-button, 
-.page-civicrm-a.page-civicrm-a .crmCaseType .btn-group-xs > .crm-button, 
-.crm-container #crm-submit-buttons .btn-group-xs > button.crm-form-submit, 
-.crm-container .btn-group-xs > button.crm-button.crm-form-submit, 
-.crm-container .btn-group-xs > .crm-hover-button, 
-.crm-container .ui-dialog-buttonset .btn-group-xs > .ui-button, .crm-container .btn-group-xs > a.button, 
+.crm-container .crm-form-date-wrapper a.crm-hover-button,
+.crm-container .btn-group-xs > .btn,
+body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLink.btn-group-xs > .form-link,
+.crm-container .crm-search-form-block.btn-group-xs > a,
+.crm-container .crm-search-form-block.btn-group-xs > span,
+.page-civicrm-admin.page-civicrm-a .crmCaseType .btn-group-xs > .crm-button,
+.page-civicrm-a.page-civicrm-a .crmCaseType .btn-group-xs > .crm-button,
+.crm-container #crm-submit-buttons .btn-group-xs > button.crm-form-submit,
+.crm-container .btn-group-xs > button.crm-button.crm-form-submit,
+.crm-container .btn-group-xs > .crm-hover-button,
+.crm-container .ui-dialog-buttonset .btn-group-xs > .ui-button, .crm-container .btn-group-xs > a.button,
 .crm-container .btn-group-xs > input[type="button"] {
     padding: var(--crm-xs) var(--crm-s);
     font-size: var(--crm-small-font-size);
     border-radius: var(--crm-roundness);
 	height: auto;
-} 
+}
 .crm-container .btn-group-xs button {
     padding: var(--crm-xs) var(--crm-s);
     font-size: var(--crm-small-font-size);
 }
 /* select all 'checkbox' on table th */
-.crm-container button.btn:has(.fa-square-o) {
+.crm-container button.btn:has(.fa-square-o),
+.crm-container button.btn:has(.fa-check-square-o) {
 	padding-inline: 0;
 	border-right: 0;
 }
-.crm-container i.ui-icon.fa-square-o {
+.crm-container i.ui-icon.fa-square-o,
+.crm-container i.ui-icon.fa-check-square-o,
+.crm-container .btn i.fa-square-o,
+.crm-container .btn i.fa-check-square-o {
 	margin: 0;
     padding: 0;
     display: flex;
@@ -331,11 +334,16 @@ body[class*="page-civicrm-report-"] #report-tab-order-by-elements #optionFieldLi
 
 .afadmin-list .nav-tabs + .form-inline + table,
 .afadmin-list > .form-inline,
-crm-search-admin-search-listing .crm-search-display.crm-search-display-table {
+.crm-search:has(.crm-search-nav-tabs) .crm-search-display.crm-search-display-table {
     border: var(--crm-tab-border);
     border-top: 0 solid transparent;
     border-radius: 0 0 var(--crm-roundness) var(--crm-roundness);
 	background: var(--crm-tab-bg-active);
+	overflow-x: auto;
+}
+.crm-search:has(.crm-search-nav-tabs) .crm-search-display.crm-search-display-table table,
+.ui-tabs-panel .crm-search-display.crm-search-display-table {
+    border: 0;
 }
 .crm-search > .ng-scope > .form-inline {
     border: var(--crm-tab-border);
@@ -397,7 +405,7 @@ crm-search-admin-search-listing .crm-search-display.crm-search-display-table {
     padding: var(--crm-padding-reg);
     font-family: var(--crm-font);
     border-radius: var(--crm-roundness);
-    top: 0;
+    top: 0;;
 }
 .crm-container .tag-tree-wrapper div.tag-info .tdl {
     font-weight: var(--crm-bold-weight);
@@ -418,7 +426,7 @@ crm-search-admin-search-listing .crm-search-display.crm-search-display-table {
 @media (max-width: 768px) {
     .crm-container .tag-tree-wrapper {
         display: block;
-    }  
+    }
 }
 /* Dedupe change usage */
 .crm-container label:has(.dedupe-rules-dialog-desc) input {
@@ -544,7 +552,7 @@ crm-search-admin-search-listing .crm-search-display.crm-search-display-table {
 }
 #api-generated tr td:first-of-type {
 	width: var(--crm-input-label-width);
-} 
+}
 /* Display Preferences */
 
 tr.crm-preferences-display-form-block-contact_edit_options td:has(table) {
@@ -622,7 +630,7 @@ tr.crm-preferences-display-form-block-contact_edit_options td table {
 .crm-container > #crm-main-content-wrapper > fieldset > * {
 	margin: 0;
 }
-					
+
 /******************
 	PADDING FIXES
 *******************/
@@ -775,6 +783,9 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 
 /* Mosaico (all importants vs the extension css) */
 
+.crm-mosaico-wizard .crm_wizard__title .panel-body {
+	padding: 0 1rem;
+}
 .crm-mosaico-wizard .crm_wizard__body .form-group {
 	max-width: 100% !important;
 }
@@ -818,17 +829,21 @@ details + .crm-content-block:has(.dataTables_wrapper) {
 	display: flex;
 	gap: var(--crm-flex-gap);
 }
-.crm-mosaico-wizard .crm_wizard__title .nav-pills li {
-	padding: var(--crm-btn-padding-block) var(--crm-btn-padding-inline);
+.crm-mosaico-wizard .crm-mosaico-template-item.thumbnail {
+	background: var(--crm-c-background2) !important /* vs _template-item.scss */;
+	border: var(--crm-c-divider) !important /* vs _template-item.scss */;
+	border-radius: var(--crm-roundness) !important /* vs _template-item.scss */;
 }
-.crm-mosaico-wizard .crm_wizard__title .nav-pills li.active,
-.crm-mosaico-wizard .crm_wizard__title .nav-pills li.active:hover,
-.crm-mosaico-wizard .crm_wizard__title .nav-pills li.active a:hover {
-	background: var(--crm-c-primary-hover);
-	border-radius: var(--crm-btn-radius);
+.crm-mosaico-wizard .crm_wizard__title .nav-pills li.disabled a {
+	color: var(--crm-c-inactive) !important /* vs _template-item.scss */;
 }
-.crm-mosaico-wizard .crm_wizard__title .nav-pills li.active a{ 
-	color: var(--crm-c-primary-text);
+#bootstrap-theme .crm-mosaico-template-item .crm-mosaico-template-actions {
+	display: flex !important /* vs _template-item.scss */;
+	opacity: 1 !important /* vs _template-item.scss */;
+	justify-content: center;
+	flex-direction: column;
+	padding-top: 50%;
+	align-items: center;
 }
 /******************
 	CORE EXTENSIONS

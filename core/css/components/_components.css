@@ -1,6 +1,6 @@
 /* Checkbox lists */
 
-.crm-container .listing-box, 
+.crm-container .listing-box,
 .crm-container .listing-box-tall,
 .crm-container ul.crm-checkbox-list {
     width: auto;
@@ -87,9 +87,11 @@ table.advmultiselect {
     width: auto;
 }
 
-/* Wizard steps */
+/* Wizard steps.
+   .crm_wizard__title is from Mosaico, to be removed someday */
 
-.crm-container ul.wizard-bar {
+.crm-container ul.wizard-bar,
+.crm_wizard__title ul {
     border-collapse: collapse;
     white-space: nowrap;
     list-style: none;
@@ -104,14 +106,16 @@ table.advmultiselect {
     width: 100%;
 }
 .crm-container #wizard-steps,
-.crm-container ul.crm-wizard-nav {
-    margin: var(--crm-wizard-margin);
+.crm-container ul.crm-wizard-nav,
+.crm-mosaico-wizard .crm_wizard__title ul {
+    margin: var(--crm-wizard-margin) !important;
     width: var(--crm-wizard-width);
 }
 .crm-container ul.crm-wizard-nav {
     margin-bottom: var(--crm-r);
 }
-.crm-container ul.wizard-bar li {
+.crm-container ul.wizard-bar li,
+.crm_wizard__title ul > li {
     margin: -2px;
     text-decoration: none;
     background-image: none;
@@ -126,10 +130,12 @@ table.advmultiselect {
     padding: 0 var(--crm-l) 0 var(--crm-xl);
     position: relative;
 }
-.crm-container ul.wizard-bar > li:first-child {
+.crm-container ul.wizard-bar > li:first-child,
+.crm_wizard__title ul > li:first-child  {
     padding-left: var(--crm-l);
 }
-.crm-container ul.wizard-bar > li::after {
+.crm-container ul.wizard-bar > li::after,
+.crm_wizard__title ul > li::after {
     border-bottom: var(--crm-wizard-height) solid rgba(0,0,0,0);
     border-left: calc(1px + var(--crm-wizard-angle)) solid var(--crm-wizard-active-bg);
     border-top: var(--crm-wizard-height) solid rgba(0,0,0,0);
@@ -141,11 +147,13 @@ table.advmultiselect {
     width: 20px;
     z-index: 10;
 }
-.crm-container ul.crm-wizard-nav > li::after {
+.crm-container ul.crm-wizard-nav > li::after,
+.crm_wizard__title ul > li::after {
     border-left: calc(1.25 * var(--crm-wizard-angle)) solid var(--crm-wizard-active-bg);
 }
-.crm-container ul.wizard-bar > li::before {
-    border-bottom: var(--crm-wizard-height) solid rgba(0,0,0,0);  
+.crm-container ul.wizard-bar > li::before,
+.crm_wizard__title ul > li::before {
+    border-bottom: var(--crm-wizard-height) solid rgba(0,0,0,0);
     border-left: var(--crm-wizard-angle) solid var(--crm-wizard-bg);
     border-top: var(--crm-wizard-height) solid rgba(0,0,0,0);
     content: "";
@@ -156,17 +164,22 @@ table.advmultiselect {
     width: 0;
     z-index: 11;
 }
-.crm-container ul.crm-wizard-nav > li::before {
+.crm-container ul.crm-wizard-nav > li::before,
+.crm_wizard__title ul > li::before {
     border-left: calc(1.25 * var(--crm-wizard-angle)) solid var(--crm-wizard-bg);
 }
-.crm-container ul.wizard-bar > li.current-step {
+.crm-container ul.wizard-bar > li.current-step,
+.crm_wizard__title ul > li.active,
+.crm_wizard__title ul > li.active a {
     background-color: var(--crm-wizard-active-bg);
     color: var(--crm-wizard-active-col);
 }
-.crm-container ul.wizard-bar > li.current-step::before {
+.crm-container ul.wizard-bar > li.current-step::before,
+.crm_wizard__title ul > li.active::before {
     border-left-color: var(--crm-wizard-active-bg);
 }
-.crm-container ul.wizard-bar > li:not(:first-child) {
+.crm-container ul.wizard-bar > li:not(:first-child),
+.crm_wizard__title ul > li:not(:first-child) {
     padding-left: calc(var(--crm-l) + var(--crm-wizard-angle)) !important;
 }
 .crm-wizard-buttons {
@@ -220,10 +233,10 @@ table.advmultiselect {
 	font-size: var(--crm-font-size);
 	color: inherit;
 }
-.crm-container .panel-title > a, 
-.crm-container .panel-title > small, 
-.crm-container .panel-title > .small, 
-.crm-container .panel-title > small > a, 
+.crm-container .panel-title > a,
+.crm-container .panel-title > small,
+.crm-container .panel-title > .small,
+.crm-container .panel-title > small > a,
 .crm-container .panel-title > .small > a {
 	color: inherit;
 }
@@ -320,12 +333,12 @@ table.advmultiselect {
 .crm-container .badge:empty {
 	display: none;
 }
-.crm-container .btn-xs .badge, 
+.crm-container .btn-xs .badge,
 .crm-container .btn-group-xs > .btn .badge {
 	top: 0;
 	padding: 1px 5px;
 }
-.list-group-item.active > .badge, 
+.list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
 	color: var(--crm-c-link);
 	background-color: var(--crm-c-page-background);
@@ -333,7 +346,7 @@ table.advmultiselect {
 .nav-pills > li > a > .badge {
 	margin-left: 3px;
 }
-.crm-container a.badge:hover, 
+.crm-container a.badge:hover,
 .crm-container a.badge:focus {
 	color: white;
 	text-decoration: none;
@@ -377,6 +390,10 @@ table.advmultiselect {
 
 /* Upgrade screen (overwrites inline css) */
 
+.crm-container.crm-upgrade-box-outer,
+.page-civicrm-upgrade .crm-queue-runner-form-block {
+	margin: var(--crm-page-padding); /* Padding on upgrade screen */
+}
 .crm-upgrade-box-outer.crm-upgrade-success {
     margin: var(--crm-page-padding);
     background: var(--crm-alert-background-help);
@@ -394,7 +411,7 @@ p.crm-upgrade-large-text {
     color: var(--crm-c-success);
 }
 .crm-upgrade-box-inner a {
-    color: var(--crm-c-link) !important;
+    color: var(--crm-c-link) !important  /* vs inline */;
 }
 p.crm-upgrade-large-text:first-of-type {
     font-size: var(--crm-r1);
@@ -404,8 +421,9 @@ p.crm-upgrade-large-text:first-of-type {
 }
 .crm-success-flex {
     display: unset;
-    padding: 0;
-    font-size: 3rem;
+    padding: 0 2rem 0 0 !important /* vs inline */;
+    font-size: var(--crm-l);
+    line-height: 1.35;
     color: var(--crm-c-success);
     grid-column: 1;
     grid-row: 1 / span 3;
@@ -414,12 +432,13 @@ p.crm-upgrade-large-text:first-of-type {
 /* Community message */
 
 div.civicrm-community-messages {
-    border: 2px solid var(--crm-c-success);
-    background: var(--crm-c-green-light);
+    border: 2px solid var(--crm-alert-border-help);
+    background: var(--crm-alert-background-help);
     padding: var(--crm-padding-inset);
 }
-div.civicrm-community-messages .crm-collapsible .collapsible-title {
-    color: var(--crm-c-success-text) !important /* vs inline */;
+div.civicrm-community-messages .crm-collapsible .collapsible-title,
+div.civicrm-community-messages a.civicrm-community-message-dismiss::before {
+    color: var(--crm-alert-text-help) !important /* vs inline */;
 }
 
 /* Status box (for mailsending) */
@@ -451,4 +470,128 @@ div.civicrm-community-messages .crm-collapsible .collapsible-title {
 }
 .crm-status-box-outer.status-error .crm-status-box-inner {
     background: var(--crm-c-alert);
+}
+
+/* Background regions */
+
+.crm-container .bg-primary {
+	background-color: var(--crm-c-primary);
+    color: var(--crm-c-primary-text);
+}
+.crm-container a.bg-primary:hover,
+.crm-container a.bg-primary:focus {
+	background-color: var(--crm-c-primary-hover);
+}
+.crm-container .bg-secondary {
+	background-color: var(--crm-c-secondary);
+    color: var(--crm-c-secondary-text);
+}
+.crm-container a.bg-secondary:hover,
+.crm-container a.bg-secondary:focus {
+	background-color: var(--crm-c-secondary-hover);
+}
+.crm-container .dropdown-menu .bg-success a,
+.crm-container .dropdown-menu a.bg-success,
+.crm-container .bg-success {
+	background-color: var(--crm-c-success);
+    color: var(--crm-c-success-text);
+}
+.crm-container a.bg-success:hover,
+.crm-container a.bg-success:focus,
+.crm-container .dropdown-menu a.bg-success:hover,
+.crm-container .dropdown-menu .bg-success a:hover {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-success);
+    color: var(--crm-c-success-text);
+}
+.crm-container .dropdown-menu .bg-info a,
+.crm-container .dropdown-menu a.bg-info,
+.crm-container .bg-info {
+	background-color: var(--crm-c-info);
+    color: var(--crm-c-info-text);
+}
+.crm-container a.bg-info:hover,
+.crm-container a.bg-info:focus,
+.crm-container .dropdown-menu .bg-info a:hover,
+.crm-container .dropdown-menu a.bg-info:hover {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-info);
+    color: var(--crm-c-info-text);
+}
+.crm-container .bg-warning,
+.crm-container .dropdown-menu .bg-warning a,
+.crm-container .dropdown-menu a.bg-warning {
+	background-color: var(--crm-c-warning);
+    color: var(--crm-c-warning-text) !important /* FormBuilder vs .disabled */;
+}
+.crm-container a.bg-warning:hover,
+.crm-container a.bg-warning:focus,
+.crm-container .dropdown-menu .bg-warning a:hover,
+.crm-container .dropdown-menu a.bg-warning:hover {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-warning);
+    color: var(--crm-c-warning-text);
+}
+.crm-container .bg-danger,
+.crm-container .dropdown-menu .bg-danger a,
+.crm-container .dropdown-menu a.bg-danger {
+	background-color: var(--crm-c-alert);
+    color: var(--crm-c-alert-text);
+}
+.crm-container a.bg-danger:hover,
+.crm-container a.bg-danger:focus,
+.crm-container .dropdown-menu .bg-danger a:hover,
+.crm-container .dropdown-menu a.bg-danger:hover {
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-alert);
+    color: var(--crm-c-alert-text);
+}
+.crm-container .dropdown-menu .bg-danger .crm-i::before {
+    color: var(--crm-c-alert-text);
+}
+.crm-container .dropdown-menu .bg-warning .crm-i::before {
+    color: var(--crm-c-warning-text);
+}
+.crm-container .dropdown-menu .bg-success .crm-i::before {
+    color: var(--crm-c-success-text);
+}
+.crm-container .dropdown-menu .bg-info .crm-i::before {
+    color: var(--crm-c-info-text);
+}
+
+/* CKEditor Config */
+
+#CKEditorConfig .cke_ltr.cke_button.cke_toolgroup {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--crm-roundness);
+    background: var(--crm-c-background);
+}
+#CKEditorConfig .move {
+    background-color: var(--crm-c-primary);
+    color: var(--crm-c-primary-text);
+    border: 0;
+    margin-block: 1px;
+}
+#CKEditorConfig .move:focus,
+#CKEditorConfig .move:hover {
+    background-color: var(--crm-c-primary-hover);
+    border: 0;
+}
+/* Blocks (D7/Joomla) */
+
+#crm-recently-viewed ul,
+#crm-recently-viewed li {
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+#crm-recently-viewed li.crm-recently-viewed {
+    margin-block: var(--crm-xs);
+    padding: var(--crm-s);
+    border: var(--crm-c-divider);
+    background-color: var(--crm-input-background);
+    white-space: nowrap;
+    list-style-type: none;
+    position: relative;
+    border-radius: var(--crm-roundness);
+}
+#crm-quick-create input {
+    max-width: 100%;
 }

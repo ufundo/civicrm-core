@@ -28,13 +28,14 @@
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
+    cursor: move;
 }
 .crm-container .crm-dashlet-header h3 {
     background: transparent;
     cursor: move;
     margin: 0 auto 0 0 !important;
     padding: 0;
-    color: #fcfcfc;
+    color: var(--crm-dashlet-header-col);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -56,7 +57,7 @@
 }
 .crm-container .crm-dashlet-header a.crm-dashlet-collapse {
     order: 1;
-}  
+}
 crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
     height: calc(100% - 1em);
 }
@@ -65,7 +66,7 @@ crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
     padding: var(--crm-dashlet-content-padding);
     overflow: auto;
 }
-.crm-container .crm-dashlet .crm-accordion-body {
+.crm-container .crm-dashlet details.crm-accordion-bold > .crm-accordion-body {
     padding: 0;
     border-bottom: var(--crm-expand-border);
 }
@@ -89,7 +90,6 @@ crm-dashlet[is-fullscreen=true] > .crm-dashlet-content {
 }
 .crm-dashlet table.dataTable {
     overflow: scroll;
-    display: block;
     padding: 0;
     border-bottom: 0 solid transparent;
     width: 99% !important;
@@ -187,7 +187,7 @@ fieldset.crm-inactive-dashlet-fieldset {
     margin-bottom: var(--crm-r);
 }
 fieldset.crm-inactive-dashlet-fieldset > div {
-    background-color: var(--crm-c-background2) !important
+    background-color: var(--crm-c-background) !important;
     box-shadow: var(--crm-popup-shadow);
     border-radius: var(--crm-dashlet-radius);
     display: flex;
@@ -200,7 +200,7 @@ fieldset.crm-inactive-dashlet-fieldset legend {
     display: block;
     margin-bottom: var(--crm-r);
     top: var(--crm-s)
-} 
+}
 fieldset.crm-inactive-dashlet-fieldset legend .crm-hover-button {
     padding: var(--crm-btn-large-padding);
     margin-right: var(--crm-r);

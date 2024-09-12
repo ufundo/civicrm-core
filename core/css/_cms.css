@@ -25,18 +25,17 @@ html.admin-bar #admin-bar-menu .civicrm .admin-bar-link-icon {
 
 /* Drupal - body.page-civicrm */
 
-/* D7 */
+/* D7 Garland */
 body.page-civicrm > #page {
     padding: 0;
     margin: 0;
     --crm-page-padding: 1rem 3rem;
 }
-body.page-civicrm div.status {
+body.page-civicrm .crm-container div.status {
     background-image: none;
 }
 
 /* D8+ */
-
 body.page-civicrm header.content-header {
     margin-bottom: 0;
     background-color: var(--crm-c-background);
@@ -48,16 +47,32 @@ body.page-civicrm header + div.layout-container {
     background-color: var(--crm-c-page-background) !important;
     margin: 0 !important; /* use of important vs some themes */
 }
+body.page-civicrm .button {
+    -webkit-font-smoothing: initial;
+}
+
+/* D7 Garland */
+body.page-civicrm #squeeze #crm-container,
+.region-sidebar-first .block-civicrm {
+    padding: 0;
+    --crm-page-padding: 0;
+    --crm-c-page-background: transparent;
+}
+body.page-civicrm #squeeze .crm-container ul li {
+    margin: 0;
+    padding: 0;
+}
+
 /* D7 Seven */
 body.page-civicrm > #branding {
     background-color: var(--crm-c-page-background);
 }
-/* D9 Claro */
 
+/* D9 Claro */
 body.page-civicrm {
     color: unset;
 }
-body.page-civicrm .breadcrumb__item, 
+body.page-civicrm .breadcrumb__item,
 body.page-civicrm .breadcrumb__link {
     color: var(--crm-c-text);
 }
@@ -65,11 +80,14 @@ body.page-civicrm .breadcrumb__link {
     --crm-page-padding: 3rem;
     --crm-page-width: calc(100% - var(--crm-page-padding) - var(--crm-page-padding));
 }
-#block-claro-content .crm-container .form-item, 
+#block-claro-content .crm-container .form-item,
 #block-claro-content .crm-container p,
-#block-claro-content .crm-container .help p, 
+#block-claro-content .crm-container .help p,
 #block-claro-content .crm-container .button {
     margin: 0;
+}
+body.page-civicrm .page-content:has(#block-claro-content) {
+    margin-top: 0;
 }
 #block-claro-content .button:not(:focus) {
     box-shadow: none;
@@ -83,8 +101,8 @@ body.page-civicrm .breadcrumb__link {
         --crm-page-padding: 1rem;
     }
 }
-/* D9 Seven */
 
+/* D9 Seven */
 #block-seven-content {
     --crm-page-padding: 2rem;
 }
@@ -96,12 +114,12 @@ body.page-civicrm .breadcrumb__link {
     text-shadow: none;
     margin-left: 0;
 }
-#block-seven-content .form-composite > legend, 
+#block-seven-content .form-composite > legend,
 #block-seven-content .label {
     font-weight: inherit;
 }
-/* Bootstrap 4 */
 
+/* Bootstrap 4 */
 body.page-civicrm main > .container:has(#block-bootstrap4-content) {
     max-width: 100%;
     background: var(--crm-c-page-background);
@@ -149,7 +167,7 @@ body.wp-admin {
 }
 body.wp-admin #wpcontent {
     padding-left: 0; /* resets WP padding */
-} 
+}
 body.wp-admin .crm-container {
     background: var(--crm-c-page-background);
 }
@@ -180,16 +198,22 @@ body.wp-admin.wp-core-ui .crm-container select {
     appearance: auto; /* Resets WP's own select UI */
     margin: 0;
 }
+body.wp-admin.wp-core-ui select:hover {
+    color: var(--crm-input-color);
+}
 
 /******************
    STANDALONE
 *******************/
 
 html.crm-standalone {
-    --crm-page-width: 100%;
-    --crm-page-padding: 1px 1vw;
+    --crm-page-width: 94vw;
+    --crm-page-padding: 1px 3vw 1rem;
 }
 html.crm-standalone body {
     margin: unset;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",sans-serif; /* Adds fallback for base font */
+}
+html.crm-standalone #crm-container:has(.standalone-auth-form) {
+    background: var(--crm-c-background);
 }

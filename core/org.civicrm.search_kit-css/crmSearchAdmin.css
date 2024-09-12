@@ -13,7 +13,7 @@
     top: calc(-1 * var(--crm-m));
 }
 .crm-container .crm-search-admin-search-listing-buttons {
-	display: flex; 
+	display: flex;
 }
 
 /* Searchkit admin */
@@ -51,7 +51,7 @@
     border: 1px solid transparent;
     border-radius: var(--crm-roundness) 0 0 var(--crm-roundness);
     right: -1px
-}  
+}
 .crm-search-admin-main-tabs ul.nav-stacked li.active {
     width: calc(100% + 1px);
 }
@@ -68,13 +68,13 @@
     height: var(--crm-m2);
     border-top: 1px solid var(--crm-c-gray-300);
     margin: var(--crm-m) var(--crm-l) 0 var(--crm-r);
-} 
+}
 .crm-search ul.nav-stacked li a[disabled] {
     text-decoration: line-through !important;
     color: grey;
     cursor: default;
     pointer-events: none;
-} 
+}
 .crm-search button.btn-xs:has(i.crm-i) {
     padding: 0;
 }
@@ -110,7 +110,7 @@
 
 .crm-search fieldset div.api4-input {
     margin-bottom: var(--crm-m);
-} 
+}
 .crm-search .api4-clause-badge {
     width: 8ch;
     display: inline-block;
@@ -131,7 +131,8 @@
     padding: var(--crm-s);
     border-top: var(--crm-c-divider);
     margin-block: var(--crm-s);
-} 
+    border-radius: var(--crm-roundness);
+}
 .crm-search fieldset fieldset {
     padding-top: 0;
     border: var(--crm-c-divider);
@@ -169,6 +170,7 @@
     border-radius: var(--crm-roundness);
     border: 0 solid transparent;
 }
+
 /* Tab: Configure Settings */
 
 .crm-search .crm-search-admin-relative textarea {
@@ -193,15 +195,96 @@
     padding: 0;
     border: 0 solid transparent;
 }
-
+.crm-search-admin-edit-columns fieldset.crm-draggable {
+    display: grid;
+    grid-template-columns: 2ch auto;
+}
+.crm-search-admin-edit-columns fieldset.crm-draggable .btn.btn-xs.pull-right {
+    line-height: 1.45rem;
+    display: block;
+    z-index: 1;
+    position: absolute;
+    right: 15px;
+}
+i.crm-i.crm-search-move-icon {
+    opacity: .5;
+    margin-top: 0.5rem;
+}
+.crm-draggable details > *,
+.crm-draggable details > .form-inline {
+    padding-inline: var(--crm-expand-body-padding);
+}
+.crm-draggable details > div:first-of-type {
+    padding-top: var(--crm-expand-body-padding);
+}
+.crm-draggable details > div:last-of-type {
+    padding-bottom: var(--crm-expand-body-padding);
+}
+#bootstrap-theme .crm-search-admin-edit-columns .input-group-btn {
+    display: flex;
+    flex-direction: row;
+}
+.crm-search-admin-edit-columns .crm-draggable > td {
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.crm-search-admin-edit-columns .crm-draggable > td input {
+    max-width: 125px;
+}
+.crm-search-admin-edit-columns .crm-draggable > td.form-inline {
+    font-size: 0;
+    padding-right: var(--crm-s);
+}
+.crm-search-admin-edit-columns .crm-draggable tfoot td.form-inline {
+    padding: var(--crm-padding-reg);
+}
+.crm-search-admin-relative {
+    position: relative;
+    display: block;
+}
+.crm-search .crm-search-admin-relative details > summary {
+    background: var(--crm-expand-header2-bg);
+    color: var(--crm-expand-header2-color);
+    padding: var(--crm-padding-small) var(--crm-padding-reg);
+}
+.crm-search crm-search-admin-link-group {
+    background: var(--crm-c-background2);
+}
+.crm-search crm-search-admin-link-group table {
+    margin: var(--crm-padding-reg);
+	max-width: calc(100% - var(--crm-padding-reg) - var(--crm-padding-reg));
+	box-shadow: none;
+}
+.crm-search-admin-edit-columns {
+    padding: 0;
+    border: 0 solid transparent;
+}
+.crm-search-admin-edit-columns details,
+.crm-search .crm-search-admin-relative details {
+    background-color: var(--crm-c-page-background);
+    border-radius: var(--crm-roundness);
+    border: 0;
+}
+.crm-search-admin-edit-columns details > summary {
+    background: var(--crm-expand-header2-bg);
+    color: var(--crm-expand-header2-color);
+    padding: var(--crm-padding-reg);
+    font-size: inherit;
+}
+.crm-search details label {
+    min-width: var(--crm-input-label-width);
+}
+.crm-search details label:has(~ a.helpicon) {
+	min-width: calc(var(--crm-input-label-width) - 19px);
+}
 /* Various */
 
 .crm-search .help-block.bg-warning {
     padding: var(--crm-padding-reg);
-} 
+}
 .crm-search .form-control.huge {
-    width: var(--crm-big-input); 
-} 
+    width: var(--crm-big-input);
+}
 /* Style expires_date date/time width */
 .crm-search #expires_date + input,
 .crm-search #expires_date + input + input {
@@ -210,11 +293,11 @@
 /* Hide time field if date & time are both empty */
 .crm-search #expires_date + input:placeholder-shown + input:placeholder-shown {
     display: none;
-}  
+}
 .crm-search div.form-control.disabled,
 .crm-search div.form-control.disabled * {
     cursor: not-allowed;
-} 
+}
 .crm-search input.ng-invalid::placeholder {
     color: var(--crm-c-warning);
 }
@@ -225,34 +308,31 @@
 }
 .crm-search fieldset div.api4-input.ui-sortable-helper {
     background-color: rgba(255, 255, 255, .9);
-} 
+}
 .crm-search fieldset div.api4-input.ui-sortable-helper {
     background-color: rgba(255, 255, 255, .9);
-} 
+}
 .crm-search .api4-clause-fieldset fieldset {
     float: right;
     width: calc(100% - 58px);
     margin-top: -8px;
-} 
+}
 .crm-search .api4-clause-fieldset.api4-sorting fieldset .api4-clause-group-sortable {
     min-height: 3.5em;
-} 
+}
 .crm-search .form-control label,
 .crm-search legend[ng-click] {
     cursor: var(--crm-hover-clickable);
-} 
+}
 .crm-search .api4-input-group {
     display: inline-block;
-} 
-i.crm-i.crm-search-move-icon {
-    opacity: .5;
 }
 .crm-draggable:hover > i.crm-i.crm-search-move-icon,
 .crm-draggable:hover > * > i.crm-i.crm-search-move-icon {
     opacity: 1;
 }
 .crm-search input[type=number] {
-    width: 90px;
+    width: 90px !important /* vs Bootstrap3.css */;
 }
 /* For display.settings.limit field */
 .crm-search .checkbox-inline.form-control input[type=number] {
@@ -336,51 +416,4 @@ crm-search-admin-import {
     top: 1px;
     right: 0;
     background-color: white;
-}
-.crm-search-admin-relative {
-    position: relative;
-    display: block;
-}
-.crm-search .crm-search-admin-relative details { /* only way to target settings accordions */
-    border: var(--crm-expand-border);
-    border-radius: var(--crm-roundness);
-}
-.crm-search .crm-search-admin-relative details > summary {
-    background: var(--crm-expand-header-bg);
-    color: var(--crm-expand-header-color);
-    padding: var(--crm-padding-small) var(--crm-padding-reg);
-}
-.crm-search crm-search-admin-link-group {
-    background: var(--crm-c-background2);
-}
-.crm-search crm-search-admin-link-group table {
-    margin: var(--crm-padding-reg);
-	max-width: calc(100% - var(--crm-padding-reg) - var(--crm-padding-reg));
-	box-shadow: none;
-}
-.crm-search-admin-edit-columns {
-    padding: 0;
-    border: 0 solid transparent;
-}
-.crm-search-admin-edit-columns details {
-    background-color: var(--crm-c-page-background);
-    border-radius: var(--crm-roundness);
-    border: 0;
-}
-.crm-search-admin-edit-columns details summary {
-    background: var(--crm-expand-header2-bg);
-    color: var(--crm-expand-header2-color);
-    padding: var(--crm-padding-reg);
-    font-size: inherit;
-}
-.crm-search .crm-search-admin-edit-columns details > *:not(summary),
-.crm-search .crm-search-admin-edit-columns details > *:first-child,
-.crm-search .crm-search-admin-edit-columns details > *:last-child {
-    padding-bottom: var(--crm-padding-reg);
-}
-.crm-search details label {
-    min-width: var(--crm-input-label-width);
-}
-.crm-search details label:has(~ a.helpicon) {
-	min-width: calc(var(--crm-input-label-width) - 19px);
 }

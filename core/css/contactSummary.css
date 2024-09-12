@@ -16,7 +16,6 @@
     padding: var(--crm-dash-header-padding);
     position: relative;
 	margin-left: var(--crm-dash-heading-inset);
-	overflow-x: auto;
     align-items: center;
     display: flex;
     gap: var(--crm-m);
@@ -130,7 +129,7 @@ div.crm-inline-edit-form div.crm-clear {
     display: table-cell;
     padding: 0;
 }
-#contact-summary .crm-inline-button, 
+#contact-summary .crm-inline-button,
 #contact-summary .crm-submit-buttons {
     margin-bottom: 0;
     padding-bottom: var(--crm-m2);
@@ -164,7 +163,7 @@ div.crm-inline-edit-form div.crm-clear {
 .crm-container div.contactCardLeft,
 .crm-container div.contactCardRight {
 	width: 100%;
-}  
+}
 .crm-container div.contact_panel table {
     margin-bottom: 0;
     width: auto;
@@ -230,23 +229,33 @@ div.crm-inline-edit-form div.crm-clear {
 }
 
 /* contact actions menu */
-  
+
 #crm-contact-actions-list {
     width: 495px;
 }
 .crm-contact-actions-list-inner {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 0;
-    gap: 10px;
 }
 #crm-contact-actions-list .crm-contact_print-list {
     grid-column: 3;
     grid-row: 1;
 }
-#crm-contact-actions-list .crm-contact_actions-list {
-    border-left: 1px solid var(--crm-c-divider);
-    border-right: 1px solid var(--crm-c-divider);
+.crm-contact_print-list ul {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
+#crm-contact-actions-list ul a {
+    display: block;
+}
+.crm-contact-crm-contact-delete {
+    margin-top: auto;
+}
+/* #crm-contact-actions-list .crm-contact_actions-list {
+    border-left: var(--crm-c-divider);
+    border-right: var(--crm-c-divider);
+} */
 #crm-contact-actions-list .crm-contact_activities-list select {
     margin-top: 4px;
 }
@@ -254,9 +263,20 @@ div.crm-inline-edit-form div.crm-clear {
     border: none;
     margin-bottom: .25em;
 }
+#crm-contact-actions-list a.delete {
+    background: var(--crm-c-alert);
+    color: var(--crm-c-alert-text);
+    border-radius: var(--crm-roundness);
+}
+#crm-contact-actions-list a.delete:hover,
+#crm-contact-actions-list a.delete:focus {
+    color: var(--crm-c-alert-text);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0.125),rgba(0, 0, 0, 0.125)) var(--crm-c-alert);
+}
+
 
 /* Responsive layout changes - Possibly Deprecated
-  
+
 .crm-container .contact_basic_information-section.narrowform table.form-layout-compressed,
 .crm-container .contact_basic_information-section.narrowform table.form-layout-compressed tbody,
 .crm-container .contact_basic_information-section.narrowform.xnarrowform table.form-layout-compressed tr {
@@ -388,5 +408,5 @@ div.crm-summary-contactname-block + .crm-actions-ribbon {
 .crm-search-col-type-field span.ng-scope a {
     display: flex;
     gap: var(--crm-btn-icon-spacing);
-    align-items: center;   
+    align-items: center;
 }
