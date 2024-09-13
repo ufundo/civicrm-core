@@ -50,6 +50,9 @@ body.page-civicrm header + div.layout-container {
 body.page-civicrm .button {
     -webkit-font-smoothing: initial;
 }
+body.page-civicrm .page-title {
+    color: var(--crm-c-text);
+}
 
 /* D7 Garland */
 body.page-civicrm #squeeze #crm-container,
@@ -192,7 +195,6 @@ body.wp-admin .crm-container div.ui-notify-message .notify-content li {
 body.wp-admin .crm-container .button {
     line-height: inherit;
     font-size: inherit;
-    border: inherit;
 }
 body.wp-admin .breadcrumb .crm-i {
     font-size: smaller;
