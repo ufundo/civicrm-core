@@ -8,12 +8,6 @@ use CRM_riverlea_ExtensionUtil as E;
  */
 
 function riverlea_civicrm_themes(&$themes) {
-  $themes['wellow'] = array(
-    'ext' => 'riverlea',
-    'title' => 'RL: Wellow Brook (~Radstock)',
-    'prefix' => 'streams/wellow/',
-    'search_order' => array('wellow', '_riverlea_core_', '_fallback_'),
-  );
   $themes['minetta'] = array(
     'ext' => 'riverlea',
     'title' => 'RL: Minetta (~Greenwich)',
