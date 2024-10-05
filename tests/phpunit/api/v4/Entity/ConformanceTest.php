@@ -301,15 +301,16 @@ class ConformanceTest extends Api4TestBase implements HookInterface {
    */
   protected function checkUpdateFailsFromCreate($entityClass, array $entityKeys): void {
     $exceptionThrown = '';
+    $primaryKey = $entityClass::getInfo()['primary_key'][0];
     try {
       $entityClass::create(FALSE)
-        ->addValue('id', reset($entityKeys))
+        ->addValue($primaryKey, reset($entityKeys))
         ->execute();
     }
     catch (\CRM_Core_Exception $e) {
       $exceptionThrown = $e->getMessage();
     }
-    $this->assertStringContainsString('id', $exceptionThrown);
+    $this->assertStringContainsString($primaryKey, $exceptionThrown);
   }
 
   /**
