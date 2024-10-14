@@ -18,20 +18,12 @@ class DynamicCss implements \Symfony\Component\EventDispatcher\EventSubscriberIn
 
   use \Civi\Core\Service\AutoServiceTrait;
 
-  protected const CSS_FILE = 'river.css';
+  public const CSS_FILE = 'river.css';
 
   public static function getSubscribedEvents() {
     return [
-      '&hook_civicrm_alterBundle' => ['alterCoreBundle', 0],
       'hook_civicrm_buildAsset' => ['buildAssetCss', 0],
     ];
-  }
-
-  public static function alterCoreBundle(\CRM_Core_Resources_Bundle $bundle) {
-    if ($bundle->name !== 'coreResources') {
-      return;
-    }
-    $bundle->addStyleUrl(\Civi::service('asset_builder')->getUrl(static::CSS_FILE, self::getCssParams()));
   }
 
   public static function getCssParams(): array {
