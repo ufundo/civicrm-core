@@ -14,11 +14,13 @@
  * @package CRM
  * @copyright CiviCRM LLC https://civicrm.org/licensing
  */
+
 /*
  * Settings metadata file
  *
  * These settings are available at bootstrap
  */
+
 return [
   'ext_repo_url' => [
     'group_name' => 'Extension Preferences',

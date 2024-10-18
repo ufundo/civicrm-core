@@ -20,6 +20,7 @@
  *
  * These settings are available at bootstrap
  */
+
 return [
   // This setting was included in SettingsManager::getSystemDefaults but not in settings meta files - unsure if still needed/used?
   'resourceBase' => [

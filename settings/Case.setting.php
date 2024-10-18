@@ -18,6 +18,7 @@
 /**
  * Settings metadata file
  */
+
 return [
   'civicaseRedactActivityEmail' => [
     'group_name' => 'CiviCRM Preferences',

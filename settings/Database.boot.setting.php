@@ -20,6 +20,7 @@
  *
  * These settings are available at bootstrap
  */
+
 return [
   'civicrm_db_dsn' => [
     'name' => 'civicrm_db_dsn',

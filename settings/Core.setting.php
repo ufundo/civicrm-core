@@ -18,6 +18,7 @@
 /**
  * Settings metadata file
  */
+
 return [
   'contact_view_options' => [
     'group_name' => 'CiviCRM Preferences',

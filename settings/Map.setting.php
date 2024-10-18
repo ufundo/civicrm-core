@@ -13,8 +13,12 @@
  *
  * @package CRM
  * @copyright CiviCRM LLC https://civicrm.org/licensing
+ */
+
+/*
  * Settings metadata file
  */
+
 return [
   'geoAPIKey' => [
     'add' => '4.7',

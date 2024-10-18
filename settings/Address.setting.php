@@ -18,6 +18,7 @@
 /**
  * Settings metadata file
  */
+
 return [
   'address_standardization_provider' => [
     'group_name' => 'Address Preferences',

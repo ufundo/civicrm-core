@@ -18,6 +18,7 @@
 /**
  * Settings metadata file
  */
+
 return [
   'show_events' => [
     'name' => 'show_events',

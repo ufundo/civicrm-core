@@ -14,9 +14,11 @@
  * @package CRM
  * @copyright CiviCRM LLC https://civicrm.org/licensing
  */
+
 /*
  * Settings metadata file
  */
+
 $optimizationSeeAlso = '<br/>' . ts('See also: <a href="%1">Search Optimization</a>', [1 => 'https://docs.civicrm.org/sysadmin/en/latest/setup/optimizations/" target="_blank"']);
 $searchConfigSeeAlso = '<br/>' . ts('See also: <a %1>Search Configuration Options</a>', [1 => 'https://docs.civicrm.org/en/user/latest/initial-set-up/customizing-the-user-interface/#customizing-search-preferences" target="_blank"']);
 return [
