@@ -17,6 +17,8 @@
 
 /**
  * Settings metadata file
+ *
+ * These settings are available at bootstrap
  */
 return [
   'civicrm_db_dsn' => [

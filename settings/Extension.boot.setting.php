@@ -16,6 +16,8 @@
  */
 /*
  * Settings metadata file
+ *
+ * These settings are available at bootstrap
  */
 return [
   'ext_repo_url' => [

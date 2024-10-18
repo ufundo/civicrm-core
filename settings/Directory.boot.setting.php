@@ -14,10 +14,12 @@
  * @package CRM
  * @copyright CiviCRM LLC https://civicrm.org/licensing
  */
+
 /*
  * Settings metadata file
+ *
+ * These settings are available at bootstrap
  */
-
 return [
   // This setting was included in SettingsManager::getSystemDefaults but not in settings meta files - unsure if still needed/used?
   'resourceBase' => [
@@ -28,7 +30,6 @@ return [
     'default' => '[civicrm.root]/',
   ],
   'uploadDir' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap.',
     'group_name' => 'Directory Preferences',
     'group' => 'directory',
     'name' => 'uploadDir',
@@ -44,7 +45,6 @@ return [
     'settings_pages' => ['path' => ['weight' => 40]],
   ],
   'imageUploadDir' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap.',
     'group_name' => 'Directory Preferences',
     'group' => 'directory',
     'name' => 'imageUploadDir',
@@ -61,7 +61,6 @@ return [
     'settings_pages' => ['path' => ['weight' => 50]],
   ],
   'customFileUploadDir' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap.',
     'group_name' => 'Directory Preferences',
     'group' => 'directory',
     'name' => 'customFileUploadDir',
@@ -78,7 +77,6 @@ return [
     'settings_pages' => ['path' => ['weight' => 60]],
   ],
   'customTemplateDir' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap.',
     'group_name' => 'Directory Preferences',
     'group' => 'directory',
     'name' => 'customTemplateDir',
@@ -95,7 +93,6 @@ return [
     'settings_pages' => ['path' => ['weight' => 70]],
   ],
   'customPHPPathDir' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap.',
     'group_name' => 'Directory Preferences',
     'group' => 'directory',
     'name' => 'customPHPPathDir',
@@ -112,7 +109,6 @@ return [
     'settings_pages' => ['path' => ['weight' => 80]],
   ],
   'extensionsDir' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap.',
     'group_name' => 'Directory Preferences',
     'group' => 'directory',
     'name' => 'extensionsDir',

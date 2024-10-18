@@ -14,9 +14,13 @@
  * @package CRM
  * @copyright CiviCRM LLC https://civicrm.org/licensing
  */
+
 /*
  * Settings metadata file
+ *
+ * These settings are available at bootstrap
  */
+
 return [
   'userFrameworkBaseURL' => [
     'group_name' => 'URL Preferences',
