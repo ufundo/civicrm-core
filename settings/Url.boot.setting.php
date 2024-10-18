@@ -35,7 +35,6 @@ return [
     'add' => '5.80',
   ],
   'userFrameworkResourceURL' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap. Defaults are loaded via SettingsBag::getSystemDefaults().',
     'group' => 'url',
     'group_name' => 'URL Preferences',
     'name' => 'userFrameworkResourceURL',
@@ -52,7 +51,6 @@ return [
     'validate_callback' => 'CRM_Utils_Rule::urlish',
   ],
   'imageUploadURL' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap. Defaults are loaded via SettingsBag::getSystemDefaults().',
     'group' => 'url',
     'group_name' => 'URL Preferences',
     'title' => ts('Image Upload URL'),
@@ -69,7 +67,6 @@ return [
     'validate_callback' => 'CRM_Utils_Rule::urlish',
   ],
   'customCSSURL' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap. Defaults are loaded via SettingsBag::getSystemDefaults().',
     'group' => 'url',
     'group_name' => 'URL Preferences',
     'name' => 'customCSSURL',
@@ -86,7 +83,6 @@ return [
     'validate_callback' => 'CRM_Utils_Rule::urlish',
   ],
   'extensionsURL' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap. Defaults are loaded via SettingsBag::getSystemDefaults().',
     'group' => 'url',
     'group_name' => 'URL Preferences',
     'title' => ts('Extension Resource URL'),

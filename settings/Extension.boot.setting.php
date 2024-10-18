@@ -37,7 +37,6 @@ return [
     'help_text' => '',
   ],
   'ext_max_depth' => [
-    'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap. Defaults are loaded via SettingsBag::getSystemDefaults().',
     'group_name' => 'Extension Preferences',
     'group' => 'ext',
     'name' => 'ext_max_depth',
