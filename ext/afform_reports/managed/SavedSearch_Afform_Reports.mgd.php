@@ -57,6 +57,9 @@ return [
               'dataType' => 'String',
               'label' => E::ts('Title'),
               'sortable' => TRUE,
+              'cssRules' => [
+                ['font-bold'],
+              ],
             ],
             [
               'type' => 'field',
