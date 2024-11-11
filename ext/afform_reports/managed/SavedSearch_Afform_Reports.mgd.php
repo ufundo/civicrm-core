@@ -25,12 +25,7 @@ return [
           'orderBy' => [],
           'where' => [
             ['server_route', 'IS NOT EMPTY'],
-            ['type:name', '=', 'search'],
-            [
-              'placements',
-              '!=',
-              'afsearchAfformReports',
-            ],
+            ['placement:name', 'CONTAINS', 'reports'],
           ],
         ],
       ],
@@ -50,7 +45,7 @@ return [
         'saved_search_id.name' => 'Afform_Reports',
         'type' => 'table',
         'settings' => [
-          'description' => E::ts(NULL),
+          'description' => E::ts(''),
           'sort' => [],
           'limit' => 50,
           'pager' => [],
