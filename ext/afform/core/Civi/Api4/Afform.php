@@ -143,6 +143,7 @@ class Afform extends Generic\AbstractEntity {
         [
           'name' => 'name',
           'title' => E::ts('Name'),
+          'input_type' => 'Text',
         ],
         [
           'name' => 'type',
@@ -169,6 +170,7 @@ class Afform extends Generic\AbstractEntity {
           'name' => 'title',
           'title' => E::ts('Title'),
           'required' => $self->getAction() === 'create',
+          'input_type' => 'Text',
         ],
         [
           'name' => 'description',
