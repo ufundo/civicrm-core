@@ -4,6 +4,7 @@
 .composer-downloads
 /ext/*
 !/ext/afform
+!/ext/afform_reports
 !/ext/standaloneusers
 !/ext/authx
 !/ext/civigrant
