@@ -25,7 +25,7 @@ class GetAfforms extends \Civi\Api4\Generic\BasicBatchAction {
     'afblockCustom',
     'afformUpdateCustom',
     'afformCreateCustom',
-    //'afsearchCustom',
+    'afsearchTabCustom',
   ];
 
   /**
@@ -44,7 +44,8 @@ class GetAfforms extends \Civi\Api4\Generic\BasicBatchAction {
   protected array $formTypes = ['block', 'form', 'search'];
 
   protected function getSelect() {
-      return ['id', 'name', 'title', 'is_multiple', 'help_pre', 'help_post', 'extends', 'icon'];
+    return ['id', 'name', 'title', 'is_multiple',
+      'help_pre', 'help_post', 'extends', 'icon', 'style'];
   }
 
   protected function doTask($item) {
@@ -77,12 +78,15 @@ class GetAfforms extends \Civi\Api4\Generic\BasicBatchAction {
           }
           break;
 
-        // TODO: implement search kit listings for multi value
-        // case 'search':
-        //   if ($item['is_multiple']) {
-        //     $forms[] = $this->generateSearchForm($item);
-        //   }
-        //   break;
+        case 'search':
+          if (
+            $item['is_multiple']
+            && ($item['style'] === 'Tab with table')
+            && CoreUtil::isContact($item['extends'])
+          ) {
+            $forms[] = $this->generateTabForm($item);
+          }
+          break;
       }
     }
 
@@ -210,6 +214,40 @@ class GetAfforms extends \Civi\Api4\Generic\BasicBatchAction {
       );
     }
     return $afform;
+  }
+
+  private function generateTabForm($item): array {
+    $afform = [
+      // name required to replace the existing tab
+      'name' => 'afsearchTabCustom_' . $item['name'],
+      'description' => E::ts('Contact summary tab display for %1', [1 => $item['title']]),
+      'type' => 'search',
+      'is_public' => FALSE,
+      // Q: how to restrict this appropriately?
+      // for now default to administer
+      // 'permission' => ['access CiviCRM'],
+      'title' => $item['title'],
+      'icon' => $item['icon'],
+    ];
+    if ($item['extends'] === 'Contact') {
+      $tabForm['placement'] = ['contact_summary_tab'];
+    }
+    elseif (CoreUtil::isContact($item['extends'])) {
+      $tabForm['placement'] = ['contact_summary_tab'];
+      $tabForm['summary_contact_type'] = [$item['extends']];
+    }
+    else {
+      // TODO implement tabs for other tabsets
+    }
+    if ($this->getLayout) {
+      // TODO: the template should be a table or grid depending
+      // on $item['style']
+      $tabForm['layout'] = \CRM_Core_Smarty::singleton()->fetchWith(
+        'afform/customGroups/afsearch.tpl',
+        ['group' => $item]
+      );
+    }
+    return $tabForm;
   }
 
   public static function getCustomGroupAfforms($event) {
