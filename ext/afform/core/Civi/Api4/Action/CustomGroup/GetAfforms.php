@@ -25,7 +25,7 @@ class GetAfforms extends \Civi\Api4\Generic\BasicBatchAction {
     'afblockCustom',
     'afformUpdateCustom',
     'afformCreateCustom',
-    //'afsearchCustom',
+    'afsearchCustom',
   ];
 
   /**
@@ -77,12 +77,11 @@ class GetAfforms extends \Civi\Api4\Generic\BasicBatchAction {
           }
           break;
 
-        // TODO: implement search kit listings for multi value
-        // case 'search':
-        //   if ($item['is_multiple']) {
-        //     $forms[] = $this->generateSearchForm($item);
-        //   }
-        //   break;
+        case 'search':
+          if ($item['is_multiple']) {
+            $forms[] = $this->generateSearchForm($item);
+          }
+          break;
       }
     }
 
@@ -206,6 +205,32 @@ class GetAfforms extends \Civi\Api4\Generic\BasicBatchAction {
           ],
           'urlAutofill' => FALSE,
           'blockDirective' => _afform_angular_module_name('afblockCustom_' . $item['name'], 'dash'),
+        ]
+      );
+    }
+    return $afform;
+  }
+
+  private function generateSearchForm($item): array {
+    $afform = [
+      'name' => 'afsearchCustom_' . $item['name'],
+      'type' => 'search',
+      'title' => E::ts('View %1', [1 => $item['title']]),
+      'description' => '',
+      'is_public' => FALSE,
+      // Q: how to restrict this appropriately?
+      // for now default to administer
+      // 'permission' => ['access CiviCRM'],
+      'server_route' => 'civicrm/af/custom/' . $item['name'] . '/list',
+      'icon' => $item['icon'],
+    ];
+    if ($this->getLayout) {
+      // TODO: the template should be a table or grid depending
+      // on $item['style']
+      $afform['layout'] = \CRM_Core_Smarty::singleton()->fetchWith(
+        'afform/customGroups/afsearch.tpl',
+        [
+          'group' => $item,
         ]
       );
     }
