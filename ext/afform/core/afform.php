@@ -79,6 +79,7 @@ function afform_civicrm_managed(&$entities, $modules) {
   if ($modules && !in_array(E::LONG_NAME, $modules, TRUE)) {
     return;
   }
+
   /** @var \CRM_Afform_AfformScanner $scanner */
   if (\Civi::container()->has('afform_scanner')) {
     $scanner = \Civi::service('afform_scanner');
@@ -145,6 +146,7 @@ function afform_civicrm_managed(&$entities, $modules) {
       ];
     }
   }
+
 }
 
 /**
