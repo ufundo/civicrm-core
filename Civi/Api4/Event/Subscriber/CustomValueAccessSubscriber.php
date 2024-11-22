@@ -71,7 +71,11 @@ class CustomValueAccessSubscriber extends \Civi\Core\Service\AutoService impleme
       return;
     }
 
-    $group = \CRM_Core_BAO_CustomGroup::getGroup(['name' => $apiRequest->getCustomGroup()]);
+    $group = \Civi\Api4\CustomGroup::get(FALSE)
+      ->addSelect('name', 'min_multiple', 'max_multiple')
+      ->addWhere('name', '=', $apiRequest->getCustomGroup())
+      ->addWhere('is_multiple', '=', TRUE)
+      ->execute()->first();
 
     if (!$group) {
       return;
