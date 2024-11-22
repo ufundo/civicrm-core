@@ -21,6 +21,7 @@ return [
             'description',
             'placement:label',
             'server_route',
+            'base_module:label',
           ],
           'orderBy' => [],
           'where' => [
@@ -66,6 +67,13 @@ return [
               'key' => 'description',
               'dataType' => 'String',
               'label' => E::ts('Description'),
+              'sortable' => TRUE,
+            ],
+            [
+              'type' => 'field',
+              'key' => 'base_module:label',
+              'dataType' => 'String',
+              'label' => E::ts('Extension'),
               'sortable' => TRUE,
             ],
             [
