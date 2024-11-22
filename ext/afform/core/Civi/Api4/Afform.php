@@ -149,6 +149,7 @@ class Afform extends Generic\AbstractEntity {
           'title' => E::ts('Type'),
           'pseudoconstant' => ['optionGroupName' => 'afform_type'],
           'default_value' => 'form',
+          'input_type' => 'Select',
         ],
         [
           'name' => 'requires',
@@ -173,6 +174,7 @@ class Afform extends Generic\AbstractEntity {
         [
           'name' => 'description',
           'title' => E::ts('Description'),
+          'input_type' => 'Text',
         ],
         [
           'name' => 'placement',
@@ -329,6 +331,7 @@ class Afform extends Generic\AbstractEntity {
           'description' => 'Name of extension which provides this form',
           'readonly' => TRUE,
           'pseudoconstant' => ['callback' => ['CRM_Core_BAO_Managed', 'getBaseModules']],
+          'input_type' => 'Select',
         ];
         $fields[] = [
           'name' => 'search_displays',
