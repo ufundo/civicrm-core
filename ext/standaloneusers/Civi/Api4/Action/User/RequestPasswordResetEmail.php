@@ -6,11 +6,9 @@ namespace Civi\Api4\Action\User;
 // clicking button on form with proper token does nothing.
 // should redirect to login on success
 
-use Civi;
 use Civi\Api4\Generic\Result;
 use API_Exception;
 use Civi\Api4\User;
-use Civi\Standalone\Security;
 use Civi\Api4\Generic\AbstractAction;
 
 /**
@@ -22,7 +20,7 @@ use Civi\Api4\Generic\AbstractAction;
  *
  * @method static setIdentifier(string $identifier)
  */
-class SendPasswordReset extends AbstractAction {
+class RequestPasswordResetEmail extends AbstractAction {
 
   /**
    * Username or email of user to send email for.
@@ -66,23 +64,11 @@ class SendPasswordReset extends AbstractAction {
     }
 
     if ($userID) {
-      // (Re)generate token and store on User.
-      $token = static::updateToken($userID);
-
-      $workflowMessage = Security::singleton()->preparePasswordResetWorkflow($user, $token);
-      if ($workflowMessage) {
-        // The template_params are used in the template like {$resetUrlHtml} and {$resetUrlHtml} {$usernamePlaintext} {$usernameHtml}
-        try {
-          [$sent, /*$subject, $text, $html*/] = $workflowMessage->sendTemplate();
-          if (!$sent) {
-            throw new \RuntimeException("sendTemplate() returned unsent.");
-          }
-          Civi::log()->info("Successfully sent password reset to user {userID} ({username}) to {email}", $workflowMessage->getParamsForLog());
-        }
-        catch (\Exception $e) {
-          Civi::log()->error("Failed to send password reset to user {userID} ({username}) to {email}", $workflowMessage->getParamsForLog() + ['exception' => $e]);
-        }
-      }
+      // we've got through all the guards - now use the
+      // internal API action to actually send the email
+      User::sendPasswordResetEmail(FALSE)
+        ->addWhere('id', '=', $userID)
+        ->execute();
     }
 
     // Ensure we took at least 0.25s. The assumption is that it takes
@@ -91,31 +77,6 @@ class SendPasswordReset extends AbstractAction {
     // thwart concerted timing attacks, but in combination with flood
     // control, it might help.
     usleep(1000000 * max(0, $endNoSoonerThan - microtime(TRUE)));
-  }
-
-  /**
-   * Generate and store a token on the User record.
-   *
-   * @param int $userID
-   *
-   * @return string
-   *   The token
-   */
-  public static function updateToken(int $userID): string {
-    // Generate a JWT that expires in 1 hour.
-    // We'll store this on the User record, that way invalidating any previous token that may have been generated.
-    $expires = time() + 60 * 60;
-    $token = \Civi::service('crypto.jwt')->encode([
-      'exp' => $expires,
-      'sub' => "uid:$userID",
-      'scope' => Security::PASSWORD_RESET_SCOPE,
-    ]);
-    User::update(FALSE)
-      ->addValue('password_reset_token', $token)
-      ->addWhere('id', '=', $userID)
-      ->execute();
-
-    return $token;
   }
 
 }
