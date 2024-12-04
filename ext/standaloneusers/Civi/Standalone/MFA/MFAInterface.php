@@ -25,4 +25,14 @@ interface MFAInterface {
    */
   public function processMFAAttempt(array $pending, $code): bool;
 
+  /**
+   * User-facing label for the MFA provider
+   */
+  public static function getLabel(): string;
+
+  /**
+   * User-facing description for the MFA provider
+   */
+  public static function getDescription(): string;
+
 }

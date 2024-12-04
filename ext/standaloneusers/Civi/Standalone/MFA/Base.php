@@ -74,21 +74,33 @@ class Base {
    * setting.
    *
    */
-  public static function getMFAclasses(): array {
-    $mfas = ['TOTP'];
+  public static function getMfaOptions(): array {
+    $mfaClasses = ['TOTP'];
     // Create an event object with all the data you wan to pass in.
-    $event = GenericHookEvent::create(['mfaClasses' => &$mfas]);
+    $event = GenericHookEvent::create(['mfaClasses' => &$mfaClasses]);
     \Civi::dispatcher()->dispatch('civi.standalone.altermfaclasses', $event);
-    // Check the list looks ok.
-    $legit = [];
-    foreach ($mfas as $shortClassName) {
+    // Build the list
+    $options = [];
+    foreach ($mfaClasses as $shortClassName) {
       $mfaClass = "Civi\\Standalone\\MFA\\$shortClassName";
-      if (is_subclass_of($mfaClass, 'Civi\\Standalone\\MFA\\MFAInterface') && class_exists($mfaClass)) {
-        // The code is available, all good.
-        $legit[$shortClassName] = $shortClassName;
+      if (!class_exists($mfaClass) || !is_subclass_of($mfaClass, 'Civi\\Standalone\\MFA\\MFAInterface')) {
+        // invalid class => skip
+        continue;
       }
+
+      // TODO: work out why we cant display description meta in a setting select2
+      // $option = [
+      //   'value' => $shortClassName,
+      //   'label' => $mfaClass::getLabel(),
+      //   'description' => $mfaClass::getDescription(),
+      // ];
+
+      $label = $mfaClass::getLabel();
+      $description = $mfaClass::getDescription();
+
+      $options[$shortClassName] = "{$label} ({$description})";
     }
-    return $legit;
+    return $options;
   }
 
   /**

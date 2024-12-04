@@ -10,6 +10,14 @@ use CRM_Core_DAO;
  */
 class TOTP extends Base implements MFAInterface {
 
+  public static function getLabel(): string {
+    return 'TOTP';
+  }
+
+  public static function getDescription(): string {
+    return 'Time-based One-Time Password which requires an authenticator app to provide a code.';
+  }
+
   public function getFormUrl(): string {
     // Is TOTP set up for this user?
     return $this->userHasCompletedSetup() ? "/civicrm/mfa/totp" : '/civicrm/mfa/totp-setup';
