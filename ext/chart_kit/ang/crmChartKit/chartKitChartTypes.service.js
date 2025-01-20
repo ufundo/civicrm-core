@@ -7,7 +7,7 @@
     chartKitRow,
     chartKitStack,
     chartKitGridCompareColumns,
-    chartKitSeries
+    chartKitGridCompareSeries
   ) => {
 
     const ts = CRM.ts('chart_kit');
@@ -44,10 +44,10 @@
         service: chartKitStack
       },
       {
-        key: 'series',
-        label: ts('Series'),
+        key: 'compare-series',
+        label: ts('Compare Series'),
         icon: 'fa-chart-gantt',
-        service: chartKitSeries
+        service: chartKitGridCompareSeries
       },
       {
         key: 'compare-columns',
