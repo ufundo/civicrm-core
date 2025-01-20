@@ -7,7 +7,8 @@
     chartKitRow,
     chartKitGridStackColumns,
     chartKitGridCompareColumns,
-    chartKitGridCompareSeries
+    chartKitGridCompareSeries,
+    chartKitGridStackSeries,
   ) => {
 
     const ts = CRM.ts('chart_kit');
@@ -42,6 +43,12 @@
         label: ts('Area'),
         icon: 'fa-chart-area',
         service: chartKitGridStackColumns
+      },
+      {
+        key: 'stack-series',
+        label: ts('Stack Series'),
+        icon: 'fa-layer-group',
+        service: chartKitGridStackSeries,
       },
       {
         key: 'compare-series',
