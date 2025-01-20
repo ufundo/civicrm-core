@@ -1,8 +1,8 @@
 (function (angular, $, _, dc) {
     "use strict";
 
-    angular.module('crmChartKit').factory('chartKitComposite', () => ({
-        adminTemplate: '~/crmChartKit/chartTypes/chartKitCompositeAdmin.html',
+    angular.module('crmChartKit').factory('chartKitGridCompareColumns', () => ({
+        adminTemplate: '~/crmChartKit/chartTypes/chartKitGridCompareColumns.html',
 
 
         getInitialDisplaySettings: () => ({

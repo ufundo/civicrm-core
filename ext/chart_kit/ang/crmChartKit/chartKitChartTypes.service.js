@@ -6,7 +6,7 @@
     chartKitPie,
     chartKitRow,
     chartKitStack,
-    chartKitComposite,
+    chartKitGridCompareColumns,
     chartKitSeries
   ) => {
 
@@ -50,10 +50,10 @@
         service: chartKitSeries
       },
       {
-        key: 'composite',
-        label: ts('Combined'),
+        key: 'compare-columns',
+        label: ts('Compare Columns'),
         icon: 'fa-layer-group',
-        service: chartKitComposite
+        service: chartKitGridCompareColumns
       },
     ];
   });
