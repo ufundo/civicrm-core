@@ -2,15 +2,16 @@
     "use strict";
 
     angular.module('crmChartKit').factory('chartKitPie', () => ({
-      adminTemplate: '~/crmChartKit/chartTypes/chartKitPieAdmin.html',
+      adminTemplate: '~/crmChartKit/chartTypes/chartKitPie.html',
 
       getAxes: () => ({
-        'x': {
+        'w': {
           label: ts('Category'),
-          reduceTypes: [],
+          reduceTypes: ['list'],
           scaleTypes: ['categorical'],
           // label is default to show what things are
           dataLabelTypes: ['label', 'title', 'none'],
+          multiColumn: true,
         },
         'y': {
           label: ts('Values'),
@@ -24,12 +25,14 @@
         }
       }),
 
-      hasCoordinateGrid: () => false,
-
       showLegend: (displayCtrl) => (displayCtrl.settings.showLegend && displayCtrl.settings.showLegend !== 'none'),
 
       // for pie chart the legend is showing column values, which benefit from rendering
-      legendTextAccessor: (displayCtrl) => ((d) => (d.name === 'Others') ? 'Others' : displayCtrl.renderColumnValue(d.data, displayCtrl.getXColumn())),
+      legendTextAccessor: (displayCtrl) => ((d) =>
+        (d.name === 'Others') ?
+          'Others' :
+          displayCtrl.getColumnsForAxis('w').map((col) => displayCtrl.renderColumnValue(d.data, col)).join(' - ')
+      ),
 
       getInitialDisplaySettings: () => ({
         showLegend: 'left',
