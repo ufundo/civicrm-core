@@ -5,7 +5,7 @@
   angular.module('crmChartKit').factory('chartKitChartTypes', (
     chartKitPie,
     chartKitRow,
-    chartKitStack,
+    chartKitGridStackColumns,
     chartKitGridCompareColumns,
     chartKitGridCompareSeries
   ) => {
@@ -29,19 +29,19 @@
         key: 'line',
         label: ts('Line'),
         icon: 'fa-line-chart',
-        service: chartKitStack
+        service: chartKitGridStackColumns
       },
       {
         key: 'bar',
         label: ts('Bar'),
         icon: 'fa-chart-column',
-        service: chartKitStack
+        service: chartKitGridStackColumns
       },
       {
         key: 'area',
         label: ts('Area'),
         icon: 'fa-chart-area',
-        service: chartKitStack
+        service: chartKitGridStackColumns
       },
       {
         key: 'compare-series',
