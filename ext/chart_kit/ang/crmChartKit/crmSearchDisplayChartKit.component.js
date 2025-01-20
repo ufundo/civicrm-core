@@ -372,7 +372,7 @@
                         .dimension(this.dimension)
                         .group(this.group)
                         // default value is just the first y co-ordinate
-                        .valueAccessor(this.getValueAccessor(this.getColumnsForAxis('y')[0]));
+                        .valueAccessor(this.getValueAccessor(this.getFirstColumnForAxis('y')));
                 }
             };
 
@@ -527,7 +527,7 @@
                 return col;
             });
 
-            this.getXColumn = () => this.getColumnsForAxis('x')[0];
+            this.getFirstColumnForAxis = (axisKey) => this.getColumns().find((col) => col.axis === axisKey);
 
             this.getOrderColumn = () => this.getColumns()[parseInt(this.settings.chartOrderColIndex ? this.settings.chartOrderColIndex : 0)];
 
