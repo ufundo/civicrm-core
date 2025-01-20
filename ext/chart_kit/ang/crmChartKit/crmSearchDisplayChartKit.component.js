@@ -269,7 +269,7 @@
                         .dimension(this.dimension)
                         .group(this.group)
                         // default value is just the first y co-ordinate
-                        .valueAccessor(this.getValueAccessor(this.getColumnsForAxis('y')[0]));
+                        .valueAccessor(this.getValueAccessor(this.getFirstColumnForAxis('y')));
                 }
             };
 
@@ -389,6 +389,8 @@
 
             this.getColumnsForAxis = (axisKey) => this.getColumns().filter((col) => col.axis === axisKey);
 
+            this.getFirstColumnForAxis = (axisKey) => this.getColumns().find((col) => col.axis === axisKey);
+
             /**
              * Get the reducer for a column, based on its reduceType key
              * ( defaults to returning the "list" reducer if reduceType isn't set )
@@ -404,8 +406,6 @@
                 col.reducer = this.getReducerForColumn(col);
                 return col;
             });
-
-            this.getXColumn = () => this.getColumnsForAxis('x')[0];
 
             this.getOrderColumn = () => this.getColumns()[parseInt(this.settings.chartOrderColIndex ? this.settings.chartOrderColIndex : 0)];
 
