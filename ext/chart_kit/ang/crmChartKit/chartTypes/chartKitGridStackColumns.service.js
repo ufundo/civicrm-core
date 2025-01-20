@@ -3,8 +3,8 @@
 
     // common renderer for line/bar/area charts, which will stack by default
     // (compare with composite chart, where each column can be line/bar/area )
-    angular.module('crmChartKit').factory('chartKitStack', () => ({
-        adminTemplate: '~/crmChartKit/chartTypes/chartKitStackAdmin.html',
+    angular.module('crmChartKit').factory('chartKitGridStackColumns', () => ({
+        adminTemplate: '~/crmChartKit/chartTypes/chartKitGridStackColumns.html',
 
         getInitialDisplaySettings: () => ({}),
 
@@ -31,9 +31,13 @@
           });
         },
 
-        hasCoordinateGrid: () => true,
+        getCoordinateGridAxes: () => ['x', 'y'],
 
-        showLegend: (displayCtrl) => (displayCtrl.getColumnsForAxis('y').length > 1 && displayCtrl.settings.showLegend && displayCtrl.settings.showLegend !== 'none'),
+        showLegend: (displayCtrl) => (
+            displayCtrl.getColumnsForAxis('y').length > 1 &&
+            displayCtrl.settings.showLegend &&
+            displayCtrl.settings.showLegend !== 'none'
+        ),
 
         getChartConstructor: (displayCtrl) => (displayCtrl.settings.chartType === 'bar') ? dc.barChart : dc.lineChart,
 
@@ -43,15 +47,14 @@
 
             const yAxisColumns = displayCtrl.getColumnsForAxis('y');
 
-            // get the first y column for the initial group
-            const firstY = yAxisColumns[0];
-
-            displayCtrl.chart.group(displayCtrl.group, firstY.label, displayCtrl.getValueAccessor(firstY));
-
-            // if we have more left then stack others on top
-            yAxisColumns.slice(1).forEach((col) =>
-                displayCtrl.chart.stack(displayCtrl.group, col.label, displayCtrl.getValueAccessor(col))
-            );
+            // group the first and then stack additional y columns
+            yAxisColumns.forEach((col, i) => {
+                if (i === 0) {
+                  displayCtrl.chart.group(displayCtrl.group, col.label, displayCtrl.getValueAccessor(col))
+                } else {
+                  displayCtrl.chart.stack(displayCtrl.group, col.label, displayCtrl.getValueAccessor(col))
+                }
+            });
 
             displayCtrl.chart.colors(displayCtrl.buildColumnColorScale(yAxisColumns));
 
@@ -62,4 +65,3 @@
         }
     }));
 })(angular, CRM.$, CRM._, CRM.chart_kit.dc);
-
