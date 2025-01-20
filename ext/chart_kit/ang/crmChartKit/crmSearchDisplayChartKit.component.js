@@ -28,8 +28,20 @@
                 this.chartContainer = $('.crm-chart-kit-chart-container', $element)[0];
 
                 // add our trait functions to the pre and post search hooks
-                this.onPreRun.push(() => this.alwaysSortByXAscending());
+                this.onPreRun.push(() => {
+                    // exit early if no chart type
+                    if (!this.initChartType()) {
+                        return;
+                    }
+
+                    this.alwaysSortByXAscending();
+                });
                 this.onPostRun.push(() => {
+                    // exit early if no chart type
+                    if (!this.initChartType()) {
+                        return;
+                    }
+
                     this.renderChart();
                     // trigger re-rendering as you edit settings
                     // TODO: could this be quite js intensive on the client browser? should we make it optional?
@@ -38,19 +50,40 @@
                 });
             };
 
+            this.getSortKeys = () => this.getDimCols().map((col) => col.key);
+
+            this.getDimCols = () => {
+                // getColumns filters out columns that dont apply to the current
+                // chart type :)
+                const wCols = this.getColumnsForAxis('w');
+                const xCols = this.getColumnsForAxis('x');
+
+                // merge and map to column keys
+                return xCols.concat(wCols);
+            };
+
             this.alwaysSortByXAscending = () => {
-                this._currentSortKey = this.getXColumn().key;
+                const sortKeys = this.getSortKeys();
+
+                // stash a serialised string for quick checking in onSettingsChange
+                this._currentSortKeys = sortKeys.join(',');
                 // always sort the query by X axis - we can handle differently when we pass to d3
                 // but this is the only way to get magic that the server knows about the order
                 // (like option groups / month order etc)
-                this.sort = this.settings.sort = [[this._currentSortKey, 'ASC']];
+                this.settings.sort = sortKeys.map((key) => [key, 'ASC']);
             };
 
             this.onSettingsChange = (newSettings, oldSettings) => {
-                // if X column key changes, we need to re-run the search to get new ordering
+                // just in case the chart type has been removed somehow
+                if (!this.initChartType()) {
+                    return;
+                }
+
+                // if sort keys have changed, we need to re-run the search to get new ordering
                 // from the server
-                if (newSettings.columns.find((col) => col.axis === 'x').key !== this._currentSortKey) {
-                    this.getResultsPronto();
+                const newSortKeysSerialised = this.getSortKeys().join(',');
+                if (this._currentSortKeys !== newSortKeysSerialised) {
+                    this.getResultsSoon();
                 } else {
                     // just rerender on the front end
                     this.renderChart();
@@ -60,16 +93,11 @@
             // this provides the common render steps - which chart types can then hook
             // into at different points
             this.renderChart = () => {
-                if (!this.settings.chartType) {
-                    this.chartContainer.innerText = ts('No chart type selected.');
-                    return;
-                }
                 if (this.results.length === 0) {
                     // show a no results type thing
                     this.chartContainer.innerText = ts('Search returned no results.');
                     return;
                 }
-                this.initChartType();
 
                 // loads search results data into crossfilter
                 this.buildCrossfilter();
@@ -94,8 +122,21 @@
             };
 
             this.initChartType = () => {
-                const type = chartKitChartTypes.find((type) => type.key === this.settings.chartType);
+                if (!this.settings.chartType) {
+                    this.chartContainer.innerText = ts('No chart type selected.');
+                    return false;
+                }
+                const type = chartKitTypes.find((type) => type.key === this.settings.chartType);
+                if (!type) {
+                    this.chartContainer.innerText = ts('Unrecognised chart type: ' + this.settings.chartType);
+                    return false;
+                }
+                if (!type.service) {
+                    this.chartContainer.innerText = ts('No service available for chart type: ' + this.settings.chartType);
+                    return false;
+                }
                 this.chartType = type.service;
+                return true;
             };
 
             this.buildCrossfilter = () => {
@@ -157,16 +198,22 @@
             };
 
             this.buildDimension = () => {
-
                 if (this.chartType.buildDimension) {
                     this.chartType.buildDimension(this);
                     return;
                 }
 
-                // 99 times out of 100 the x axis will be column 0, but let's be sure
-                // (assume there's only one x axis column)
-                const xColumnIndex = this.getXColumn().index;
-                this.dimension = this.ndx.dimension((d) => d[xColumnIndex]);
+                const colIndexes = this.getDimCols().map((col) => col.index)
+
+                if (colIndexes.length > 1) {
+                  // dimension is multi-column
+                  this.dimension = this.ndx.dimension((d) => colIndexes.map((i) => d[i]));
+                }
+                else {
+                  // this is a long way round to "get X column values"
+                  const colIndex = colIndexes[0];
+                  this.dimension = this.ndx.dimension((d) => d[colIndex]);
+                }
             };
 
             this.buildGroup = () => {
@@ -176,18 +223,76 @@
                     return;
                 }
 
-                const cols = this.getColumnsWithReducers();
+                // define our custom reducer functions based on the reduceType of each column
+                const reduceAdd = (p, v) => this.getColumns().map((col) => {
+                    switch (col.reduceType) {
+                        case 'mean':
+                            const previous = p[col.index];
+                            return [
+                                previous[0] + v[col.index],
+                                previous[1] + 1
+                            ];
+                        case 'list':
+                            // add the new value if we dont already have it
+                            if (p[col.index].indexOf(v[col.index]) < 0) {
+                                p[col.index].push(v[col.index]);
+                            }
 
-                // reduce every coordinate using the functions from its column reduce type
-                const reduceAdd = (p, v) => cols.map((col) => {
-                    return col.reducer.add(p[col.index], v[col.index]);
+                            return p[col.index];
+                        // we track the same value for percentages
+                        // we'll just divide by the total across all
+                        // records when displaying
+                        case 'percentage_count':
+                        case 'count':
+                            // just increment the record counter
+                            return p[col.index] + 1;
+                        case 'percentage_sum':
+                        case 'sum':
+                        default:
+                            // default reduce type is SUM
+                            return p[col.index] + v[col.index];
+                    }
                 });
-                const reduceSub = (p, v) => cols.map((col) => {
-                    return col.reducer.sub(p[col.index], v[col.index]);
+                const reduceSub = (p, v) => this.getColumns().map((col) => {
+                    switch (col.reduceType) {
+                        case 'mean':
+                            // increment the SUM and COUNT sub-coordinates
+                            const previous = p[col.index];
+                            return [
+                                previous[0] - v[col.index],
+                                previous[1] - 1
+                            ];
+                        case 'list':
+                            // remove value from the list
+                            return p[col.index].filter((item) => (item !== v[col.index]));
+                        case 'percentage_count':
+                        case 'count':
+                            // just decrement the record counter
+                            return p[col.index] - 1;
+                        case 'percentage_sum':
+                        case 'sum':
+                        default:
+                            // default reduce type is SUM
+                            return p[col.index] - v[col.index];
+                    }
                 });
-                const reduceStart = () => cols.map((col) => {
-                    return col.reducer.start();
+                // start with an array of "zeroes"
+                // though what zero is depends on the reduce type...
+                // NOTE we dont use getColumns because we need to leave gaps
+                // in the starting array for unset columns (which are excluded from getColumns)
+                const reduceStart = () => this.settings.columns.map((col) => {
+                    switch (col.reduceType) {
+                        case 'mean':
+                            // sub-coordinates for SUM and COUNT
+                            return [0, 0];
+                        case 'list':
+                            return [];
+                        default:
+                            // COUNT or SUM
+                            return 0;
+                    }
                 });
+
 
                 this.group = this.dimension.group().reduce(reduceAdd, reduceSub, reduceStart);
 
@@ -206,7 +311,7 @@
                 if (this.chartType.getChartConstructor) {
                     this.chart = this.chartType.getChartConstructor(this)(this.chartContainer);
 
-                    if (this.chartType.hasCoordinateGrid()) {
+                    if (this.chartType.getCoordinateGridAxes) {
                         this.buildCoordinateGrid();
                     }
 
@@ -226,11 +331,9 @@
             };
 
             this.buildCoordinateGrid = () => {
-                this.buildXAxis();
-            };
+                const gridAxes = this.chartType.getCoordinateGridAxes();
+                const xCol = this.getColumnsForAxis(gridAxes[0])[0];
 
-            this.buildXAxis = () => {
-                const xCol = this.getXColumn();
                 const xDomainValues = this.columnTotals[xCol.index];
                 const min = Math.min(...xDomainValues);
                 const max = Math.max(...xDomainValues);
@@ -291,7 +394,7 @@
                         chart.svg().style('background', this.settings.format.backgroundColor);
                     });
 
-                if (this.chartType.hasCoordinateGrid()) {
+                if (this.chartType.getCoordinateGridAxes) {
                     this.formatCoordinateGrid();
                 }
 
@@ -302,17 +405,11 @@
 
 
             this.formatCoordinateGrid = () => {
-                // format x axis
-                // add our label formatter to the tick values
-                // EXCEPT for dates, where DC is much cleverer
-                // than we are at adapting the date precision
-                const xCols = this.getColumnsForAxis('x');
+                const gridAxes = this.chartType.getCoordinateGridAxes();
+                const xCols = this.getColumnsForAxis(gridAxes[0]);
 
-                if (xCols.length === 1) {
-
-                    if (xCols[0].scaleType !== 'date') {
-                        this.chart.xAxis().tickFormat((v) => this.renderDataValue(v, xCols[0]));
-                    }
+                if (xCols[0].scaleType !== 'date') {
+                    this.chart.xAxis().tickFormat((v) => this.renderDataValue(v, xCols[0]));
                 }
                 this.chart.xAxisLabel(
                     this.settings.format.xAxisLabel ? this.settings.format.xAxisLabel : xCols.map((col) => col.label).join(' - ')
@@ -320,7 +417,7 @@
 
                 // for Y axis, we need to work out whether this is split left and right
                 const supportsRightYAxis = this.chart.rightYAxis;
-                const allYCols = this.getColumnsForAxis('y');
+                const allYCols = this.getColumnsForAxis(gridAxes[1]);
 
                 const leftYCols = supportsRightYAxis ? allYCols.filter((col) => !col.useRightAxis) : allYCols;
 
@@ -381,11 +478,36 @@
 
             // TODO: move everything from here down  to a util service?
 
-            this.getColumns = () => this.settings.columns.map((col, colIndex) => {
-                // we need the canonical column index to get data values
-                col.index = colIndex;
-                return col;
-            }).filter((col) => col.key);
+            this.getColumns = () => {
+
+                const chartTypeAxes = this.chartType.getAxes();
+                const singleColumnAxesFilled = [];
+
+                return this.settings.columns
+                  // filter out any columns which haven't got a set key
+                  .filter((col) => col.key)
+                  // filter out any columns on axes which aren't used for this chart type
+                  .filter((col) => Object.keys(chartTypeAxes).includes(col.axis))
+                  // filter out columns for single column axis that are already filled
+                  .filter((col) => {
+                    // multicolumn => no problem
+                    if (chartTypeAxes[col.axis].multiColumn) {
+                      return true;
+                    }
+                    // already used => ignore further columns
+                    if (singleColumnAxesFilled.includes(col.axis)) {
+                      return false;
+                    }
+                    // first column for this axis => take the slot and accept this column
+                    singleColumnAxesFilled.push(col.axis);
+                    return true;
+                  })
+                  .map((col, colIndex) => {
+                      // we need the canonical column index to get data values
+                      col.index = colIndex;
+                      return col;
+                  });
+            };
 
             this.getColumnsForAxis = (axisKey) => this.getColumns().filter((col) => col.axis === axisKey);
 
