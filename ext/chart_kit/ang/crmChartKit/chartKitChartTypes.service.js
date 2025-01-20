@@ -5,9 +5,10 @@
   angular.module('crmChartKit').factory('chartKitChartTypes', (
     chartKitPie,
     chartKitRow,
-    chartKitStack,
-    chartKitComposite,
-    chartKitSeries
+    chartKitGridCompareColumns,
+    chartKitGridStackColumns,
+    chartKitGridCompareSeries,
+    chartKitGridStackSeries,
   ) => {
 
     const ts = CRM.ts('chart_kit');
@@ -29,31 +30,43 @@
         key: 'line',
         label: ts('Line'),
         icon: 'fa-line-chart',
-        service: chartKitStack
+        service: chartKitGridStackColumns
       },
       {
         key: 'bar',
         label: ts('Bar'),
         icon: 'fa-chart-column',
-        service: chartKitStack
+        service: chartKitGridStackColumns
       },
       {
         key: 'area',
         label: ts('Area'),
         icon: 'fa-chart-area',
-        service: chartKitStack
+        service: chartKitGridStackColumns
       },
       {
-        key: 'series',
-        label: ts('Series'),
-        icon: 'fa-chart-gantt',
-        service: chartKitSeries
-      },
-      {
-        key: 'composite',
-        label: ts('Combined'),
+        key: 'stack-series',
+        label: ts('Stack Series'),
         icon: 'fa-layer-group',
-        service: chartKitComposite
+        service: chartKitGridStackSeries,
+      },
+      {
+        key: 'stack-columns',
+        label: ts('Stack Columns'),
+        icon: 'fa-layer-group',
+        service: chartKitGridStackColumns
+      },
+      {
+        key: 'compare-columns',
+        label: ts('Compare Columns'),
+        icon: 'fa-layer-group',
+        service: chartKitGridCompareColumns
+      },
+      {
+        key: 'compare-series',
+        label: ts('Compare Series'),
+        icon: 'fa-chart-gantt',
+        service: chartKitGridCompareSeries
       },
     ];
   });
