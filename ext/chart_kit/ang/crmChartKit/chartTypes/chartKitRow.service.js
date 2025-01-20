@@ -2,12 +2,13 @@
     "use strict";
 
     angular.module('crmChartKit').factory('chartKitRow', () => ({
-      adminTemplate: '~/crmChartKit/chartTypes/chartKitRowAdmin.html',
+
+      adminTemplate: '~/crmChartKit/chartTypes/chartKitRow.html',
 
       getAxes: () => ({
-        'x': {
+        'w': {
           label: ts('Category'),
-	      reduceTypes: [],
+	        reduceTypes: ['list'],
           scaleTypes: ['categorical'],
           // label is default to show what things are
           dataLabelTypes: ['label', 'title', 'none'],
@@ -25,8 +26,6 @@
           multiColumn: true,
         }
       }),
-
-      hasCoordinateGrid: () => false,
 
       // TODO could add legend to row charts?
       showLegend: () => false,
