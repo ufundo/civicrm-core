@@ -126,7 +126,7 @@
                     this.chartContainer.innerText = ts('No chart type selected.');
                     return false;
                 }
-                const type = chartKitTypes.find((type) => type.key === this.settings.chartType);
+                const type = chartKitChartTypes.find((type) => type.key === this.settings.chartType);
                 if (!type) {
                     this.chartContainer.innerText = ts('Unrecognised chart type: ' + this.settings.chartType);
                     return false;
@@ -216,6 +216,11 @@
                 }
             };
 
+            this.getColumnsWithReduceTypes = () => this.getColumns().map((col) => {
+                col.reduceType = this.getReduceTypeForColumn(col);
+                return col;
+            });
+
             this.buildGroup = () => {
 
                 if (this.chartType.buildGroup) {
@@ -223,76 +228,18 @@
                     return;
                 }
 
-                // define our custom reducer functions based on the reduceType of each column
-                const reduceAdd = (p, v) => this.getColumns().map((col) => {
-                    switch (col.reduceType) {
-                        case 'mean':
-                            const previous = p[col.index];
-                            return [
-                                previous[0] + v[col.index],
-                                previous[1] + 1
-                            ];
-                        case 'list':
-                            // add the new value if we dont already have it
-                            if (p[col.index].indexOf(v[col.index]) < 0) {
-                                p[col.index].push(v[col.index]);
-                            }
+                const columnsWithReduceTypes = this.getColumnsWithReduceTypes();
 
-                            return p[col.index];
-                        // we track the same value for percentages
-                        // we'll just divide by the total across all
-                        // records when displaying
-                        case 'percentage_count':
-                        case 'count':
-                            // just increment the record counter
-                            return p[col.index] + 1;
-                        case 'percentage_sum':
-                        case 'sum':
-                        default:
-                            // default reduce type is SUM
-                            return p[col.index] + v[col.index];
-                    }
+                // reduce every coordinate using the functions from its column reduce type
+                const reduceAdd = (p, v) => columnsWithReduceTypes.map((col) => {
+                    return col.reduceType.add(p[col.index], v[col.index]);
                 });
-                const reduceSub = (p, v) => this.getColumns().map((col) => {
-                    switch (col.reduceType) {
-                        case 'mean':
-                            // increment the SUM and COUNT sub-coordinates
-                            const previous = p[col.index];
-                            return [
-                                previous[0] - v[col.index],
-                                previous[1] - 1
-                            ];
-                        case 'list':
-                            // remove value from the list
-                            return p[col.index].filter((item) => (item !== v[col.index]));
-                        case 'percentage_count':
-                        case 'count':
-                            // just decrement the record counter
-                            return p[col.index] - 1;
-                        case 'percentage_sum':
-                        case 'sum':
-                        default:
-                            // default reduce type is SUM
-                            return p[col.index] - v[col.index];
-                    }
+                const reduceSub = (p, v) => columnsWithReduceTypes.map((col) => {
+                    return col.reduceType.sub(p[col.index], v[col.index]);
                 });
-                // start with an array of "zeroes"
-                // though what zero is depends on the reduce type...
-                // NOTE we dont use getColumns because we need to leave gaps
-                // in the starting array for unset columns (which are excluded from getColumns)
-                const reduceStart = () => this.settings.columns.map((col) => {
-                    switch (col.reduceType) {
-                        case 'mean':
-                            // sub-coordinates for SUM and COUNT
-                            return [0, 0];
-                        case 'list':
-                            return [];
-                        default:
-                            // COUNT or SUM
-                            return 0;
-                    }
+                const reduceStart = () => columnsWithReduceTypes.map((col) => {
+                    return col.reduceType.start();
                 });
-
 
                 this.group = this.dimension.group().reduce(reduceAdd, reduceSub, reduceStart);
 
@@ -308,26 +255,25 @@
                     return;
                 }
 
-                if (this.chartType.getChartConstructor) {
-                    this.chart = this.chartType.getChartConstructor(this)(this.chartContainer);
-
-                    if (this.chartType.getCoordinateGridAxes) {
-                        this.buildCoordinateGrid();
-                    }
-
-                    // load in cap if implemented by chart type
-                    if (this.chart.cap) {
-                        this.chart.cap(this.settings.maxSegments ? this.settings.maxSegments : null);
-                    }
-                    // load in ordering if implement by chart type
-                    if (this.chart.ordering) {
-                        this.chart.ordering(this.getOrderAccessor());
-                    }
-
-                    return;
+                if (!this.chartType.getChartConstructor) {
+                   throw new Error('Chart type should implement buildChart or getChartConstructor');
                 }
 
-                throw new Error('Chart type should implement buildChart or getChartConstructor');
+                this.chart = this.chartType.getChartConstructor(this)(this.chartContainer);
+
+                if (this.chartType.getCoordinateGridAxes) {
+                    this.buildCoordinateGrid();
+                }
+
+                // load in cap if implemented by chart type
+                if (this.chart.cap) {
+                    this.chart.cap(this.settings.maxSegments ? this.settings.maxSegments : null);
+                }
+                // load in ordering if implement by chart type
+                if (this.chart.ordering) {
+                    this.chart.ordering(this.getOrderAccessor());
+                }
+
             };
 
             this.buildCoordinateGrid = () => {
@@ -372,7 +318,7 @@
                         .dimension(this.dimension)
                         .group(this.group)
                         // default value is just the first y co-ordinate
-                        .valueAccessor(this.getValueAccessor(this.getFirstColumnForAxis('y')));
+                        .valueAccessor(this.getValueAccessor(this.getColumnsForAxis('y')[0]));
                 }
             };
 
@@ -528,6 +474,14 @@
             });
 
             this.getFirstColumnForAxis = (axisKey) => this.getColumns().find((col) => col.axis === axisKey);
+
+            // default to list
+            this.getReduceTypeForColumn = (col) => {
+                if (col.reduceType) {
+                  return chartKitReduceTypes.find((type) => type.key === col.reduceType);
+                }
+                return chartKitReduceTypes.find((type) => type.key === 'list');
+            }
 
             this.getOrderColumn = () => this.getColumns()[parseInt(this.settings.chartOrderColIndex ? this.settings.chartOrderColIndex : 0)];
 

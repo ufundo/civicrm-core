@@ -25,87 +25,141 @@
                     label: ts('Values'),
                     sourceDataTypes: ['Integer', 'Money', 'Boolean'],
                 },
-                'z': {
-                    label: ts('Additional Labels'),
-                    dataLabelTypes: ['label', 'title'],
-                    prepopulate: false,
-                    multiColumn: true,
-                }
-            });
-        },
-
-        buildDimension: (displayCtrl) => {
-            const xCol = displayCtrl.getFirstColumnForAxis('x');
-            if (!xCol) {
-                return;
-            }
-
-            // get series col if any
-            const seriesCol = displayCtrl.getFirstColumnForAxis('w');
-
-            // we need to add the series values in the dimension or they will get
-            // aggregated
-            displayCtrl.dimension = displayCtrl.ndx.dimension((d) => {
-                const xValue = d[xCol.index];
-                const seriesVal = seriesCol ? d[seriesCol.index] : null;
-
-                // we used to use a string separator rather than array to
-                // not corrupt ordering on xValue
-                // TODO: ?
-                return [xValue, seriesVal];
+// TODO: supporting reduce types for additional labels is complicated
+// because we build the group differently for ?
+//                'z': {
+//                    label: ts('Additional Labels'),
+//                    dataLabelTypes: ['label', 'title'],
+//                    prepopulate: false,
+//                    multiColumn: true,
+//                }
             });
         },
 
         getCoordinateGridAxes: () => ['x', 'y'],
 
-        showLegend: (displayCtrl) => (
-            displayCtrl.getColumnsForAxis('w').length &&
-            displayCtrl.settings.showLegend &&
-            displayCtrl.settings.showLegend !== 'none'),
+        showLegend: (displayCtrl) => displayCtrl.settings.showLegend &&
+            displayCtrl.settings.showLegend !== 'none',
 
         getChartConstructor: (displayCtrl) => (displayCtrl.settings.chartType === 'bar') ? dc.barChart : dc.lineChart,
 
-        loadChartData: (displayCtrl) => {
-            displayCtrl.chart
-                .dimension(displayCtrl.dimension);
+        buildDimension: (displayCtrl) => {
+            const xCol = displayCtrl.getFirstColumnForAxis('x');
 
+            if (!xCol) {
+                return;
+            }
+
+            displayCtrl.dimension = displayCtrl.ndx.dimension((d) => d[xCol.index]);
+        },
+
+
+        buildGroup: (displayCtrl) => {
+            // get cols we need
             const yColumn = displayCtrl.getFirstColumnForAxis('y');
+            const wColumn = displayCtrl.getFirstColumnForAxis('w');
 
-            if (!yColumn) {
+            if (!yColumn || !wColumn) {
+                return;
+            }
+
+            const columnsWithReduceTypes = displayCtrl.getColumnsWithReduceTypes();
+
+            // we have to add an extra depth to the reduction of the y column
+            const reduceAdd = (p, v) => columnsWithReduceTypes.map((col) => {
+                if (col.axis === 'y') {
+                  const w = v[wColumn.index];
+                  const yValue = p[col.index];
+
+                  if (!(w in yValue)) {
+                      yValue[w] = col.reduceType.start();
+                  }
+
+                  yValue[w] = col.reduceType.add(yValue[w], v[col.index]);
+                  return yValue;
+                }
+                return col.reduceType.add(p[col.index], v[col.index]);
+            });
+            const reduceSub = (p, v) => columnsWithReduceTypes.map((col) => {
+                if (col.axis === 'y') {
+                  const w = v[wColumn.index];
+                  const yValue = p[col.index];
+
+                  yValue[w] = col.reduceType.sub(yValue[w], v[col.index]);
+                  return yValue;
+                }
+                return col.reduceType.sub(p[col.index], v[col.index]);
+            });
+            const reduceStart = () => columnsWithReduceTypes.map((col) => {
+                if (col.axis === 'y') {
+                    return {};
+                }
+                return col.reduceType.start();
+            });
+
+            displayCtrl.group = displayCtrl.dimension.group().reduce(reduceAdd, reduceSub, reduceStart);
+
+            // find totals in each column
+            displayCtrl.columnTotals = displayCtrl.ndx.groupAll().reduce(reduceAdd, reduceSub, reduceStart).value();
+
+            // the total for Y will be split by series. for calcs we might need to aggregate the overall total?
+            // this might be tricksy depending on reduce type
+            console.log(displayCtrl.columnTotals[yColumn.index]);
+
+            const ySeriesTotals = Object.values(displayCtrl.columnTotals[yColumn.index]);
+
+            const yGrandTotal = ySeriesTotals.reduce((a, b) => {
+              switch (yColumn.reduceType) {
+                  case 'list':
+                    return a.concat(b);
+
+                  case 'mean':
+                    return [
+                        a[0] + b[0],
+                        a[1] + b[1]
+                    ];
+
+                  default:
+                    return a + b;
+              }
+            });
+
+            displayCtrl.columnTotals[yColumn.index] = yGrandTotal;
+        },
+
+        loadChartData: (displayCtrl) => {
+            displayCtrl.chart.dimension(displayCtrl.dimension);
+
+            // get cols we need
+            const xColumn = displayCtrl.getFirstColumnForAxis('x');
+            const yColumn = displayCtrl.getFirstColumnForAxis('y');
+            const wColumn = displayCtrl.getFirstColumnForAxis('w');
+
+
+            if (!xColumn || !yColumn || !wColumn) {
                 return;
             }
 
             const yValueAccessor = displayCtrl.getValueAccessor(yColumn);
 
-            const wColumn = displayCtrl.getFirstColumnForAxis('w');
+            // wValues are list reduced - so the column total is the list of all values
+            // that appear in that column in the dataset
+            const wValues = displayCtrl.columnTotals[wColumn.index];
 
-            if (!wColumn) {
-                displayCtrl.chart.group(displayCtrl.group, yValueAccessor);
-            } else {
-                // for a specific value of W, we want a new value accessor which returns the
-                // y value for that datapoint if the w value matches, otherwise is 0
-                const crossedValueAccessor = (w) => (
-                    (d) => (d.key[1] === w) ? yValueAccessor(d) : 0
-                );
+            wValues.forEach((w, i) => {
+                const crossedValueAccessor = (d) => yValueAccessor(d)[w];
 
-                // wValues are list reduced - so the column total is the list of all values
-                // that appear in the dataset
-                const wValues = displayCtrl.columnTotals[wColumn.index];
+                if (i === 0) {
+                    displayCtrl.chart.group(displayCtrl.group, displayCtrl.renderDataValue(w, wColumn), crossedValueAccessor);
+                } else {
+                    displayCtrl.chart.stack(displayCtrl.group, displayCtrl.renderDataValue(w, wColumn), crossedValueAccessor);
+                }
+            });
 
-                wValues.forEach((w, i) => {
-                    if (i === 0) {
-                      displayCtrl.chart.group(displayCtrl.group, displayCtrl.renderDataValue(w, wColumn), crossedValueAccessor(w))
-                    } else {
-                      displayCtrl.chart.stack(displayCtrl.group, displayCtrl.renderDataValue(w, wColumn), crossedValueAccessor(w))
-                    }
-                });
-
-                // we need to plot using the x axis from the keys
-                displayCtrl.chart.keyAccessor((d) => d.key[0]);
-            }
+            // we need to plot using the x axis from the keys
+            //displayCtrl.chart.keyAccessor((d) => d.key);
 
             displayCtrl.chart.hidableStacks(true)
-            // displayCtrl.chart.colors(displayCtrl.buildColumnColorScale(yColumns));
 
             if (displayCtrl.settings.chartType === 'area') {
                 // chart should be a line chart by this point
