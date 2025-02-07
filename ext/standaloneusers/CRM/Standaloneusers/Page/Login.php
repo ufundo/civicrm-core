@@ -27,6 +27,12 @@ class CRM_Standaloneusers_Page_Login extends CRM_Core_Page {
     // Remove breadcrumb for login page.
     $this->assign('breadcrumb', NULL);
 
+    // statusMessages are usually at top of page but in login forms they look much better
+    // inside the main box.
+    $this->assign('statusMessages', CRM_Core_Smarty::singleton()->fetchWith("CRM/common/status.tpl", [
+      'no_popup' => TRUE,
+    ]));
+
     // Add the jQuery notify library because this library is only loaded whne the user is logged in. And we need this for CRM.alert
     CRM_Core_Resources::singleton()->addScriptFile('civicrm', "packages/jquery/plugins/jquery.notify.min.js", ['region' => 'html-header']);
 
