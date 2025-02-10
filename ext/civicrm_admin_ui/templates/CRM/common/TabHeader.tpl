@@ -36,7 +36,7 @@
                 {/if}
               </div>
             {else}
-              <civi-snippet src="{$tabValue.url|smarty:nodefaults}"></civi-snippet>
+              <civi-snippet src="{$tabValue.url|smarty:nodefaults}" lazy-load="1"></civi-snippet>
             {/if}
 
           </details>
