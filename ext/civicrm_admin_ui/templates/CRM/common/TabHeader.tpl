@@ -35,7 +35,7 @@
                 {/if}
               </div>
             {else}
-              <iframe src="{$tabValue.url|smarty:nodefaults}"></iframe>
+              <civi-snippet src="{$tabValue.url|smarty:nodefaults}"></civi-snippet>
             {/if}
 
           </details>
