@@ -2,7 +2,7 @@
 <div class="standalone-auth-form">
   <div class="standalone-auth-box">
     <form id=login-form>
-      <img class="crm-logo" src="{$logoUrl}" alt="{ts escape='htmlattribute'}Logo for CiviCRM, with an intersecting blue and green triangle{/ts}">
+      {include file='CRM/common/logo.tpl'}
       {$statusMessages}
       <div class="input-wrapper">
         <label for="usernameInput" name=username class="form-label">{ts}Username{/ts}</label>
