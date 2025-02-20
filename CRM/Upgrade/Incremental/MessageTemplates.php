@@ -539,9 +539,7 @@ class CRM_Upgrade_Incremental_MessageTemplates {
   public function updateTemplates(): void {
     $templates = $this->getTemplatesToUpdate();
     foreach ($templates as $template) {
-      $workFlowID = CRM_Core_DAO::singleValueQuery('SELECT MAX(id) as id FROM civicrm_option_value WHERE name = %1', [
-        1 => [$template['name'], 'String'],
-      ]);
+      $workflowName = $template['name'];
       if ($template['type'] === 'text') {
         // We no longer ship text templates.
         $content = '';
@@ -551,32 +549,36 @@ class CRM_Upgrade_Incremental_MessageTemplates {
           ->getPath('[civicrm.root]/xml/templates/message_templates/' . $template['name'] . '_' . $template['type'] . '.tpl'));
       }
       $templatesToUpdate = [];
-      if (!empty($workFlowID)) {
-        // This could be empty if the template was deleted. It should not happen,
-        // but has been seen in the wild (ex: marketing/civicrm-website#163).
-        $id = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_msg_template WHERE workflow_id = $workFlowID AND is_reserved = 1");
-        if ($id) {
-          $templatesToUpdate[] = $id;
-        }
+      // This could be empty if the template was deleted. It should not happen,
+      // but has been seen in the wild (ex: marketing/civicrm-website#163).
+      $reservedId = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_msg_template WHERE workflow_name = {$workflowName} AND is_reserved = 1");
+      if ($reservedId) {
+        $templatesToUpdate[] = $reservedId;
+        // look for matching default template that has not deviated from the reserved template
         $defaultTemplateID = CRM_Core_DAO::singleValueQuery("
-          SELECT default_template.id FROM civicrm_msg_template reserved
-          LEFT JOIN civicrm_msg_template default_template
-            ON reserved.workflow_id = default_template.workflow_id
-          WHERE reserved.workflow_id = $workFlowID
-          AND reserved.is_reserved = 1 AND default_template.is_default = 1 AND reserved.id <> default_template.id
-          AND reserved.msg_{$template['type']} = default_template.msg_{$template['type']}
+          SELECT default.id
+          FROM
+            civicrm_msg_template default
+          LEFT JOIN
+            civicrm_msg_template reserved
+          WHERE
+            reserved.id = {$reservedId}
+            AND default.workflow_name = {$workflowName}
+            AND default.is_default = 1
+            AND default.id <> reserved.id
+            AND default.msg_{$template['type']} = reserved.msg_{$template['type']}
         ");
         if ($defaultTemplateID) {
           $templatesToUpdate[] = $defaultTemplateID;
         }
+      }
 
-        if (!empty($templatesToUpdate)) {
-          CRM_Core_DAO::executeQuery("
-            UPDATE civicrm_msg_template SET msg_{$template['type']} = %1 WHERE id IN (" . implode(',', $templatesToUpdate) . ")", [
-              1 => [$content, 'String'],
-            ]
-          );
-        }
+      if (!empty($templatesToUpdate)) {
+        CRM_Core_DAO::executeQuery("
+          UPDATE civicrm_msg_template SET msg_{$template['type']} = %1 WHERE id IN (" . implode(',', $templatesToUpdate) . ")", [
+            1 => [$content, 'String'],
+          ]
+        );
       }
     }
   }
