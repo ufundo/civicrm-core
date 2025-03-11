@@ -35,6 +35,9 @@ class AfformAdminInjector extends AutoSubscriber {
    * @see CRM_Utils_Hook::alterAngular()
    */
   public static function preprocess($e) {
+    if (\Civi::settings()->get('afform_admin_hide_inline_edit_menus')) {
+      return;
+    }
     $changeSet = \Civi\Angular\ChangeSet::create('afformAdmin')
       ->alterHtml(';\\.aff\\.html$;', function($doc, $path) {
         try {
