@@ -26,7 +26,7 @@ class DynamicCss implements \Symfony\Component\EventDispatcher\EventSubscriberIn
     ];
   }
 
-  public static function getCssParams(): array {
+  public function getCssParams(): array {
     $darkModeSetting = \CRM_Utils_System::isFrontendPage() ?
       \Civi::settings()->get('riverlea_dark_mode_frontend') :
       \Civi::settings()->get('riverlea_dark_mode_backend');
@@ -45,7 +45,7 @@ class DynamicCss implements \Symfony\Component\EventDispatcher\EventSubscriberIn
    * @see CRM_Utils_hook::buildAsset()
    * @see \Civi\Core\AssetBuilder
    */
-  public static function buildAssetCss($e) {
+  public function buildAssetCss($e) {
     if ($e->asset !== static::CSS_FILE) {
       return;
     }
@@ -58,7 +58,7 @@ class DynamicCss implements \Symfony\Component\EventDispatcher\EventSubscriberIn
     $content = [];
 
     // add base vars for the stream
-    $content[] = self::getCSSFromFile('_variables.css', $stream);
+    $content[] = $this->getCSSFromFile('_variables.css', $stream);
 
     switch ($params['dark'] ?? NULL) {
       case 'light':
@@ -70,7 +70,7 @@ class DynamicCss implements \Symfony\Component\EventDispatcher\EventSubscriberIn
         // tell OS we want dark for system elements
         $content[] = ":root { color-scheme: dark; }";
         // add stream dark vars unconditionally
-        $content[] = self::getCSSFromFile('_dark.css', $stream);
+        $content[] = $this->getCSSFromFile('_dark.css', $stream);
         break;
 
       case 'inherit':
@@ -79,7 +79,7 @@ class DynamicCss implements \Symfony\Component\EventDispatcher\EventSubscriberIn
         $content[] = ":root { color-scheme: light dark; }";
         // add stream dark vars wrapped inside a media query
         $content[] = '@media (prefers-color-scheme: dark) {';
-        $content[] = self::getCSSFromFile('_dark.css', $stream);
+        $content[] = $this->getCSSFromFile('_dark.css', $stream);
         $content[] = '}';
         break;
     }
@@ -95,7 +95,7 @@ class DynamicCss implements \Symfony\Component\EventDispatcher\EventSubscriberIn
    *
    * @return string
    */
-  private static function getCSSFromFile(string $cssFileName, string $stream): string {
+  private function getCSSFromFile(string $cssFileName, string $stream): string {
     $res = \Civi::resources();
     $theme = \Civi::service('themes')->get($stream);
     $file = '';
