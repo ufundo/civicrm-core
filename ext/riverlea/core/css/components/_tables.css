@@ -67,25 +67,25 @@ table.dataTable.order-column.stripe tbody tr.even > .sorting_1 {
   background: linear-gradient(to top,rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05)) var(--crm-table-even-row);
 }
 .crm-container .extension-installed {
-  background: var(--crm-c-green-light);
+  background: var(--crm-alert-background-help);
   color: var(--crm-alert-text-help);
 }
 .crm-container .extension-installed summary {
   color: var(--crm-alert-text-help);
 }
 table.dataTable.display tbody tr.extension-installed.odd {
-  background: linear-gradient(to top,rgba(256,256,256,0.25),rgba(256,256,256,0.25)) var(--crm-c-green-light);
+  background: linear-gradient(to top,rgba(256,256,256,0.25),rgba(256,256,256,0.25)) var(--crm-alert-background-help);
 }
 table.dataTable.display tbody tr.extension-installed.odd:hover {
   background-color: var(--crm-table-odd-hover);
 }
 table.dataTable.display tbody tr.extension-installed.odd > .sorting_1,
 table.dataTable.order-column.stripe tbody tr.extension-installed.odd > .sorting_1 {
-  background: var(--crm-c-green-light) !important;
+  background: var(--crm-alert-background-help) !important;
 }
 table.dataTable.display tbody tr.extension-installed.even > .sorting_1,
 table.dataTable.order-column.stripe tbody tr.extension-installed.even > .sorting_1 {
-  background: linear-gradient(to top,rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05)) var(--crm-c-green-light);
+  background: linear-gradient(to top,rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05)) var(--crm-alert-background-help);
 }
 .crm-container td,
 .crm-container table.dataTable thead td {
