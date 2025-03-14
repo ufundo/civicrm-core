@@ -18,9 +18,6 @@
   --crm-c-red: #b3001b;
   --crm-c-blue-light: #195e80;
   --crm-c-teal: #a3ebe6;
-  --crm-c-green-light: #366336;
-  --crm-c-green: #55aa57;
-  --crm-c-green-dark: #dff0d8;
   --crm-c-gray-900: #363636;
   --crm-c-gray-800: #464646;
   --crm-c-gray-700: #535252;
@@ -55,14 +52,14 @@
   --crm-table-odd-hover: var(--crm-c-gray-700);
   --crm-table-even-row: var(--crm-c-page-background);
   --crm-table-even-hover: var(--crm-c-gray-700);
-  --crm-alert-text-help: var(--crm-c-text-light);
   --crm-alert-background-info: var(--crm-c-blue-dark);
   --crm-alert-text-info: var(--crm-c-text-light);
   --crm-c-inactive: var(--crm-c-gray-400);
   --crm-input-color: var(--crm-c-text);
   --crm-input-description: var(--crm-c-gray-300);
   --crm-input-radio-color: #38c4b4;
-  --crm-alert-text-help: var(--crm-c-text);
+  --crm-alert-text-help: var(--crm-c-text-light);
+  --crm-alert-background-help: var(--crm-c-green-dark);
   --crm-btn-cancel-bg: #9b3d4b;
   --crm-btn-alert-bg: var(--crm-btn-cancel-bg);
   --crm-btn-alert-text: var(--crm-c-text);
