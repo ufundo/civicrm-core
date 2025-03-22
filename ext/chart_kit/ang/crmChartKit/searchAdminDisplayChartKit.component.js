@@ -318,7 +318,6 @@
                 let axisSlots = this.getColumnSlots().filter((col) => col.axis === axisKey);
 
                 // only display first column for single col
-                // TODO (dont include these hidden cols in the search if not needed)
                 if (!axis.multiColumn) {
                     axisSlots = axisSlots.slice(0, 1);
                 }
