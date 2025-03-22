@@ -28,8 +28,20 @@
                 this.chartContainer = $('.crm-chart-kit-chart-container', $element)[0];
 
                 // add our trait functions to the pre and post search hooks
-                this.onPreRun.push(() => this.alwaysSortByXAscending());
+                this.onPreRun.push(() => {
+                    // exit early if no chart type
+                    if (!this.initChartType()) {
+                        return;
+                    }
+
+                    this.alwaysSortByXAscending();
+                });
                 this.onPostRun.push(() => {
+                    // exit early if no chart type
+                    if (!this.initChartType()) {
+                        return;
+                    }
+
                     this.renderChart();
                     // trigger re-rendering as you edit settings
                     // TODO: could this be quite js intensive on the client browser? should we make it optional?
@@ -47,7 +59,12 @@
             };
 
             this.onSettingsChange = (newSettings, oldSettings) => {
-                // if X column key changes, we need to re-run the search to get new ordering
+                // just in case the chart type has been removed somehow
+                if (!this.initChartType()) {
+                    return;
+                }
+
+                // if sort keys have changed, we need to re-run the search to get new ordering
                 // from the server
                 if (newSettings.columns.find((col) => col.axis === 'x').key !== this._currentSortKey) {
                     this.getResultsPronto();
@@ -60,16 +77,11 @@
             // this provides the common render steps - which chart types can then hook
             // into at different points
             this.renderChart = () => {
-                if (!this.settings.chartType) {
-                    this.chartContainer.innerText = ts('No chart type selected.');
-                    return;
-                }
                 if (this.results.length === 0) {
                     // show a no results type thing
                     this.chartContainer.innerText = ts('Search returned no results.');
                     return;
                 }
-                this.initChartType();
 
                 // loads search results data into crossfilter
                 this.buildCrossfilter();
@@ -94,8 +106,21 @@
             };
 
             this.initChartType = () => {
+                if (!this.settings.chartType) {
+                    this.chartContainer.innerText = ts('No chart type selected.');
+                    return false;
+                }
                 const type = chartKitChartTypes.find((type) => type.key === this.settings.chartType);
+                if (!type) {
+                    this.chartContainer.innerText = ts('Unrecognised chart type: ' + this.settings.chartType);
+                    return false;
+                }
+                if (!type.service) {
+                    this.chartContainer.innerText = ts('No service available for chart type: ' + this.settings.chartType);
+                    return false;
+                }
                 this.chartType = type.service;
+                return true;
             };
 
             this.buildCrossfilter = () => {
