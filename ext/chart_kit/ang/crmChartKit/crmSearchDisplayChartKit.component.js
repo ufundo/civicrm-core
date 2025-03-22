@@ -64,6 +64,7 @@
                     axis.key = axisKey;
                     return axis;
                 });
+            };
 
             this.getGridAxes = () => this.getAxes().filter((axis) => axis.isGridAxis);
 
