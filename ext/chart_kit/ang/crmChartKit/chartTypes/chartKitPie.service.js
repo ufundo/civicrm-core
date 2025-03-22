@@ -11,6 +11,8 @@
           scaleTypes: ['categorical'],
           // label is default to show what things are
           dataLabelTypes: ['label', 'title', 'none'],
+          multiColumn: true,
+          isDimension: true,
         },
         'y': {
           label: ts('Values'),

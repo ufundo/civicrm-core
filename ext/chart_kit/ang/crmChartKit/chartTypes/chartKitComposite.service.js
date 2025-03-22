@@ -15,7 +15,9 @@
                 label: ts('X-Axis'),
                 // prefer date/categorical
                 scaleTypes: ['date', 'numeric', 'categorical'],
-                reduceTypes: []
+                reduceTypes: [],
+                isDimension: true,
+                isGridAxis: true,
             },
             'y': {
                 key: 'y',
@@ -24,6 +26,7 @@
                 seriesTypes: ['bar', 'line', 'area'],
                 multiColumn: true,
                 colorType: 'one-per-column',
+                isGridAxis: true,
             },
             'z': {
                 label: ts('Additional Labels'),
@@ -32,8 +35,6 @@
                 multiColumn: true,
             }
         }),
-
-        hasCoordinateGrid: () => true,
 
         showLegend: (displayCtrl) => (displayCtrl.settings.showLegend && displayCtrl.settings.showLegend !== 'none'),
 

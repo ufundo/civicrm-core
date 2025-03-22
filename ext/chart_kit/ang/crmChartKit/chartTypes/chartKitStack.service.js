@@ -13,7 +13,9 @@
             'x': {
                 label: ts('X-Axis'),
                 scaleTypes: ['date', 'numeric', 'categorical'],
-                reduceTypes: []
+                reduceTypes: [],
+                isDimension: true,
+                isGridAxis: true,
             },
             'y': {
                 key: 'y',
@@ -21,6 +23,7 @@
                 sourceDataTypes: ['Integer', 'Money', 'Boolean', 'Float', 'Double'],
                 multiColumn: true,
                 colorType: 'one-per-column',
+                isGridAxis: true,
             },
             'z': {
                 label: ts('Additional Labels'),
@@ -31,9 +34,11 @@
           });
         },
 
-        hasCoordinateGrid: () => true,
-
-        showLegend: (displayCtrl) => (displayCtrl.getColumnsForAxis('y').length > 1 && displayCtrl.settings.showLegend && displayCtrl.settings.showLegend !== 'none'),
+        showLegend: (displayCtrl) => (
+            displayCtrl.getColumnsForAxis('y').length > 1 &&
+            displayCtrl.settings.showLegend &&
+            displayCtrl.settings.showLegend !== 'none'
+        ),
 
         getChartConstructor: (displayCtrl) => (displayCtrl.settings.chartType === 'bar') ? dc.barChart : dc.lineChart,
 

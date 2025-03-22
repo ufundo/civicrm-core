@@ -17,15 +17,19 @@
                 label: ts('X-Axis'),
                 scaleTypes: ['date', 'numeric', 'categorical'],
                 reduceTypes: [],
+                isDimension: true,
+                isGridAxis: true,
             },
             'w': {
                 label: ts('Grouping'),
                 scaleTypes: ['categorical'],
                 reduceTypes: [],
+                isDimension: true,
             },
             'y': {
                 label: ts('Value'),
                 sourceDataTypes: ['Integer', 'Money', 'Boolean'],
+                isGridAxis: true,
             },
             'z': {
               label: ts('Additional labels'),
@@ -35,8 +39,6 @@
             }
           });
         },
-
-        hasCoordinateGrid: () => true,
 
         showLegend: (displayCtrl) => (displayCtrl.settings.showLegend && displayCtrl.settings.showLegend !== 'none'),
 

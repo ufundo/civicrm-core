@@ -50,6 +50,22 @@
                 });
             };
 
+            this.getAxes() = () => this.chartType.getAxes();
+
+            this.getGridAxes = () => this.getAxes().filter((axis) => axis.isGridAxis);
+
+            this.getDimensionAxes = () => this.getAxes().filter((axis) => axis.isDimension);
+
+            this.getDimensionColumns = () => {
+                const dimensionAxes = this.getDimensionAxes();
+
+                // TODO: is there a problem with the ordering here?
+                return this.getColumns().filter((col) => dimensionAxes.includes(col.axis));
+                // alternative?
+                // const dimensionColumns = dimensionAxes.map((axisKey) => this.getColumnsForAxis(axisKey));
+                // return dimensionColumns.flat();
+            };
+
             this.alwaysSortByXAscending = () => {
                 this._currentSortKey = this.getXColumn().key;
                 // always sort the query by X axis - we can handle differently when we pass to d3
@@ -188,10 +204,18 @@
                     return;
                 }
 
-                // 99 times out of 100 the x axis will be column 0, but let's be sure
-                // (assume there's only one x axis column)
-                const xColumnIndex = this.getXColumn().index;
-                this.dimension = this.ndx.dimension((d) => d[xColumnIndex]);
+                const colIndexes = this.getDimensionColumns().map((col) => col.index)
+
+                if (colIndexes.length > 1) {
+                  // dimension is multi-column, create an array key
+                  this.dimension = this.ndx.dimension((d) => colIndexes.map((i) => d[i]));
+                }
+                else {
+                  // if there is only one dimension axis we use the actual value
+                  // rather than a single item array
+                  const colIndex = colIndexes[0];
+                  this.dimension = this.ndx.dimension((d) => d[colIndex]);
+                }
             };
 
             this.buildGroup = () => {
@@ -228,34 +252,32 @@
                     return;
                 }
 
-                if (this.chartType.getChartConstructor) {
-                    this.chart = this.chartType.getChartConstructor(this)(this.chartContainer);
-
-                    if (this.chartType.hasCoordinateGrid()) {
-                        this.buildCoordinateGrid();
-                    }
-
-                    // load in cap if implemented by chart type
-                    if (this.chart.cap) {
-                        this.chart.cap(this.settings.maxSegments ? this.settings.maxSegments : null);
-                    }
-                    // load in ordering if implement by chart type
-                    if (this.chart.ordering) {
-                        this.chart.ordering(this.getOrderAccessor());
-                    }
-
-                    return;
+                if (!this.chartType.getChartConstructor) {
+                   throw new Error('Chart type should implement buildChart or getChartConstructor');
                 }
 
-                throw new Error('Chart type should implement buildChart or getChartConstructor');
+                this.chart = this.chartType.getChartConstructor(this)(this.chartContainer);
+
+                const gridAxes = this.getGridAxes();
+                if (gridAxes) {
+                  this.buildCoordinateGrid(gridAxes);
+                }
+
+                // load in cap if implemented by chart type
+                if (this.chart.cap) {
+                    this.chart.cap(this.settings.maxSegments ? this.settings.maxSegments : null);
+                }
+                // load in ordering if implement by chart type
+                if (this.chart.ordering) {
+                    this.chart.ordering(this.getOrderAccessor());
+                }
+
             };
 
-            this.buildCoordinateGrid = () => {
-                this.buildXAxis();
-            };
+            this.buildCoordinateGrid = (gridAxes) => {
+                const [xAxis, yAxis] = gridAxes;
+                const xCol = this.getFirstColumnForAxis(xAxis.key);
 
-            this.buildXAxis = () => {
-                const xCol = this.getXColumn();
                 const xDomainValues = this.columnTotals[xCol.index];
                 const min = Math.min(...xDomainValues);
                 const max = Math.max(...xDomainValues);
@@ -316,8 +338,9 @@
                         chart.svg().style('background', this.settings.format.backgroundColor);
                     });
 
-                if (this.chartType.hasCoordinateGrid()) {
-                    this.formatCoordinateGrid();
+                const gridAxes = this.getGridAxes();
+                if (gridAxes) {
+                    this.formatCoordinateGrid(gridAxes);
                 }
 
                 if (this.chartType.showLegend(this)) {
@@ -326,18 +349,12 @@
             };
 
 
-            this.formatCoordinateGrid = () => {
-                // format x axis
-                // add our label formatter to the tick values
-                // EXCEPT for dates, where DC is much cleverer
-                // than we are at adapting the date precision
-                const xCols = this.getColumnsForAxis('x');
+            this.formatCoordinateGrid = (gridAxes) => {
+                const [xAxis, yAxis] = gridAxes;
+                const xCol = this.getFirstColumnForAxis(xAxis.key);
 
-                if (xCols.length === 1) {
-
-                    if (xCols[0].scaleType !== 'date') {
-                        this.chart.xAxis().tickFormat((v) => this.renderDataValue(v, xCols[0]));
-                    }
+                if (xCol.scaleType !== 'date') {
+                    this.chart.xAxis().tickFormat((v) => this.renderDataValue(v, xCol));
                 }
                 this.chart.xAxisLabel(
                     this.settings.format.xAxisLabel ? this.settings.format.xAxisLabel : xCols.map((col) => col.label).join(' - ')
@@ -345,7 +362,7 @@
 
                 // for Y axis, we need to work out whether this is split left and right
                 const supportsRightYAxis = this.chart.rightYAxis;
-                const allYCols = this.getColumnsForAxis('y');
+                const allYCols = this.getColumnsForAxis(yAxis.key);
 
                 const leftYCols = supportsRightYAxis ? allYCols.filter((col) => !col.useRightAxis) : allYCols;
 
