@@ -50,7 +50,20 @@
                 });
             };
 
-            this.getAxes() = () => this.chartType.getAxes();
+            /**
+             * @returns array of the axes from the chart type
+             */
+            this.getAxes = () => {
+                if (!this.chartType) {
+                  return [];
+                }
+
+                const axisDefintion = this.chartType.getAxes();
+                return Object.keys(axisDefintion).map((axisKey) => {
+                    const axis = axisDefintion[axisKey];
+                    axis.key = axisKey;
+                    return axis;
+                });
 
             this.getGridAxes = () => this.getAxes().filter((axis) => axis.isGridAxis);
 
@@ -430,6 +443,11 @@
 
             this.getColumns = () => {
                 const axes = this.getAxes();
+
+                if (!axes.length) {
+                  return [];
+                }
+
                 const singleColumnAxesFilled = [];
 
                 return this.settings.columns
