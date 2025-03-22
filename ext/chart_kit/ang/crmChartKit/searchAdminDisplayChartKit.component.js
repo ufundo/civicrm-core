@@ -24,9 +24,7 @@
             // often we only want the columns which have a source field set
             this.getColumns = () => this.getColumnSlots().filter((col) => col.key);
 
-            this.getColumnsForAxis = (axisKey) => {
-                return this.getColumns().filter((col) => col.axis === axisKey);
-            };
+            this.getColumnsForAxis = (axisKey) => this.getColumns().filter((col) => col.axis === axisKey);
 
             this.getChartTypeOptions = () => chartKitChartTypes.map((type) => ({ key: type.key, label: type.label, icon: type.icon }));
 
@@ -134,8 +132,7 @@
                 return this.display.settings.columns[index];
             };
 
-            this.axisDefaults = () => {
-                return {
+            this.axisDefaults = () => ({
                     // by default allow all types we know
                     reduceTypes: chartKitReduceTypes.map((type) => type.key),
                     scaleTypes: chartKitColumnConfig.scaleType.map((type) => type.key),
@@ -145,9 +142,7 @@
                     dataLabelFormatters: chartKitColumnConfig.dataLabelFormatter.map((type) => type.key),
                     multiColumn: false,
                     prepopulate: true,
-                };
-
-            };
+            });
 
             this.getAxis = (axisKey) => {
                 // merge in default axis options
