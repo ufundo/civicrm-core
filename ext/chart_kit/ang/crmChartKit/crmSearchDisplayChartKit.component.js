@@ -66,12 +66,17 @@
                 // return dimensionColumns.flat();
             };
 
+            this.getSortKeys = () => this.getDimensionColumns().map((col) => col.key);
+
             this.alwaysSortByXAscending = () => {
-                this._currentSortKey = this.getXColumn().key;
+                const sortKeys = this.getSortKeys();
+
+                // stash a serialised string for quick checking in onSettingsChange
+                this._currentSortKeys = sortKeys.join(',');
                 // always sort the query by X axis - we can handle differently when we pass to d3
                 // but this is the only way to get magic that the server knows about the order
                 // (like option groups / month order etc)
-                this.sort = this.settings.sort = [[this._currentSortKey, 'ASC']];
+                this.settings.sort = sortKeys.map((key) => [key, 'ASC']);
             };
 
             this.onSettingsChange = (newSettings, oldSettings) => {
@@ -82,8 +87,9 @@
 
                 // if sort keys have changed, we need to re-run the search to get new ordering
                 // from the server
-                if (newSettings.columns.find((col) => col.axis === 'x').key !== this._currentSortKey) {
-                    this.getResultsPronto();
+                const newSortKeysSerialised = this.getSortKeys().join(',');
+                if (this._currentSortKeys !== newSortKeysSerialised) {
+                    this.getResultsSoon();
                 } else {
                     // just rerender on the front end
                     this.renderChart();
@@ -198,7 +204,6 @@
             };
 
             this.buildDimension = () => {
-
                 if (this.chartType.buildDimension) {
                     this.chartType.buildDimension(this);
                     return;
@@ -423,11 +428,35 @@
 
             // TODO: move everything from here down  to a util service?
 
-            this.getColumns = () => this.settings.columns.map((col, colIndex) => {
-                // we need the canonical column index to get data values
-                col.index = colIndex;
-                return col;
-            }).filter((col) => col.key);
+            this.getColumns = () => {
+                const axes = this.getAxes();
+                const singleColumnAxesFilled = [];
+
+                return this.settings.columns
+                  // filter out any columns which haven't got a set key
+                  .filter((col) => col.key)
+                  // filter out any columns on axes which aren't used for this chart type
+                  .filter((col) => Object.keys(axes).includes(col.axis))
+                  // filter out columns for single column axis that are already filled
+                  .filter((col) => {
+                    // multicolumn => no problem
+                    if (axes[col.axis].multiColumn) {
+                      return true;
+                    }
+                    // already used => ignore further columns
+                    if (singleColumnAxesFilled.includes(col.axis)) {
+                      return false;
+                    }
+                    // first column for this axis => take the slot and accept this column
+                    singleColumnAxesFilled.push(col.axis);
+                    return true;
+                  })
+                  .map((col, colIndex) => {
+                      // we need the canonical column index to get data values
+                      col.index = colIndex;
+                      return col;
+                  });
+            };
 
             this.getColumnsForAxis = (axisKey) => this.getColumns().filter((col) => col.axis === axisKey);
 
