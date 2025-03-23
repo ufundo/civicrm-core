@@ -277,10 +277,7 @@
 
                 this.chart = this.chartType.getChartConstructor(this)(this.chartContainer);
 
-                const gridAxes = this.getGridAxes();
-                if (gridAxes) {
-                  this.buildCoordinateGrid(gridAxes);
-                }
+                this.buildCoordinateGridIfAny();
 
                 // load in cap if implemented by chart type
                 if (this.chart.cap) {
@@ -293,7 +290,11 @@
 
             };
 
-            this.buildCoordinateGrid = (gridAxes) => {
+            this.buildCoordinateGridIfAny = () => {
+                const gridAxes = this.getGridAxes();
+                if (!gridAxes.length) {
+                    return;
+                }
                 const [xAxis, yAxis] = gridAxes;
                 const xCol = this.getFirstColumnForAxis(xAxis.key);
 
@@ -357,10 +358,8 @@
                         chart.svg().style('background', this.settings.format.backgroundColor);
                     });
 
-                const gridAxes = this.getGridAxes();
-                if (gridAxes) {
-                    this.formatCoordinateGrid(gridAxes);
-                }
+
+                this.formatCoordinateGridIfAny();
 
                 if (this.chartType.showLegend(this)) {
                     this.addLegend();
@@ -368,15 +367,23 @@
             };
 
 
-            this.formatCoordinateGrid = (gridAxes) => {
+            this.formatCoordinateGridIfAny = () => {
+                const gridAxes = this.getGridAxes();
+                if (!gridAxes.length) {
+                    return;
+                }
                 const [xAxis, yAxis] = gridAxes;
                 const xCol = this.getFirstColumnForAxis(xAxis.key);
 
+                // add ticks if not a date (dc is better at handling ticks for us for dates)
                 if (xCol.scaleType !== 'date') {
                     this.chart.xAxis().tickFormat((v) => this.renderDataValue(v, xCol));
                 }
+
                 this.chart.xAxisLabel(
-                    this.settings.format.xAxisLabel ? this.settings.format.xAxisLabel : xCols.map((col) => col.label).join(' - ')
+                    this.settings.format.xAxisLabel ? this.settings.format.xAxisLabel : xCol.label
+                    // TODO: could we have multi-x?
+                    //this.settings.format.xAxisLabel ? this.settings.format.xAxisLabel : xCols.map((col) => col.label).join(' - ')
                 );
 
                 // for Y axis, we need to work out whether this is split left and right

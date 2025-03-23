@@ -59,7 +59,7 @@
                 .keyAccessor((d) => d.key[xCol.index])
                 .seriesAccessor((d) => d.key[wCol.index]);
 
-            displayCtrl.buildCoordinateGrid();
+            displayCtrl.buildCoordinateGridIfAny();
         }
     }));
 })(angular, CRM.$, CRM._, CRM.chart_kit.dc);
