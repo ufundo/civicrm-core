@@ -66,14 +66,18 @@
                 });
             };
 
-            this.getGridAxes = () => this.getAxes().filter((axis) => axis.isGridAxis);
+//            this.getGridAxes = () => this.getAxes().filter((axis) => axis.isGridAxis);
 
-            this.getDimensionAxes = () => this.getAxes().filter((axis) => axis.isDimension);
+//            this.getDimensionAxes = () => this.getAxes().filter((axis) => axis.isDimension);
 
-            this.getDimensionColumns = () => {
-                const dimensionColumns = this.getDimensionAxes().map((axis) => this.getColumnsForAxis(axis.key));
-                return dimensionColumns.flat();
-            };
+            this.getGridColumns = () => this.getColumns().filter((col) => col.isGridAxis);
+
+            this.getDimensionColumns = () => this.getColumns().filter((col) => col.isDimension);
+
+//            this.getDimensionColumns = () => {
+//                const dimensionColumns = this.getDimensionAxes().map((axis) => this.getColumnsForAxis(axis.key));
+//                return dimensionColumns.flat();
+//            };
 
             this.getSortKeys = () => this.getDimensionColumns().map((col) => col.key);
 
@@ -213,10 +217,6 @@
             };
 
             this.buildDimension = () => {
-                if (this.chartType.buildDimension) {
-                    this.chartType.buildDimension(this);
-                    return;
-                }
 
                 const colIndexes = this.getDimensionColumns().map((col) => col.index)
 
@@ -363,7 +363,8 @@
 
 
             this.formatCoordinateGridIfAny = () => {
-                const gridAxes = this.getGridAxes();
+                //const gridAxes = this.getGridAxes();
+                const gridColumns = this.getGridColumns();
                 if (!gridAxes.length) {
                     return;
                 }
@@ -456,18 +457,27 @@
                 return this.settings.columns
                   // filter out any columns which haven't got a set key
                   .filter((col) => col.key)
-                  // check columns match a current axis,
-                  // and that axis isn't already taken
-                  .filter((col) => {
-                    const colAxis = axes.find((axis) => (axis.key === col.axis));
+                  // add meta from the assigned axis
+                  .map((col) => {
+                    const axis = axes.find((axis) => (axis.key === col.axis));
 
-                    if (!colAxis) {
-                        // column does not match a current axis, ignore
-                        return false;
+                    // no matching axis, invalid
+                    if (!axis) {
+                      return null;
                     }
 
+                    col.isDimension = axis.isDimension ?? false;
+                    col.isGridAxis = axis.isGridAxis ?? false;
+                    col.multiColumn = axis.multiColumn ?? false;
+
+                    return col;
+                  })
+                  // remove any that didn't match an axis
+                  .filter((col) => col)
+                  // ensure ther is only one column for each single-column axis
+                  .filter((col) => {
                     // multicolumn => no problem
-                    if (colAxis.multiColumn) {
+                    if (col.multiColumn) {
                       return true;
                     }
 
@@ -480,7 +490,7 @@
                     return true;
                   })
                   .map((col, colIndex) => {
-                      // we need the canonical column index to get data values
+                      // add the canonical column index to get data values
                       col.index = colIndex;
                       return col;
                   });
@@ -517,13 +527,22 @@
                 return ((d) => orderSign * orderColValueAccessor(d));
             };
 
-            this.getValueAccessor = (col) => ((d) => {
-                const columnData = d.value[col.index];
+            this.getValueAccessor = (col) => {
+                if (col.isDimension) {
+                  console.log('returning dim value accessor');
+                  return ((d) => {
+                    console.log(d);
+                    return d.value[col.index][0];
+                   });
+                }
 
                 const reducer = this.getReducerForColumn(col);
-
-                return reducer.final(columnData, this.columnTotals[col.index]);
-            });
+                const columnTotal = this.columnTotals[col.index];
+                return ((d) => {
+                  const columnValue = d.value[col.index];
+                  return reducer.final(columnValue, columnTotal);
+                });
+            };
 
 
             this.dataPointLabelMask = (context) => ((dataPoint) => {

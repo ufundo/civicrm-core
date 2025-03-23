@@ -16,14 +16,12 @@
             'x': {
                 label: ts('X-Axis'),
                 scaleTypes: ['date', 'numeric', 'categorical'],
-                reduceTypes: [],
                 isDimension: true,
                 isGridAxis: true,
             },
             'w': {
                 label: ts('Grouping'),
                 scaleTypes: ['categorical'],
-                reduceTypes: [],
                 isDimension: true,
             },
             'y': {
@@ -31,12 +29,13 @@
                 sourceDataTypes: ['Integer', 'Money', 'Boolean'],
                 isGridAxis: true,
             },
-            'z': {
-              label: ts('Additional labels'),
-              dataLabelTypes: ['title', 'label'],
-              multiColumn: true,
-              prepopulate: false,
-            }
+            // TODO: fix additional labels for compare series
+            //'z': {
+            //  label: ts('Additional labels'),
+            //  dataLabelTypes: ['title', 'label'],
+            //  multiColumn: true,
+            //  prepopulate: false,
+            //}
           });
         },
 
@@ -60,8 +59,6 @@
                 .valueAccessor(displayCtrl.getValueAccessor(yCol))
                 .keyAccessor(displayCtrl.getValueAccessor(xCol))
                 .seriesAccessor(displayCtrl.getValueAccessor(wCol));
-                //.keyAccessor((d) => d.value[xCol.index][0])
-                //.seriesAccessor((d) => d.value[wCol.index][0]);
 
             displayCtrl.buildCoordinateGridIfAny();
         }
