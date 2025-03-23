@@ -50,12 +50,14 @@
         loadChartData: (displayCtrl) => {
             displayCtrl.chart.chart((displayCtrl.settings.seriesDisplayType === 'bar') ? dc.barChart : dc.lineChart);
 
+            const [xCol, wCol] = displayCtrl.getDimensionColumns();
+
             displayCtrl.chart
                 .dimension(displayCtrl.dimension)
                 .group(displayCtrl.group)
                 .valueAccessor(displayCtrl.getValueAccessor(displayCtrl.getFirstColumnForAxis('y')))
-                .keyAccessor((d) => d.key[0])
-                .seriesAccessor((d) => d.key[1]);
+                .keyAccessor((d) => d.key[xCol.index])
+                .seriesAccessor((d) => d.key[wCol.index]);
 
             displayCtrl.buildCoordinateGrid();
         }
