@@ -78,7 +78,7 @@
                   yValue[w] = col.reducer.add(yValue[w], v[col.index]);
                   return yValue;
                 }
-                return col.reduceType.add(p[col.index], v[col.index]);
+                return col.reducer.add(p[col.index], v[col.index]);
             });
             const reduceSub = (p, v) => columnsWithReducers.map((col) => {
                 if (col.axis === 'y') {
@@ -88,7 +88,7 @@
                   yValue[w] = col.reducer.sub(yValue[w], v[col.index]);
                   return yValue;
                 }
-                return col.reduceType.sub(p[col.index], v[col.index]);
+                return col.reducer.sub(p[col.index], v[col.index]);
             });
             const reduceStart = () => columnsWithReducers.map((col) => {
                 if (col.axis === 'y') {
