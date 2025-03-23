@@ -20,7 +20,6 @@
               label: ts('Grouping'),
               scaleTypes: ['categorical'],
               reduceTypes: ['list'],
-              isDimension: true,
           },
           'y': {
               key: 'y',
@@ -43,17 +42,6 @@
 
         getChartConstructor: (displayCtrl) => (displayCtrl.settings.chartType === 'bar') ? dc.barChart : dc.lineChart,
 
-        buildDimension: (displayCtrl) => {
-            const xCol = displayCtrl.getFirstColumnForAxis('x');
-
-            if (!xCol) {
-                return;
-            }
-
-            displayCtrl.dimension = displayCtrl.ndx.dimension((d) => d[xCol.index]);
-        },
-
-
         buildGroup: (displayCtrl) => {
             // get cols we need
             const yColumn = displayCtrl.getFirstColumnForAxis('y');
@@ -63,10 +51,10 @@
                 return;
             }
 
-            const columnsWithReducers = displayCtrl.getColumnsWithReducers();
+            const cols = displayCtrl.getColumnsWithReducers();
 
             // we have to add an extra depth to the reduction of the y column
-            const reduceAdd = (p, v) => columnsWithReducers.map((col) => {
+            const reduceAdd = (p, v) => cols.map((col) => {
                 if (col.axis === 'y') {
                   const w = v[wColumn.index];
                   const yValue = p[col.index];
@@ -80,7 +68,7 @@
                 }
                 return col.reducer.add(p[col.index], v[col.index]);
             });
-            const reduceSub = (p, v) => columnsWithReducers.map((col) => {
+            const reduceSub = (p, v) => cols.map((col) => {
                 if (col.axis === 'y') {
                   const w = v[wColumn.index];
                   const yValue = p[col.index];
@@ -90,7 +78,7 @@
                 }
                 return col.reducer.sub(p[col.index], v[col.index]);
             });
-            const reduceStart = () => columnsWithReducers.map((col) => {
+            const reduceStart = () => cols.map((col) => {
                 if (col.axis === 'y') {
                     return {};
                 }
@@ -147,12 +135,13 @@
             const wValues = displayCtrl.columnTotals[wColumn.index];
 
             wValues.forEach((w, i) => {
-                const crossedValueAccessor = (d) => yValueAccessor(d)[w];
+                const seriesLabel = displayCtrl.renderDataValue(w, wColumn);
+                const seriesValueAccessor = (d) => yValueAccessor(d)[w] ?? null;
 
                 if (i === 0) {
-                    displayCtrl.chart.group(displayCtrl.group, displayCtrl.renderDataValue(w, wColumn), crossedValueAccessor);
+                    displayCtrl.chart.group(displayCtrl.group, seriesLabel, seriesValueAccessor);
                 } else {
-                    displayCtrl.chart.stack(displayCtrl.group, displayCtrl.renderDataValue(w, wColumn), crossedValueAccessor);
+                    displayCtrl.chart.stack(displayCtrl.group, seriesLabel, seriesValueAccessor);
                 }
             });
 
