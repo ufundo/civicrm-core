@@ -71,10 +71,10 @@
             this.getDimensionAxes = () => this.getAxes().filter((axis) => axis.isDimension);
 
             this.getDimensionColumns = () => {
-                const dimensionAxes = this.getDimensionAxes();
+                const dimensionAxisKeys = this.getDimensionAxes().map((axis) => axis.key);
 
                 // TODO: is there a problem with the ordering here?
-                return this.getColumns().filter((col) => dimensionAxes.includes(col.axis));
+                return this.getColumns().filter((col) => dimensionAxisKeys.includes(col.axis));
                 // alternative?
                 // const dimensionColumns = dimensionAxes.map((axisKey) => this.getColumnsForAxis(axisKey));
                 // return dimensionColumns.flat();
@@ -454,14 +454,21 @@
                 return this.settings.columns
                   // filter out any columns which haven't got a set key
                   .filter((col) => col.key)
-                  // filter out any columns on axes which aren't used for this chart type
-                  .filter((col) => Object.keys(axes).includes(col.axis))
-                  // filter out columns for single column axis that are already filled
+                  // check columns match a current axis,
+                  // and that axis isn't already taken
                   .filter((col) => {
+                    const colAxis = axes.find((axis) => axis.key = col.axis);
+
+                    if (!colAxis) {
+                        // column does not match a current axis, ignore
+                        return false;
+                    }
+
                     // multicolumn => no problem
-                    if (axes[col.axis].multiColumn) {
+                    if (colAxis.multiColumn) {
                       return true;
                     }
+
                     // already used => ignore further columns
                     if (singleColumnAxesFilled.includes(col.axis)) {
                       return false;
