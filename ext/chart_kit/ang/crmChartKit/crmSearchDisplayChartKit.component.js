@@ -170,7 +170,7 @@
                 // (which is useful for canonical ordering)
                 this.categories = {};
 
-                this.chartData = this.results.map((record, i) => this.getColumns().map((col) => {
+                const parsedResults = this.results.map((record, i) => this.getColumns().map((col) => {
 
                     let value = record.data[col.key];
 
@@ -214,7 +214,7 @@
                     }
                 }));
 
-                this.ndx = crossfilter(this.chartData);
+                this.ndx = crossfilter(parsedResults);
             };
 
             this.buildDimension = () => {
