@@ -71,13 +71,8 @@
             this.getDimensionAxes = () => this.getAxes().filter((axis) => axis.isDimension);
 
             this.getDimensionColumns = () => {
-                const dimensionAxisKeys = this.getDimensionAxes().map((axis) => axis.key);
-
-                // TODO: is there a problem with the ordering here?
-                return this.getColumns().filter((col) => dimensionAxisKeys.includes(col.axis));
-                // alternative?
-                // const dimensionColumns = dimensionAxes.map((axisKey) => this.getColumnsForAxis(axisKey));
-                // return dimensionColumns.flat();
+                const dimensionColumns = this.getDimensionAxes().map((axis) => this.getColumnsForAxis(axis.key));
+                return dimensionColumns.flat();
             };
 
             this.getSortKeys = () => this.getDimensionColumns().map((col) => col.key);
@@ -464,7 +459,7 @@
                   // check columns match a current axis,
                   // and that axis isn't already taken
                   .filter((col) => {
-                    const colAxis = axes.find((axis) => axis.key = col.axis);
+                    const colAxis = axes.find((axis) => (axis.key === col.axis));
 
                     if (!colAxis) {
                         // column does not match a current axis, ignore
