@@ -591,19 +591,10 @@
 
                 value = reducer.final(value, this.columnTotals[col.index]);
 
-                // list and percentage are special cases
-                // for how we apply data value renderer
-                switch (col.reduceType) {
-                    case 'list':
-                        // we need to apply the datavalue rendering to each element
-                        return value.map((item) => this.renderDataValue(item, col)).join(', ');
-                    case 'percentage_sum':
-                    case 'percentage_count':
-                        // TODO would we ever need to call renderDataValue here? before or after division?
-                        const percentage = Math.floor(100 * value);
-                        return `${percentage}%`;
-                    default:
-                        return this.renderDataValue(value, col);
+                if (reducer.render) {
+                    return reducer.render(value, (v) => this.renderDataValue(v, col));
+                } else {
+                    return this.renderDataValue(value, col);
                 }
             };
 
