@@ -3,7 +3,7 @@
 <div class="crm-chart-kit-admin">
 
   <div>
-    <div class="crm-chart-kit-admin-chart-type">
+    <div class="crm-chart-kit-admin-chart-type" ng-class="$ctrl.display.settings.chartType ? 'crm-chart-kit-admin-has-type' : ''">
         <label ng-repeat="type in $ctrl.chartTypeOptions">
             <input type="radio" name="occurrences" ng-value="type.key" ng-model="$ctrl.display.settings.chartType" />
             <i class="crm-i {{:: type.icon}}" />

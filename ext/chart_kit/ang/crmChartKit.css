@@ -44,5 +44,12 @@
 
 .crm-chart-kit-admin-chart-type label {
   padding: 2rem;
+  font-size: 2rem;
   border: 1px solid;
 }
+
+.crm-chart-kit-admin-chart-type.crm-chart-kit-admin-has-type label {
+  padding: 1rem;
+  font-size: 1rem;
+}
+
