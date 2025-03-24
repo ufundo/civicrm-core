@@ -11,13 +11,13 @@
           seriesDisplayType: 'line',
         }),
 
-        getAxes: function () {
-            return ({
+        hasCoordinateGrid: true,
+
+        getAxes: () => ({
             'x': {
                 label: ts('X-Axis'),
                 scaleTypes: ['date', 'numeric', 'categorical'],
                 isDimension: true,
-                isGridAxis: true,
             },
             'w': {
                 label: ts('Grouping'),
@@ -27,7 +27,6 @@
             'y': {
                 label: ts('Value'),
                 sourceDataTypes: ['Integer', 'Money', 'Boolean'],
-                isGridAxis: true,
             },
             // TODO: fix additional labels for compare series
             //'z': {
@@ -36,8 +35,7 @@
             //  multiColumn: true,
             //  prepopulate: false,
             //}
-          });
-        },
+        }),
 
         showLegend: (displayCtrl) => (displayCtrl.settings.showLegend && displayCtrl.settings.showLegend !== 'none'),
 

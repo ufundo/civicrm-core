@@ -8,14 +8,13 @@
 
         getInitialDisplaySettings: () => ({}),
 
-        getAxes: function () {
-            return ({
+        hasCoordinateGrid: true,
+
+        getAxes: () => ({
             'x': {
                 label: ts('X-Axis'),
                 scaleTypes: ['date', 'numeric', 'categorical'],
-                reduceTypes: [],
                 isDimension: true,
-                isGridAxis: true,
             },
             'y': {
                 key: 'y',
@@ -23,7 +22,6 @@
                 sourceDataTypes: ['Integer', 'Money', 'Boolean', 'Float', 'Double'],
                 multiColumn: true,
                 colorType: 'one-per-column',
-                isGridAxis: true,
             },
             'z': {
                 label: ts('Additional Labels'),
@@ -31,8 +29,7 @@
                 prepopulate: false,
                 multiColumn: true,
             }
-          });
-        },
+        }),
 
         showLegend: (displayCtrl) => (
             displayCtrl.getColumnsForAxis('y').length > 1 &&

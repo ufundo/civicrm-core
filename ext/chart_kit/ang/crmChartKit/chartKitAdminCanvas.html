@@ -37,7 +37,7 @@
     </div>
 
 
-    <div ng-if="$ctrl.chartType.hasCoordinateGrid()" class="form-inline">
+    <div ng-if="$ctrl.chartType.hasCoordinateGrid" class="form-inline">
         <label>
           {{:: ts('Top') }}
         </label>
@@ -63,7 +63,7 @@
 
   </details>
 
-  <details ng-if="$ctrl.chartType.hasCoordinateGrid()">
+  <details ng-if="$ctrl.chartType.hasCoordinateGrid">
     <summary>{{:: ts('Axes')}}</summary>
       <div class="form-inline">
         <label>

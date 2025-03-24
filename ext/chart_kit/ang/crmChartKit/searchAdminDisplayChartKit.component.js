@@ -12,7 +12,7 @@
             crmSearchAdmin: '^crmSearchAdmin'
         },
         templateUrl: '~/crmChartKit/searchAdminDisplayChartKit.html',
-        controller: function ($scope, searchMeta, chartKitColumnConfig, chartKitChartTypes, chartKitReduceTypes) {
+        controller: function ($scope, searchMeta, chartKitColumnConfigOptions, chartKitChartTypes, chartKitReduceTypes) {
             const ts = $scope.ts = CRM.ts('chart_kit');
 
             this.getColumnSlots = () => this.display.settings.columns.map((col, colIndex) => {
@@ -135,11 +135,11 @@
             this.axisDefaults = () => ({
                     // by default allow all types we know
                     reduceTypes: chartKitReduceTypes.map((type) => type.key),
-                    scaleTypes: chartKitColumnConfig.scaleType.map((type) => type.key),
-                    dataLabelTypes: chartKitColumnConfig.dataLabelType.map((type) => type.key),
+                    scaleTypes: chartKitColumnConfigOptions.scaleType.map((type) => type.key),
+                    dataLabelTypes: chartKitColumnConfigOptions.dataLabelType.map((type) => type.key),
                     // by default no option
                     seriesTypes: [],
-                    dataLabelFormatters: chartKitColumnConfig.dataLabelFormatter.map((type) => type.key),
+                    dataLabelFormatters: chartKitColumnConfigOptions.dataLabelFormatter.map((type) => type.key),
                     multiColumn: false,
                     prepopulate: true,
             });
@@ -239,7 +239,7 @@
 
             this.getColumnDatePrecisionOptions = (col) => {
                 if (this.getColumnSourceDataTypeIsDate(col)) {
-                    return chartKitColumnConfig.datePrecision.map((option) => option.key);
+                    return chartKitColumnConfigOptions.datePrecision.map((option) => option.key);
                 }
                 return [];
             };
@@ -333,7 +333,7 @@
                 if (configKey === 'reduceType') {
                     return chartKitReduceTypes;
                 }
-                return chartKitColumnConfig[configKey];
+                return chartKitColumnConfigOptions[configKey];
             };
 
             this.getOptionDetailsForKey = (configKey, optionKey) => this.getAllOptionDetails(configKey).find((option) => option.key === optionKey);

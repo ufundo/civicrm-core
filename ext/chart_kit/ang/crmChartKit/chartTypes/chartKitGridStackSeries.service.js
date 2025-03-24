@@ -8,12 +8,12 @@
 
         getInitialDisplaySettings: () => ({}),
 
+        hasCoordinateGrid: true,
+
         getAxes: () => ({
           'x': {
               label: ts('X-Axis'),
               scaleTypes: ['date', 'numeric', 'categorical'],
-              reduceTypes: [],
-              isGridAxis: true,
               isDimension: true,
           },
           'w': {
@@ -25,7 +25,6 @@
               key: 'y',
               label: ts('Values'),
               sourceDataTypes: ['Integer', 'Money', 'Boolean'],
-              isGridAxis: true,
           },
           // TODO: supporting reduce types for additional labels is complicated
           // because we build the group differently
@@ -51,50 +50,49 @@
                 return;
             }
 
-            const cols = displayCtrl.getColumnsWithReducers();
+            const cols = displayCtrl.getColumns();
 
-            // we have to add an extra depth to the reduction of the y column
-            const reduceAdd = (p, v) => cols.map((col) => {
-                if (col.axis === 'y') {
+            const reduceAdd = (p, v) => {
+                cols.forEach((col) => {
                   const w = v[wColumn.index];
-                  const yValue = p[col.index];
+                  const colValue = p[col.index];
 
-                  if (!(w in yValue)) {
-                      yValue[w] = col.reducer.start();
+                  if (!(w in colValue)) {
+                      colValue[w] = col.reducer.start();
                   }
 
-                  yValue[w] = col.reducer.add(yValue[w], v[col.index]);
-                  return yValue;
-                }
-                return col.reducer.add(p[col.index], v[col.index]);
-            });
-            const reduceSub = (p, v) => cols.map((col) => {
-                if (col.axis === 'y') {
-                  const w = v[wColumn.index];
-                  const yValue = p[col.index];
+                  colValue[w] = col.reducer.add(colValue[w], v[col.index]);
 
-                  yValue[w] = col.reducer.sub(yValue[w], v[col.index]);
-                  return yValue;
-                }
-                return col.reducer.sub(p[col.index], v[col.index]);
-            });
-            const reduceStart = () => cols.map((col) => {
-                if (col.axis === 'y') {
-                    return {};
-                }
-                return col.reducer.start();
-            });
+                  p[col.index] = colValue;
+                });
+                return p;
+            };
+            const reduceSub = (p, v) => {
+                cols.forEach((col) => {
+                  const w = v[wColumn.index];
+                  const colValue = p[col.index];
+
+                  colValue[w] = col.reducer.sub(colValue[w], v[col.index]);
+                  p[col.index] = colValue;
+                });
+                return p;
+            };
+            const reduceStart = () => {
+                const p = {};
+                cols.forEach((col) => {
+                    p[col.index] = {};
+                });
+                return p;
+            };
 
             displayCtrl.group = displayCtrl.dimension.group().reduce(reduceAdd, reduceSub, reduceStart);
 
             // find totals in each column
-            displayCtrl.columnTotals = displayCtrl.ndx.groupAll().reduce(reduceAdd, reduceSub, reduceStart).value();
+            const columnTotals = displayCtrl.ndx.groupAll().reduce(reduceAdd, reduceSub, reduceStart).value();
 
             // the total for Y will be split by series. for calcs we might need to aggregate the overall total?
             // this might be tricksy depending on reduce type
-            console.log(displayCtrl.columnTotals[yColumn.index]);
-
-            const ySeriesTotals = Object.values(displayCtrl.columnTotals[yColumn.index]);
+            const ySeriesTotals = Object.values(columnTotals[yColumn.index]);
 
             const yGrandTotal = ySeriesTotals.reduce((a, b) => {
               switch (yColumn.reduceType) {
@@ -112,7 +110,9 @@
               }
             });
 
-            displayCtrl.columnTotals[yColumn.index] = yGrandTotal;
+            columnTotals[yColumn.index] = yGrandTotal;
+
+            displayCtrl.setColumnTotals(columnTotals);
         },
 
         loadChartData: (displayCtrl) => {
@@ -132,7 +132,7 @@
 
             // wValues are list reduced - so the column total is the list of all values
             // that appear in that column in the dataset
-            const wValues = displayCtrl.columnTotals[wColumn.index];
+            const wValues = wColumn.total;
 
             wValues.forEach((w, i) => {
                 const seriesLabel = displayCtrl.renderDataValue(w, wColumn);

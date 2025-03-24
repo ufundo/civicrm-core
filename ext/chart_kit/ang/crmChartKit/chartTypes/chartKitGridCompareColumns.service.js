@@ -10,6 +10,8 @@
             barGap: 5,
         }),
 
+        hasCoordinateGrid: true,
+
         getAxes: () => ({
             'x': {
                 label: ts('X-Axis'),
@@ -17,7 +19,6 @@
                 scaleTypes: ['date', 'numeric', 'categorical'],
                 reduceTypes: [],
                 isDimension: true,
-                isGridAxis: true,
             },
             'y': {
                 key: 'y',
@@ -26,7 +27,6 @@
                 seriesTypes: ['bar', 'line', 'area'],
                 multiColumn: true,
                 colorType: 'one-per-column',
-                isGridAxis: true,
             },
             'z': {
                 label: ts('Additional Labels'),

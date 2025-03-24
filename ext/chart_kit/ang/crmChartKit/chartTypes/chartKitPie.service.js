@@ -32,7 +32,7 @@
       legendTextAccessor: (displayCtrl) => ((d) =>
         (d.name === 'Others') ?
           'Others' :
-          displayCtrl.getColumnsForAxis('w').map((col) => displayCtrl.renderColumnValue(d.data, col)).join(' - ')
+          displayCtrl.getColumnsForAxis('w').map((col) => col.renderValue(d.data)).join(' - ')
       ),
 
       getInitialDisplaySettings: () => ({
