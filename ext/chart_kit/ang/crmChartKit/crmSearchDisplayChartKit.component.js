@@ -303,7 +303,7 @@
           this.formatCoordinateGrid();
         }
 
-        if (this.chartType.showLegend(this)) {
+        if (this.chartType.showLegend && this.chartType.showLegend(this)) {
           this.addLegend();
         }
       };

@@ -22,7 +22,7 @@
               label: ts('Value'),
               sourceDataTypes: ['Integer', 'Money', 'Boolean'],
               // TODO: support average/percentage aggregators with series
-              reduceTypes: ['sum', 'count']
+              reduceTypes: ['sum', 'count'],
             },
             'w': {
                 label: ts('Grouping'),
@@ -30,17 +30,20 @@
                 reduceTypes: ['list'],
                 isDimension: true,
                 prepopulate: false,
+                multiColumn: true
             },
-            // TODO: fix additional labels for compare series
-            //'z': {
-            //  label: ts('Additional labels'),
-            //  dataLabelTypes: ['title', 'label'],
-            //  multiColumn: true,
-            //  prepopulate: false,
-            //}
+            'z': {
+              label: ts('Additional labels'),
+              dataLabelTypes: ['title', 'label'],
+              multiColumn: true,
+              prepopulate: false,
+            }
         }),
 
-        showLegend: (displayCtrl) => (displayCtrl.settings.showLegend && displayCtrl.settings.showLegend !== 'none'),
+        showLegend: (displayCtrl) =>
+            (displayCtrl.getColumnsForAxis('w').length
+            && displayCtrl.settings.showLegend
+            && (displayCtrl.settings.showLegend !== 'none')),
 
         getChartConstructor: () => dc.seriesChart,
 
@@ -48,15 +51,21 @@
             displayCtrl.chart.chart((displayCtrl.settings.displayType === 'bar') ? dc.barChart : dc.lineChart);
 
             const xCol = displayCtrl.getFirstColumnForAxis('x');
-            const wCol = displayCtrl.getFirstColumnForAxis('w');
             const yCol = displayCtrl.getFirstColumnForAxis('y');
+            const wCols = displayCtrl.getColumnsForAxis('w');
 
             displayCtrl.chart
                 .dimension(displayCtrl.dimension)
                 .group(displayCtrl.group)
                 .valueAccessor(yCol.getDataValue)
-                .keyAccessor((d) => parseFloat(xCol.getDataValue(d)[0]))
-                .seriesAccessor(wCol.getRenderedValue)
+                .keyAccessor((d) => parseFloat(xCol.getDataValue(d)[0]));
+
+            if (wCols.length) {
+              displayCtrl.chart.seriesAccessor((d) => wCols.map((col) => col.getRenderedValue(d)).join(' - '))
+            }
+            else {
+                displayCtrl.chart.seriesAccessor((d) => null);
+            }
 
             displayCtrl.buildCoordinateGrid();
         }

@@ -29,10 +29,6 @@
             this.initChartTypeSettings = () => {
               this.chartTypeSettings = chartKitChartTypes.chartTypeSettings;
 
-              Object.keys(this.chartTypeSettings).forEach((setting) => {
-                $scope.$watch('$ctrl.display.settings.' + setting, () => this.onSetChartType(), true);
-              });
-
               this.headerSettings = [{
                 key: 'displayType',
                 label: ts('Chart Type'),
@@ -76,15 +72,16 @@
 
                 this.initChartType();
 
+                $scope.$watch('$ctrl.display.settings', () => this.onSettingChange(), true);
+
             };
 
-            this.onSetChartType = () => {
+            this.onSettingChange = () => {
               this.initChartType();
             };
 
             this.initChartType = () => {
               this.chartType = chartKitChartTypes.getChartType(this.display.settings);
-
 
               if (!this.chartType) {
                 return;
@@ -93,6 +90,10 @@
               this.initAxesForChartType();
               this.initDisplaySettingsForChartType();
             };
+
+            this.setSetting = (key, value) => {
+              this.display.settings[key] = value;
+            }
 
             this.hasChartType = () => !!this.chartType;
 

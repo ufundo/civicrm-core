@@ -1,0 +1,21 @@
+<div class="crm-chart-kit-series-admin">
+
+  <div ng-include="'~/crmChartKit/chartKitAdminColumns.html'"></div>
+
+  <button class="btn btn-default" ng-click="$ctrl.setSetting('seriesType', 'rows')">
+    <i class="crm-i fa-plus" />
+    {{:: ts('Group By Another Column') }}
+  </button>
+
+  <button class="btn btn-default" ng-click="$ctrl.setSetting('seriesType', 'columns')">
+    <i class="crm-i fa-plus" />
+    {{:: ts('Add Another Value Column') }}
+  </button>
+
+  <div class="crm-chart-kit-admin-presentation">
+
+    <div ng-include="'~/crmChartKit/chartKitAdminCanvas.html'"></div>
+
+  </div>
+
+</div>

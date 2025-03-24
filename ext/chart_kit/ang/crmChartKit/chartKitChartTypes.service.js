@@ -5,6 +5,7 @@
   angular.module('crmChartKit').factory('chartKitChartTypes', (
     chartKitPie,
     chartKitRow,
+    chartKitGridSimple,
     chartKitGridStackColumns,
     chartKitGridCompareColumns,
     chartKitGridCompareRows,
@@ -74,7 +75,13 @@
           settings.displayType = settings.chartType;
         }
 
-        const displayType = settings.displayType;
+        let displayType = settings.displayType;
+        let seriesType = settings.seriesType;
+        let layerType = settings.layerType;
+
+        if (!displayType) {
+          return null;
+        }
 
         if (displayType === 'pie') {
           return chartKitPie;
@@ -83,43 +90,30 @@
           return chartKitRow;
         }
 
-        const layerType = settings.layerType;
-
-        const yCols = settings.columns.filter((col) => col.axis === 'y').length;
-
-        const seriesType = (yCols > 1) ? 'columns' : 'rows';
-
-        if (layerType === 'stack' && seriesType === 'rows') {
-          return chartKitGridStackRows;
-        }
-
-        if (layerType === 'stack' && seriesType === 'columns') {
-          return chartKitGridStackColumns;
-        }
-
-        if (layerType === 'compare' && seriesType === 'rows') {
-          return chartKitGridCompareRows;
-        }
-
-        if (layerType === 'compare' && seriesType === 'columns') {
-          return chartKitGridCompareColumns;
-        }
-
-        // defaults based on display type
         if (displayType === 'mixed') {
-          return chartKitGridCompareColumns;
-        }
-        if (displayType === 'line') {
-          return chartKitGridCompareColumns;
-        }
-        if (displayType === 'bar') {
-          return chartKitGridCompareRows;
-        }
-        if (displayType === 'area') {
-          return chartKitGridStackRows;
+          seriesType = 'columns';
         }
 
-        return null;
+        switch (seriesType) {
+          case 'rows':
+            switch (layerType) {
+              case 'stack':
+                return chartKitGridStackRows;
+              case 'compare':
+              default:
+                return chartKitGridCompareRows;
+            }
+          case 'columns':
+            switch (layerType) {
+              case 'stack':
+                return chartKitGridStackColumns;
+              case 'compare':
+              default:
+                return chartKitGridCompareColumns;
+            }
+          default:
+            return chartKitGridSimple;
+        }
       }
     });
   });
