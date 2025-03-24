@@ -231,10 +231,13 @@
 
       Object.keys(axisDefinition).forEach((axisKey) => {
 
-        // find all matching columns if multiColumn, or just pick first matching column if single
-        columnsByAxis[axisKey] = axisDefinition[axisKey].multiColumn
-          ? setColumns.filter((col) => col.axis === axisKey)
-          : [setColumns.find((col) => col.axis === axisKey)];
+        // find all matching columns
+        columnsByAxis[axisKey] = setColumns.filter((col) => col.axis === axisKey)
+
+        // if not multiColumn, pick at most 1
+        if (!axisDefinition[axisKey].multiColumn) {
+          columnsByAxis[axisKey] = columnsByAxis[axisKey].slice(0, 1);
+        }
 
         // build out the columns
         columnsByAxis[axisKey] = columnsByAxis[axisKey].map((col, index) => {

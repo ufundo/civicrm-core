@@ -1,0 +1,7 @@
+<div class="form-inline" ng-if="$ctrl.display.settings.displayType !== 'mixed'">
+  <label ng-repeat="option in $ctrl.chartTypeSettings.seriesType">
+      <input type="radio" ng-name="option.key" ng-value="option.key" ng-model="$ctrl.display.settings.seriesType" />
+      <i class="crm-i {{:: option.icon}}" />
+      {{:: option.label }}
+  </label>
+</div>

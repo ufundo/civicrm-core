@@ -180,7 +180,7 @@
             />
         </div>
       </details>
-      <button class="btn btn-sm btn-secondary-outline" ng-if="axis.multiColumn"  ng-click="$ctrl.removeColumn(col.index)">
+      <button class="btn btn-sm btn-secondary-outline" ng-if="axis.multiColumn || !axis.prepopulate"  ng-click="$ctrl.removeColumn(col.index)">
         <i class="crm-i fa-minus" />
         {{:: ts('Remove field') }}
       </button>

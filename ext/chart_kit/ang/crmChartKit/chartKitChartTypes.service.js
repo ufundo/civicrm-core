@@ -5,11 +5,9 @@
   angular.module('crmChartKit').factory('chartKitChartTypes', (
     chartKitPie,
     chartKitRow,
-    chartKitGridSimple,
-    chartKitGridStackColumns,
-    chartKitGridCompareColumns,
+    chartKitGridCompareColumnsStackRows,
     chartKitGridCompareRows,
-    chartKitGridStackRows,
+    chartKitGridStackColumns,
   ) => {
 
     const ts = CRM.ts('chart_kit');
@@ -50,22 +48,16 @@
         ],
         seriesType: [
           {
-            key: 'rows',
-            label: ts('Group Based On Values in a Column'),
+            key: 'compare-columns-stack-rows',
+            label: ts('Standard'),
           },
           {
-            key: 'columns',
-            label: ts('Use Multiple Columns'),
-          }
-        ],
-        layerType: [
-          {
-            key: 'stack',
-            label: ts('Stack'),
+            key: 'compare-rows',
+            label: ts('Compare Grouping'),
           },
           {
-            key: 'compare',
-            label: ts('Compare'),
+            key: 'stack-columns',
+            label: ts('Stack Values'),
           }
         ],
       },
@@ -77,7 +69,6 @@
 
         let displayType = settings.displayType;
         let seriesType = settings.seriesType;
-        let layerType = settings.layerType;
 
         if (!displayType) {
           return null;
@@ -89,31 +80,20 @@
         if (displayType === 'row') {
           return chartKitRow;
         }
-
         if (displayType === 'mixed') {
-          seriesType = 'columns';
+          // stack columns and compare rows dont allow
+          // mixing types
+          return chartKitGridCompareColumnsStackRows;
         }
 
-        switch (seriesType) {
-          case 'rows':
-            switch (layerType) {
-              case 'stack':
-                return chartKitGridStackRows;
-              case 'compare':
-              default:
-                return chartKitGridCompareRows;
-            }
-          case 'columns':
-            switch (layerType) {
-              case 'stack':
-                return chartKitGridStackColumns;
-              case 'compare':
-              default:
-                return chartKitGridCompareColumns;
-            }
-          default:
-            return chartKitGridSimple;
+        if (seriesType === 'compare-rows') {
+          return chartKitGridCompareRows;
         }
+        if (seriesType === 'stack-columns') {
+          return chartKitGridStackColumns;
+        }
+
+        return chartKitGridCompareColumnsStackRows;
       }
     });
   });

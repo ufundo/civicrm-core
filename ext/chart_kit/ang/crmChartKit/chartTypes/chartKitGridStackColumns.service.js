@@ -37,7 +37,7 @@
             displayCtrl.settings.showLegend !== 'none'
         ),
 
-        getChartConstructor: (displayCtrl) => (displayCtrl.settings.chartType === 'bar') ? dc.barChart : dc.lineChart,
+        getChartConstructor: (displayCtrl) => (displayCtrl.settings.displayType === 'bar') ? dc.barChart : dc.lineChart,
 
         loadChartData: (displayCtrl) => {
             displayCtrl.chart

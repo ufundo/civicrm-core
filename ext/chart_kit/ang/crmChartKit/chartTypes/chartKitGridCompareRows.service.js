@@ -48,7 +48,20 @@
         getChartConstructor: () => dc.seriesChart,
 
         loadChartData: (displayCtrl) => {
-            displayCtrl.chart.chart((displayCtrl.settings.displayType === 'bar') ? dc.barChart : dc.lineChart);
+
+
+            switch (displayCtrl.settings.displayType) {
+                case 'area':
+                    displayCtrl.chart.chart((c) => dc.lineChart(c).renderArea(true));
+                    break;
+                case 'bar':
+                    displayCtrl.chart.chart(dc.barChart);
+                    break;
+                case 'line':
+                default:
+                    displayCtrl.chart.chart(dc.lineChart);
+                    break;
+            }
 
             const xCol = displayCtrl.getFirstColumnForAxis('x');
             const yCol = displayCtrl.getFirstColumnForAxis('y');
