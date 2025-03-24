@@ -48,9 +48,9 @@
             // group the first and then stack additional y columns
             yAxisColumns.forEach((col, i) => {
                 if (i === 0) {
-                  displayCtrl.chart.group(displayCtrl.group, col.label, displayCtrl.getValueAccessor(col))
+                  displayCtrl.chart.group(displayCtrl.group, col.label, col.getDataValue)
                 } else {
-                  displayCtrl.chart.stack(displayCtrl.group, col.label, displayCtrl.getValueAccessor(col))
+                  displayCtrl.chart.stack(displayCtrl.group, col.label, col.getDataValue)
                 }
             });
 

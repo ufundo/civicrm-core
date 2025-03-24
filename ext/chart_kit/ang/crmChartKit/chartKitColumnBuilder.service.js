@@ -1,50 +1,28 @@
-(function (angular, $, _) {
+(function (angular, $, _, d3) {
   "use strict";
 
   // Provides common "option group" info for chart admin components
-  angular.module('crmChartKit').service('chartKitColumnBuilder', (chartKitReduceTypes) => {
-
-    this.buildColumns = (columnSettings, axisDefinition) => {
-      // filter out any columns which haven't got a set key
-      const setColumns = columnSettings.filter((col) => col.key);
-
-      const columnsByAxis = {};
-
-      Object.keys(axisDefinition).forEach((axisKey) => {
-
-        // find all matching columns if multiColumn, or just pick first matching column if single
-        columnsByAxis[axisKey] = axisDefinition[axisKey].multiColumn
-          ? setColumns.filter((col) => col.axis === axisKey)
-          : [setColumns.find((col) => col.axis === axisKey)];
-
-        // build out the columns
-        columnsByAxis[axisKey] = columnsByAxis[axisKey].map((col, index) => {
-          // set isDimension on the column based on axis defintion
-          col.isDimension = axisDefinition[axisKey].isDimension ?? false;
-
-          // set its index in the columnsByAxis array
-          col.axisIndex = index;
-          // set overall canonical indexes for each col
-          // e.g. x_0, y_0, y_1, ...
-          col.index = `${axisKey}_${index}`;
-
-
-          // add getter/setters etc
-          return this.buildColumn(col);
-        });
-      });
-
-      return columnsByAxis;
-    };
+  angular.module('crmChartKit').factory('chartKitColumnBuilder', (chartKitReduceTypes) => {
 
     /**
      * Get the reducer for a column, based on its reduceType key
      * ( defaults to returning the "list" reducer if reduceType isn't set )
      */
-    this.buildColumn = (col) => {
+    const buildColumn = (col) => {
+      // initialise the category list for categorical columns
+      if (col.scaleType === 'categorical') {
+        col.categories = [];
+      }
+
       col.reducer = chartKitReduceTypes.find((type) => type.key === (col.reduceType ?? 'list'));
 
-      col.getDataValue = (d) => col.isDimension ? d.value[col.index][0] : col.reducer.final(d.value[col.index], col.total);
+      col.getDataValue = (d) => {
+        const stored = d.value[col.index] ?? null;
+        if (stored === null) {
+          return null;
+        }
+        return col.reducer.final(stored, col.total);
+      };
 
       col.toDataValue = (v) => {
         switch (col.datePrecision) {
@@ -67,11 +45,6 @@
 
         switch (col.scaleType) {
           case 'categorical':
-            // initialise the category list for this column if it doesnt exist yet
-            if (!col.categories) {
-              col.categories = [];
-            }
-
             const existingIndex = col.categories.indexOf(v);
 
             if (existingIndex < 0) {
@@ -91,7 +64,7 @@
         switch (col.scaleType) {
           case 'categorical':
             // convert categorical indexes back to label
-            v = col.categoryMap[v];
+            v = col.categories[v];
             break;
         }
         // convert timestamp crossfilter back to date string
@@ -121,19 +94,24 @@
             return v.toFixed(col.dataLabelDecimalPlaces);
           case 'formatMoney':
             return CRM.formatMoney(v, null, col.dataLabelMoneyFormatString);
+          default:
+            return v;
         }
       };
 
-      col._renderDataValue = (v) => {
+      col.renderUnreducedDataValue = (v) => {
         const parsedValue = col.fromDataValue(v);
         return col.applyFormatters(parsedValue);
       },
 
       col.renderDataValue = (v) => {
+        if (!v && v !== 0) {
+          return null;
+        }
         if (col.reducer.render) {
-          return col.reducer.render(v, (v) => col._renderDataValue(v));
+          return col.reducer.render(v, (v) => col.renderUnreducedDataValue(v));
         } else {
-          return col._renderDataValue(v);
+          return col.renderUnreducedDataValue(v);
         }
       }
 
@@ -146,18 +124,51 @@
       };
 
       col.getRenderedLabel = (d) => {
-        const value = col.getRenderedValue(d);
-
-        if (!value && value !== 0) {
-          return null;
-        }
+        const v = col.getRenderedValue(d);
 
         if (col.dataLabelColumnPrefix) {
-          return `${col.label}: ${value}`;
+          return `${col.label}: ${v}`;
         }
 
-        return value;
+        return v;
       };
+
+      return col;
+    };
+
+
+    return (columnSettings, axisDefinition) => {
+      // filter out any columns which haven't got a set key
+      const setColumns = columnSettings.filter((col) => col.key);
+
+      const columnsByAxis = {};
+
+      Object.keys(axisDefinition).forEach((axisKey) => {
+
+        // find all matching columns if multiColumn, or just pick first matching column if single
+        columnsByAxis[axisKey] = axisDefinition[axisKey].multiColumn
+          ? setColumns.filter((col) => col.axis === axisKey)
+          : [setColumns.find((col) => col.axis === axisKey)];
+
+        // build out the columns
+        columnsByAxis[axisKey] = columnsByAxis[axisKey].map((col, index) => {
+          // add getter/setters etc
+          const builtCol = buildColumn(col);
+
+          // set isDimension on the column based on axis defintion
+          builtCol.isDimension = axisDefinition[axisKey].isDimension ?? false;
+
+          // set its index in the columnsByAxis array
+          builtCol.axisIndex = index;
+          // set overall canonical indexes for each col
+          // e.g. x_0, y_0, y_1, ...
+          builtCol.index = `${axisKey}_${index}`;
+
+          return builtCol;
+        });
+      });
+
+      return columnsByAxis;
     };
   });
-})(angular, CRM.$, CRM._);
+})(angular, CRM.$, CRM._, CRM.chart_kit.d3);

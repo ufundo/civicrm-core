@@ -34,6 +34,11 @@
             return;
           }
 
+          // build out column model based on column settings
+          if (!this.columnsByAxis) {
+            this.buildColumns();
+          }
+
           this.alwaysSortByXAscending();
         });
         this.onPostRun.push(() => {
@@ -71,6 +76,9 @@
           return;
         }
 
+        // build out column model based on column settings
+        this.buildColumns();
+
         // if sort keys have changed, we need to re-run the search to get new ordering
         // from the server
         const newSortKeysSerialised = this.getSortKeys().join(',');
@@ -90,9 +98,6 @@
           this.chartContainer.innerText = ts('Search returned no results.');
           return;
         }
-
-        // build out column model based on column settings
-        this.buildColumns();
 
         // loads search results data into crossfilter
         this.buildCrossfilter();
@@ -286,10 +291,9 @@
       this.formatChart = () => {
         // provide title and label accessors based on our column config
         this.chart
-          .title((d) => this.renderDataLabel(d, this.dataPointLabelMask('title')(d)))
+          .title((d) => this.renderDataLabel(d, 'title'))
           // svg doesn't render line breaks
-          .label((d) => this.renderDataLabel(d, this.dataPointLabelMask('label')(d)).replaceAll('\n', ' - '));
-        //.label((d) => this.renderDataLabel(d, this.maskedDataPointValue(d, 'label')).split('\n').map(a => `<tspan>${a}</tspan>`).join(''));
+          .label((d) => this.renderDataLabel(d, 'label').replaceAll('\n', ' - '));
 
         this.chart
           .width(() => (this.settings.format.width))
@@ -396,7 +400,7 @@
           return;
         }
 
-        this.columnsByAxis = chartKitColumnBuilder.buildColumns(this.settings.columns, this.chartType.getAxes());
+        this.columnsByAxis = chartKitColumnBuilder(_.cloneDeep(this.settings.columns), this.chartType.getAxes());
       };
 
       this.getColumnsForAxis = (axisKey) => this.columnsByAxis[axisKey] ?? [];
@@ -409,44 +413,35 @@
       this.getOrderDirection = () => (this.settings.chartOrderDir ? this.settings.chartOrderDir : 'ASC');
 
       this.getOrderAccessor = () => {
-        const orderColValueAccessor = this.getOrderColumn().valueAccessor;
+        const orderColValueAccessor = this.getOrderColumn().getDataValue;
         const orderSign = (this.getOrderDirection() === 'ASC') ? 1 : -1;
 
         return ((d) => orderSign * orderColValueAccessor(d));
       };
 
-      this.dataPointLabelMask = (context) => ((dataPoint) => {
-        const dataPointValue = this.dataPointValue(dataPoint);
-
-        this.getColumns().forEach((col) => {
-          if (col.dataLabelType !== context) {
-            dataPointValue[col.index] = null;
-          }
-        });
-
-        return dataPointValue;
-      });
-
-      this.dataPointValue = (dataPoint) => {
-        if (!dataPoint) {
+      this.renderDataLabel = (dataPoint, maskContext = null, maskColsByIndex = null) => {
+        if (!dataPoint || dataPoint.key === 'empty') {
           return null;
         }
-        // sometimes the data is in a sub-property
-        // (depends on chartType or whether title or label ??)
-        if (dataPoint.data) {
-          dataPoint = dataPoint.data;
-        }
-        if (dataPoint.value) {
-          dataPoint = dataPoint.value;
-        }
-        return dataPoint;
-      };
-
-      this.renderDataLabel = (dataPoint, dataPointValue) => {
         if (dataPoint.key === 'Others') {
           return `${dataPoint.others.length} Others`;
         }
-        return this.getColumns().map((col) => col.getRenderedLabel(dataPointValue))
+        // sometimes the data point has "data" rather than "value"
+        // (depends on chartType or whether title or label ??)
+        if (dataPoint.data && !dataPoint.value) {
+          dataPoint.value = dataPoint.data;
+        }
+
+        let columns = this.getColumns();
+
+        if (maskContext) {
+          columns = columns.filter((col) => col.dataLabelType === maskContext);
+        }
+        if (maskColsByIndex) {
+          columns = columns.filter((col) => !maskColsByIndex.includes(col.index));
+        }
+
+        return columns.map((col) => col.getRenderedLabel(dataPoint))
           // remove blanks
           .filter((label) => !!label)
           .join('\n');

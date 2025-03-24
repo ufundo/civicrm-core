@@ -80,7 +80,12 @@
             sub: (p, v) => p.filter((x) => x != v),
             start: () => [],
             // apply the dataRender to each coordinate, then join
-            render: (v, dataRender) => v.map((item) => dataRender(item)).join(', '),
+            render: (v, dataRender) => {
+              if (!v.map) {
+                return dataRender(v);
+              }
+              return v.map((item) => dataRender(item)).join(', ');
+            },
         }
     ];
   });

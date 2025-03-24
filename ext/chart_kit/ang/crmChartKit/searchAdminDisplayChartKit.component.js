@@ -16,9 +16,9 @@
             const ts = $scope.ts = CRM.ts('chart_kit');
 
             this.getColumnSlots = () => this.display.settings.columns.map((col, colIndex) => {
-                // we need the canonical column index to get data values
-                col.index = colIndex;
-                return col;
+              // add canonical index for keeping track of oclumns
+              col.index = colIndex;
+              return col;
             });
 
             // often we only want the columns which have a source field set
@@ -84,6 +84,8 @@
             };
 
             this.getAxes = () => this.axes;
+
+            this.getAxis = (axisKey) => this.axes[axisKey];
 
             this.initAxesForChartType = () => {
                 const axes = this.chartType.getAxes();
@@ -157,7 +159,7 @@
                 return this.getAxis(axisKey).sourceDataTypes;
             };
 
-            this.getAxisscaleTypeOptions = (axisKey) => {
+            this.getAxisScaleTypeOptions = (axisKey) => {
                 return this.getAxis(axisKey).scaleTypes;
             };
 
@@ -219,7 +221,7 @@
             };
 
             this.getColumnscaleTypeOptions = (col) => {
-                let options = this.getAxisscaleTypeOptions(col.axis);
+                let options = this.getAxisScaleTypeOptions(col.axis);
 
                 // date is only valid if the column type is date
                 if (this.getColumnSourceDataTypeIsDate(col)) {

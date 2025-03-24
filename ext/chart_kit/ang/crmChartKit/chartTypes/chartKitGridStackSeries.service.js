@@ -90,27 +90,31 @@
             // find totals in each column
             const columnTotals = displayCtrl.ndx.groupAll().reduce(reduceAdd, reduceSub, reduceStart).value();
 
-            // the total for Y will be split by series. for calcs we might need to aggregate the overall total?
+            // the totals will be split by series. for calcs we might need to aggregate the overall total?
             // this might be tricksy depending on reduce type
-            const ySeriesTotals = Object.values(columnTotals[yColumn.index]);
+            displayCtrl.getColumns().forEach((col) => {
+                const colTotalsBySeries = Object.values(columnTotals[col.index]);
 
-            const yGrandTotal = ySeriesTotals.reduce((a, b) => {
-              switch (yColumn.reduceType) {
-                  case 'list':
-                    return a.concat(b);
+                columnTotals[col.index] = colTotalsBySeries.reduce((a, b) => {
+                  switch (col.reduceType) {
+                      case 'list':
+                        return a.concat(b);
 
-                  case 'mean':
-                    return [
-                        a[0] + b[0],
-                        a[1] + b[1]
-                    ];
+                      case 'mean':
+                        return [
+                            a[0] + b[0],
+                            a[1] + b[1]
+                        ];
 
-                  default:
-                    return a + b;
-              }
+                      default:
+                        return a + b;
+                  }
+                });
+
+                if (col.reduceType === 'mean') {
+                    columnTotals[col.index] = col.reducer.final(columnTotals[col.index]);
+                }
             });
-
-            columnTotals[yColumn.index] = yGrandTotal;
 
             displayCtrl.setColumnTotals(columnTotals);
         },
@@ -128,22 +132,52 @@
                 return;
             }
 
-            const yValueAccessor = displayCtrl.getValueAccessor(yColumn);
+            const yValueAccessor = yColumn.getDataValue;
 
             // wValues are list reduced - so the column total is the list of all values
             // that appear in that column in the dataset
-            const wValues = wColumn.total;
+            const seriesKeys = wColumn.total;
 
-            wValues.forEach((w, i) => {
-                const seriesLabel = displayCtrl.renderDataValue(w, wColumn);
-                const seriesValueAccessor = (d) => yValueAccessor(d)[w] ?? null;
+            const allSeries = seriesKeys.map((w) => ({key: w, label: wColumn.renderDataValue(w)}));
+
+            allSeries.forEach((series, i) => {
+                const seriesValueAccessor = (d) => yValueAccessor(d)[series.key] ?? null;
 
                 if (i === 0) {
-                    displayCtrl.chart.group(displayCtrl.group, seriesLabel, seriesValueAccessor);
+                    displayCtrl.chart.group(displayCtrl.group, series.label, seriesValueAccessor);
                 } else {
-                    displayCtrl.chart.stack(displayCtrl.group, seriesLabel, seriesValueAccessor);
+                    displayCtrl.chart.stack(displayCtrl.group, series.label, seriesValueAccessor);
                 }
             });
+
+            // we also override getRenderedLabel on each column to account for our by series data points
+            displayCtrl.getColumns().forEach((col) => {
+              switch (col.axis) {
+                case 'x':
+                case 'w':
+                  col.getRenderedValue = (d) => {
+                    const valueBySeries = col.getDataValue(d) ?? {};
+                    const allValues = Object.values(valueBySeries);
+                    return col.renderDataValue(allValues);
+                  };
+                  break;
+                default:
+                  col.getRenderedValue = (d) => {
+                    const dataValue = col.getDataValue(d);
+
+                    return allSeries.map((series) => {
+                      const renderedValue = col.renderDataValue(dataValue[series.key]);
+                      if (renderedValue === null) {
+                        return null;
+                      }
+                      return `${series.label}: ${renderedValue}`;
+                    })
+                    .filter((label) => !!label)
+                    .join(' - ');
+                  };
+              }
+            });
+
 
             // we need to plot using the x axis from the keys
             //displayCtrl.chart.keyAccessor((d) => d.key);

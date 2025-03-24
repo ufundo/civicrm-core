@@ -22,6 +22,7 @@
             'w': {
                 label: ts('Grouping'),
                 scaleTypes: ['categorical'],
+                reduceTypes: ['list'],
                 isDimension: true,
             },
             'y': {
@@ -40,7 +41,11 @@
         showLegend: (displayCtrl) => (displayCtrl.settings.showLegend && displayCtrl.settings.showLegend !== 'none'),
 
         // the legend gets the series "name", which is the delisted value of the series column
-        legendTextAccessor: (displayCtrl) => ((d) => displayCtrl.renderDataValue(d.name, displayCtrl.getFirstColumnForAxis('w'))),
+//        legendTextAccessor: (displayCtrl) => ((d) => {
+//            console.log(d)
+//            return displayCtrl.getFirstColumnForAxis('w').renderDataValue(d.name);
+//        }),
+
 
         getChartConstructor: () => dc.seriesChart,
 
@@ -54,11 +59,11 @@
             displayCtrl.chart
                 .dimension(displayCtrl.dimension)
                 .group(displayCtrl.group)
-                .valueAccessor(displayCtrl.getValueAccessor(yCol))
-                .keyAccessor(displayCtrl.getValueAccessor(xCol))
-                .seriesAccessor(displayCtrl.getValueAccessor(wCol));
+                .valueAccessor(yCol.getDataValue)
+                .keyAccessor((d) => parseFloat(xCol.getDataValue(d)[0]))
+                .seriesAccessor(wCol.getRenderedValue)
 
-            displayCtrl.buildCoordinateGridIfAny();
+            displayCtrl.buildCoordinateGrid();
         }
     }));
 })(angular, CRM.$, CRM._, CRM.chart_kit.dc);
