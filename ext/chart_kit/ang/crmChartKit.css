@@ -36,19 +36,19 @@
   min-width: 3rem;
 }
 
-.crm-chart-kit-admin-chart-type {
+.crm-chart-kit-admin-chart-type-setting {
   display: flex;
   flex-flow: row wrap;
   gap: 0.5rem;
 }
 
-.crm-chart-kit-admin-chart-type label {
+.crm-chart-kit-admin-chart-type-setting label {
   padding: 2rem;
   font-size: 2rem;
   border: 1px solid;
 }
 
-.crm-chart-kit-admin-chart-type.crm-chart-kit-admin-has-type label {
+.crm-chart-kit-admin-has-type .crm-chart-kit-admin-chart-type-setting label {
   padding: 1rem;
   font-size: 1rem;
 }

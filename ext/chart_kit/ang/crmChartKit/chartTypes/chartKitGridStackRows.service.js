@@ -3,8 +3,8 @@
 
     // common renderer for line/bar/area charts, which will stack by default
     // (compare with composite chart, where each column can be line/bar/area )
-    angular.module('crmChartKit').factory('chartKitGridStackSeries', () => ({
-        adminTemplate: '~/crmChartKit/chartTypes/chartKitGridStackSeries.html',
+    angular.module('crmChartKit').factory('chartKitGridStackRows', () => ({
+        adminTemplate: '~/crmChartKit/chartTypes/chartKitGridStackRows.html',
 
         getInitialDisplaySettings: () => ({}),
 
@@ -16,15 +16,18 @@
               scaleTypes: ['date', 'numeric', 'categorical'],
               isDimension: true,
           },
-          'w': {
-              label: ts('Grouping'),
-              scaleTypes: ['categorical'],
-              reduceTypes: ['list'],
-          },
           'y': {
               key: 'y',
               label: ts('Values'),
               sourceDataTypes: ['Integer', 'Money', 'Boolean'],
+              // TODO: support average/percentage aggregators with series
+              reduceTypes: ['sum', 'count']
+          },
+          'w': {
+              label: ts('Grouping'),
+              scaleTypes: ['categorical'],
+              reduceTypes: ['list'],
+              prepopulate: false,
           },
           // TODO: supporting reduce types for additional labels is complicated
           // because we build the group differently

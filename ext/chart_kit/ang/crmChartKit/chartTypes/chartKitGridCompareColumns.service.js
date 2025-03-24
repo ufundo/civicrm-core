@@ -1,7 +1,7 @@
 (function (angular, $, _, dc) {
     "use strict";
 
-    angular.module('crmChartKit').factory('chartKitGridCompareColumns', () => ({
+    angular.module('crmChartKit').factory('chartKitGridCompareColumns', (chartKitColumnConfig) => ({
         adminTemplate: '~/crmChartKit/chartTypes/chartKitGridCompareColumns.html',
 
 
@@ -24,7 +24,7 @@
                 key: 'y',
                 label: ts('Values'),
                 sourceDataTypes: ['Integer', 'Money', 'Boolean', 'Float', 'Double'],
-                seriesTypes: ['bar', 'line', 'area'],
+                displayTypes: ['bar', 'line', 'area'],
                 multiColumn: true,
                 colorType: 'one-per-column',
             },
@@ -48,7 +48,7 @@
             const yAxisColumns = displayCtrl.getColumnsForAxis('y');
 
             // build color scale integrating user-assigned colors
-            const colorScale = displayCtrl.buildColumnColorScale(yAxisColumns);
+            const colorScale = chartKitColumnConfig.buildColumnColorScale(yAxisColumns);
 
             // compose subchart for each column
             displayCtrl.chart
@@ -58,7 +58,7 @@
                 .shareTitle(false)
                 .compose(yAxisColumns.map((col) => {
 
-                    const subChart = ((col.seriesType === 'bar') ? dc.barChart : dc.lineChart)(displayCtrl.chart);
+                    const subChart = ((col.displayType === 'bar') ? dc.barChart : dc.lineChart)(displayCtrl.chart);
 
                     // this is used to suppress other y cols from the labels
                     const otherYColIndexes = yAxisColumns.map((otherCol) => otherCol.index).filter((index) => index !== col.index);
@@ -76,7 +76,7 @@
                         .label((d) => displayCtrl.renderDataLabel(d, 'label', otherYColIndexes))
                         .useRightYAxis(col.useRightAxis);
 
-                    if (col.seriesType === 'area') {
+                    if (col.displayType === 'area') {
                         subChart.renderArea(true);
                     }
 
@@ -88,7 +88,7 @@
             //
             // we do this based on barWidth & barGap settings
             // but we check to make sure these will fit
-            const yAxisBars = yAxisColumns.filter((col) => col.seriesType === 'bar');
+            const yAxisBars = yAxisColumns.filter((col) => col.displayType === 'bar');
             const barCount = yAxisBars.length;
 
             if (barCount > 1) {
@@ -125,7 +125,7 @@
         },
 
         // helper for whether to display grouped bar settings in the admin screen
-        isGroupedBar: (displayCtrl) => (displayCtrl.getColumnsForAxis('y').filter((col) => col.seriesType === 'bar').length > 1),
+        isGroupedBar: (displayCtrl) => (displayCtrl.getColumnsForAxis('y').filter((col) => col.displayType === 'bar').length > 1),
     }));
 })(angular, CRM.$, CRM._, CRM.chart_kit.dc);
 

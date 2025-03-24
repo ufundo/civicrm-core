@@ -15,7 +15,7 @@
       afFieldset: '?^^afFieldset'
     },
     templateUrl: '~/crmChartKit/chartKitCanvas.html',
-    controller: function ($scope, $element, searchDisplayBaseTrait, chartKitChartTypes, chartKitColumnBuilder) {
+    controller: function ($scope, $element, searchDisplayBaseTrait, chartKitChartTypes, chartKitColumnConfig) {
       const ts = $scope.ts = CRM.ts('chart_kit');
 
       // Mix in base display trait
@@ -122,20 +122,14 @@
       };
 
       this.initChartType = () => {
-        if (!this.settings.chartType) {
+
+        this.chartType = chartKitChartTypes.getChartType(this.settings);
+
+        if (!this.chartType) {
           this.chartContainer.innerText = ts('No chart type selected.');
           return false;
         }
-        const type = chartKitChartTypes.find((type) => type.key === this.settings.chartType);
-        if (!type) {
-          this.chartContainer.innerText = ts('Unrecognised chart type: ' + this.settings.chartType);
-          return false;
-        }
-        if (!type.service) {
-          this.chartContainer.innerText = ts('No service available for chart type: ' + this.settings.chartType);
-          return false;
-        }
-        this.chartType = type.service;
+
         return true;
       };
 
@@ -400,7 +394,7 @@
           return;
         }
 
-        this.columnsByAxis = chartKitColumnBuilder(_.cloneDeep(this.settings.columns), this.chartType.getAxes());
+        this.columnsByAxis = chartKitColumnConfig.buildColumns(_.cloneDeep(this.settings.columns), this.chartType.getAxes());
       };
 
       this.getColumnsForAxis = (axisKey) => this.columnsByAxis[axisKey] ?? [];
@@ -465,22 +459,6 @@
         };
       };
 
-      this.buildColumnColorScale = (columns) => {
-        // build color scale integrating user-assigned colors
-
-        // default color map based on column labels
-        const defaultColors = d3.scaleOrdinal(columns.map((col) => col.label), dc.config.defaultColors());
-
-        const finalColors = {};
-
-        columns.forEach((col) => {
-          // use user-assigned color or pick one from the default color scheme
-          finalColors[col.label] = col.color ? col.color : defaultColors(col.label);
-        });
-
-        // mapping function from our dict
-        return ((layerName) => finalColors[layerName]);
-      };
 
       this.downloadImageUrl = (mime, url, ext) => {
         const filename = (this.settings.format.title ? this.settings.format.title : 'chart').replace(/[^a-zA-Z0-9-]+/g, '') + '.' + ext;

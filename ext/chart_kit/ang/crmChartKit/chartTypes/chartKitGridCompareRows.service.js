@@ -3,12 +3,11 @@
 
     // common renderer for line/bar/area charts, which will stack by default
     // (compare with composite chart, where each column can be line/bar/area )
-    angular.module('crmChartKit').factory('chartKitGridCompareSeries', () => ({
-        adminTemplate: '~/crmChartKit/chartTypes/chartKitGridCompareSeries.html',
+    angular.module('crmChartKit').factory('chartKitGridCompareRows', () => ({
+        adminTemplate: '~/crmChartKit/chartTypes/chartKitGridCompareRows.html',
 
         getInitialDisplaySettings: () => ({
           showLegend: 'right',
-          seriesDisplayType: 'line',
         }),
 
         hasCoordinateGrid: true,
@@ -19,15 +18,18 @@
                 scaleTypes: ['date', 'numeric', 'categorical'],
                 isDimension: true,
             },
+            'y': {
+              label: ts('Value'),
+              sourceDataTypes: ['Integer', 'Money', 'Boolean'],
+              // TODO: support average/percentage aggregators with series
+              reduceTypes: ['sum', 'count']
+            },
             'w': {
                 label: ts('Grouping'),
                 scaleTypes: ['categorical'],
                 reduceTypes: ['list'],
                 isDimension: true,
-            },
-            'y': {
-                label: ts('Value'),
-                sourceDataTypes: ['Integer', 'Money', 'Boolean'],
+                prepopulate: false,
             },
             // TODO: fix additional labels for compare series
             //'z': {
@@ -40,17 +42,10 @@
 
         showLegend: (displayCtrl) => (displayCtrl.settings.showLegend && displayCtrl.settings.showLegend !== 'none'),
 
-        // the legend gets the series "name", which is the delisted value of the series column
-//        legendTextAccessor: (displayCtrl) => ((d) => {
-//            console.log(d)
-//            return displayCtrl.getFirstColumnForAxis('w').renderDataValue(d.name);
-//        }),
-
-
         getChartConstructor: () => dc.seriesChart,
 
         loadChartData: (displayCtrl) => {
-            displayCtrl.chart.chart((displayCtrl.settings.seriesDisplayType === 'bar') ? dc.barChart : dc.lineChart);
+            displayCtrl.chart.chart((displayCtrl.settings.displayType === 'bar') ? dc.barChart : dc.lineChart);
 
             const xCol = displayCtrl.getFirstColumnForAxis('x');
             const wCol = displayCtrl.getFirstColumnForAxis('w');

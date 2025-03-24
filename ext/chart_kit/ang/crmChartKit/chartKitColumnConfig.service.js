@@ -1,8 +1,95 @@
-(function (angular, $, _, d3) {
+(function (angular, $, _, d3, dc) {
   "use strict";
 
   // Provides common "option group" info for chart admin components
-  angular.module('crmChartKit').factory('chartKitColumnBuilder', (chartKitReduceTypes) => {
+  angular.module('crmChartKit').factory('chartKitColumnConfig', (chartKitReduceTypes) => {
+
+    const configOptions = {
+      reduceType: chartKitReduceTypes,
+      scaleType: [
+        {
+          key: 'numeric',
+          label: ts('Numeric'),
+        },
+        {
+          key: 'categorical',
+          label: ts('Categorical'),
+        },
+        {
+          key: 'date',
+          label: ts('Datetime'),
+        },
+      ],
+      datePrecision: [
+        {
+          key: 'year',
+          label: ts('Year'),
+        },
+        {
+          key: 'month',
+          label: ts('Month'),
+        },
+        {
+          key: 'week',
+          label: ts('Week'),
+        },
+        {
+          key: 'day',
+          label: ts('Day'),
+        },
+        {
+          key: 'hour',
+          label: ts('Hour'),
+        },
+      ],
+      displayType: [
+        {
+          key: 'bar',
+          label: ts('Bar')
+        },
+        {
+          key: 'line',
+          label: ts('Line')
+        },
+        {
+          key: 'area',
+          label: ts('Area')
+        },
+      ],
+      dataLabelType: [
+        {
+          key: "none",
+          label: "None",
+        },
+        {
+          key: "title",
+          label: "On hover",
+        },
+        {
+          key: "label",
+          label: "Always show",
+        }
+      ],
+      dataLabelFormatter: [
+        {
+          key: "none",
+          label: "None",
+        },
+        {
+          key: "round",
+          label: "Round",
+        },
+        // TODO: custom date formatting
+        //        {
+        //            key: "formatDate",
+        //            label: "Date format",
+        //        },
+        {
+          key: "formatMoney",
+          label: "Money formatter",
+        }
+      ],
+    };
 
     /**
      * Get the reducer for a column, based on its reduceType key
@@ -136,8 +223,7 @@
       return col;
     };
 
-
-    return (columnSettings, axisDefinition) => {
+    const buildColumns = (columnSettings, axisDefinition) => {
       // filter out any columns which haven't got a set key
       const setColumns = columnSettings.filter((col) => col.key);
 
@@ -170,5 +256,41 @@
 
       return columnsByAxis;
     };
+
+    const buildColumnColorScale = (columns) => {
+      // build color scale integrating user-assigned colors
+
+      // default color map based on column labels
+      const defaultColors = d3.scaleOrdinal(columns.map((col) => col.label), dc.config.defaultColors());
+
+      const finalColors = {};
+
+      columns.forEach((col) => {
+        // use user-assigned color or pick one from the default color scheme
+        finalColors[col.label] = col.color ? col.color : defaultColors(col.label);
+      });
+
+      // mapping function from our dict
+      return ((layerName) => finalColors[layerName]);
+    };
+
+    const axisDefaults = ({
+      // by default allow all types we know
+      reduceTypes: configOptions.reduceType.map((type) => type.key),
+      scaleTypes: configOptions.scaleType.map((type) => type.key),
+      dataLabelTypes: configOptions.dataLabelType.map((type) => type.key),
+      // by default no option
+      displayTypes: [],
+      dataLabelFormatters: configOptions.dataLabelFormatter.map((type) => type.key),
+      multiColumn: false,
+      prepopulate: true,
+    });
+
+    return ({
+      configOptions: configOptions,
+      axisDefaults: axisDefaults,
+      buildColumns: buildColumns,
+      buildColumnColorScale: buildColumnColorScale
+    });
   });
-})(angular, CRM.$, CRM._, CRM.chart_kit.d3);
+})(angular, CRM.$, CRM._, CRM.chart_kit.d3, CRM.chart_kit.dc);

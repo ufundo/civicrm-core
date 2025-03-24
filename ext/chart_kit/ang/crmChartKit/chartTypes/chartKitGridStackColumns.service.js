@@ -3,7 +3,7 @@
 
     // common renderer for line/bar/area charts, which will stack by default
     // (compare with composite chart, where each column can be line/bar/area )
-    angular.module('crmChartKit').factory('chartKitGridStackColumns', () => ({
+    angular.module('crmChartKit').factory('chartKitGridStackColumns', (chartKitColumnConfig) => ({
         adminTemplate: '~/crmChartKit/chartTypes/chartKitGridStackColumns.html',
 
         getInitialDisplaySettings: () => ({}),
@@ -54,9 +54,9 @@
                 }
             });
 
-            displayCtrl.chart.colors(displayCtrl.buildColumnColorScale(yAxisColumns));
+            displayCtrl.chart.colors(chartKitColumnConfig.buildColumnColorScale(yAxisColumns));
 
-            if (displayCtrl.settings.chartType === 'area') {
+            if (displayCtrl.settings.displayType === 'area') {
                 // chart should be a line chart by this point
                 displayCtrl.chart.renderArea(true);
             }

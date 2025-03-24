@@ -7,61 +7,120 @@
     chartKitRow,
     chartKitGridStackColumns,
     chartKitGridCompareColumns,
-    chartKitGridCompareSeries,
-    chartKitGridStackSeries,
+    chartKitGridCompareRows,
+    chartKitGridStackRows,
   ) => {
 
     const ts = CRM.ts('chart_kit');
 
-    return [
-      {
-        key: 'pie',
-        label: ts('Pie'),
-        icon: 'fa-pie-chart',
-        service: chartKitPie,
+    return ({
+      chartTypeSettings: {
+        displayType: [
+          {
+            key: 'pie',
+            label: ts('Pie'),
+            icon: 'fa-pie-chart',
+          },
+          {
+            key: 'row',
+            label: ts('Row'),
+            icon: 'fa-chart-bar',
+          },
+          {
+            key: 'line',
+            label: ts('Line'),
+            icon: 'fa-line-chart',
+          },
+          {
+            key: 'bar',
+            label: ts('Bar'),
+            icon: 'fa-chart-column',
+          },
+          {
+            key: 'area',
+            label: ts('Area'),
+            icon: 'fa-chart-area',
+          },
+          {
+            key: 'mixed',
+            label: ts('Mixed'),
+            icon: 'fa-layer-group',
+          },
+        ],
+        seriesType: [
+          {
+            key: 'rows',
+            label: ts('Group Based On Values in a Column'),
+          },
+          {
+            key: 'columns',
+            label: ts('Use Multiple Columns'),
+          }
+        ],
+        layerType: [
+          {
+            key: 'stack',
+            label: ts('Stack'),
+          },
+          {
+            key: 'compare',
+            label: ts('Compare'),
+          }
+        ],
       },
-      {
-        key: 'row',
-        label: ts('Row'),
-        icon: 'fa-chart-bar',
-        service: chartKitRow
-      },
-      {
-        key: 'line',
-        label: ts('Line'),
-        icon: 'fa-line-chart',
-        service: chartKitGridStackColumns
-      },
-      {
-        key: 'bar',
-        label: ts('Bar'),
-        icon: 'fa-chart-column',
-        service: chartKitGridStackColumns
-      },
-      {
-        key: 'area',
-        label: ts('Area'),
-        icon: 'fa-chart-area',
-        service: chartKitGridStackColumns
-      },
-      {
-        key: 'stack-series',
-        label: ts('Stack Series'),
-        icon: 'fa-layer-group',
-        service: chartKitGridStackSeries,
-      },
-      {
-        key: 'compare-series',
-        label: ts('Compare Series'),
-        icon: 'fa-chart-gantt',
-        service: chartKitGridCompareSeries
-      },
-      {
-        key: 'compare-columns',
-        label: ts('Compare Columns'),
-        icon: 'fa-layer-group',
-        service: chartKitGridCompareColumns
-      },
-    ];
+      getChartType: (settings) => {
+        // convert legacy key
+        if (settings.chartType && !settings.displayType) {
+          settings.displayType = settings.chartType;
+        }
+
+        const displayType = settings.displayType;
+
+        if (displayType === 'pie') {
+          return chartKitPie;
+        }
+        if (displayType === 'row') {
+          return chartKitRow;
+        }
+
+        const layerType = settings.layerType;
+
+        const yCols = settings.columns.filter((col) => col.axis === 'y').length;
+
+        const seriesType = (yCols > 1) ? 'columns' : 'rows';
+
+        if (layerType === 'stack' && seriesType === 'rows') {
+          return chartKitGridStackRows;
+        }
+
+        if (layerType === 'stack' && seriesType === 'columns') {
+          return chartKitGridStackColumns;
+        }
+
+        if (layerType === 'compare' && seriesType === 'rows') {
+          return chartKitGridCompareRows;
+        }
+
+        if (layerType === 'compare' && seriesType === 'columns') {
+          return chartKitGridCompareColumns;
+        }
+
+        // defaults based on display type
+        if (displayType === 'mixed') {
+          return chartKitGridCompareColumns;
+        }
+        if (displayType === 'line') {
+          return chartKitGridCompareColumns;
+        }
+        if (displayType === 'bar') {
+          return chartKitGridCompareRows;
+        }
+        if (displayType === 'area') {
+          return chartKitGridStackRows;
+        }
+
+        return null;
+      }
+    });
   });
 })(angular, CRM.$, CRM._);

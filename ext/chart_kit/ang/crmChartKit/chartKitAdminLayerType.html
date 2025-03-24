@@ -1,0 +1,10 @@
+      <div class="form-inline">
+        <h4>
+          {{:: ts('Stack or Compare')}}
+        </h4>
+        <label ng-repeat="option in $ctrl.chartTypeSettings.layerType">
+            <input type="radio" ng-name="option.key" ng-value="option.key" ng-model="$ctrl.display.settings.layerType" />
+            <i class="crm-i {{:: option.icon}}" />
+            {{:: option.label }}
+        </label>
+      </div>

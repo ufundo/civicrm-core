@@ -3,15 +3,21 @@
 <div class="crm-chart-kit-admin">
 
   <div>
-    <div class="crm-chart-kit-admin-chart-type" ng-class="$ctrl.display.settings.chartType ? 'crm-chart-kit-admin-has-type' : ''">
-        <label ng-repeat="type in $ctrl.chartTypeOptions">
-            <input type="radio" name="occurrences" ng-value="type.key" ng-model="$ctrl.display.settings.chartType" />
-            <i class="crm-i {{:: type.icon}}" />
-            {{:: type.label }}
-        </label>
+    <div class="crm-chart-kit-admin-chart-type" ng-class="$ctrl.hasChartType() ? 'crm-chart-kit-admin-has-type' : ''">
+
+        <div ng-repeat="setting in $ctrl.headerSettings" class="crm-chart-kit-admin-chart-type-setting">
+
+          <h3>{{:: setting.label }}</h3>
+
+          <label ng-repeat="option in setting.options">
+              <input type="radio" ng-name="option.key" ng-value="option.key" ng-model="$ctrl.display.settings[setting.key]" />
+              <i class="crm-i {{:: option.icon}}" />
+              {{:: option.label }}
+          </label>
+        </div>
     </div>
   </div>
 
-  <div ng-if="$ctrl.display.settings.chartType" ng-include="$ctrl.getChartTypeAdminTemplate()"></div>
+  <div ng-if="$ctrl.hasChartType()" ng-include="$ctrl.getChartTypeAdminTemplate()"></div>
 
 </div>

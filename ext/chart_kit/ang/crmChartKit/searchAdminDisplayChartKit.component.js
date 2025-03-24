@@ -12,7 +12,7 @@
             crmSearchAdmin: '^crmSearchAdmin'
         },
         templateUrl: '~/crmChartKit/searchAdminDisplayChartKit.html',
-        controller: function ($scope, searchMeta, chartKitColumnConfigOptions, chartKitChartTypes, chartKitReduceTypes) {
+        controller: function ($scope, searchMeta, chartKitColumnConfig, chartKitChartTypes) {
             const ts = $scope.ts = CRM.ts('chart_kit');
 
             this.getColumnSlots = () => this.display.settings.columns.map((col, colIndex) => {
@@ -26,7 +26,20 @@
 
             this.getColumnsForAxis = (axisKey) => this.getColumns().filter((col) => col.axis === axisKey);
 
-            this.getChartTypeOptions = () => chartKitChartTypes.map((type) => ({ key: type.key, label: type.label, icon: type.icon }));
+            this.initChartTypeSettings = () => {
+              this.chartTypeSettings = chartKitChartTypes.chartTypeSettings;
+
+              Object.keys(this.chartTypeSettings).forEach((setting) => {
+                $scope.$watch('$ctrl.display.settings.' + setting, () => this.onSetChartType(), true);
+              });
+
+              this.headerSettings = [{
+                key: 'displayType',
+                label: ts('Chart Type'),
+                options: this.chartTypeSettings.displayType
+              }];
+            };
+
 
             this.getInitialDisplaySettings = () => ({
                 columns: [],
@@ -55,33 +68,33 @@
             this.$onInit = () => {
                 this.searchColumns = this.apiParams.select.map((col) => searchMeta.fieldToColumn(col, { label: true }));
 
-                this.chartTypeOptions = this.getChartTypeOptions();
-
                 if (!this.display.settings) {
-                    this.display.settings = {
-                        chartType: null
-                    };
+                  this.display.settings = {};
                 }
 
-                $scope.$watch('$ctrl.display.settings.chartType', () => this.onSetChartType(), true);
-            };
-
-            this.onSetChartType = () => {
-                if (!this.display.settings.chartType) {
-                    return;
-                }
+                this.initChartTypeSettings();
 
                 this.initChartType();
 
-                this.initAxesForChartType();
+            };
 
-                this.initDisplaySettingsForChartType();
+            this.onSetChartType = () => {
+              this.initChartType();
             };
 
             this.initChartType = () => {
-                const type = chartKitChartTypes.find((type) => type.key === this.display.settings.chartType);
-                this.chartType = type.service;
+              this.chartType = chartKitChartTypes.getChartType(this.display.settings);
+
+
+              if (!this.chartType) {
+                return;
+              }
+
+              this.initAxesForChartType();
+              this.initDisplaySettingsForChartType();
             };
+
+            this.hasChartType = () => !!this.chartType;
 
             this.getAxes = () => this.axes;
 
@@ -92,7 +105,7 @@
 
                 // merge axis defaults into the axes array
                 Object.keys(axes).forEach((key) => {
-                    axes[key] = Object.assign({}, this.axisDefaults(), axes[key]);
+                    axes[key] = Object.assign({}, chartKitColumnConfig.axisDefaults, axes[key]);
                 });
 
                 this.axes = axes;
@@ -134,17 +147,6 @@
                 return this.display.settings.columns[index];
             };
 
-            this.axisDefaults = () => ({
-                    // by default allow all types we know
-                    reduceTypes: chartKitReduceTypes.map((type) => type.key),
-                    scaleTypes: chartKitColumnConfigOptions.scaleType.map((type) => type.key),
-                    dataLabelTypes: chartKitColumnConfigOptions.dataLabelType.map((type) => type.key),
-                    // by default no option
-                    seriesTypes: [],
-                    dataLabelFormatters: chartKitColumnConfigOptions.dataLabelFormatter.map((type) => type.key),
-                    multiColumn: false,
-                    prepopulate: true,
-            });
 
             this.getAxis = (axisKey) => {
                 // merge in default axis options
@@ -170,8 +172,11 @@
                 return this.getAxis(axisKey).reduceTypes;
             };
 
-            this.getAxisSeriesTypeOptions = (axisKey) => {
-                return this.getAxis(axisKey).seriesTypes;
+            this.getAxisDisplayTypeOptions = (axisKey) => {
+                if (this.display.settings.displayType !== 'mixed') {
+                  return [this.display.settings.displayType];
+                }
+                return this.getAxis(axisKey).displayTypes;
             };
 
             this.getAxisDataLabelTypeOptions = (axisKey) => {
@@ -241,7 +246,7 @@
 
             this.getColumnDatePrecisionOptions = (col) => {
                 if (this.getColumnSourceDataTypeIsDate(col)) {
-                    return chartKitColumnConfigOptions.datePrecision.map((option) => option.key);
+                    return chartKitColumnConfig.configOptions.datePrecision.map((option) => option.key);
                 }
                 return [];
             };
@@ -259,8 +264,8 @@
                 return options;
             };
 
-            this.getColumnSeriesTypeOptions = (col) => {
-                return this.getAxisSeriesTypeOptions(col.axis);
+            this.getColumnDisplayTypeOptions = (col) => {
+                return this.getAxisDisplayTypeOptions(col.axis);
             };
 
             this.getColumnDataLabelTypeOptions = (col) => {
@@ -332,10 +337,7 @@
                 if (configKey === 'searchColumn') {
                     return this.searchColumns;
                 }
-                if (configKey === 'reduceType') {
-                    return chartKitReduceTypes;
-                }
-                return chartKitColumnConfigOptions[configKey];
+                return chartKitColumnConfig.configOptions[configKey];
             };
 
             this.getOptionDetailsForKey = (configKey, optionKey) => this.getAllOptionDetails(configKey).find((option) => option.key === optionKey);
@@ -345,7 +347,7 @@
                 scaleType: this.getColumnscaleTypeOptions,
                 datePrecision: this.getColumnDatePrecisionOptions,
                 reduceType: this.getColumnReduceTypeOptions,
-                seriesType: this.getColumnSeriesTypeOptions,
+                displayType: this.getColumnDisplayTypeOptions,
                 dataLabelType: this.getColumnDataLabelTypeOptions,
                 dataLabelFormatter: this.getColumnDataLabelFormatterOptions
             });
