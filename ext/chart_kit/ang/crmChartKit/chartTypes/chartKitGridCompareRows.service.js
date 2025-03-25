@@ -18,12 +18,6 @@
                 scaleTypes: ['date', 'numeric', 'categorical'],
                 isDimension: true,
             },
-            'y': {
-              label: ts('Value'),
-              sourceDataTypes: ['Integer', 'Money', 'Boolean'],
-              // TODO: support average/percentage aggregators with series
-              reduceTypes: ['sum', 'count'],
-            },
             'w': {
                 label: ts('Grouping'),
                 scaleTypes: ['categorical'],
@@ -31,6 +25,12 @@
                 isDimension: true,
                 prepopulate: false,
                 multiColumn: true
+            },
+            'y': {
+              label: ts('Value'),
+              sourceDataTypes: ['Integer', 'Money', 'Boolean'],
+              // TODO: support average/percentage aggregators with series
+              reduceTypes: ['sum', 'count'],
             },
             'z': {
               label: ts('Additional labels'),
@@ -77,7 +77,7 @@
               displayCtrl.chart.seriesAccessor((d) => wCols.map((col) => col.getRenderedValue(d)).join(' - '))
             }
             else {
-                displayCtrl.chart.seriesAccessor((d) => null);
+              displayCtrl.chart.seriesAccessor((d) => null);
             }
 
             displayCtrl.buildCoordinateGrid();
