@@ -158,17 +158,29 @@
     loadChartData: (displayCtrl) => {
       // get our y columns
       const yCols = displayCtrl.getColumnsForAxis('y');
+
+      // get w col
       const wCol = displayCtrl.getFirstColumnForAxis('w');
 
-      // wValues are list reduced - so the column total is the list of all values
-      // that appear in that column in the dataset
+      // wValues are list reduced - so the column total is the list
+      // of all values that appear in the dataset
+      // => use this to generate our series
       const allSeries = wCol ? wCol.total.map((w) => ({
         key: w,
         label: wCol.renderDataValue(w)
       })) : [];
 
+      const seriesValueAccessor = (yCol, wValue) => ((d) => {
+        const stored = d.value[yCol.index][wValue] ?? null;
+        if (stored === null) {
+          return null;
+        }
+        return yCol.reducer.final(stored, yCol.total);
+      });
+
       // build color scale integrating user-assigned colors
-      //const colorScale = chartKitColumnConfig.buildColumnColorScale(yCols);
+      // TODO:
+      // const colorScale = chartKitColumnConfig.buildColumnColorScale(yCols);
 
       // compose subchart for each column
       displayCtrl.chart
@@ -191,19 +203,12 @@
           }
           else {
             allSeries.forEach((series, i) => {
-              const seriesValueAccessor = (d) => {
-                const stored = d.value[yCol.index][series.key] ?? null;
-                if (stored === null) {
-                  return null;
-                }
-                return yCol.reducer.final(stored, yCol.total);
-              };
               const seriesLabel = (yCols.length > 1) ? `${yCol.label} - ${series.label}` : series.label;
 
               if (i === 0) {
-                subChart.group(displayCtrl.group, seriesLabel, seriesValueAccessor);
+                subChart.group(displayCtrl.group, seriesLabel, seriesValueAccessor(yCol, series.key));
               } else {
-                subChart.stack(displayCtrl.group, seriesLabel, seriesValueAccessor);
+                subChart.stack(displayCtrl.group, seriesLabel, seriesValueAccessor(yCol, series.key));
               }
             });
           }
@@ -220,7 +225,6 @@
             subChart.renderArea(true);
           }
 
-
           subChart.hidableStacks(true)
 
           return subChart;
@@ -233,24 +237,23 @@
             case 'x':
             case 'w':
               col.getRenderedValue = (d) => {
-                const valueBySeries = col.getDataValue(d) ?? {};
-                const allValues = Object.values(valueBySeries);
-                return col.renderDataValue(allValues);
+                return allSeries.map((series) => {
+                  const seriesValue = seriesValueAccessor(col, series.key)(d);
+                  return col.renderDataValue(seriesValue);
+                })
+                .filter((v) => !!v)[0];
               };
               break;
             default:
               col.getRenderedValue = (d) => {
-                const dataValue = col.getDataValue(d);
-
                 return allSeries.map((series) => {
-                  const renderedValue = col.renderDataValue(dataValue[series.key]);
-                  if (renderedValue === null) {
-                    return null;
-                  }
-                  return `${series.label}: ${renderedValue}`;
+                  const seriesValue = seriesValueAccessor(col, series.key)(d);
+                  const renderedValue = col.renderDataValue(seriesValue);
+
+                  return renderedValue ? `${series.label}: ${renderedValue}` : null;
                 })
-                  .filter((label) => !!label)
-                  .join(' - ');
+                .filter((v) => !!v)
+                .join(' - ');
               };
           }
         });
