@@ -5,16 +5,11 @@
   <div>
     <div class="crm-chart-kit-admin-chart-type" ng-class="$ctrl.hasChartType() ? 'crm-chart-kit-admin-has-type' : ''">
 
-        <div ng-repeat="setting in $ctrl.headerSettings" class="crm-chart-kit-admin-chart-type-setting">
-
-          <h3>{{:: setting.label }}</h3>
-
-          <label ng-repeat="option in setting.options">
-              <input type="radio" ng-name="option.key" ng-value="option.key" ng-model="$ctrl.display.settings[setting.key]" />
-              <i class="crm-i {{:: option.icon}}" />
-              {{:: option.label }}
-          </label>
-        </div>
+        <label ng-repeat="option in $ctrl.chartTypeSettings.displayType">
+            <input type="radio" ng-name="option.key" ng-value="option.key" ng-model="$ctrl.display.settings.displayType" />
+            <i class="crm-i {{:: option.icon}}" />
+            {{:: option.label }}
+        </label>
     </div>
   </div>
 
