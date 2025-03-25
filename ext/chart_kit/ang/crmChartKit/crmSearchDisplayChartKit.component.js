@@ -402,7 +402,10 @@
       this.getFirstColumnForAxis = (axisKey) => this.getColumnsForAxis(axisKey)[0] ?? null;
 
       // TODO: check this index
-      this.getOrderColumn = () => this.getColumns()[parseInt(this.settings.chartOrderColIndex ? this.settings.chartOrderColIndex : 0)];
+      this.getOrderColumn = () => {
+        const selected = this.getColumns().find((col) => col.index === this.settings.chartOrderColIndex);
+        return selected ? selected : this.getFirstColumnForAxis('w');
+      };
 
       this.getOrderDirection = () => (this.settings.chartOrderDir ? this.settings.chartOrderDir : 'ASC');
 
@@ -420,10 +423,10 @@
         if (dataPoint.key === 'Others') {
           return `${dataPoint.others.length} Others`;
         }
-        // sometimes the data point has "data" rather than "value"
+        // sometimes the data point value is below  "data" subkey
         // (depends on chartType or whether title or label ??)
-        if (dataPoint.data && !dataPoint.value) {
-          dataPoint.value = dataPoint.data;
+        if (!dataPoint.value && dataPoint.data) {
+          dataPoint = dataPoint.data;
         }
 
         let columns = this.getColumns();
