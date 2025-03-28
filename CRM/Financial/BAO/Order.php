@@ -377,7 +377,7 @@ class CRM_Financial_BAO_Order {
   /**
    * Form object - if present the buildAmount hook will be called.
    *
-   * @var \CRM_Member_Form_Membership|\CRM_Member_Form_MembershipRenewal
+   * @var \CRM_Member_Form_Membership|\CRM_Member_Form_MembershipRenewal|\CRM_Contribute_Form_Contribution
    */
   protected $form;
 
@@ -892,6 +892,24 @@ class CRM_Financial_BAO_Order {
       }
       if (empty($line['membership_num_terms'])) {
         $lines[$index]['membership_num_terms'] = 1;
+      }
+    }
+    return $lines;
+  }
+
+  /**
+   * Get line items that specifically relate to participants.
+   *
+   * return array
+   *
+   * @throws \CRM_Core_Exception
+   */
+  public function getParticipantLineItems():array {
+    $lines = $this->getLineItems();
+    foreach ($lines as $index => $line) {
+      if ($line['entity_table'] !== 'civicrm_participant') {
+        unset($lines[$index]);
+        continue;
       }
     }
     return $lines;
