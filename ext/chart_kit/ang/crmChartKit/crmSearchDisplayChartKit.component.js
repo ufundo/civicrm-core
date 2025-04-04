@@ -31,8 +31,11 @@
         this.onPreRun.push(() => {
           // exit early if no chart type
           if (!this.initChartType()) {
+            this.chartContainer.innerText = ts('No chart type');
             return;
           }
+
+          this.chartContainer.innerHtml = '<div class="crm-loading-element"></div>';
 
           // build out column model based on column settings
           if (!this.columnsByAxis) {
@@ -117,6 +120,7 @@
         // apply formattting
         this.formatChart();
 
+        this.chartContainer.innerText = '';
         // run the dc render
         this.chart.render();
       };
