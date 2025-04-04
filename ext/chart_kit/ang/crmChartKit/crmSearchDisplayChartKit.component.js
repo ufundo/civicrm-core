@@ -414,7 +414,11 @@
       this.getOrderDirection = () => (this.settings.chartOrderDir ? this.settings.chartOrderDir : 'ASC');
 
       this.getOrderAccessor = () => {
-        const orderColValueAccessor = this.getOrderColumn().getDataValue;
+        const orderCol = this.getOrderColumn();
+        if (!orderCol) {
+          return ((d) => d);
+        }
+        const orderColValueAccessor = orderCol.getDataValue;
         const orderSign = (this.getOrderDirection() === 'ASC') ? 1 : -1;
 
         return ((d) => orderSign * orderColValueAccessor(d));
