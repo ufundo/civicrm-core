@@ -597,23 +597,12 @@ class CRM_Utils_System_Standalone extends CRM_Utils_System_Base {
    *
    * Note that there are a few subtle variations on this:
    *
-   * - For authenticated users with a session/cookie, it uses "statusBounce()" to show popup (on prior page or dashboard page).
-   * - For authenticated users with stateless requests, it shows formatted error page.
    * - For unauthenticated users, it shows login screen with an error blurb.
+   * - For authenticated users with a session/cookie who can access the home page, it redirects them there with a popup
+   * - For authenticated users with stateless requests, or who cannot access the home page, it shows formatted error page.
    */
   public function permissionDenied() {
-    // If not logged in, they need to.
-    $session = CRM_Core_Session::singleton();
-    $useSession = ($session->get('authx')['useSession'] ?? TRUE);
-    if ($this->isUserLoggedIn() && $useSession) {
-      // They are logged in; they're just not allowed this page.
-      CRM_Core_Error::statusBounce(ts("Access denied"), CRM_Utils_System::url('civicrm'));
-      return;
-    }
-    elseif ($this->isUserLoggedIn() && !$useSession) {
-      return (new CRM_Standaloneusers_Page_PermissionDenied())->run();
-    }
-    else {
+    if (!$this->isUserLoggedIn()) {
       http_response_code(403);
 
       // render a login page
@@ -625,6 +614,28 @@ class CRM_Utils_System_Standalone extends CRM_Utils_System_Base {
 
       throw new CRM_Core_Exception('Access denied. Standaloneusers login page not found');
     }
+
+    $useSession = \CRM_Core_Session::singleton()->get('authx')['useSession'] ?? TRUE;
+
+    if ($useSession) {
+      // user is logged in but doesn't have permission to view the current item
+      // normally we redirect them to home page
+      // but in edge cases user might not have access to the home page and end up in
+      // a redirect loop
+      // so check a) they have access to the homepage route, b) they haven't just been redirected
+      // TODO: if homepage configuration becomes richer this may need updating
+      $home = \CRM_Core_Invoke::getItem('civicrm/home') ?: \CRM_Core_Invoke::getItem('civicrm');
+      $canViewHome = \CRM_Core_Permission::checkMenuItem($home);
+      $alreadyRedirected = \CRM_Core_Permission::retrieve('permissionDeniedRedirect', 'Boolean');
+
+      if ($canViewHome && !$alreadyRedirected) {
+        \CRM_Core_Error::statusBounce(ts("Access denied"), CRM_Utils_System::url('civicrm/home', ['permissionDeniedRedirect' => 1]));
+        return;
+      }
+    }
+
+    // stateless OR user cannot access home page => static permission denied message
+    return (new CRM_Standaloneusers_Page_PermissionDenied())->run();
   }
 
   /**
