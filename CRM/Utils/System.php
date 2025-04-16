@@ -1943,6 +1943,13 @@ class CRM_Utils_System {
     self::sendResponse(new Response(200, [], $message));
   }
 
+  public static function logout(): void {
+    if (!self::isUserLoggedIn()) {
+      throw new \CRM_Core_Exception(ts('You cannot log out because you are not logged in.'));
+    }
+    \CRM_Core_Config::singleton()->userSystem->logout();
+  }
+
   public static function isMaintenanceMode(): bool {
     try {
       $civicrmSetting = \Civi::settings()->get('core_maintenance_mode');
