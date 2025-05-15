@@ -59,6 +59,11 @@ class Paths {
       ->register('civicrm.files', function () {
         return \CRM_Core_Config::singleton()->userSystem->getDefaultFileStorage();
       })
+      ->register('civicrm.custom', function () {
+        return [
+          'path' => \Civi::paths()->getSettingPath('customFileUploadDir'),
+        ];
+      })
       ->register('civicrm.private', function () {
         return [
           // For backward compatibility with existing deployments, this
