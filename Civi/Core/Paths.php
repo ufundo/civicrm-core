@@ -195,23 +195,43 @@ class Paths {
    * @return mixed|string
    */
   public function getPath($value) {
-    if ($value === NULL || $value === FALSE || $value === '') {
+    // @todo add ?string parameter typing
+    if (!is_string($value) && !is_null($value)) {
+      \CRM_Core_Error::deprecatedWarning('$value passed to getPath should be ?string. Stronger typing may be added in future that would result in an error.');
+      $value = (string) $value;
+    }
+
+    // @todo could we switch to return null so we can add ?string return type guarantee?
+    if ($value === NULL || $value === '') {
       return FALSE;
     }
 
-    $defaultContainer = self::DEFAULT_PATH;
-    if ($value && $value[0] == '[' && preg_match(';^\[([a-zA-Z0-9\._]+)\]/(.*);', $value, $matches)) {
-      $defaultContainer = $matches[1];
-      $value = $matches[2];
+
+    if ($value[0] === '[' && preg_match(';^\[([a-zA-Z0-9\._]+)\](.*?)$;', $value, $matches)) {
+      $baseVariable = $matches[1];
+      $relativePath = $matches[2];
+    }
+    else {
+      $baseVariable = self::DEFAULT_PATH;
+      $relativePath = $value;
     }
 
-    $isDot = $value === '.';
-    if ($isDot) {
-      $value = '';
+    $basePath = $this->getVariable($baseVariable, 'path');
+
+    // magic value for returning with no trailing slash
+    if ($relativePath === '/.') {
+      $relativePath = '';
     }
 
-    $result = \CRM_Utils_File::absoluteDirectory($value, $this->getVariable($defaultContainer, 'path'));
-    return $isDot ? rtrim($result, '/' . DIRECTORY_SEPARATOR) : $result;
+    // note: we must not pass relativePath with leading slash or will be treated as
+    // already absolute and basePath will be ignored
+    $absolutePath = \CRM_Utils_File::absoluteDirectory(ltrim($relativePath, '/'), $basePath);
+
+    // remove trailing slash added by absoluteDirectory
+    if ($relativePath === '') {
+      $absolutePath = rtrim($absolutePath, '/' . DIRECTORY_SEPARATOR);
+    }
+    return $absolutePath;
   }
 
   /**
@@ -242,18 +262,37 @@ class Paths {
       return FALSE;
     }
 
-    $defaultContainer = self::DEFAULT_URL;
-    if ($value && $value[0] == '[' && preg_match(';^\[([a-zA-Z0-9\._]+)\](/(.*))$;', $value, $matches)) {
-      $defaultContainer = $matches[1];
-      $value = $matches[3];
+    if (!is_string($value)) {
+      \CRM_Core_Error::deprecatedWarning('$value passed to getUrl should be string. It will be recast for now but may cause an error in future');
+      $value = (string) $value;
     }
 
-    $isDot = $value === '.';
-    if (substr($value, 0, 5) === 'http:' || substr($value, 0, 6) === 'https:') {
+    if (str_starts_with('http:', $value) || str_starts_with('https:', $value)) {
       return $value;
     }
 
-    $value = rtrim($this->getVariable($defaultContainer, 'url'), '/') . ($isDot ? '' : "/$value");
+    if ($value[0] === '[' && preg_match(';^\[([a-zA-Z0-9\._]+)\](.*?)$;', $value, $matches)) {
+      $baseVariable = $matches[1];
+      $relativePath = $matches[2];
+    }
+    else {
+      $baseVariable = self::DEFAULT_URL;
+      $relativePath = $value;
+    }
+
+    $normalisedBaseUrl = rtrim($this->getVariable($baseVariable, 'url'), '/');
+
+    // magic value for returning with no trailing slash
+    if ($relativePath === '/.') {
+      $relativePath = '';
+    }
+
+    if ($relativePath === '') {
+      $value = $normalisedBaseUrl;
+    }
+    else {
+      $value = $normalisedBaseUrl . '/' . ltrim($relativePath, '/');
+    }
 
     if ($preferFormat === 'relative') {
       $value = \CRM_Utils_Url::toRelative($value);
