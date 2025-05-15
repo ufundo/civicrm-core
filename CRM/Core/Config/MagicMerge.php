@@ -264,12 +264,13 @@ class CRM_Core_Config_MagicMerge {
 
       case 'setting-url':
         $options = !empty($this->map[$k][2]) ? $this->map[$k][2] : [];
-        $value = $this->getSettings()->get($name);
-        if ($value && !(in_array('noslash', $options))) {
-          $value = CRM_Utils_File::addTrailingSlash($value, '/');
+        $value = \Civi::paths()->getSettingPath($name,
+           in_array('rel', $options) ? 'relative' : 'absolute');
+        $value = rtrim($value, '/');
+        if (!(in_array('noslash', $options))) {
+          $value .= '/';
         }
-        $this->cache[$k] = Civi::paths()->getUrl($value,
-          in_array('rel', $options) ? 'relative' : 'absolute');
+        $this->cache[$k] = $value;
         return $this->cache[$k];
 
       case 'runtime':
