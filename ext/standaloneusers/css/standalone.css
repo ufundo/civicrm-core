@@ -1,4 +1,4 @@
-.standalone-page-padding {
+html.crm-standalone .crm-container {
   padding: 1px max(10px, 1vw) 1rem;
 }
 

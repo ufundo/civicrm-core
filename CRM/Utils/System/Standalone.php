@@ -333,7 +333,7 @@ class CRM_Utils_System_Standalone extends CRM_Utils_System_Base {
       // if maintenance, we need to wrap in a minimal header
       $headerContent = CRM_Core_Region::instance('html-header', FALSE)->render('');
 
-      // note - now adding #crm-container is a hacky way to avoid rendering
+      // note - not adding #crm-container is a hacky way to avoid rendering
       // the civicrm menubar. @todo a better way
       $content = <<<HTML
         <!DOCTYPE html >
@@ -342,7 +342,7 @@ class CRM_Utils_System_Standalone extends CRM_Utils_System_Base {
             {$headerContent}
           </head>
           <body>
-            <div class="crm-container standalone-page-padding">
+            <div class="crm-container">
               {$content}
             </div>
           </body>
