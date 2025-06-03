@@ -1953,4 +1953,65 @@ abstract class CRM_Core_Payment {
     return FALSE;
   }
 
+  public function doCheckout(PropertyBag &$paymentParams, ?string $successUrl, ?string $failUrl): array {
+    try {
+      $this->doPayment($paymentParams);
+
+      // payment completed successfully
+      // TODO: what if partial payment?
+//      \Civi\Api4\Contribution::update(FALSE)
+//        ->addWhere('id', '=', $paymentParams['contributionID'])
+//        ->addValue('contribution_status_id:name', 'Completed')
+//        ->execute();
+
+      if ($successUrl) {
+        return [
+          'redirect' => $successUrl,
+        ];
+      }
+
+      return [];
+    }
+    catch (\Exception $e) {
+      // TODO: should we handle here?
+      // if ($failUrl) {
+      //   return [
+      //     'is_error' => TRUE,
+      //     'redirect' => $failUrl,
+      //   ];
+      // }
+      return ['is_error' => TRUE];
+    }
+  }
+
+  /**
+   *
+   * Get a map between Api4 field keys on the contribution record and payment params
+   * used in doPayment
+   *
+   * This can be used to fill missing params.
+   *
+   * TODO: what values might need casting etc?
+   *
+   * @return array
+   */
+  public function getPaymentParamFetchMap(): array {
+    return [
+      'Contribution' => [
+        'id' => 'contributionID',
+        'contact_id' => 'contactID',
+        'total_amount' => 'amount',
+        'invoice_id' => 'invoiceID',
+        'source' => 'source',
+        'currency' => 'currency',
+      ],
+      'Address' => [
+        'postal_code' => 'billingPostalCode',
+        'city' => 'billingCity',
+        'country' => 'billingCountry',
+        'street_address' => 'billingStreetAddress',
+      ],
+    ];
+  }
+
 }
