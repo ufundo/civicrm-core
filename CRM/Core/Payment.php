@@ -1953,6 +1953,14 @@ abstract class CRM_Core_Payment {
     return FALSE;
   }
 
+  public function getAfformModule(): ?string {
+    return NULL;
+  }
+
+  public function getAfformTemplate(): ?string {
+    return NULL;
+  }
+
   public function doCheckout(PropertyBag &$paymentParams, ?string $successUrl, ?string $failUrl): array {
     try {
       $this->doPayment($paymentParams);
