@@ -143,7 +143,12 @@ class ExportAction extends AbstractAction {
       }
     }
     // Unset values that match the default
+    // EXCEPT for is_active - so that when you disable and reenable
+    // an extension, records it manages are reenabled
     foreach ($allFields as $fieldName => $field) {
+      if ($fieldName === 'is_active') {
+        continue;
+      }
       if (($record[$fieldName] ?? NULL) === $field['default_value']) {
         unset($record[$fieldName]);
       }
