@@ -27,7 +27,7 @@
       this.fetchAndRender();
     }
 
-    fetchAndRender() {
+    async fetchAndRender() {
       this.ul.innerHTML = '<div class="crm-loading-element"></div>';
 
       return Promise.all([this.fetchRecords(), this.fetchSettingState()])
@@ -35,7 +35,7 @@
     }
 
 
-    fetchRecords() {
+    async fetchRecords() {
       this.streams = {};
 
       return CRM.api4('RiverleaStream', 'getWithFileContent', {
@@ -247,19 +247,24 @@
 
     render() {
       this.innerHTML = `
-        <h3>
-          ${this.data.label}
-          <div class="civi-riverlea-stream-header-buttons"></div>
-        </h3>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3>${this.data.label}</h3>
+          <div class="civi-riverlea-stream-header-buttons crm-buttons"></div>
+        </div>
 
-        <p>
-          ${ this.data.description ? this.data.description : '' }
-        </p>
+        <div class="panel-body">
+          <p>
+            ${ this.data.description ? this.data.description : '' }
+          </p>
 
-        <details class="civi-riverlea-stream-details">
-        </details>
-
-        <div class="civi-riverlea-stream-panel-buttons"></div>
+          <details class="civi-riverlea-stream-details">
+          </details>
+        </div>
+        <div class="panel-footer">
+          <div class="civi-riverlea-stream-panel-buttons crm-buttons"></div>
+        </div>
+      </div>
       `;
 
       this.renderDetailsArea(this.querySelector('.civi-riverlea-stream-details'));

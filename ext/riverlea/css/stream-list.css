@@ -27,7 +27,7 @@ civi-riverlea-stream-card.is-set-preview {
   outline-color: var(--crm-c-warning);
 }
 
-civi-riverlea-stream-card h3 {
+civi-riverlea-stream-card .panel-heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
