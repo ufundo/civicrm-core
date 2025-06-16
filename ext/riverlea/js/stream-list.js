@@ -258,7 +258,8 @@
             ${ this.data.description ? this.data.description : '' }
           </p>
 
-          <details class="civi-riverlea-stream-details">
+          <details class="civi-riverlea-stream-details crm-accordion-settings">
+            <summary>${ ts('More info') }
           </details>
         </div>
         <div class="panel-footer">
