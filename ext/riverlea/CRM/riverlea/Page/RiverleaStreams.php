@@ -12,7 +12,7 @@ class CRM_riverlea_Page_RiverleaStreams extends CRM_Core_Page {
     $resources->addStyleFile(E::SHORT_NAME, 'css/stream-list.css');
 
     if (!_riverlea_is_active()) {
-      \CRM_Core_Session::setStatus(ts('You must first activate a Riverlea stream to be able to preview others'), ts('Stream Previews'), 'warning');
+      \CRM_Core_Session::setStatus(E::ts('You must first activate a Riverlea stream to be able to preview others'), ts('Stream Previews'), 'warning');
     }
 
     parent::run();
