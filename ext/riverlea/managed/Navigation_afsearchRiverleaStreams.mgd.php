@@ -13,7 +13,7 @@ return [
         'label' => E::ts('Manage Riverlea Streams'),
         'name' => 'afsearchRiverleaStreams',
         'url' => 'civicrm/admin/riverlea/streams',
-        'icon' => 'crm-i fa-list-alt',
+        'icon' => 'crm-i fa-palette',
         'permission' => ['access CiviCRM'],
         'permission_operator' => 'AND',
         'parent_id.name' => 'Customize Data and Screens',
