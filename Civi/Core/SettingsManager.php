@@ -403,9 +403,9 @@ class SettingsManager {
   public function flush() {
     $this->mandatory = NULL;
 
-    $this->cache->flush();
+    $this->cache->clear();
     // SettingsMetadata; not guaranteed to use same cache.
-    \Civi::cache('settings')->flush();
+    \Civi::cache('settings')->clear();
 
     foreach ($this->bagsByDomain as $bag) {
       /** @var SettingsBag $bag */
