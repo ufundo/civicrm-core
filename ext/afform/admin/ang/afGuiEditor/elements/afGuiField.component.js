@@ -29,8 +29,8 @@
       this.$onInit = function() {
         ctrl.hasDefaultValue = !!getSet('afform_default');
         setFieldDefn();
-        ctrl.inputTypes = _.transform(_.cloneDeep(afGui.meta.inputTypes), function(inputTypes, type) {
-          if (inputTypeCanBe(type.name)) {
+        ctrl.inputTypes = afGui.meta.inputTypes.filter((type) => inputTypeCanBe(type.name))
+          .map((type) => {
             // Change labels for EntityRef fields
             if (ctrl.getDefn().input_type === 'EntityRef') {
               var entity = ctrl.getFkEntity();
@@ -44,9 +44,9 @@
                 type.label = ts('Select Form %1', {1: entity.label});
               }
             }
-            inputTypes.push(type);
-          }
-        });
+            return type;
+          });
+
         // Quick-add links for autocompletes
         this.quickAddLinks = [];
         let allowedEntity = (ctrl.getFkEntity() || {}).entity;
