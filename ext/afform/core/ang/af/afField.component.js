@@ -34,6 +34,14 @@
           $element.addClass('af-field-type-multiple');
         }
 
+        // fallback value for input template based on input_type if not set explicitly
+        // this is only intended for edge cases like munged fields (such as name="display_name,email")
+        // which are not handled by AfformMetadataInjector
+        // this fallback will *not* respect hooks on afform_admin.metadata
+        if (!this.defn.template) {
+          $timeout(() => this.defn.template = `~/af/fields/${this.defn.input_type}.html`);
+        }
+
         this.fkEntity = this.defn.fk_entity || null;
 
         if (this.defn.name !== this.fieldName) {
