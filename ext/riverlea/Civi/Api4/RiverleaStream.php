@@ -5,6 +5,7 @@ namespace Civi\Api4;
  * RiverleaStream entity.
  *
  * Provided by the RiverLea CiviCRM Theme Framework extension.
+ * @searchFields label,description,extension,base_module
  *
  * @package Civi\Api4
  */

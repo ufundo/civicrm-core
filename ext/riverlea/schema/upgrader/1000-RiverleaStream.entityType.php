@@ -67,7 +67,7 @@ return [
       'title' => ts('Extension'),
       'sql_type' => 'varchar(255)',
       'input_type' => 'Select',
-      'description' => ts('Extension that provides this stream.'),
+      'description' => ts('Extension where any stream CSS files are found. Note: this may be different from base_module, e.g. if a downstream extension provides a Managed Stream that uses the CSS files from the core riverlea extension.'),
       'default' => NULL,
       // @todo why not work?
       // 'entity_reference' => [
