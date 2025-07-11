@@ -206,7 +206,7 @@ class Admin {
     }
     // Other possible relevant columns... now we're just guessing
     //
-    // TODO: these can be specified using the @searchColumns annotation on
+    // TODO: these can be specified using the @searchFields annotation on
     // the Api4 entity class so would probably be better to specify sensible
     // options for core entities explicitly - which allows you to order logically too
     $possibleColumns['description'] = 'description';
