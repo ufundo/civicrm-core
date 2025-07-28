@@ -1,0 +1,16 @@
+{
+    "type": "search",
+    "title": "CiviCRM Home",
+    "placement": [],
+    "placement_filters": [],
+    "icon": "fa-list-alt",
+    "server_route": "civicrm/home",
+    "permission": [
+        "access CiviCRM"
+    ],
+    "permission_operator": "AND",
+    "confirmation_type": "redirect_to_url",
+    "requires": [
+      "crmDashboard"
+    ]
+}
