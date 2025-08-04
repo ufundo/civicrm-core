@@ -1,0 +1,25 @@
+<div class="panel">
+  <div class="form-inline panel-heading">
+    <label for="crm-search-main-entity">{{:: ts('Search for') }}</label>
+    <input id="crm-search-main-entity" class="form-control twenty collapsible-optgroups" ng-model="$ctrl.savedSearch.api_entity" crm-ui-select="::{allowClear: false, data: mainEntitySelect}" ng-disabled="$ctrl.savedSearch.id">
+  </div>
+
+  <div class="panel-body">
+    <details open class="crm-search-select-fields">
+      <summary>{{:: ts('Fields') }}</summary>
+      <crm-search-admin-entity-fields></crm-search-admin-entity-fields>
+    </details>
+  </div>
+</div>
+
+<div ng-include="'~/crmSearchAdmin/crmSearch-joins.html'"></div>
+
+<div class="api4-clause-fieldset crm-search-wheres panel">
+  <div class="panel-heading">
+    <i class="crm-i fa-filter"></i>
+    {{:: ts('Filters') }}
+  </div>
+  <div class="panel-body">
+    <crm-search-clause clauses="$ctrl.savedSearch.api_params.where" format="string" op="AND" label="{{:: ts('Where') }}" fields="fieldsForWhere" allow-functions="$ctrl.paramExists('groupBy')" ></crm-search-clause>
+  </div>
+</div>

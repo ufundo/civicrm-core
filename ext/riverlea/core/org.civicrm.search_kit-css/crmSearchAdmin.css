@@ -395,3 +395,18 @@ crm-search-admin-import {
 .crm-search-admin-relative .help-block { /* reduces help-block by width of crm-search-admin-right button */
   width: calc(100% - 180px);
 }
+
+.crm-search-admin-field-list {
+  display: flex;
+  flex-flow: row wrap;
+  padding-left: 0;
+}
+.crm-search-admin-field-list li {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: var(--crm-expand-border);
+  border-radius: var(--crm-roundness);
+}

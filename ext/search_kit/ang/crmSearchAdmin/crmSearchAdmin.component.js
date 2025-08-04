@@ -44,24 +44,19 @@
 
     this.mainTabs = [
       {
-        key: 'for',
-        title: ts('Search For'),
+        key: 'main',
+        title: ts('Search'),
         icon: 'fa-search',
       },
       {
-        key: 'conditions',
-        title: ts('Filter Conditions'),
-        icon: 'fa-filter',
-      },
-      {
-        key: 'fields',
-        title: ts('Select Fields'),
-        icon: 'fa-columns',
-      },
-      {
-        key: 'settings',
-        title: ts('Configure Settings'),
+        key: 'advanced',
+        title: ts('Advanced'),
         icon: 'fa-gears',
+      },
+      {
+        key: 'description',
+        title: ts('Description & Tags'),
+        icon: 'fa-tag',
       },
       {
         key: 'query',

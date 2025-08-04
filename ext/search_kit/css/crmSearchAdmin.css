@@ -327,3 +327,13 @@ crm-search-admin-import {
 #bootstrap-theme .crm-search-admin-outer details summary ~ * {
   padding: 0.75rem 1rem;
 }
+
+.crm-search-admin-field-list {
+  display: flex;
+  flex-flow: row wrap;
+}
+.crm-search-admin-field-list li {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+}
