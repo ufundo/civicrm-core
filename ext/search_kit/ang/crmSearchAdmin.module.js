@@ -187,12 +187,13 @@
           }
         }
         const defaultLabel = labels.join(' - ');
+        const icon = getEntity(join.entity).icon ? getEntity(join.entity).icon : 'fa-chain';
         result = _.assign(_.cloneDeep(join), {
           label: (savedSearch && savedSearch.form_values && savedSearch.form_values.join && savedSearch.form_values.join[alias]) || defaultLabel,
           defaultLabel: defaultLabel,
           alias: alias,
           baseEntity: baseEntity,
-          icon: getEntity(join.entity).icon,
+          icon: icon,
         });
         // Add the numbered suffix to the join conditions
         // If this is a deep join, also add the base entity prefix
