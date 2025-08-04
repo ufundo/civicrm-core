@@ -1,99 +1,53 @@
-/* SearchKit table display styling */
-
-#bootstrap-theme .crm-search-display-table > table.table > thead > tr > th {
-  position: relative;
-}
-
-#bootstrap-theme .crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon {
-  position: absolute;
-  left: 2px;
-  bottom: 10px;
-}
-
-#bootstrap-theme .crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon + .crm-search-display-table-column-label {
-  margin-left: 4px;
-  display: inline-block;
-}
-
-#bootstrap-theme .crm-search-display-table > table.table > thead > tr > th.crm-search-result-select {
-  padding-left: 0;
-  padding-right: 0;
-  text-transform: none;
-  color: initial;
-  /* Don't allow button to be split on 2 lines */
-  min-width: 86px;
-}
-
-#bootstrap-theme .crm-search-display.crm-search-display-table tfoot > tr > td {
-  font-weight: bold;
-}
-
+/* SearchKit table layout styling */
 table.crm-sticky-header > thead > tr {
   position: sticky !important;
   top: var(--crm-menubar-bottom, 0px);
   z-index: 2;
 }
+.crm-search-display-table > table.table > thead > tr > th.crm-search-result-select {
+  padding-inline: 0;
+  text-transform: none;
+  color: initial;
+  min-width: 95px; /* Don't allow button to be split on 2 lines */
+}
+.crm-search-display-table > table.table > thead > tr > th i.crm-search-table-column-sort-icon + .crm-search-display-table-column-label {
+  margin-left: 0 !important;
+}
+.crm-search-display.crm-search-display-table tfoot > tr > td {
+  font-weight: bold;
+  font-family: var(--crm-font-bold);
+}
 
-/* Nested styling for hierarchical rows */
-#bootstrap-theme .crm-search-display-table tr td.crm-hierarchical-row {
-  position: relative;
+/* Afform tables */
+.crm-container td.crm-search-col-type-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--crm-s);
 }
-#bootstrap-theme .crm-search-display-table crm-search-display-toggle-collapse {
-  position: relative;
-  z-index: 1;
+.crm-container td.crm-search-col-type-buttons:has(span:only-child),
+.crm-container td.crm-search-col-type-buttons:has(> .btn:only-child) {
+  /* when button column has only one button, turn cell back to table cell to vertically center */
+  display: table-cell;
 }
-/* Depth >= 1 */
-#bootstrap-theme .crm-search-display-table tr td.crm-hierarchical-child:first-child:not(.crm-search-ctrl-column),
-#bootstrap-theme .crm-search-display-table tr td.crm-search-ctrl-column + td.crm-hierarchical-child {
-  padding-left: 35px;
+td.crm-search-col-type-buttons.text-right {
+  flex-direction: row-reverse;
 }
-#bootstrap-theme .crm-search-display-table tr td.crm-hierarchical-child:first-child:not(.crm-search-ctrl-column):before,
-#bootstrap-theme .crm-search-display-table tr td.crm-search-ctrl-column + td.crm-hierarchical-child:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 15px;
-  width: 15px;
-  height: calc(100%/2);
-  border-bottom: 2px dotted currentColor;
-  border-left: 2px dotted currentColor;
+#bootstrap-theme th.crm-search-result-select button.btn {
+  background: transparent;
+  padding: var(--crm-xs1) var(--crm-m1);
 }
-#bootstrap-theme .crm-search-display-table .crm-hierarchical-depth-1 crm-search-display-toggle-collapse {
-  left: 30px;
+#bootstrap-theme th.crm-search-result-select button.btn:hover,
+#bootstrap-theme th.crm-search-result-select button.btn:focus {
+  background: transparent;
 }
-/* Depth = 2 */
-#bootstrap-theme .crm-search-display-table tr td.crm-hierarchical-depth-2:first-child:not(.crm-search-ctrl-column),
-#bootstrap-theme .crm-search-display-table tr td.crm-search-ctrl-column + td.crm-hierarchical-depth-2 {
-  padding-left: 65px;
+#bootstrap-theme th.crm-search-result-select button.btn i.crm-i {
+  color: var(--crm-c-text);
+  min-width: fit-content;
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
-#bootstrap-theme .crm-search-display-table tr td.crm-hierarchical-depth-2:first-child:not(.crm-search-ctrl-column):before,
-#bootstrap-theme .crm-search-display-table tr td.crm-search-ctrl-column + td.crm-hierarchical-depth-2:before {
-  left: 45px;
-}
-#bootstrap-theme .crm-search-display-table .crm-hierarchical-depth-2 crm-search-display-toggle-collapse {
-  left: 60px;
-}
-/* Depth = 3 */
-#bootstrap-theme .crm-search-display-table tr td.crm-hierarchical-depth-3:first-child:not(.crm-search-ctrl-column),
-#bootstrap-theme .crm-search-display-table tr td.crm-search-ctrl-column + td.crm-hierarchical-depth-3 {
-  padding-left: 95px;
-}
-#bootstrap-theme .crm-search-display-table tr td.crm-hierarchical-depth-3:first-child:not(.crm-search-ctrl-column):before,
-#bootstrap-theme .crm-search-display-table tr td.crm-search-ctrl-column + td.crm-hierarchical-depth-3:before {
-  left: 75px;
-}
-#bootstrap-theme .crm-search-display-table .crm-hierarchical-depth-3 crm-search-display-toggle-collapse {
-  left: 90px;
-}
-/* Depth = 4 */
-#bootstrap-theme .crm-search-display-table tr td.crm-hierarchical-depth-4:first-child:not(.crm-search-ctrl-column),
-#bootstrap-theme .crm-search-display-table tr td.crm-search-ctrl-column + td.crm-hierarchical-depth-4 {
-  padding-left: 125px;
-}
-#bootstrap-theme .crm-search-display-table tr td.crm-hierarchical-depth-4:first-child:not(.crm-search-ctrl-column):before,
-#bootstrap-theme .crm-search-display-table tr td.crm-search-ctrl-column + td.crm-hierarchical-depth-4:before {
-  left: 105px;
-}
-#bootstrap-theme .crm-search-display-table .crm-hierarchical-depth-4 crm-search-display-toggle-collapse {
-  left: 120px;
+.crm-search-display-table table {
+  border: var(--crm-table-outside-border);
+  box-shadow: var(--crm-block-shadow);
 }
