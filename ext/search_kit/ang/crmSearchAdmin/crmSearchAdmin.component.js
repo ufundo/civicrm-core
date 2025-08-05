@@ -45,13 +45,8 @@
     this.mainTabs = [
       {
         key: 'main',
-        title: ts('Search'),
+        title: ts('Entities & Fields'),
         icon: 'fa-search',
-      },
-      {
-        key: 'advanced',
-        title: ts('Advanced'),
-        icon: 'fa-gears',
       },
       {
         key: 'description',
@@ -59,10 +54,10 @@
         icon: 'fa-tag',
       },
       {
-        key: 'query',
-        title: ts('Query Info'),
-        icon: 'fa-info-circle',
-      },
+        key: 'advanced',
+        title: ts('Advanced Options'),
+        icon: 'fa-gears',
+      }
     ];
 
     $scope.controls = {tab: this.mainTabs[0].key, joinType: 'LEFT'};
