@@ -119,6 +119,11 @@ class Rebuilder {
       // a bit aggressive, but livable for now
       CRM_Utils_Cache::singleton()->flush();
 
+      // reset statics as this is used a lot for caching
+      // TODO: might this cause problem if $statics has been
+      // used for non-caching - e.g. run-once checks?
+      Civi::$statics = [];
+
       if (Container::isContainerBooted()) {
         Civi::cache('long')->flush();
         Civi::cache('settings')->flush();
