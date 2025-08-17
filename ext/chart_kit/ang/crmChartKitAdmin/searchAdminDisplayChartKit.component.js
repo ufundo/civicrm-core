@@ -12,21 +12,19 @@
       crmSearchAdmin: '^crmSearchAdmin'
     },
     templateUrl: '~/crmChartKitAdmin/searchAdminDisplayChartKit.html',
-    controller: function ($scope, searchMeta, chartKitColumnConfig, chartKitChartTypes, chartKitReduceTypes) {
+    controller: function ($scope, searchMeta, chartKitChartTypes, chartKitChartColumns) {
       const ts = $scope.ts = CRM.ts('chart_kit');
 
-      this.getColumnSlots = () => this.display.settings.columns.map((col, colIndex) => {
-        // we need the canonical column index to get data values
-        col.index = colIndex;
+      this.getColumnSlots = () => this.display.settings.columns.map((col, index) => {
+        // add index for tracking in admin interface
+        col.adminIndex = index;
         return col;
       });
 
       // often we only want the columns which have a source field set
       this.getColumns = () => this.getColumnSlots().filter((col) => col.key);
 
-      this.getColumnsForAxis = (axisKey) => {
-        return this.getColumns().filter((col) => col.axis === axisKey);
-      };
+      this.getColumnsForAxis = (axisKey) => this.getColumns().filter((col) => col.axis === axisKey);
 
       this.getChartTypeOptions = () => chartKitChartTypes.types.map((type) => ({ key: type.key, label: type.label, icon: type.icon }));
 
@@ -107,17 +105,18 @@
 
       this.getAxes = () => this.axes;
 
+      this.getAxis = (axisKey) => this.axes[axisKey];
+
       this.initAxesForChartType = () => {
         const axes = this.chartType.getAxes();
 
         // merge axis defaults into the axes array
         Object.keys(axes).forEach((key) => {
-          axes[key] = Object.assign({}, this.axisDefaults(), axes[key]);
+          axes[key] = Object.assign({}, this.axisDefaults, axes[key]);
         });
 
         this.axes = axes;
       };
-
 
       this.initDisplaySettingsForChartType = () => {
         // TODO: some kind of deep merge so new settings are added to old charts at all levels
@@ -150,24 +149,19 @@
         });
       };
 
-      this.getColumn = (index) => {
-        return this.display.settings.columns[index];
-      };
+      this.getColumn = (adminIndex) => this.display.settings.columns[adminIndex] ?? null;
 
-      this.axisDefaults = () => {
-        return {
-          // by default allow all types we know
-          reduceTypes: chartKitReduceTypes.map((type) => type.key),
-          scaleTypes: chartKitColumnConfig.scaleType.map((type) => type.key),
-          dataLabelTypes: chartKitColumnConfig.dataLabelType.map((type) => type.key),
-          // by default no option
-          seriesTypes: [],
-          dataLabelFormatters: chartKitColumnConfig.dataLabelFormatter.map((type) => type.key),
-          multiColumn: false,
-          prepopulate: true,
-        };
-
-      };
+      this.axisDefaults = ({
+        // by default allow all types we know
+        reduceTypes: chartKitChartColumns.configOptions.reduceType.map((type) => type.key),
+        scaleTypes: chartKitChartColumns.configOptions.scaleType.map((type) => type.key),
+        dataLabelTypes: chartKitChartColumns.configOptions.dataLabelType.map((type) => type.key),
+        // by default no option
+        seriesTypes: [],
+        dataLabelFormatters: chartKitChartColumns.configOptions.dataLabelFormatter.map((type) => type.key),
+        multiColumn: false,
+        prepopulate: true,
+      });
 
       this.getAxis = (axisKey) => {
         // merge in default axis options
@@ -222,12 +216,12 @@
           .map((searchCol) => searchCol.key);
       };
 
-      this.getColumnSearchColumn = (col) => {
-        return this.searchColumns.find((searchColumn) => (searchColumn.key === col.key));
+      this.getSearchColumn = (key) => {
+        return this.searchColumns.find((searchColumn) => (searchColumn.key === key));
       };
 
       this.getColumnSourceDataType = (col) => {
-        const details = this.getColumnSearchColumn(col);
+        const details = this.getSearchColumn(col.key);
         return details ? details.dataType : null;
       };
 
@@ -257,7 +251,7 @@
 
       this.getColumnDatePrecisionOptions = (col) => {
         if (this.getColumnSourceDataTypeIsDate(col)) {
-          return chartKitColumnConfig.datePrecision.map((option) => option.key);
+          return chartKitChartColumns.configOptions.datePrecision.map((option) => option.key);
         }
         return [];
       };
@@ -304,13 +298,13 @@
         return options;
       };
 
-      this.onColumnSearchColumnChange = (colIndex) => {
-        const col = this.getColumn(colIndex);
+      this.onColumnSearchColumnChange = (adminIndex) => {
+        const col = this.getColumn(adminIndex);
 
-        const selectedFieldDetails = this.getColumnSearchColumn(col);
+        const selectedFieldDetails = this.getSearchColumn(col.key);
         if (selectedFieldDetails) {
-          this.display.settings.columns[colIndex].label = selectedFieldDetails.label;
-          this.display.settings.columns[colIndex].sourceDataType = selectedFieldDetails.dataType;
+          this.display.settings.columns[adminIndex].label = selectedFieldDetails.label;
+          this.display.settings.columns[adminIndex].sourceDataType = selectedFieldDetails.dataType;
         }
 
         // check for reduce/data/label types and pick the first if available
@@ -321,7 +315,7 @@
             return;
           }
           const optionKeys = this.getColumnConfigOptionKeys(col, configKey);
-          this.display.settings.columns[colIndex][configKey] = optionKeys.length ? optionKeys[0] : null;
+          this.display.settings.columns[adminIndex][configKey] = optionKeys.length ? optionKeys[0] : null;
         });
       };
 
@@ -331,7 +325,6 @@
         let axisSlots = this.getColumnSlots().filter((col) => col.axis === axisKey);
 
         // only display first column for single col
-        // TODO (dont include these hidden cols in the search if not needed)
         if (!axis.multiColumn) {
           axisSlots = axisSlots.slice(0, 1);
         }
@@ -349,10 +342,7 @@
         if (configKey === 'searchColumn') {
           return this.searchColumns;
         }
-        if (configKey === 'reduceType') {
-          return chartKitReduceTypes;
-        }
-        return chartKitColumnConfig[configKey];
+        return chartKitChartColumns.configOptions[configKey];
       };
 
       this.getOptionDetailsForKey = (configKey, optionKey) => this.getAllOptionDetails(configKey).find((option) => option.key === optionKey);
@@ -376,24 +366,22 @@
           key: null,
         });
 
-        const colIndex = this.display.settings.columns.length - 1;
+        const adminIndex = this.display.settings.columns.length - 1;
 
-        let searchColumnOptions = this.getColumnSearchColumnOptions(this.getColumn(colIndex));
+        let searchColumnOptions = this.getColumnSearchColumnOptions(this.getColumn(adminIndex));
 
         // filter options for data keys already used
         const alreadyUsedKeys = this.getColumns().map((col) => col.key);
         searchColumnOptions = searchColumnOptions.filter((key) => !alreadyUsedKeys.includes(key));
 
         // if there are any left, set the first
-        this.display.settings.columns[colIndex].key = searchColumnOptions.length ? searchColumnOptions[0] : null;
+        this.display.settings.columns[adminIndex].key = searchColumnOptions.length ? searchColumnOptions[0] : null;
 
         // trigger loading column settings
-        this.onColumnSearchColumnChange(colIndex);
+        this.onColumnSearchColumnChange(adminIndex);
       };
 
-      this.removeColumn = (colIndex) => {
-        this.display.settings.columns.splice(colIndex, 1);
-      };
+      this.removeColumn = (adminIndex) => this.display.settings.columns.splice(adminIndex, 1);
 
     }
   });

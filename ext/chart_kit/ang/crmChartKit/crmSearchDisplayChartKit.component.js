@@ -15,7 +15,7 @@
       afFieldset: '?^^afFieldset'
     },
     templateUrl: '~/crmChartKit/chartKitCanvas.html',
-    controller: function ($scope, $element, searchDisplayBaseTrait, chartKitChartTypes, chartKitReduceTypes) {
+    controller: function ($scope, $element, searchDisplayBaseTrait, chartKitChartTypes, chartKitChartColumns) {
       const ts = $scope.ts = CRM.ts('chart_kit');
 
       // Mix in base display trait
@@ -29,15 +29,27 @@
 
         // add our trait functions to the pre and post search hooks
         this.onPreRun.push(() => {
-          const init = this.initChartType();
-          if (!init) {
-            // TODO: it might be nice to abort the whole search here, because
-            //  it's not going to be able to render the chart anyway
+          // exit early if no chart type
+          if (!this.initChartType()) {
+            this.chartContainer.innerText = ts('No chart type');
             return;
           }
-          this.alwaysSortByDimensionCols();
+
+          this.chartContainer.innerHtml = '<div class="crm-loading-element"></div>';
+
+          // build out column model based on column settings
+          if (!this.columnsByAxis) {
+            this.buildColumns();
+          }
+
+          this.alwaysSortByXAscending();
         });
         this.onPostRun.push(() => {
+          // exit early if no chart type
+          if (!this.initChartType()) {
+            return;
+          }
+
           this.renderChart();
           // trigger re-rendering as you edit settings
           // TODO: could this be quite js intensive on the client browser? should we make it optional?
@@ -46,47 +58,30 @@
         });
       };
 
-      this.initChartType = () => {
-        // run initial settings through our legacy adaptor
-        this.settings = chartKitChartTypes.legacySettingsAdaptor(this.settings);
-
-        if (!this.settings.chartType) {
-          this.chartContainer.innerText = ts('No chart type selected.');
-          return false;
-        }
-        const type = chartKitChartTypes.types.find((type) => type.key === this.settings.chartType);
-        if (!type || !type.service) {
-          this.chartContainer.innerText = ts('No chart type selected.');
-          return false;
-        }
-        this.chartType = type.service;
-        return true;
-      };
-
-      this.getDimensionColumns = () => {
-        const axes = this.chartType.getAxes();
-        const dimensionAxisKeys = Object.keys(axes).filter((key) => axes[key].isDimension);
-        const dimensionColumns = dimensionAxisKeys.map((axis) => this.getColumnsForAxis(axis));
-        return dimensionColumns.flat();
-      };
+      this.getDimensionColumns = () => this.getColumns().filter((col) => col.isDimension);
 
       this.getSortKeys = () => this.getDimensionColumns().map((col) => col.key);
 
-        /**
-         * we want to always sort the server query by dimension columns -
-         * we can handle differently when we pass to d3
-         * but this is the only way to get magic that the server knows about the order
-         * of e.g. OptionValue fields, months of the year
-         */
-      this.alwaysSortByDimensionCols = () => {
+      this.alwaysSortByXAscending = () => {
         const sortKeys = this.getSortKeys();
 
         // stash a serialised string for quick checking in onSettingsChange
         this._currentSortKeys = sortKeys.join(',');
+        // always sort the query by X axis - we can handle differently when we pass to d3
+        // but this is the only way to get magic that the server knows about the order
+        // (like option groups / month order etc)
         this.settings.sort = sortKeys.map((key) => [key, 'ASC']);
       };
 
       this.onSettingsChange = (newSettings, oldSettings) => {
+        // just in case the chart type has been removed somehow
+        if (!this.initChartType()) {
+          return;
+        }
+
+        // build out column model based on column settings
+        this.buildColumns();
+
         // if sort keys have changed, we need to re-run the search to get new ordering
         // from the server
         const newSortKeysSerialised = this.getSortKeys().join(',');
@@ -101,19 +96,11 @@
       // this provides the common render steps - which chart types can then hook
       // into at different points
       this.renderChart = () => {
-        const init = this.initChartType();
-        if (!init) {
-          return;
-        }
-
         if (this.results.length === 0) {
           // show a no results type thing
           this.chartContainer.innerText = ts('Search returned no results.');
           return;
         }
-
-        // add a loading spinner
-        this.chartContainer.innerHTML = '<div class="crm-loading-element"></div>';
 
         // loads search results data into crossfilter
         this.buildCrossfilter();
@@ -133,79 +120,45 @@
         // apply formattting
         this.formatChart();
 
-        // clear the loading spinner
-        this.chartContainer.innerHTML = '';
-
-        // run the dc render to draw the chart
+        this.chartContainer.innerText = '';
+        // run the dc render
         this.chart.render();
       };
 
-      this.buildCrossfilter = () => {
+      this.initChartType = () => {
+        // run initial settings through our legacy adaptor
+        this.settings = chartKitChartTypes.legacySettingsAdaptor(this.settings);
 
-        if (this.chartType.buildCrossfilter) {
-          this.chartType.buildCrossfilter(this);
-          return;
+        if (!this.settings.chartType) {
+          this.chartContainer.innerText = ts('No chart type selected.');
+          return false;
         }
+        const type = chartKitChartTypes.types.find((type) => type.key === this.settings.chartType);
+        if (!type || !type.service) {
+          this.chartContainer.innerText = ts('No chart type selected.');
+          return false;
+        }
+        this.chartType = type.service;
+        return true;
+      };
 
-        // place to store values from each categorical column in the order from the results
-        // (which is useful for canonical ordering)
-        this.categories = {};
+      this.buildCrossfilter = () => {
+        const dataPoints = this.results.map((record, i) => {
+          const dataPoint = {};
 
-        this.chartData = this.results.map((record, i) => this.getColumns().map((col) => {
+          this.getColumns().forEach((col) => {
+            const resultValue = record.data[col.key];
+            dataPoint[col.index] = col.applyParsers(resultValue);
+          });
 
-          let value = record.data[col.key];
+          return dataPoint;
+        });
 
-          switch (col.datePrecision) {
-            case 'year':
-              value = d3.timeYear.floor(Date.parse(value)).valueOf();
-              break;
-            case 'month':
-              value = d3.timeMonth.floor(Date.parse(value)).valueOf();
-              break;
-            case 'week':
-              value = d3.timeWeek.floor(Date.parse(value)).valueOf();
-              break;
-            case 'day':
-              value = d3.timeDay.floor(Date.parse(value)).valueOf();
-              break;
-            case 'hour':
-              value = d3.timeHour.floor(Date.parse(value)).valueOf();
-              break;
-          }
-
-          switch (col.scaleType) {
-            case 'categorical':
-              // initialise the category list for this column if it doesnt exist yet
-              if (!this.categories[col.index]) {
-                this.categories[col.index] = [];
-              }
-
-              const categoryIndex = this.categories[col.index].indexOf(value);
-
-              if (categoryIndex < 0) {
-                // if not found, add new category to our list
-                this.categories[col.index].push(value);
-                // we know its that last item in the list now
-                return this.categories[col.index].length - 1;
-              }
-
-              return categoryIndex;
-            default:
-              return value;
-          }
-        }));
-
-        this.ndx = crossfilter(this.chartData);
+        this.ndx = crossfilter(dataPoints);
       };
 
       this.buildDimension = () => {
-
-        if (this.chartType.buildDimension) {
-          this.chartType.buildDimension(this);
-          return;
-        }
-
-        const colIndexes = this.getDimensionColumns().map((col) => col.index);
+        const colIndexes = this.getDimensionColumns().map((col) => col.index)
 
         if (colIndexes.length > 1) {
           // dimension is multi-column, create an array key
@@ -213,8 +166,7 @@
         }
         else {
           // if there is only one dimension axis we use the actual value
-          // rather than a single item array in order to benefit
-          // from default ordering in the chart library
+          // rather than a single item array
           const colIndex = colIndexes[0];
           this.dimension = this.ndx.dimension((d) => d[colIndex]);
         }
@@ -227,33 +179,54 @@
           return;
         }
 
-        const cols = this.getColumnsWithReducers();
+        const cols = this.getColumns();
 
         // reduce every coordinate using the functions from its column reduce type
-        const reduceAdd = (p, v) => cols.map((col) => {
-          return col.reducer.add(p[col.index], v[col.index]);
-        });
-        const reduceSub = (p, v) => cols.map((col) => {
-          return col.reducer.sub(p[col.index], v[col.index]);
-        });
-        const reduceStart = () => cols.map((col) => {
-          return col.reducer.start();
-        });
+        const reduceAdd = (p, v) => {
+          cols.forEach((col) => {
+            p[col.index] = col.reducer.add(p[col.index], v[col.index]);
+          });
+          return p;
+        };
+        const reduceSub = (p, v) => {
+          cols.forEach((col) => {
+            p[col.index] = col.reducer.sub(p[col.index], v[col.index]);
+          });
+          return p;
+        };
+        const reduceStart = () => {
+          const p = {};
+          cols.forEach((col) => {
+            p[col.index] = col.reducer.start();
+          });
+          return p;
+        };
 
         this.group = this.dimension.group().reduce(reduceAdd, reduceSub, reduceStart);
 
-        // find totals in each column
-        this.columnTotals = this.ndx.groupAll().reduce(reduceAdd, reduceSub, reduceStart).value();
+        // find grand totals for each column
+        const columnTotals = this.ndx.groupAll().reduce(reduceAdd, reduceSub, reduceStart).value();
+
+        this.setColumnTotals(columnTotals);
+      };
+
+      this.setColumnTotals = (totals) => {
+        // assign these to our stored columns
+        this.getColumns().forEach((col) => {
+          this.columnsByAxis[col.axis][col.axisIndex].total = totals[col.index];
+        });
       };
 
       this.buildChart = () => {
-        if (!this.chartType.buildChart && !this.chartType.getChartConstructor) {
-          throw new Error('Chart type should implement buildChart or getChartConstructor');
-        }
-
+        // use override from chart type if defined - otherwise use a default
+        // based on chartType.getChartConstructor
         if (this.chartType.buildChart) {
           this.chartType.buildChart(this);
           return;
+        }
+
+        if (!this.chartType.getChartConstructor) {
+          throw new Error('Chart type should implement buildChart or getChartConstructor');
         }
 
         this.chart = this.chartType.getChartConstructor(this)(this.chartContainer);
@@ -275,7 +248,7 @@
       this.buildCoordinateGrid = () => {
         const xCol = this.getFirstColumnForAxis('x');
 
-        const xDomainValues = this.columnTotals[xCol.index];
+        const xDomainValues = xCol.total;
         const min = Math.min(...xDomainValues);
         const max = Math.max(...xDomainValues);
 
@@ -313,26 +286,24 @@
             .dimension(this.dimension)
             .group(this.group)
             // default value is just the first y co-ordinate
-            .valueAccessor(this.getValueAccessor(this.getFirstColumnForAxis('y')));
+            .valueAccessor(this.getFirstColumnForAxis('y').valueAccessor);
         }
       };
 
       this.formatChart = () => {
         // provide title and label accessors based on our column config
         this.chart
-          .title((d) => this.renderDataLabel(d, this.dataPointLabelMask('title')(d)))
-          // svg doesn't render line breaks
-          .label((d) => this.renderDataLabel(d, this.dataPointLabelMask('label')(d)).replaceAll('\n', ' - '));
-        //.label((d) => this.renderDataLabel(d, this.maskedDataPointValue(d, 'label')).split('\n').map(a => `<tspan>${a}</tspan>`).join(''));
+          .title((d) => this.renderDataLabel(d, 'title'))
+          .label((d) => this.renderDataLabel(d, 'label'));
 
         this.chart
           .width(() => (this.settings.format.width))
           .height(() => (this.settings.format.height))
-          .on('pretransition.canvasColors', () => {
-            this.chart.selectAll('text').style('fill', this.settings.format.labelColor);
+          .on('pretransition', chart => {
+            chart.selectAll('text').attr('fill', this.settings.format.labelColor);
             // we need to add the background here as well as to the containing div
             // in order for inclusion in exports
-            this.chart.svg().style('background', this.settings.format.backgroundColor);
+            chart.svg().style('background', this.settings.format.backgroundColor);
           });
 
         if (this.chartType.hasCoordinateGrid()) {
@@ -350,7 +321,7 @@
 
         // add ticks if not a date (dc is better at handling ticks for us for dates)
         if (xCol.scaleType !== 'date') {
-          this.chart.xAxis().tickFormat((v) => this.renderDataValue(v, xCol));
+          this.chart.xAxis().tickFormat((v) => xCol.renderValue(v));
         }
 
         this.chart.xAxisLabel(
@@ -367,7 +338,7 @@
 
         // if only one y column, we can do fancy formatting for y ticks
         if (leftYCols.length === 1) {
-          this.chart.yAxis().tickFormat((v) => this.renderDataValue(v, leftYCols[0]));
+          this.chart.yAxis().tickFormat((v) => leftYCols[0].renderValue(v));
         }
         this.chart.yAxisLabel(
           this.settings.format.yAxisLabel ? this.settings.format.yAxisLabel : leftYCols.map((col) => col.label).join(' - ')
@@ -376,7 +347,7 @@
         if (supportsRightYAxis) {
           const rightYCols = allYCols.filter((col) => col.useRightAxis);
           if (rightYCols.length === 1) {
-            this.chart.rightYAxis().tickFormat((v) => this.renderDataValue(v, rightYCols[0]));
+            this.chart.rightYAxis().tickFormat((v) => rightYCols[0].renderValue(v));
           }
           if (rightYCols) {
             this.chart.rightYAxisLabel(
@@ -414,203 +385,122 @@
 
         // Correct vertical alignment of legend labels on Chrome
         // Should be fixed upstream and therefore unnecessary in DCv5
-        this.chart.on('pretransition.legendTextCorrect', () =>
-          this.chart.selectAll('.dc-legend-item text')
+        this.chart.on('pretransition', (chart) =>
+          chart.selectAll('.dc-legend-item text')
             .attr('y', legend.itemHeight() - 2)
         );
       };
 
-      // TODO: move everything from here down  to a util service?
+      this.getColumns = () => {
+        return Object.values(this.columnsByAxis).flat();
+      }
 
-      this.getColumns = () => this.settings.columns.map((col, colIndex) => {
-        // we need the canonical column index to get data values
-        col.index = colIndex;
-        return col;
-      }).filter((col) => col.key);
+      this.buildColumns = () => {
+        this.columnsByAxis = {};
 
-      this.getColumnsForAxis = (axisKey) => this.getColumns().filter((col) => col.axis === axisKey);
-
-      this.getFirstColumnForAxis = (axisKey) => this.getColumns().find((col) => col.axis === axisKey);
-
-      /**
-       * Get the reducer for a column, based on its reduceType key
-       * ( defaults to returning the "list" reducer if reduceType isn't set )
-       */
-      this.getReducerForColumn = (col) => {
-        if (col.reduceType) {
-          return chartKitReduceTypes.find((type) => type.key === col.reduceType);
+        if (!this.chartType) {
+          return;
         }
-        return chartKitReduceTypes.find((type) => type.key === 'list');
+
+        const axisDefinition = this.chartType.getAxes();
+
+        // iterate over axis keys first - we want to add all the X columns,
+        // then all the Y columns, etc
+        Object.keys(axisDefinition).forEach((axisKey) => {
+          // initialise sub-array
+          this.columnsByAxis[axisKey] = [];
+
+          // TODO: change from boolean "multiColumn" to a numeric "maxColumns"
+          const axisColumnLimit = axisDefinition[axisKey].multiColumn ? undefined : 1;
+
+          this.settings.columns
+            // find all matching columns
+            .filter((colSetting) => colSetting.axis === axisKey)
+            // filter any columns that dont have source key set
+            .filter((colSetting) => colSetting.key)
+            // take at most "axisColumnLimit" columns for this axis
+            // (note if axisColumnLimit is undefined, this keeps all columns)
+            .slice(0, axisColumnLimit)
+            // use the column builder to initialise a column object
+            // from the settings
+            .forEach((colSetting, perAxisIndex) => {
+              const col = chartKitChartColumns.buildColumn(
+                colSetting.key,
+                colSetting.label,
+                axisKey,
+                perAxisIndex,
+                axisDefinition[axisKey].isDimension ?? false,
+                colSetting.scaleType,
+                colSetting.reduceType,
+                colSetting.datePrecision,
+                colSetting.seriesType,
+                colSetting.dataLabelType,
+                colSetting.dataLabelFormatter,
+                colSetting.dataLabelColumnPrefix,
+                colSetting.dataLabelDecimalPlaces,
+                colSetting.dataLabelMoneyFormatString,
+                colSetting.useRightAxis,
+                colSetting.color
+              );
+
+              this.columnsByAxis[axisKey].push(col);
+            });
+        })
       };
 
-      this.getColumnsWithReducers = () => this.getColumns().map((col) => {
-        col.reducer = this.getReducerForColumn(col);
-        return col;
-      });
+      this.getColumnsForAxis = (axisKey) => this.columnsByAxis[axisKey] ?? [];
 
-      this.getOrderColumn = () => this.getColumns()[parseInt(this.settings.chartOrderColIndex ? this.settings.chartOrderColIndex : 0)];
+      this.getFirstColumnForAxis = (axisKey) => this.getColumnsForAxis(axisKey)[0] ?? null;
+
+      // TODO: check this index
+      this.getOrderColumn = () => {
+        const selected = this.getColumns().find((col) => col.index === this.settings.chartOrderColIndex);
+        return selected ? selected : this.getFirstColumnForAxis('w');
+      };
 
       this.getOrderDirection = () => (this.settings.chartOrderDir ? this.settings.chartOrderDir : 'ASC');
 
       this.getOrderAccessor = () => {
-        const orderColValueAccessor = this.getValueAccessor(this.getOrderColumn());
+        const orderCol = this.getOrderColumn();
+        if (!orderCol) {
+          return ((d) => d);
+        }
+        const orderColValueAccessor = orderCol.valueAccessor;
         const orderSign = (this.getOrderDirection() === 'ASC') ? 1 : -1;
 
         return ((d) => orderSign * orderColValueAccessor(d));
       };
 
-      this.getValueAccessor = (col) => ((d) => {
-        const columnData = d.value[col.index];
-
-        const reducer = this.getReducerForColumn(col);
-
-        return reducer.final(columnData, this.columnTotals[col.index]);
-      });
-
-
-      this.dataPointLabelMask = (context) => ((dataPoint) => {
-        const dataPointValue = this.dataPointValue(dataPoint);
-
-        return this.getColumns().map((col) => {
-          if (col.dataLabelType === context) {
-            return dataPointValue[col.index];
-          }
-          return null;
-        });
-      });
-
-      this.dataPointValue = (dataPoint) => {
-        if (!dataPoint) {
+      this.renderDataLabel = (dataPoint, maskContext = null, maskColsByIndex = null) => {
+        if (!dataPoint || dataPoint.key === 'empty') {
           return null;
         }
-        // sometimes the data is in a sub-property
-        // (depends on chartType or whether title or label ??)
-        if (dataPoint.data) {
-          dataPoint = dataPoint.data;
-        }
-        if (dataPoint.value) {
-          dataPoint = dataPoint.value;
-        }
-        return dataPoint;
-      };
-
-      this.renderDataLabel = (dataPoint, dataPointValue) => {
         if (dataPoint.key === 'Others') {
           return `${dataPoint.others.length} Others`;
         }
-        return this.getColumns().map((col) => {
-          return this.renderColumnLabel(dataPointValue, col);
-        })
+        // sometimes the data point value is below  "data" subkey
+        // (depends on chartType or whether title or label ??)
+        if (!dataPoint.value && dataPoint.data) {
+          dataPoint = dataPoint.data;
+        }
+
+        let columns = this.getColumns();
+
+        if (maskContext) {
+          columns = columns.filter((col) => col.dataLabelType === maskContext);
+        }
+        if (maskColsByIndex) {
+          columns = columns.filter((col) => !maskColsByIndex.includes(col.index));
+        }
+
+        return columns.map((col) => col.getRenderedLabel(dataPoint))
           // remove blanks
           .filter((label) => !!label)
-          .join('\n');
+          .join(' - ');
       };
 
-      this.renderColumnLabel = (dataPointValue, col) => {
-        const value = this.renderColumnValue(dataPointValue, col);
-
-        if (!value && value !== 0) {
-          return null;
-        }
-
-        if (col.dataLabelColumnPrefix) {
-          return col.label + ': ' + value;
-        }
-
-        return value;
-      };
-
-      this.renderColumnValue = (dataPointValue, col) => {
-        const value = dataPointValue[col.index] ? dataPointValue[col.index] : null;
-
-        if (!value && value !== 0) {
-          return null;
-        }
-
-        return this.renderReduceTypeValue(value, col);
-      };
-
-      this.renderReduceTypeValue = (value, col) => {
-        const reducer = this.getReducerForColumn(col);
-
-        value = reducer.final(value, this.columnTotals[col.index]);
-
-        // list and percentage are special cases
-        // for how we apply data value renderer
-        switch (col.reduceType) {
-          case 'list':
-            // we need to apply the datavalue rendering to each element
-            return value.map((item) => this.renderDataValue(item, col)).join(', ');
-          case 'percentage_sum':
-          case 'percentage_count':
-            // TODO would we ever need to call renderDataValue here? before or after division?
-            const percentage = Math.floor(100 * value);
-            return `${percentage}%`;
-          default:
-            return this.renderDataValue(value, col);
-        }
-      };
-
-      this.renderDataValue = (value, col) => {
-        // convert timestamp crossfilter back to date string
-        switch (col.scaleType) {
-          case 'categorical':
-            // convert categorical indexes back to label
-            value = this.categories[col.index][value];
-            break;
-        }
-        switch (col.datePrecision) {
-          case 'year':
-            value = new Date(value).toLocaleString(undefined, { year: 'numeric' });
-            break;
-          case 'month':
-            value = new Date(value).toLocaleString(undefined, { year: 'numeric', month: 'long' });
-            break;
-          case 'week':
-            value = new Date(value).toLocaleString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-            break;
-          case 'day':
-            value = new Date(value).toLocaleString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
-            break;
-          case 'hour':
-            value = new Date(value).toLocaleString();
-            break;
-        }
-        switch (col.dataLabelFormatter) {
-          case 'round':
-            return value.toFixed(col.dataLabelDecimalPlaces);
-          case 'formatMoney':
-            return CRM.formatMoney(value, null, col.dataLabelMoneyFormatString);
-        }
-        return value;
-      };
-
-      this.getCanvasStyle = () => {
-        const formatSettings = this.settings.format;
-        if (!formatSettings) {
-          return {};
-        }
-        return {
-          backgroundColor: formatSettings.backgroundColor,
-          padding: formatSettings.padding.outer,
-          display: 'inline-block',
-        };
-      };
-
-      this.getContainerStyle = () => {
-        const formatSettings = this.settings.format;
-        if (!formatSettings) {
-          return {};
-        }
-        return {
-          height: formatSettings.height,
-          width: formatSettings.width,
-          margin: formatSettings.padding.inner,
-        };
-      };
-
+      // build color scale integrating user-assigned colors
       this.buildColumnColorScale = (columns) => {
-        // build color scale integrating user-assigned colors
 
         // default color map based on column labels
         const defaultColors = d3.scaleOrdinal(columns.map((col) => col.label), dc.config.defaultColors());
@@ -625,6 +515,25 @@
         // mapping function from our dict
         return ((layerName) => finalColors[layerName]);
       };
+
+      this.getCanvasStyle = () => {
+        const formatSettings = this.settings.format;
+        return {
+          backgroundColor: formatSettings.backgroundColor,
+          padding: formatSettings.padding.outer,
+          display: 'inline-block',
+        };
+      };
+
+      this.getContainerStyle = () => {
+        const formatSettings = this.settings.format;
+        return {
+          height: formatSettings.height,
+          width: formatSettings.width,
+          margin: formatSettings.padding.inner,
+        };
+      };
+
 
       this.downloadImageUrl = (mime, url, ext) => {
         const filename = (this.settings.format.title ? this.settings.format.title : 'chart').replace(/[^a-zA-Z0-9-]+/g, '') + '.' + ext;

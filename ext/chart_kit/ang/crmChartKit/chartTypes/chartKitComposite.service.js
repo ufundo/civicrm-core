@@ -49,19 +49,6 @@
       // build color scale integrating user-assigned colors
       const colorScale = displayCtrl.buildColumnColorScale(yAxisColumns);
 
-      // in order to suppress other y-column labels on a given line
-      // we apply a mask to set the datapoint value to null in that column
-      const layerMask = (d, context, targetColIndex) => {
-        d = displayCtrl.dataPointLabelMask(context)(d);
-
-        return displayCtrl.settings.columns.map((col, colIndex) => {
-          if ((col.axis === 'y') && (targetColIndex !== colIndex)) {
-            return null;
-          }
-          return d[colIndex] ? d[colIndex] : null;
-        });
-      };
-
       // compose subchart for each column
       displayCtrl.chart
         // we need to add to main chart for axis building
@@ -69,20 +56,22 @@
         .group(displayCtrl.group)
         .shareTitle(false)
         .compose(yAxisColumns.map((col) => {
+          // this is used to suppress other y cols from the labels
+          const otherYColIndexes = yAxisColumns.map((otherCol) => otherCol.index).filter((index) => index !== col.index);
 
           const subChart = ((col.seriesType === 'bar') ? dc.barChart : dc.lineChart)(displayCtrl.chart);
 
           subChart
             .dimension(displayCtrl.dimension)
             // add group for this Y column
-            .group(displayCtrl.group, col.label, displayCtrl.getValueAccessor(col))
+            .group(displayCtrl.group, col.label, col.valueAccessor)
             // set constant color using the color scale we made earlier
             .colorCalculator(() => colorScale(col.label))
             // title/label options on the subcharts
             // weblank out values from datapoint for other columns so the
             // rendered label matches this subchart
-            .title((d) => displayCtrl.renderDataLabel(d, layerMask(d, 'title', col.index)))
-            .label((d) => displayCtrl.renderDataLabel(d, layerMask(d, 'label', col.index)))
+            .title((d) => displayCtrl.renderDataLabel(d, 'title', otherYColIndexes))
+            .label((d) => displayCtrl.renderDataLabel(d, 'label', otherYColIndexes))
             .useRightYAxis(col.useRightAxis);
 
           if (col.seriesType === 'area') {

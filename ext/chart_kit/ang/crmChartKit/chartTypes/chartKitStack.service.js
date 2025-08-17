@@ -45,11 +45,11 @@
       // get the first y column for the initial group
       const firstY = yAxisColumns[0];
 
-      displayCtrl.chart.group(displayCtrl.group, firstY.label, displayCtrl.getValueAccessor(firstY));
+      displayCtrl.chart.group(displayCtrl.group, firstY.label, firstY.valueAccessor);
 
       // if we have more left then stack others on top
       yAxisColumns.slice(1).forEach((col) =>
-        displayCtrl.chart.stack(displayCtrl.group, col.label, displayCtrl.getValueAccessor(col))
+        displayCtrl.chart.stack(displayCtrl.group, col.label, col.valueAccessor)
       );
 
       displayCtrl.chart.colors(displayCtrl.buildColumnColorScale(yAxisColumns));
