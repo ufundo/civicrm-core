@@ -91,9 +91,9 @@ return [
               'size' => '',
               'links' => [
                 [
-                  'path' => '/civicrm/user/edit#?User1=[uf_id]',
-                  'icon' => 'fa-key',
-                  'text' => E::ts('Update account'),
+                  'path' => '/civicrm/my-account/edit#?User1=[uf_id]',
+                  'icon' => 'fa-user',
+                  'text' => E::ts('Update Account'),
                   'style' => 'default',
                   'condition' => [],
                   'task' => '',
@@ -103,9 +103,9 @@ return [
                   'target' => '',
                 ],
                 [
-                  'path' => '/civicrm/admin/user/password',
+                  'path' => '/civicrm/my-account/password',
                   'icon' => 'fa-keyboard',
-                  'text' => E::ts('Update password'),
+                  'text' => E::ts('Change Password'),
                   'style' => 'default',
                   'condition' => [],
                   'task' => '',
