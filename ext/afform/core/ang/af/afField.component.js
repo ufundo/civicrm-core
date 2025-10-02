@@ -154,18 +154,18 @@
           }
           // Set default value from url with uniquePrefix + fieldName
           if (urlArgs && ((uniquePrefix + ctrl.fieldName) in urlArgs)) {
-            setValue(urlArgs[uniquePrefix + ctrl.fieldName]);
+            this.setValue(urlArgs[uniquePrefix + ctrl.fieldName]);
           }
           // Set default value from url with fieldName only
           else if (urlArgs && (ctrl.fieldName in urlArgs)) {
-            setValue(urlArgs[ctrl.fieldName]);
+            this.setValue(urlArgs[ctrl.fieldName]);
           }
           else if (firstLoad && ctrl.afFieldset.getStoredValue(ctrl.fieldName) !== undefined) {
-            setValue(ctrl.afFieldset.getStoredValue(ctrl.fieldName));
+            this.setValue(ctrl.afFieldset.getStoredValue(ctrl.fieldName));
           }
           // Set default value based on field defn
           else if ('afform_default' in ctrl.defn) {
-            setValue(ctrl.defn.afform_default);
+            this.setValue(ctrl.defn.afform_default);
           }
 
           if (ctrl.defn.search_range) {
@@ -230,37 +230,37 @@
       };
 
       // Set default value; ensure data type matches input type
-      function setValue(value) {
+      this.setValue = (value) => {
         // For values passed from the url, split
-        if (typeof value === 'string' && ctrl.isMultiple()) {
+        if (typeof value === 'string' && this.isMultiple()) {
           value = value.split(',');
         }
         // Support "Select Current User" default
-        if (ctrl.defn.input_type === 'EntityRef' && ['Contact', 'Individual'].includes(ctrl.fkEntity) && value === 'user_contact_id') {
+        if (this.defn.input_type === 'EntityRef' && ['Contact', 'Individual'].includes(this.fkEntity) && value === 'user_contact_id') {
           value = CRM.config.cid;
         }
         // correct the value type
-        if (ctrl.defn.input_type !== 'DisplayOnly') {
-          value = correctValueType(value, ctrl.defn.data_type);
+        if (this.defn.input_type !== 'DisplayOnly') {
+          value = correctValueType(value, this.defn.data_type);
         }
 
-        if (ctrl.defn.input_type === 'Date' && typeof value === 'string' && value.startsWith('now')) {
-          value = getRelativeDate(value, ctrl.defn.input_attrs.time);
+        if (this.defn.input_type === 'Date' && typeof value === 'string' && value.startsWith('now')) {
+          value = getRelativeDate(value, this.defn.input_attrs.time);
         }
-        if (ctrl.defn.input_type === 'Number' && ctrl.defn.search_range) {
+        if (this.defn.input_type === 'Number' && this.defn.search_range) {
           if (!_.isPlainObject(value)) {
             value = {
               '>=': +(('' + value).split('-')[0] || 0),
               '<=': +(('' + value).split('-')[1] || 0),
             };
           }
-        } else if (ctrl.defn.input_type === 'Number') {
+        } else if (this.defn.input_type === 'Number') {
           value = Number(value);
         }
         // Initialze search range unless the field also has options (as in a date search) and
         // the default value is a valid option.
-        else if (ctrl.defn.search_range && !_.isPlainObject(value) &&
-          !(ctrl.defn.options && _.findWhere(ctrl.defn.options, {id: value}))
+        else if (this.defn.search_range && !_.isPlainObject(value) &&
+          !(this.defn.options && _.findWhere(this.defn.options, {id: value}))
         ) {
           value = {
             '>=': ('' + value).split('-')[0],
@@ -268,7 +268,7 @@
           };
         }
         $scope.getSetValue(value);
-      }
+      };
 
       // Get the repeat index of the entity fieldset (not the join)
       ctrl.getEntityIndex = function() {
