@@ -560,12 +560,19 @@ class CRM_Utils_System_Drupal8 extends CRM_Utils_System_DrupalBase {
    * @inheritDoc
    */
   public function flush() {
+    // if Drupal isnt booted then we can't help
+    if (!class_exists('Drupal')) {
+      \Civi::log()->warning('Unable to flush Drupal caches as Drupal wasn\'t booted');
+      return;
+    }
     // CiviCRM and Drupal both provide (different versions of) Symfony (and possibly share other classes too).
     // If we call drupal_flush_all_caches(), Drupal will attempt to rediscover all of its classes, use Civicrm's
     // alternatives instead and then die. Instead, we only clear cache bins and no more.
     foreach (Drupal\Core\Cache\Cache::getBins() as $service_id => $cache_backend) {
       $cache_backend->deleteAll();
     }
+    // invalidate page cache for pages which use CiviCRM elements
+    \Drupal\Core\Cache\Cache::invalidateTags(['civicrm']);
   }
 
   /**
