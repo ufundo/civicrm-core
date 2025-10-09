@@ -63,6 +63,7 @@ class CRM_Queue_Page_Runner extends CRM_Core_Page {
       else {
         echo CRM_Utils_System::renderMaintenanceMessage($content);
       }
+      exit();
     }
     else {
       parent::run();

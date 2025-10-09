@@ -119,6 +119,7 @@ class CRM_Upgrade_Page_Upgrade extends CRM_Core_Page {
     else {
       echo CRM_Utils_System::renderMaintenanceMessage($content);
     }
+    exit();
   }
 
   /**
@@ -202,6 +203,7 @@ class CRM_Upgrade_Page_Upgrade extends CRM_Core_Page {
     else {
       echo CRM_Utils_System::renderMaintenanceMessage($content);
     }
+    exit();
   }
 
 }
