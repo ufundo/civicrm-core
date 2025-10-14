@@ -1498,11 +1498,35 @@ if (!CRM.vars) CRM.vars = {};
       return $('#crm-notification-container').notify('create', params, options);
     }
     else {
-      if (title.length) {
-        text = title + "\n" + text;
+      if (type === 'alert') {
+        type = 'warning';
       }
-      // strip html tags as they are not parsed in standard alerts
-      alert($("<div/>").html(text).text());
+      if (!title) {
+        title = text;
+        text = null;
+      }
+
+      const dialog = document.createElement('dialog');
+      dialog.classList.add('alert', 'alert-' + type)
+
+      dialog.innerHTML = `
+        <h2 class="crm-alert-title"></h2>
+        <p class="crm-alert-body"></p>
+        <div class="crm-buttons crm-alert-buttons">
+          <button type="button" class="btn crm-button" onclick="this.closest('dialog').remove()">
+            ${ts('Ok')}
+          </button>
+        </div>
+      `;
+      // todo permit providing TrustedHTML object
+      dialog.querySelector('.crm-alert-title').innerText = title;
+      dialog.querySelector('.crm-alert-body').innerText = text;
+
+
+      document.querySelector('.crm-container').append(dialog);
+      dialog.showModal();
+      // focus the dismiss button so it can be dismissed with Enter
+      dialog.querySelector('.crm-button').focus({focusVisible: true});
       return null;
     }
   };

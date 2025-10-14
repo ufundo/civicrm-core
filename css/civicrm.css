@@ -3001,6 +3001,24 @@ tbody.scrollContent tr.alternateRow {
   border-radius: 4px;
 }
 
+/* HTML5 alert dialogs */
+.crm-container dialog.alert {
+  margin: auto;
+  min-width: 10rem;
+  border: 1px solid #70716b;
+  border-radius: 8px;
+}
+.crm-container dialog.alert .crm-alert-title {
+  margin-top: 0;
+}
+.crm-container dialog.alert .crm-alert-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+.crm-container dialog.alert .crm-alert-buttons .btn {
+  margin-bottom: 0;
+}
+
 /* deprecated autocomplete styles */
 
 .ac_results {
