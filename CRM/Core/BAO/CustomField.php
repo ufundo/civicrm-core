@@ -210,45 +210,59 @@ class CRM_Core_BAO_CustomField extends CRM_Core_DAO_CustomField implements \Civi
    */
   public static function writeRecords(array $records): array {
     $addedColumns = $sql = $customFields = $pre = $post = [];
-    foreach ($records as $index => $params) {
-      CRM_Utils_Hook::pre(empty($params['id']) ? 'create' : 'edit', 'CustomField', $params['id'] ?? NULL, $params);
 
-      $changeSerialize = self::getChangeSerialize($params);
-      $customField = self::createCustomFieldRecord($params);
-      // Serialize/deserialize sql must run after/before the table is altered
-      if ($changeSerialize === 0) {
-        $pre[] = self::getAlterSerializeSQL($customField);
-      }
-      if ($changeSerialize === 1) {
-        $post[] = self::getAlterSerializeSQL($customField);
-      }
-      $fieldSQL = self::getAlterFieldSQL($customField, empty($params['id']) ? 'add' : 'modify');
+    // TODO: if we wrote each record individually we could wrap them in a transaction per row,
+    // rather than a transaction for the whole batch
+    $tx = new CRM_Core_Transaction();
+    try {
+      foreach ($records as $index => $params) {
+        CRM_Utils_Hook::pre(empty($params['id']) ? 'create' : 'edit', 'CustomField', $params['id'] ?? NULL, $params);
 
-      $tableName = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_CustomGroup', $customField->custom_group_id, 'table_name');
-      $sql[$tableName][] = $fieldSQL;
-      $addedColumns[$tableName][] = $customField->column_name;
-      $customFields[$index] = $customField;
-    }
+        $changeSerialize = self::getChangeSerialize($params);
+        $customField = self::createCustomFieldRecord($params);
+        // Serialize/deserialize sql must run after/before the table is altered
+        if ($changeSerialize === 0) {
+          $pre[] = self::getAlterSerializeSQL($customField);
+        }
+        if ($changeSerialize === 1) {
+          $post[] = self::getAlterSerializeSQL($customField);
+        }
+        $fieldSQL = self::getAlterFieldSQL($customField, empty($params['id']) ? 'add' : 'modify');
 
-    foreach ($pre as $query) {
-      CRM_Core_DAO::executeQuery($query);
-    }
-
-    foreach ($sql as $tableName => $statements) {
-      // CRM-7007: do not i18n-rewrite this query
-      CRM_Core_DAO::executeQuery("ALTER TABLE $tableName " . implode(', ', $statements), [], TRUE, NULL, FALSE, FALSE);
-
-      if (CRM_Core_Config::singleton()->logging) {
-        $logging = new CRM_Logging_Schema();
-        $logging->fixSchemaDifferencesFor($tableName, ['ADD' => $addedColumns[$tableName]]);
+        $tableName = CRM_Core_DAO::getFieldValue('CRM_Core_DAO_CustomGroup', $customField->custom_group_id, 'table_name');
+        $sql[$tableName][] = $fieldSQL;
+        $addedColumns[$tableName][] = $customField->column_name;
+        $customFields[$index] = $customField;
       }
 
-      Civi::service('sql_triggers')->rebuild($tableName, TRUE);
+      foreach ($pre as $query) {
+        CRM_Core_DAO::executeQuery($query);
+      }
+
+      foreach ($sql as $tableName => $statements) {
+        // CRM-7007: do not i18n-rewrite this query
+        CRM_Core_DAO::executeQuery("ALTER TABLE $tableName " . implode(', ', $statements), [], TRUE, NULL, FALSE, FALSE);
+
+        if (CRM_Core_Config::singleton()->logging) {
+          $logging = new CRM_Logging_Schema();
+          $logging->fixSchemaDifferencesFor($tableName, ['ADD' => $addedColumns[$tableName]]);
+        }
+
+        Civi::service('sql_triggers')->rebuild($tableName, TRUE);
+      }
+
+      foreach ($post as $query) {
+        CRM_Core_DAO::executeQuery($query);
+      }
+    }
+    catch (\CRM_Core_Exception $e) {
+      \Civi::log()->debug("Error writing CustomField records: " . $e->getMessage());
+      $tx->rollback();
+      // throw the exception up to e.g. Api4 wrapper
+      throw $e;
     }
 
-    foreach ($post as $query) {
-      CRM_Core_DAO::executeQuery($query);
-    }
+    $tx->commit();
 
     Civi::rebuild(['system' => TRUE])->execute();
     CRM_Utils_API_HTMLInputCoder::singleton()->flushCache();
