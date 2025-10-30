@@ -22,6 +22,12 @@
         {{:: ts('View Results') }}
       </a>
     </li>
+    <li title="{{:: ts('Create a report from this search') }}">
+      <a href ng-click="$ctrl.createReport(row)">
+        <i class="crm-i fa-list" role="img" aria-hidden="true"></i>
+        {{:: ts('Create report') }}
+      </a>
+    </li>
     <li title="{{:: ts('Create a new search based on this one') }}">
       <a ng-href="#/clone/{{:: row.data.id }}?is_template=0">
         <i class="crm-i fa-clone" role="img" aria-hidden="true"></i>

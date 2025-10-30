@@ -213,6 +213,18 @@
         );
       };
 
+      this.createReport = (row) => {
+        crmApi4('SavedSearch', 'createReport', {
+          where: [['id', '=', row.key]]
+        })
+        .then((result) => {
+          if (result.is_error || !result.length || !result[0].url) {
+            throw new Error('Error creating report')
+          }
+          window.location = result[0].url;
+        })
+      }
+
       function buildDisplaySettings() {
         ctrl.display = {
           type: 'table',
