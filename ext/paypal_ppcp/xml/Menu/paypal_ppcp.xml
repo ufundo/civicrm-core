@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/ajax/paypal-onboard</path>
+    <page_callback>CRM_PayPalPpcp_Page_Onboard</page_callback>
+    <title>Onboard</title>
+    <access_arguments>administer payment processors</access_arguments>
+  </item>
+</menu>
