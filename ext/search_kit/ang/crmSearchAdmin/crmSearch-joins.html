@@ -1,45 +1,45 @@
-<div class="panel">
-  <div class="panel-heading">
-    <i class="crm-i fa-chain"></i>
-    {{:: ts('Linked Entities') }}
-  </div>
-
-  <div class="panel-body">
-
-  <div ng-if=":: $ctrl.paramExists('join')" class="crm-search-joins">
-    <div ng-repeat="join in $ctrl.savedSearch.api_params.join" class="crm-search-join panel">
-      <div class="form-inline panel-heading">
-        <label title="{{:: getJoin(join[0]).defaultLabel }}">
-          <i class="crm-i {{:: getJoin(join[0]).icon }}" role="img" aria-hidden="true"></i>
-          {{:: ts(getJoin(join[0]).entity) }}</label>
-        </label>
-        <input class="form-control crm-search-join-label twenty" ng-model="$ctrl.getSetJoinLabel(join[0])" ng-model-options="{getterSetter: true, updateOn: 'blur'}" placeholder="{{:: getJoin(join[0]).defaultLabel }}" title="{{:: ts('Optional label for this join') }}">
-        <button type="button" class="btn btn-xs btn-danger-outline" ng-click="$ctrl.removeJoin($index)" title="{{:: ts('Remove join') }}">
-          <i class="crm-i fa-trash" role="img" aria-hidden="true"></i>
-        </button>
+<ul ng-if=":: $ctrl.paramExists('join')" class="crm-search-admin-joins">
+  <li ng-repeat="(i, join) in $ctrl.savedSearch.api_params.join" ng-if="join[1] !== 'EXCLUDE'">
+    <i class="crm-i fa-link" role="img" aria-label="{{:: ts('With') }}"></i>
+    <div class="crm-search-admin-join panel panel-info">
+      <div class="panel-heading">
+        <div>
+          <i class="crm-i {{:: $ctrl.getJoin(join[0]).icon }}" role="img" aria-hidden="true"></i>
+          {{:: ts($ctrl.getJoin(join[0]).entity) }}
+          <input class="form-control crm-search-join-label twenty" ng-model="$ctrl.getSetJoinLabel(join[0])" ng-model-options="{getterSetter: true, updateOn: 'blur'}" placeholder="{{:: $ctrl.getJoin(join[0]).defaultLabel }}" title="{{:: ts('Optional label for this join') }}">
+          <label>
+            {{:: ts('Required?') }}
+            <input type="checkbox" ng-model="$ctrl.getSetJoinRequired(join)" ng-model-options="{getterSetter: true}">
+          </label>
+        </div>
+        <div class="crm-buttons">
+          <button type="button" class="btn btn-xs" ng-click="$ctrl.showExtraJoinConditions(i)" ng-if="!$ctrl.isShowExtraJoinConditions(i)">
+            <i class="crm-i fa-gear" role="img" aria-hidden="true"></i>
+            {{:: ts('Add conditions') }}
+          </button>
+          <!-- TODO: this should have a confirmation dialog as lots of config can be lost -->
+          <button type="button" class="btn btn-xs btn-danger-outline" ng-click="$ctrl.removeJoin(i)" title="{{:: ts('Remove join') }}">
+            <i class="crm-i fa-trash" role="img" aria-hidden="true"></i>
+            {{:: ts('Remove') }}
+          </button>
+        </div>
+      </div>
+      <div class="panel-body crm-search-admin-join-extra-conditions" ng-if="$ctrl.isShowExtraJoinConditions(i)">
+        <crm-search-clause clauses="join" format="json" skip="2 + $ctrl.getJoin(join[0]).conditions.length" op="AND" label="{{:: ts('Where') }}" hide-label="true" placeholder="ts('Add Condition')" fields="fieldsForJoin(join[0])" ></crm-search-clause>
       </div>
       <div class="panel-body">
-        <details class="api4-clause-fieldset">
-          <summary>{{ ts('Join Conditions') }}</summary>
-          <div class="form-group">
-            <label>{{ ts('Join type') }}</label>
-            <select class="form-control crm-auto-width" ng-model="join[1]" ng-change="$ctrl.changeJoinType(join)" ng-options="o.k as o.v for o in ::joinTypes" ></select>
-          </div>
-          <crm-search-clause clauses="join" format="json" skip="2 + getJoin(join[0]).conditions.length" op="AND" label="{{:: ts('If') }}" hide-label="true" placeholder="ts('Add Condition')" fields="fieldsForJoin(join[0])" ></crm-search-clause>
-        </details>
-        <details open class="crm-search-select-fields">
-          <summary>{{:: ts('Fields') }}</summary>
-          <crm-search-admin-entity-fields join="join[0]"></crm-search-admin-entity-fields>
-        </details>
+        <crm-search-admin-entity-fields join="join[0]"></crm-search-admin-entity-fields>
       </div>
     </div>
-  <div class="crm-search-join-add">
-      <label class="sr-only">{{ ts('Linked entity') }}</label>
+  </li>
+  <li>
+    <i class="crm-i fa-plus" role="img" aria-hidden="true"></i>
+    <div class="crm-search-join-add">
+      <label class="sr-only">{{ ts('Add linked entity') }}</label>
       <input id="crm-search-add-join"
-             class="form-control crm-action-menu"
-             crm-ui-select="{placeholder: ts('Add linked entity'), data: getJoinEntities}"
-             on-crm-ui-select="$ctrl.addJoin(selection)">
-  </div>
-  </div>
-</div>
-</div>
+        class="form-control crm-action-menu"
+        crm-ui-select="{placeholder: ts('Add linked entity'), data: getJoinEntities}"
+        on-crm-ui-select="$ctrl.addJoin(selection)">
+    </div>
+  </li>
+</ul>

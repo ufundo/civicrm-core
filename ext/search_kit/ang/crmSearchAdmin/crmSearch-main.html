@@ -1,25 +1,32 @@
-<div class="panel">
-  <div class="form-inline panel-heading">
-    <label for="crm-search-main-entity">{{:: ts('Search for') }}</label>
-    <input id="crm-search-main-entity" class="form-control twenty collapsible-optgroups" ng-model="$ctrl.savedSearch.api_entity" crm-ui-select="::{allowClear: false, data: mainEntitySelect}" ng-disabled="$ctrl.savedSearch.id">
+<div class="crm-search-admin-main panel panel-info">
+
+  <div class="panel-heading" ng-if="$ctrl.savedSearch.api_entity">
+    <div>
+      <i class="crm-i {{:: $ctrl.getMainEntity().icon }}" role="img" aria-hidden="true"></i>
+      {{:: $ctrl.getMainEntity().title_plural }}
+      <span>({{:: ts('Primary Entity') }})</span>
+    </div>
+    <div class="form-inline" ng-if="!$ctrl.savedSearch.id">
+      <label for="crm-search-main-entity">{{:: ts('Change Primary Entity') }}</label>
+      <input id="crm-search-main-entity" class="form-control twenty collapsible-optgroups" ng-model="$ctrl.savedSearch.api_entity" crm-ui-select="::{allowClear: false, data: mainEntitySelect}">
+    </div>
   </div>
 
   <div class="panel-body">
-    <details open class="crm-search-select-fields">
-      <summary>{{:: ts('Fields') }}</summary>
-      <crm-search-admin-entity-fields></crm-search-admin-entity-fields>
-    </details>
+
+    <crm-search-admin-entity-fields></crm-search-admin-entity-fields>
   </div>
+
 </div>
 
 <div ng-include="'~/crmSearchAdmin/crmSearch-joins.html'"></div>
 
-<div class="api4-clause-fieldset crm-search-wheres panel">
+<div class="api4-clause-fieldset crm-search-wheres panel panel-info">
   <div class="panel-heading">
     <i class="crm-i fa-filter"></i>
     {{:: ts('Filters') }}
   </div>
   <div class="panel-body">
-    <crm-search-clause clauses="$ctrl.savedSearch.api_params.where" format="string" op="AND" label="{{:: ts('Where') }}" fields="fieldsForWhere" allow-functions="$ctrl.paramExists('groupBy')" ></crm-search-clause>
+    <crm-search-clause clauses="$ctrl.savedSearch.api_params.where" format="string" op="AND" label="{{:: ts('Where') }}" hide-label="true" fields="fieldsForWhere" allow-functions="$ctrl.paramExists('groupBy')" ></crm-search-clause>
   </div>
 </div>

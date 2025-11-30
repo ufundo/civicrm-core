@@ -331,9 +331,50 @@ crm-search-admin-import {
 .crm-search-admin-field-list {
   display: flex;
   flex-flow: row wrap;
+  padding-left: 0;
+  margin: 0;
 }
 .crm-search-admin-field-list li {
   display: flex;
   flex-flow: row nowrap;
   flex-shrink: 0;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  border: var(--crm-border, 1px solid lightgrey);
+  border-radius: var(--crm-l-radius, 3px);
+  align-items: center;
+}
+.crm-search-admin-field-list li:last-of-type {
+  border: none;
+}
+.crm-search-admin-joins {
+  padding-left: 0;
+}
+.crm-search-admin-joins > li {
+  display: flex;
+  flex-flow: row;
+  gap: var(--crm-flex-gap, 0.5rem);
+}
+/* align with panels */
+.crm-search-admin-joins > li:not(:only-child) > :not(.panel) {
+  margin-top: var(--crm-l-medium-2, 0.75rem);
+  padding: var(--crm-l-medium, 0.5rem);
+}
+.crm-search-admin-joins > li > .crm-search-admin-join {
+  flex-grow: 1;
+}
+.crm-search-admin-main > .panel-heading,
+.crm-search-admin-join > .panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.crm-container .panel-body.crm-search-admin-join-extra-conditions {
+  background-color: var(--crm-layer1-bg-color, lightgrey);
+}
+.crm-container .panel-body.crm-search-admin-join-extra-conditions .api4-clause-group-sortable:first-of-type {
+  margin: 0;
+}
+.crm-container .crm-search-admin-advanced > * {
+  min-width: min(40rem, 100%);
 }

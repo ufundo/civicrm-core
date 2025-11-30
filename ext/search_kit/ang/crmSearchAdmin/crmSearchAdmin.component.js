@@ -45,7 +45,7 @@
     this.mainTabs = [
       {
         key: 'main',
-        title: ts('Entities & Fields'),
+        title: ts('Entities, Fields & Filters'),
         icon: 'fa-search',
       },
       {
@@ -55,7 +55,7 @@
       },
       {
         key: 'advanced',
-        title: ts('Advanced Options'),
+        title: ts('Advanced'),
         icon: 'fa-gears',
       }
     ];
@@ -67,11 +67,7 @@
       return $scope.controls.tab.startsWith('display_');
     };
 
-    $scope.joinTypes = [
-      {k: 'LEFT', v: ts('With (optional)')},
-      {k: 'INNER', v: ts('With (required)')},
-      {k: 'EXCLUDE', v: ts('Without')},
-    ];
+    this.forceShowExtraJoinConditions = [];
     $scope.getEntity = searchMeta.getEntity;
     $scope.getField = searchMeta.getField;
     this.perm = {
@@ -141,7 +137,9 @@
         });
       }
 
-      $scope.getJoin = _.wrap(this.savedSearch, searchMeta.getJoin);
+      this.getMainEntity = () => searchMeta.getEntity(this.savedSearch.api_entity);
+
+      this.getJoin = (fullNameOrAlias) => searchMeta.getJoin(this.savedSearch, fullNameOrAlias);
 
       $scope.mainEntitySelect = searchMeta.getPrimaryAndSecondaryEntitySelect();
 
@@ -413,12 +411,19 @@
       return {results: addEntityJoins(ctrl.savedSearch.api_entity)};
     };
 
-    this.addJoin = function(value) {
+    this.addExcludedJoin = (value) => {
+      this.addJoin(value, 'EXCLUDE');
+    };
+
+    this.addJoin = function(value, joinType = null) {
+      if (!joinType) {
+        joinType = $scope.controls.joinType ? $scope.controls.joinType : 'LEFT';
+      }
       if (value) {
         ctrl.savedSearch.api_params.join = ctrl.savedSearch.api_params.join || [];
         const join = searchMeta.getJoin(ctrl.savedSearch, value),
           entity = searchMeta.getEntity(join.entity),
-          params = [value, $scope.controls.joinType || 'LEFT'];
+          params = [value, joinType];
         _.each(_.cloneDeep(join.conditions), function(condition) {
           params.push(condition);
         });
@@ -426,7 +431,7 @@
           params.push(condition);
         });
         ctrl.savedSearch.api_params.join.push(params);
-        if (entity.search_fields && $scope.controls.joinType !== 'EXCLUDE') {
+        if (entity.search_fields && joinType !== 'EXCLUDE') {
           // Add columns for newly-joined entity
           entity.search_fields.forEach((fieldName) => {
             // Try to avoid adding duplicate columns
@@ -484,11 +489,26 @@
       delete ctrl.savedSearch.form_values.join[alias];
     }
 
-    this.changeJoinType = function(join) {
-      if (join[1] === 'EXCLUDE') {
-        removeJoinStuff(searchMeta.getJoin(ctrl.savedSearch, join[0]).alias);
+    this.isShowExtraJoinConditions = (index) => {
+      if (this.forceShowExtraJoinConditions.includes(index)) {
+        return true;
       }
+
+      const join = this.savedSearch.api_params.join[index];
+      const noBaseConditions = this.getJoin(join[0]).conditions.length;
+      return join.length > 2 + noBaseConditions;
     };
+
+    this.showExtraJoinConditions = (index) => {
+      this.forceShowExtraJoinConditions.push(index);
+    };
+
+    this.getSetJoinRequired = (join) => ((required) => {
+      if (required !== undefined) {
+        join[1] = required ? 'INNER' : 'LEFT';
+      }
+      return join[1] === 'INNER';
+    });
 
     $scope.changeGroupBy = function(idx) {
       // When clearing a selection
