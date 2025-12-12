@@ -68,7 +68,7 @@
         // always sort the query by X axis - we can handle differently when we pass to d3
         // but this is the only way to get magic that the server knows about the order
         // (like option groups / month order etc)
-        this.settings.sort = sortKeys.map((key) => [key, 'ASC']);
+        this.sort = sortKeys.map((key) => [key, 'ASC']);
       };
 
       this.onSettingsChange = (newSettings, oldSettings) => {
