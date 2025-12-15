@@ -64,6 +64,10 @@
       this.chartContainer.innerHTML = '<div class="crm-loading-spinner"></div>';
     }
 
+    toggleBlur(blur = true) {
+      this.chartContainer.style.filter = blur ? 'blur(1px)' : null;
+    }
+
     renderContainer() {
       this.innerHTML = `
         <div class="crm-chart-kit-canvas">
@@ -137,14 +141,17 @@
       this._settings.sort = sortKeys.map((key) => [key, 'ASC']);
     }
 
+    /*
+      * triggers re-rendering as you edit settings
+      * TODO: could this be quite js intensive on the client browser? should we make it optional?
+      **/
     _onChangeSettings() {
-      // triggers re-rendering as you edit settings
-      // TODO: could this be quite js intensive on the client browser? should we make it optional?
+      if (!this.chartContainer) {
+        return;
+      }
+      this.toggleBlur(true);
       clearTimeout(this.queuedSettingsChange);
       this.queuedSettingsChange = setTimeout(() => {
-        if (!this.chartContainer) {
-          return;
-        }
         // run initial settings through our legacy adaptor
         this._settings = chartKitUtils.legacySettingsAdaptor(this.settings);
 
@@ -204,6 +211,7 @@
       // run the dc render
       this.chart.render();
       this.renderDownloadLinks();
+      this.toggleBlur(false);
     }
 
     initChartType() {
