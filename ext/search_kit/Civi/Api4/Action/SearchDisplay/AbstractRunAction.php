@@ -8,6 +8,8 @@ use Civi\Api4\Query\SqlField;
 use Civi\Api4\SearchDisplay;
 use Civi\Api4\Utils\CoreUtil;
 use Civi\Api4\Utils\FormattingUtil;
+use CRM_Utils_Cache_ArrayCache;
+use CRM_Utils_Cache_Interface;
 
 /**
  * Base class for running a search.
@@ -106,6 +108,11 @@ abstract class AbstractRunAction extends \Civi\Api4\Generic\AbstractAction {
   private $_qfKeys = [];
 
   /**
+   * Private cache for
+   */
+  private CRM_Utils_Cache_Interface $cache;
+
+  /**
    * Override execute method to change the result object type
    * @return \Civi\Api4\Result\SearchDisplayRunResult
    */
@@ -119,6 +126,7 @@ abstract class AbstractRunAction extends \Civi\Api4\Generic\AbstractAction {
    * @throws \CRM_Core_Exception
    */
   public function _run(\Civi\Api4\Generic\Result $result) {
+    $this->cache = new CRM_Utils_Cache_ArrayCache(NULL);
     $this->checkPermissionToLoadSearch();
     $this->loadSavedSearch();
     $this->loadSearchDisplay();
@@ -280,6 +288,11 @@ abstract class AbstractRunAction extends \Civi\Api4\Generic\AbstractAction {
       case 'menu':
         $out = $this->formatLinksColumn($column, $data);
         break;
+
+      case 'subsearch':
+        $out = $this->formatSubsearchColumn($column, $data);
+        break;
+
     }
     // Format tooltip
     if (isset($column['title']) && strlen($column['title'])) {
@@ -1310,6 +1323,38 @@ abstract class AbstractRunAction extends \Civi\Api4\Generic\AbstractAction {
     }
 
     return $formatted;
+  }
+
+  private function formatSubsearchColumn(array $col, array $rowData): array {
+    $subsearch = $this->getSubsearch($col['subsearch']);
+    // $subsearch['options'] = \htmlentities(\json_encode([$col['childColumn'] => $rowData[$col['parentColumn']]]));
+    $subsearch['filters'] = [$col['childColumn'] => $rowData[$col['parentColumn']]];
+
+    //$subsearch['filters'] = htmlspecialchars(\CRM_Utils_JS::encode($filters), ENT_COMPAT);
+    return $subsearch;
+  }
+
+  private function getSubsearch(string $subsearchName): array {
+    $subsearch = $this->cache->get("subsearch_{$subsearchName}");
+    if (!is_array($subsearch)) {
+      [$savedSearch, $searchDisplay] = explode('.', $subsearchName, 2);
+      $subsearch = \Civi\Api4\SearchDisplay::get(FALSE)
+        ->addWhere('saved_search_id.name', '=', $savedSearch)
+        ->addWhere('name', '=', $searchDisplay)
+        ->addSelect('type', 'settings', 'name', 'saved_search_id.name', 'saved_search_id.api_entity')
+        ->execute()
+        ->single();
+      $subsearch = [
+        'display' => $subsearch['name'], //htmlspecialchars(\CRM_Utils_JS::encode($subsearch['name']), ENT_COMPAT),
+        'search' => $subsearch['saved_search_id.name'], // htmlspecialchars(\CRM_Utils_JS::encode($subsearch['saved_search_id.name']), ENT_COMPAT),
+        'api_entity' => $subsearch['saved_search_id.api_entity'],
+        'type' => $subsearch['type'],
+        'settings' => $subsearch['settings'], // htmlspecialchars(\CRM_Utils_JS::encode($subsearch['settings']), ENT_COMPAT),
+      ];
+      //$subsearch['settings'] = \htmlentities(\json_encode($subsearch['settings']));
+      $this->cache->set("subsearch_{$subsearchName}", $subsearch);
+    }
+    return $subsearch;
   }
 
   /**

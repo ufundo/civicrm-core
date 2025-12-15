@@ -31,7 +31,7 @@
       html += '</div>';
       return html;
     },
-    controller: function($scope, $timeout, searchMeta) {
+    controller: function($scope, $timeout, searchMeta, crmApi4) {
       const ts = $scope.ts = CRM.ts('org.civicrm.search_kit'),
         ctrl = this;
       let initDefaults;
@@ -69,6 +69,14 @@
             links: []
           }
         },
+        subsearch: {
+          label: ts('Subsearch'),
+          icon: 'fa-filter',
+          defaults: {
+            path: '',
+            filters: {}
+          }
+        },
         include: {
           label: ts('Custom Code'),
           icon: 'fa-code',
@@ -89,6 +97,10 @@
       };
 
       this.styles = CRM.crmSearchAdmin.styles;
+
+      this.$onInit = () => {
+        this.fetchSubsearchOptions();
+      }
 
       function selectToKey(selectExpr) {
         return selectExpr.split(' AS ').slice(-1)[0];
@@ -416,6 +428,33 @@
           this.display.settings.draggable = this.getMainEntity().order_by;
         }
       };
+
+      this.getSubsearchOptions = () => {
+        return this.subsearchOptions ? this.subsearchOptions : [];
+      };
+
+      this.fetchSubsearchOptions = () => crmApi4('SearchDisplay', 'get', {
+          select: ['label', 'name', 'saved_search_id.name', 'saved_search_id.api_entity', 'saved_search_id.api_params'],
+        })
+        .then((results) => this.subsearchOptions = results.map((record) => ({
+          id: `${record['saved_search_id.name']}.${record['name']}`,
+          label: record.label,
+          entity: record['saved_search_id.api_entity'],
+          select: record['saved_search_id.api_params'].select,
+        })))
+        .then(() => this.subsearchOptions);
+
+      this.getSubsearchColumnOptions = (subsearch) => {
+        const search = this.subsearchOptions?.find((search) => search.id === subsearch);
+        if (!search) {
+          return [];
+        }
+        return searchMeta.getEntity(search.entity).fields.map((field) => ({
+            id: field.fieldName,
+            label: field.label,
+          }))
+          .filter((field) => search.select.includes(field.id));
+      }
 
       // Generic function to add to a setting array if the item is not already there
       this.pushSetting = function(name, value) {

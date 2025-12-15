@@ -20,6 +20,7 @@
         ctrl = angular.extend(this, _.cloneDeep(searchDisplayBaseTrait), _.cloneDeep(searchDisplayTasksTrait), _.cloneDeep(searchDisplaySortableTrait), _.cloneDeep(searchDisplayEditableTrait));
 
       this.$onInit = function() {
+        console.log(this);
         let tallyParams;
 
         ctrl.onPreRun.push(this.trackFetchedColumns);

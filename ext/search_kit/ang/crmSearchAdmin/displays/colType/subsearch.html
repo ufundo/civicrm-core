@@ -1,0 +1,20 @@
+<div class="form-inline crm-search-admin-flex-row">
+  <label>
+    {{:: ts('Subsearch') }}
+  </label>
+  <select class="form-control" ng-model="col.subsearch" ng-options="key.id as key.label for key in $ctrl.parent.getSubsearchOptions()"></select>
+</div>
+<div class="form-inline crm-search-admin-flex-row">
+  <label>
+    {{:: ts('Filter') }}
+  </label>
+  <select class="form-control" type="text" ng-model="col.childColumn" ng-options="field.id as field.label for field in $ctrl.parent.getSubsearchColumnOptions(col.subsearch)"></select>
+  =
+  <select class="form-control" ng-model="col.parentColumn" ng-options="key as $ctrl.parent.getFieldLabel(key) for key in $ctrl.parent.savedSearch.api_params.select"></select>
+</div>
+<div class="form-inline crm-search-admin-flex-row">
+  <label>
+    {{:: ts('Limit') }}
+  </label>
+  <input class="form-control" type="number" min="1" step="1" ng-model="col.limit" />
+</div>

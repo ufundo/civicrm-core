@@ -223,6 +223,7 @@
       // Call SearchDisplay.run and update ctrl.results and ctrl.rowCount
       runSearch: function(apiCalls, statusParams, editedRow) {
         const ctrl = this;
+        console.log(ctrl);
         const requestId = ++this._runCount;
         const apiParams = this.getApiParams();
         if (!statusParams) {
