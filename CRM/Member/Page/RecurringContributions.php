@@ -63,7 +63,9 @@ class CRM_Member_Page_RecurringContributions extends CRM_Core_Page {
       ->column('contribution_id.contribution_recur_id');
 
     // also include where the contribution is linked by legacy civicrm_membership_payment table
-    $contributionRecurIds = array_merge($contributionRecurIds, $this->getLegacyRecurContributionIds($membershipID, $contributionRecurIds));
+    if (\Civi::settings()->get('member_use_civicrm_membership_payment_table')) {
+      $contributionRecurIds = array_merge($contributionRecurIds, $this->getLegacyRecurContributionIds($membershipID, $contributionRecurIds));
+    }
 
     $recurringContributions = (array) \Civi\Api4\ContributionRecur::get(FALSE)
       ->addWhere('id', 'IN', $contributionRecurIds)
