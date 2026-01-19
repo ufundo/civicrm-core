@@ -68,6 +68,12 @@
     {{:: ts('Auto Open') }}
   </a>
 </li>
+<li ng-if="$ctrl.fieldDefn.input_type === 'Radio'">
+  <a href ng-click="toggleAttr('input_attrs.allowCustomInput'); $event.stopPropagation(); $event.target.blur();" title="{{:: ts('Allow user to enter another option with free text') }}">
+    <i class="crm-i fa-{{ getProp('input_attrs.allowCustomInput') ? 'check-' : '' }}square-o" role="img" aria-hidden="true"></i>
+    {{:: ts('Allow Other') }}
+  </a>
+</li>
 <li>
   <a href ng-click="toggleAttr('required'); $event.stopPropagation(); $event.target.blur();" title="{{:: ts('Require this field') }}">
     <i class="crm-i fa-{{ getProp('required') ? 'check-' : '' }}square-o" role="img" aria-hidden="true"></i>
