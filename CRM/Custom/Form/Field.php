@@ -111,6 +111,7 @@ class CRM_Custom_Form_Field extends CRM_Core_Form {
     }
 
     // Add crm-options-repeat web component. FIXME: need an autoloader for web components.
+    \Civi::resources()->addScriptFile('civicrm', 'elements/civi-ts.js');
     \Civi::resources()->addScriptFile('civicrm', 'js/CrmOptionsRepeat.js');
 
     if ($this->_gid) {
