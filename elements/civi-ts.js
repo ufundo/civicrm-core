@@ -11,19 +11,23 @@ CRM = CRM || {};
 
 CRM.babel = {
 
-  dictionary: {},
-
   toFetch: [],
 
   nextFetch: null,
 
+  get: (src) => localStorage.getItem('civi-babel-' + src),
+
+  // TODO: add cache key?
+  set: (src, translation) => localStorage.setItem('civi-babel-' + src, translation),
+
   ts: (string) => {
-    if (!CRM.babel.dictionary[string]) {
+    const translation = CRM.babel.get(string);
+    if (!translation) {
       CRM.babel.queueFetch(string);
       return null;
     }
 
-    return CRM.babel.dictionary[string];
+    return translation;
   },
 
   queueFetch: (string) => {
@@ -67,8 +71,8 @@ CRM.babel = {
         return;
       }
 
-      // add returned strings to dictionary
-      Object.assign(CRM.babel.dictionary, response.dictionary);
+      // add returned strings to local storage
+      Object.entries(response.dictionary).forEach((e) => CRM.babel.set(e[0], e[1]));
 
       CRM.babel.propogate(thisBatch);
     })
@@ -77,7 +81,7 @@ CRM.babel = {
 
   propogate: (strings) => {
     strings.forEach((string) => {
-      const translation = CRM.babel.dictionary[string];
+      const translation = CRM.babel.get(string);
       document.querySelectorAll(`civi-ts[src="${string}"]`).forEach((e) => e.innerText = translation);
     });
   }
