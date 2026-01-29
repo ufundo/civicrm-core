@@ -5,23 +5,23 @@ class CrmOptionsRepeat extends HTMLElement {
       <thead>
         <tr>
           <th></th>
-          <th>{ts}Default{/ts}</th>
+          <th><civi-ts src="Default"></civi-ts></th>
           <th>
-            {ts}Label{/ts}
+            <civi-ts src="label"></civi-ts>
             <a class="crm-hover-button crm-options-repeat-sort" title="{ts escape='html'}Sort by label{/ts}">
               <i class="crm-i fa-sort-alpha-down" aria-hidden="true" role="img"></i>
-              <span class="sr-only">{ts}Sort by label{/ts}</span>
+              <span class="sr-only"><civi-ts src="Sort by label"></civi-ts></span>
             </a>
           </th>
 
           <th>
-            {ts}Value{/ts}
+            <civi-ts src="Value"></civi-ts>
             <a class="crm-hover-button crm-options-repeat-sort" title="{ts escape='html'}Sort by value{/ts}">
               <i class="crm-i fa-sort-numeric-down" aria-hidden="true" role="img"></i>
-              <span class="sr-only">{ts}Sort by value{/ts}</span>
+              <span class="sr-only"><civi-ts src="Sort by value"></civi-ts></span>
             </a>
           </th>
-          <th>{ts}Enabled{/ts}</th>
+          <th><civi-ts src="Enabled"></civi-ts></th>
           <th></th>
         </tr>
       </thead>
@@ -30,7 +30,7 @@ class CrmOptionsRepeat extends HTMLElement {
           <td>
             <a class="crm-draggable">
               <i class="crm-i fa-arrows-up-down" role="img" aria-hidden="true"></i>
-              <span class="sr-only">{ts}Change order{/ts}</span>
+              <span class="sr-only"><civi-ts src="Change order"></civi-ts></span>
             </a>
           </td>
           <td><input type="radio" name="is_default" class="crm-form-radio"></td>
@@ -40,7 +40,7 @@ class CrmOptionsRepeat extends HTMLElement {
           <td>
             <a class="crm-hover-button crm-options-repeat-remove" title="{ts escape='html'}Delete{/ts}">
               <i class="crm-i fa-trash" role="img" aria-hidden="true"></i>
-              <span class="sr-only">{ts}Delete{/ts}</span>
+              <span class="sr-only"><civi-ts src="Delete"></civi-ts></span>
             </a>
           </td>
         </tr>
@@ -50,7 +50,7 @@ class CrmOptionsRepeat extends HTMLElement {
           <td colspan="6">
             <button type="button" class="crm-options-repeat-add">
               <i class="crm-i fa-plus" role="img" aria-hidden="true"></i>
-              {ts}Add Option{/ts}
+              <civi-ts src="Add Option"></civi-ts>
             </button>
           </td>
         </tr>
