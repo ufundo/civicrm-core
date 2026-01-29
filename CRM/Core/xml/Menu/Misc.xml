@@ -284,4 +284,9 @@
     <page_callback>CRM_Contact_Form_Task_Delete</page_callback>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/elements</path>
+    <page_callback>Civi\Core\Elements::get</page_callback>
+    <access_arguments>*always allow*</access_arguments>
+  </item>
 </menu>

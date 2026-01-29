@@ -206,6 +206,7 @@ class CRM_Core_Resources_Common {
       "js/crm.datepicker.js",
       "js/crm.ajax.js",
       "js/wysiwyg/crm.wysiwyg.js",
+      "js/crm.elements.js",
     ];
 
     // Dynamic localization script

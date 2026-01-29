@@ -110,8 +110,8 @@ class CRM_Custom_Form_Field extends CRM_Core_Form {
       CRM_Core_Error::statusBounce("You cannot add or edit fields in a reserved custom field-set.");
     }
 
-    // Add crm-options-repeat web component. FIXME: need an autoloader for web components.
-    \Civi::resources()->addScriptFile('civicrm', 'js/CrmOptionsRepeat.js');
+    // Add crm-options-repeat web component. FIXME: autoload
+    \Civi::resources()->addScript('CRM.loadElement("civi-options-repeat")', ['weight' => -100]);
 
     if ($this->_gid) {
       $url = CRM_Utils_System::url('civicrm/admin/custom/group/field',
