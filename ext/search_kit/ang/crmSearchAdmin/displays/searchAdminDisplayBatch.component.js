@@ -37,7 +37,8 @@
             pager: {hide_single: true}
           };
         }
-        ctrl.parent.initColumns({label: true});
+        ctrl.parent.setColumnDefaults({label: true});
+        ctrl.parent.initColumns();
         if (isNew) {
           this.toggleTally();
         }

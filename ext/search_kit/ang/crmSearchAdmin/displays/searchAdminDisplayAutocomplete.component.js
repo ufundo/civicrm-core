@@ -31,7 +31,7 @@
             }
           });
         }
-        ctrl.parent.initColumns({});
+        ctrl.parent.initColumns();
         ctrl.display.settings.searchFields = ctrl.display.settings.searchFields || [];
         if (!ctrl.display.settings.searchFields.length) {
           const baseEntity = searchMeta.getBaseEntity();

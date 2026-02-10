@@ -48,7 +48,8 @@
         if (!ctrl.display.id && !ctrl.display._job) {
           ctrl.display._job = defaultJobParams();
         }
-        ctrl.parent.initColumns({label: true});
+        ctrl.parent.setColumnDefaults({label: true});
+        ctrl.parent.initColumns();
       };
 
       this.onChangeEntityPermission = function() {

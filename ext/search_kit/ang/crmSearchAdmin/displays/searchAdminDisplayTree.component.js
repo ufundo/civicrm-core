@@ -35,7 +35,8 @@
             ctrl.parent.toggleDraggable();
           }
         }
-        ctrl.parent.initColumns({break: false});
+        ctrl.parent.setColumnDefaults({break: false});
+        ctrl.parent.initColumns();
       };
 
     }

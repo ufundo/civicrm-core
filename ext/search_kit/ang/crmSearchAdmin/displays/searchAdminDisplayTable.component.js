@@ -48,13 +48,14 @@
             ctrl.display.settings.columnMode = 'auto';
           }
         }
+        ctrl.parent.setColumnDefaults({label: true, sortable: true});
       };
 
       this.setColumnMode = (value) => {
         // if switching from auto columns and no columns already exist then
         // initialise with all the columns to start
         if (value !== 'auto' && !(this.display.settings.columns && this.display.settings.columns.length)) {
-          this.parent.initColumns({label: true, sortable: true});
+          this.parent.initColumns();
         }
         this.display.settings.columnMode = value;
       };

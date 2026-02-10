@@ -44,7 +44,7 @@
             pager: {}
           };
         }
-        ctrl.parent.initColumns({});
+        ctrl.parent.initColumns();
       };
 
     }

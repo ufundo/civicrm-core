@@ -34,12 +34,13 @@
     controller: function($scope, $timeout, searchMeta) {
       const ts = $scope.ts = CRM.ts('org.civicrm.search_kit'),
         ctrl = this;
-      let initDefaults;
 
       this.isSuperAdmin = CRM.checkPerm('all CiviCRM permissions and ACLs');
       this.aclBypassHelp = ts('Only users with "all CiviCRM permissions and ACLs" can disable permission checks.');
 
       this.preview = this.stale = false;
+
+      this.columnDefaults = {};
 
       // Extra (non-field) colum types
       this.colTypes = {
@@ -125,7 +126,7 @@
         if (index > -1) {
           ctrl.removeCol(index);
         } else {
-          ctrl.display.settings.columns.push(searchMeta.fieldToColumn(key, initDefaults));
+          ctrl.display.settings.columns.push(searchMeta.fieldToColumn(key, ctrl.columnDefaults));
         }
       };
 
@@ -340,11 +341,13 @@
       };
 
       // Helper function to sort active from hidden columns and initialize each column with defaults
-      this.initColumns = function(defaults) {
-        initDefaults = defaults;
+      this.setColumnDefaults = (columnDefaults) => this.columnDefaults = columnDefaults;
+
+      // Helper function to sort active from hidden columns and initialize each column with defaults
+      this.initColumns = function() {
         if (!ctrl.display.settings.columns) {
           ctrl.display.settings.columns = _.transform(ctrl.savedSearch.api_params.select, function(columns, fieldExpr) {
-            columns.push(searchMeta.fieldToColumn(fieldExpr, defaults));
+            columns.push(searchMeta.fieldToColumn(fieldExpr, ctrl.columnDefaults));
           });
         } else {
           let activeColumns = ctrl.display.settings.columns.map(col => col.key);
