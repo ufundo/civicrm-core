@@ -297,7 +297,7 @@
       this.innerHTML = `
       <div class="panel panel-info">
         <div class="panel-heading">
-          <h3>${this.data.label}</h3>
+          <b>${this.data.label}</b>
           <div class="civi-riverlea-stream-header-buttons crm-buttons"></div>
         </div>
 

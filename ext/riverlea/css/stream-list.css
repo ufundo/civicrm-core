@@ -1,15 +1,16 @@
 /* CSS rules for Riverlea stream admin */
 
+civi-riverlea-stream-list h3 {
+  --crm-heading-margin: 1rem 0;
+  display: inline-block;
+}
+
 civi-riverlea-stream-list ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr) );
   padding-left: 0;
   gap: 1rem;
   margin: 0;
-}
-
-civi-riverlea-stream-card {
-  display: block;
 }
 civi-riverlea-stream-card.is-set-preview > .panel {
   outline: 2px solid var(--crm-warning-color);
