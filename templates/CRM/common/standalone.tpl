@@ -61,11 +61,22 @@
         <ul>{$standaloneErrors}</ul>
       </div>
       <script type="text/javascript">
-      {if $breadcrumb}
-        CRM.$("div.standalone-errors").insertAfter("nav.breadcrumb");
-      {else}
-        CRM.$("div.standalone-errors").prependTo("div#crm-container");
-      {/if}
+        const errors = document.querySelector('.standalone-errors');
+        const breadcrumb = document.querySelector('.breadcrumb');
+        const crmContainer = document.querySelector('.crm-container');
+
+        if (!errors) {
+          // nothing to do
+        }
+        else if (breadcrumb) {
+          breadcrumb.after(errors);
+        }
+        else if (crmContainer) {
+          crmContainer.prepend(errors);
+        }
+        else {
+          // leave errors where they are
+        }
       </script>
     {/if}
 
