@@ -4,6 +4,8 @@ namespace Civi\Contribute\Service;
 use Civi\Afform\Event\AfformSubmitEvent;
 use Civi\Afform\Event\AfformValidateEvent;
 use Civi\Contribute\Utils\PriceFieldUtils;
+use Civi\Afform\FormDataModel;
+use Civi\Core\Event\GenericHookEvent;
 use Civi\Core\Service\AutoService;
 use DateTime;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -55,25 +57,33 @@ class CreateContribution extends AutoService implements EventSubscriberInterface
    */
   public static function getSubscribedEvents() {
     return [
-      'civi.afform.validate' => [
-        // TODO: this belongs in a hook to validate a form
-        // that is being saved or loaded rather than submitted
-        // but we dont have that yet - hopefully the admin will
-        // try to submit the form at least once
+      'civi.afform.save' => [
         ['validateFormModel', 1000],
+      ],
+      'civi.afform.validate' => [
         ['validateLineItems', 101],
       ],
       'civi.afform.submit' => [
-        // the GenericEntitySave is a no-op for Contributions
-        // this provides the equivalent functionality for new Contributions
-        // TODO: provide sensible default for existing contributions
+       // the GenericEntitySave is a no-op for Contributions
+       // this provides the equivalent functionality for new Contributions
+       // TODO: provide sensible default for existing contributions
         ['saveNewContribution', 0],
       ],
     ];
   }
 
-  public function validateFormModel(AfformValidateEvent $event) {
-    $model = $event->getFormDataModel();
+  public function validateFormModel(GenericHookEvent $event) {
+    $layout = $event->record['layout'] ?? NULL;
+
+    if (!$layout) {
+      return;
+    }
+
+    if (!is_array($layout)) {
+      $converter = new \CRM_Afform_ArrayHtml();
+      $layout = $converter->convertHtmlToArray($layout);
+    }
+    $model = new FormDataModel($layout);
 
     // only validate forms this service cares about
     if (!$this->isActive($model)) {
@@ -87,13 +97,11 @@ class CreateContribution extends AutoService implements EventSubscriberInterface
       return;
     }
     if (count($contributions) > 1) {
-      $event->setError(E::ts('Handling multiple contributions on the same form is not supported'));
-      return;
+      throw new \CRM_Core_Exception(E::ts('Handling multiple contributions on the same form is not supported'));
     }
     $contribution = reset($contributions);
     if (count(array_filter($contribution['actions'])) !== 1) {
-      $event->setError(E::ts('Contribution action should be create or update but not both.'));
-      return;
+      throw new \CRM_Core_Exception(E::ts('Contribution action should be create or update but not both.'));
     }
 
     // TODO: check any entities with price fields are ordered *before* the contribution
