@@ -65,6 +65,24 @@ class CRM_Upgrade_Incremental_php_SixFourteen extends CRM_Upgrade_Incremental_Ba
       'description' => ts('JSON blob of config as appropriate for the specific integration'),
     ], 'AFTER `accepted_credit_cards`');
     $this->addTask('Drop civicrm_activity.is_current_revision index', 'dropIndex', 'civicrm_activity', 'index_is_current_revision');
+
+    $this->addTask('Make WordReplacement Find Word', 'alterSchemaField', 'WordReplacement', 'find_word', [
+      'title' => ts('Replaced Word'),
+      'sql_type' => 'varchar(255)',
+      'input_type' => 'Text',
+      'description' => ts('Word which need to be replaced'),
+      'add' => '4.4',
+      'collate' => 'utf8_bin',
+      'required' => TRUE,
+    ]);
+    $this->addTask('Make WordReplacement replace word required', 'alterSchemaField', 'WordReplacement', 'replace_word', [
+      'title' => ts('Replacement Word'),
+      'sql_type' => 'varchar(255)',
+      'input_type' => 'Text',
+      'description' => ts('Word which will replace the word in find'),
+      'add' => '4.4',
+      'collate' => 'utf8_bin',
+    ]);
   }
 
 }
