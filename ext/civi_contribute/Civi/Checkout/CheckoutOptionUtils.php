@@ -134,4 +134,21 @@ class CheckoutOptionUtils {
     }, $allFields);
   }
 
+  public static function getPaymentProcessorPairs(array $paymentProcessorTypeNames): array {
+    $all = \Civi\Api4\PaymentProcessor::get(FALSE)
+      // note the payment_processor_type_id doesn't actually matter when it comes to
+      // CheckoutOptions - as long as the credentials are valid
+      ->addWhere('payment_processor_type_id:name', 'IN', $paymentProcessorTypeNames)
+      ->addWhere('is_test', 'IN', [TRUE, FALSE])
+      ->execute();
+
+    $pairs = [];
+
+    foreach ($all as $processor) {
+      $pairs[$processor['name']][$processor['is_test'] ? 'test' : 'live'] = $processor;
+    }
+
+    return $pairs;
+  }
+
 }
