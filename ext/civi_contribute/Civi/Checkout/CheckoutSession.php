@@ -352,10 +352,13 @@ class CheckoutSession {
   public function getResponseItems(): array {
     $responseItems = $this->responseItems;
 
-    // if the payment processor doesn't set a redirect item
-    // we ensure set this key is set to suppress any standard
-    // Afform redirect
-    $responseItems['redirect'] ??= $this->getNextUrl() ?? FALSE;
+    // if redirect / message aren't set explicitly, then provide
+    // defaults to override any normal Afform redirect/message
+    $redirect = $this->getNextUrl() ?? FALSE;
+    $responseItems['redirect'] ??= $redirect;
+
+    $message = $this->getStatusMessage() ?? FALSE;
+    $responseItems['message'] ??= $message;
 
     return $responseItems;
   }
