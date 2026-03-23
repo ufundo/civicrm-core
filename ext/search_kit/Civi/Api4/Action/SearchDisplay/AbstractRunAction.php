@@ -596,7 +596,9 @@ abstract class AbstractRunAction extends \Civi\Api4\Generic\AbstractAction {
     ];
 
     foreach ($column['subsearch']['filters'] as $filterSetting) {
-      $out['subsearch']['filters'][$filterSetting['subsearch_field']] = $data[$filterSetting['parent_field']] ?? NULL;
+      // use hardcoded value or value from column data or null
+      $value = $filterSetting['value'] ?? $data[$filterSetting['parent_field']] ?? NULL;
+      $out['subsearch']['filters'][$filterSetting['subsearch_field']] = $value;
     }
 
     return $out;
