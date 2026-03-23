@@ -21,9 +21,6 @@ return [
             'subject',
             'activity_date_time',
             'status_id:label',
-            'GROUP_CONCAT(UNIQUE Activity_ActivityContact_Contact_02.sort_name) AS GROUP_CONCAT_Activity_ActivityContact_Contact_02_sort_name',
-            'GROUP_CONCAT(UNIQUE Activity_ActivityContact_Contact_03.sort_name) AS GROUP_CONCAT_Activity_ActivityContact_Contact_03_sort_name',
-            'GROUP_CONCAT(UNIQUE Activity_ActivityContact_Contact_04.sort_name) AS GROUP_CONCAT_Activity_ActivityContact_Contact_04_sort_name',
           ],
           'orderBy' => [],
           'where' => $excludeCaseActivities ? [['case_id', 'IS EMPTY']] : [],
@@ -39,51 +36,6 @@ return [
                 'id',
                 '=',
                 'Activity_ActivityContact_Contact_01.activity_id',
-              ],
-            ],
-            [
-              'Contact AS Activity_ActivityContact_Contact_02',
-              'LEFT',
-              'ActivityContact',
-              [
-                'id',
-                '=',
-                'Activity_ActivityContact_Contact_02.activity_id',
-              ],
-              [
-                'Activity_ActivityContact_Contact_02.record_type_id:name',
-                '=',
-                '"Activity Source"',
-              ],
-            ],
-            [
-              'Contact AS Activity_ActivityContact_Contact_03',
-              'LEFT',
-              'ActivityContact',
-              [
-                'id',
-                '=',
-                'Activity_ActivityContact_Contact_03.activity_id',
-              ],
-              [
-                'Activity_ActivityContact_Contact_03.record_type_id:name',
-                '=',
-                '"Activity Targets"',
-              ],
-            ],
-            [
-              'Contact AS Activity_ActivityContact_Contact_04',
-              'LEFT',
-              'ActivityContact',
-              [
-                'id',
-                '=',
-                'Activity_ActivityContact_Contact_04.activity_id',
-              ],
-              [
-                'Activity_ActivityContact_Contact_04.record_type_id:name',
-                '=',
-                '"Activity Assignees"',
               ],
             ],
           ],
@@ -115,7 +67,7 @@ return [
               'DESC',
             ],
           ],
-          'limit' => 50,
+          'limit' => 20,
           'pager' => [
             'hide_single' => TRUE,
             'show_count' => TRUE,
@@ -156,39 +108,63 @@ return [
               'editable' => TRUE,
             ],
             [
-              'type' => 'field',
-              'key' => 'GROUP_CONCAT_Activity_ActivityContact_Contact_02_sort_name',
+              'type' => 'subsearch',
               'label' => ts('Added By'),
               'sortable' => TRUE,
-              'link' => [
-                'entity' => 'Contact',
-                'action' => 'view',
-                'join' => 'Activity_ActivityContact_Contact_02',
-                'target' => '_blank',
+              'subsearch' => [
+                'search' => 'Contact_Summary_ActivityContacts',
+                'display' => 'Contact_Summary_ActivityContacts',
+                'subsearch_mode' => 'inline',
+                'filters' => [
+                  [
+                    'subsearch_field' => 'Contact_ActivityContact_Activity_01.id',
+                    'parent_field' => 'id',
+                  ],
+                  [
+                    'subsearch_field' => 'Contact_ActivityContact_Activity_01.record_type_id:name',
+                    'value' => 'Activity Source',
+                  ],
+                ],
               ],
             ],
             [
-              'type' => 'field',
-              'key' => 'GROUP_CONCAT_Activity_ActivityContact_Contact_03_sort_name',
+              'type' => 'subsearch',
               'label' => ts('With'),
               'sortable' => TRUE,
-              'link' => [
-                'entity' => 'Contact',
-                'action' => 'view',
-                'join' => 'Activity_ActivityContact_Contact_03',
-                'target' => '_blank',
+              'subsearch' => [
+                'search' => 'Contact_Summary_ActivityContacts',
+                'display' => 'Contact_Summary_ActivityContacts',
+                'subsearch_mode' => 'inline',
+                'filters' => [
+                  [
+                    'subsearch_field' => 'Contact_ActivityContact_Activity_01.id',
+                    'parent_field' => 'id',
+                  ],
+                  [
+                    'subsearch_field' => 'Contact_ActivityContact_Activity_01.record_type_id:name',
+                    'value' => 'Activity Targets',
+                  ],
+                ],
               ],
             ],
             [
-              'type' => 'field',
-              'key' => 'GROUP_CONCAT_Activity_ActivityContact_Contact_04_sort_name',
+              'type' => 'subsearch',
               'label' => ts('Assigned'),
               'sortable' => TRUE,
-              'link' => [
-                'entity' => 'Contact',
-                'action' => 'view',
-                'join' => 'Activity_ActivityContact_Contact_04',
-                'target' => '_blank',
+              'subsearch' => [
+                'search' => 'Contact_Summary_ActivityContacts',
+                'display' => 'Contact_Summary_ActivityContacts',
+                'subsearch_mode' => 'inline',
+                'filters' => [
+                  [
+                    'subsearch_field' => 'Contact_ActivityContact_Activity_01.id',
+                    'parent_field' => 'id',
+                  ],
+                  [
+                    'subsearch_field' => 'Contact_ActivityContact_Activity_01.record_type_id:name',
+                    'value' => 'Activity Assignees',
+                  ],
+                ],
               ],
             ],
             [
