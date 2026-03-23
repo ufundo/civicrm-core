@@ -75,7 +75,7 @@ class CRM_Upgrade_Incremental_php_SixFourteen extends CRM_Upgrade_Incremental_Ba
       'collate' => 'utf8_bin',
       'required' => TRUE,
     ]);
-    $this->addTask('Make WordReplacement replace word required', 'alterSchemaField', 'WordReplacement', 'replace_word', [
+    $this->addTask('Make WordReplacement "replace_word" required', 'alterSchemaField', 'WordReplacement', 'replace_word', [
       'title' => ts('Replacement Word'),
       'sql_type' => 'varchar(255)',
       'input_type' => 'Text',
