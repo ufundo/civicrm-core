@@ -185,7 +185,7 @@ class CRM_Contribute_Form_Task_PDFLetter extends CRM_Contribute_Form_Task {
     }
     // a placeholder in case the separator is common in the string - e.g ', '
     $separator = '****~~~~';
-    $groupBy = $this->getSubmittedValue('group_by');
+    $groupBy = (string) $this->getSubmittedValue('group_by');
 
     $contributionIDs = $this->getIDs();
     if ($this->isQueryIncludesSoftCredits()) {
@@ -196,7 +196,7 @@ class CRM_Contribute_Form_Task_PDFLetter extends CRM_Contribute_Form_Task {
         $contributionIDs["{$result->contact_id}-{$result->contribution_id}"] = $result->contribution_id;
       }
     }
-    [$contributions, $contacts] = $this->buildContributionArray((string) $groupBy, $contributionIDs, $returnProperties, $messageToken, $separator, $this->isQueryIncludesSoftCredits());
+    [$contributions, $contacts] = $this->buildContributionArray($groupBy, $contributionIDs, $returnProperties, $messageToken, $separator, $this->isQueryIncludesSoftCredits());
     $html = [];
     $contactHtml = $emailedHtml = [];
     foreach ($contributions as $contributionId => $contribution) {
@@ -410,10 +410,9 @@ class CRM_Contribute_Form_Task_PDFLetter extends CRM_Contribute_Form_Task {
    * @param bool $grouped
    * @param int $groupByID
    *
-   * @return string
-   * @throws \CRM_Core_Exception
+   * @return string|null
    */
-  public function generateHtml($contact, $contribution, $groupBy, $contributions, $realSeparator, $tableSeparators, $messageToken, $html_message, $separator, $grouped, $groupByID) {
+  private function generateHtml($contact, $contribution, string $groupBy, $contributions, $realSeparator, $tableSeparators, $messageToken, $html_message, $separator, $grouped, $groupByID): ?string {
     static $validated = FALSE;
     $html = NULL;
 
