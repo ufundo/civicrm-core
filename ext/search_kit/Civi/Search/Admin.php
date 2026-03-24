@@ -374,7 +374,8 @@ class Admin {
             $keyField = $fields[$reference->getReferenceKey()] ?? NULL;
             foreach ($reference->getTargetEntities() as $dynamicValue => $targetEntityName) {
               $targetEntity = $allowedEntities[$targetEntityName] ?? NULL;
-              $baseEntity = $allowedEntities[$fields[$baseKey]['fk_entity']] ?? NULL;
+              $fkEntity = $fields[$baseKey]['fk_entity'] ?? '';
+              $baseEntity = $allowedEntities[$fkEntity] ?? NULL;
               if (!$targetEntity || !$baseEntity) {
                 continue;
               }
