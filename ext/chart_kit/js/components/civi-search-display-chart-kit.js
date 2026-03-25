@@ -328,11 +328,19 @@
           // timescale
           this.chart.x(d3.scaleTime().domain([min, max]).nice());
           break;
+
         case 'categorical':
           this.chart
             .x(d3.scaleBand().domain(xDomainValues))
             .xUnits(dc.units.ordinal);
           break;
+
+        case 'integer':
+          this.chart
+            .x(d3.scaleBand().domain(d3.range(min, max + 1)))
+            .xUnits(dc.units.ordinal);
+          break;
+
         default:
           // regular linear scale
           this.chart.x(d3.scaleLinear().domain([min, max]).nice());
