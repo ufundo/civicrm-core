@@ -223,5 +223,6 @@ return [
     'is_contact' => 0,
     'help_text' => ts('Enable Contributions and Price Fields in FormBuilder.'),
     'settings_pages' => ['contribute' => ['weight' => 100]],
+    'on_change' => ['_civi_contribute_afform_clear'],
   ],
 ];
