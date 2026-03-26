@@ -1724,7 +1724,7 @@ class CRM_Report_Form extends CRM_Core_Form {
     ) {
       $this->addElement('select', 'groups', ts('Group'),
         ['' => ts('Add Contacts to Group')] +
-        CRM_Core_PseudoConstant::nestedGroup(),
+        CRM_Core_PseudoConstant::nestedGroup(textFormat: 'plain'),
         ['class' => 'crm-select2 crm-action-menu fa-plus huge', 'title' => ts('Add Contacts to Group')]
       );
       $this->assign('group', TRUE);
@@ -1976,7 +1976,7 @@ class CRM_Report_Form extends CRM_Core_Form {
         'type' => CRM_Utils_Type::T_INT,
         'operatorType' => CRM_Report_Form::OP_MULTISELECT,
         'group' => TRUE,
-        'options' => CRM_Core_PseudoConstant::nestedGroup(),
+        'options' => CRM_Core_PseudoConstant::nestedGroup(textFormat: 'plain'),
       ],
     ];
     if (empty($this->_columns['civicrm_group']['dao'])) {
