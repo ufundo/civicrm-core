@@ -27,18 +27,7 @@ return [
           'groupBy' => [
             'id',
           ],
-          'join' => [
-            [
-              'Contact AS Activity_ActivityContact_Contact_01',
-              'INNER',
-              'ActivityContact',
-              [
-                'id',
-                '=',
-                'Activity_ActivityContact_Contact_01.activity_id',
-              ],
-            ],
-          ],
+          'join' => [],
           'having' => [],
         ],
       ],
