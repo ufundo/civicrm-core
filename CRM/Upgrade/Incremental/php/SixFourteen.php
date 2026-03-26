@@ -57,6 +57,16 @@ class CRM_Upgrade_Incremental_php_SixFourteen extends CRM_Upgrade_Incremental_Ba
       'default' => FALSE,
     ], 'AFTER `is_view`');
 
+    $this->addTask('Add default to CustomGroup.created_date', 'alterSchemaField', 'CustomGroup', 'created_date', [
+      'title' => ts('Custom Group Created Date'),
+      'sql_type' => 'datetime',
+      'input_type' => 'Select Date',
+      // This is what's being added
+      'default' => 'CURRENT_TIMESTAMP',
+      'readonly' => TRUE,
+      'description' => ts('Date and time this custom group was created.'),
+    ]);
+
     $this->addTask('Add PaymentProcessor.config', 'alterSchemaField', 'PaymentProcessor', 'config', [
       'title' => ts('Configuration'),
       'sql_type' => 'text',
