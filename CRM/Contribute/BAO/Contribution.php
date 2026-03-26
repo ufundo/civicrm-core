@@ -3504,7 +3504,7 @@ INNER JOIN civicrm_activity ON civicrm_activity_contact.activity_id = civicrm_ac
    * Get the contribution fields for $id and display labels where
    * appropriate (if the token is present).
    *
-   * @deprecated
+   * @deprecated will be removed aroun 6.20
    *
    * @param int $id
    * @param array $messageToken
@@ -3513,6 +3513,7 @@ INNER JOIN civicrm_activity ON civicrm_activity_contact.activity_id = civicrm_ac
    * @throws \CRM_Core_Exception
    */
   public static function getContributionTokenValues($id, $messageToken) {
+    CRM_Core_Error::deprecatedFunctionWarning('token processor');
     if (empty($id)) {
       return [];
     }
