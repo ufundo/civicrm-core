@@ -1135,7 +1135,7 @@ class CRM_Core_Form extends HTML_QuickForm_Page {
     if ($this->_paymentProcessors) {
       if (!empty($this->_submitValues)) {
         $this->_paymentProcessorID = $this->_submitValues['payment_processor_id'] ?? NULL;
-        $this->_paymentProcessor = $this->_paymentProcessors[$this->_paymentProcessorID] ?? NULL;
+        $this->_paymentProcessor = $this->_paymentProcessors[$this->_paymentProcessorID ?? ''] ?? NULL;
         $this->set('type', $this->_paymentProcessorID);
         $this->set('mode', $this->_mode);
         $this->set('paymentProcessor', $this->_paymentProcessor);
