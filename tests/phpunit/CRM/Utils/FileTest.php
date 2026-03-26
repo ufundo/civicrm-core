@@ -684,7 +684,7 @@ class CRM_Utils_FileTest extends CiviUnitTestCase {
     $depthResults[1] = CRM_Utils_File::findFiles($CRM, 'Contact.php', $isRelative, 1);
     $depthResults[2] = CRM_Utils_File::findFiles($CRM, 'Contact.php', $isRelative, 2);
     $depthResults[3] = CRM_Utils_File::findFiles($CRM, 'Contact.php', $isRelative, 3);
-    $depthResults[NULL] = CRM_Utils_File::findFiles($CRM, 'Contact.php', $isRelative);
+    $depthResults[''] = CRM_Utils_File::findFiles($CRM, 'Contact.php', $isRelative);
 
     $expectPrefix = $isRelative ? '' : $CRM . '/';
 
