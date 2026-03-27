@@ -688,8 +688,8 @@ class CRM_Utils_FileTest extends CiviUnitTestCase {
 
     $expectPrefix = $isRelative ? '' : $CRM . '/';
 
-    $expectFiles['Contact/BAO/Contact.php'] = [0 => FALSE, 1 => FALSE, 2 => TRUE, 3 => TRUE, NULL => TRUE];
-    $expectFiles['Contact/Import/Parser/Contact.php'] = [0 => FALSE, 1 => FALSE, 2 => FALSE, 3 => TRUE, NULL => TRUE];
+    $expectFiles['Contact/BAO/Contact.php'] = [0 => FALSE, 1 => FALSE, 2 => TRUE, 3 => TRUE, '' => TRUE];
+    $expectFiles['Contact/Import/Parser/Contact.php'] = [0 => FALSE, 1 => FALSE, 2 => FALSE, 3 => TRUE, '' => TRUE];
 
     foreach ($expectFiles as $expectFile => $expectMatches) {
       $actualMatches = [];

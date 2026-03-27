@@ -156,7 +156,7 @@ class CRM_Upgrade_Incremental_php_SixTwo extends CRM_Upgrade_Incremental_Base {
       $fieldsToConvert[$key] = self::getConvertedName($key, $entity);
       // Convert the field.
       CRM_Core_DAO::executeQuery(' UPDATE civicrm_mapping_field SET name = %1 WHERE id = %2', [
-        1 => [$fieldsToConvert[$mappingFields->name], 'String'],
+        1 => [$fieldsToConvert[$key], 'String'],
         2 => [$mappingFields->id, 'Integer'],
       ]);
     }
