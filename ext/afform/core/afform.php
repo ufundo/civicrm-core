@@ -185,6 +185,23 @@ function _afform_hook_civicrm_angularModules($e) {
   foreach ($afforms as $afform) {
     $e->angularModules[$afform['module_name']]['requires'] = $dependencyMapper->autoReq($afform);
   }
+
+  // Require all modules that provide input types
+  foreach (\Civi\Afform\Utils::getInputTypes() as $inputType) {
+    if (str_starts_with($inputType['template'], '~/') && !str_starts_with($inputType['template'], '~/af/')) {
+      [, $moduleName] = explode('/', $inputType['template']);
+      if (!in_array($moduleName, $e->angularModules['af']['requires'])) {
+        $e->angularModules['af']['requires'][] = $moduleName;
+      }
+      // Also add admin template if needed
+      if (isset($inputType['admin_template']) && isset($e->angularModules['afAdmin'])) {
+        [, $moduleName] = explode('/', $inputType['admin_template']);
+        if (!in_array($moduleName, $e->angularModules['afAdmin']['requires'])) {
+          $e->angularModules['afAdmin']['requires'][] = $moduleName;
+        }
+      }
+    }
+  }
 }
 
 /**
