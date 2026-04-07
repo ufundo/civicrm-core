@@ -16,8 +16,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class Afform extends AutoService implements EventSubscriberInterface {
 
-  public const NO_PAYMENT_PROCESSING = '_none_';
-
   public function isActive(): bool {
     return !!\Civi::settings()->get('contribute_enable_afform_contributions');
   }
