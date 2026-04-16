@@ -116,6 +116,19 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
         // Variable needed by the previewer.js script.
         $bundle->addVars(E::LONG_NAME, ['resourceUrl' => E::url()]);
       }
+
+      if (!\CRM_Utils_System::isFrontendPage()) {
+        // Inject dark mode preference for backend toggle
+        $bundle->addScript(
+          'window.riverleaBackendMode = ' . json_encode($this->getBackendDarkMode()) . ';',
+          ['weight' => 950, 'translate' => FALSE]
+        );
+        // Load the dark mode toggle button
+        $bundle->addScriptFile('riverlea', 'js/modeToggle.js', [
+          'weight' => 960,
+          'translate' => FALSE,
+        ]);
+      }
     }
 
     if ($bundle->name === 'bootstrap3') {
@@ -255,6 +268,23 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
           ->execute();
       }
     }
+  }
+  /**
+   * Get the backend dark mode, respecting per-user cookie override.
+   */
+  private function getBackendDarkMode() {
+    return $this->getDarkModeSetting();
+  }
+
+  /**
+   * Determine the active dark-mode option, checking cookie first.
+   */
+  private function getDarkModeSetting() {
+    $darkModeSetting = \Civi::settings()->get('riverlea_dark_mode_backend');
+    if (!empty($_COOKIE['riverlea_dark_mode_backend'])) {
+      $darkModeSetting = $_COOKIE['riverlea_dark_mode_backend'];
+    }
+    return in_array($darkModeSetting, ['light', 'dark', 'inherit'], TRUE) ? $darkModeSetting : 'light';
   }
 
 }
