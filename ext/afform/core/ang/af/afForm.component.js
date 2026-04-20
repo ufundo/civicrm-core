@@ -320,6 +320,9 @@
         const metaData = ctrl.getFormMeta(),
           dialog = $element.closest('.ui-dialog-content');
 
+        // reset form to clean
+        ctrl.ngForm.$setPristine();
+
         $element.trigger('crmFormSuccess', {
           afform: metaData,
           data: data,
@@ -526,6 +529,11 @@
           }
         });
       }
+
+      // Used by "extra" afFields that have no entity.
+      this.getFieldData = () => {
+        return data.extra;
+      };
 
     }
   });
