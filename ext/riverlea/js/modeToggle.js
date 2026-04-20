@@ -1,13 +1,13 @@
 (function () {
-  var COOKIE_NAME = 'riverlea_dark_mode_backend';
-  var COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
-  var MODES = ['light', 'dark', 'inherit'];
-  var MODE_LABELS = {
+  const COOKIE_NAME = 'riverlea_dark_mode_backend';
+  const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+  const MODES = ['light', 'dark', 'inherit'];
+  const MODE_LABELS = {
     light: 'Light',
     dark: 'Dark',
     inherit: 'Auto'
   };
-  var MODE_ICONS = {
+  const MODE_ICONS = {
     light: '☀',
     dark: '🌙',
     inherit: '◐'
@@ -18,9 +18,9 @@
   }
 
   function getCookie(name) {
-    var cookieParts = document.cookie ? document.cookie.split('; ') : [];
-    for (var i = 0; i < cookieParts.length; i += 1) {
-      var part = cookieParts[i];
+    const cookieParts = document.cookie ? document.cookie.split('; ') : [];
+    for (let i = 0; i < cookieParts.length; i += 1) {
+      const part = cookieParts[i];
       if (part.indexOf(name + '=') === 0) {
         return decodeURIComponent(part.substring(name.length + 1));
       }
@@ -38,7 +38,7 @@
   }
 
   function getNextMode(currentMode) {
-    var index = MODES.indexOf(normalizeMode(currentMode));
+    const index = MODES.indexOf(normalizeMode(currentMode));
     return MODES[(index + 1) % MODES.length];
   }
 
@@ -51,42 +51,8 @@
   }
 
   function getCurrentMode() {
-    return normalizeMode(getCookie(COOKIE_NAME) || window.riverleaBackendMode || 'light');
-  }
-
-  function ensureStyles() {
-    if (document.getElementById('riverlea-mode-toggle-style')) {
-      return;
-    }
-
-    var style = document.createElement('style');
-    style.id = 'riverlea-mode-toggle-style';
-    style.textContent = [
-      '.riverlea-mode-toggle-item{display:flex;align-items:center;list-style:none;}',
-      '#civicrm-menu > .riverlea-mode-toggle-item{float:right;position:relative;z-index:500;padding:0 6px;height:42px;justify-content:center;}',
-      '#crm-menubar-toggle-position + .riverlea-mode-toggle-item{padding-left:4px;}',
-      '.riverlea-mode-toggle-wrap{display:inline-flex;align-items:center;height:100%;}',
-      '.riverlea-mode-switch{position:relative;width:58px;height:30px;border:0;border-radius:999px;cursor:pointer;transition:background .2s ease,box-shadow .2s ease,transform .2s ease;padding:0;outline:none;}',
-      '.riverlea-mode-switch .riverlea-mode-thumb{position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;transition:left .2s ease,transform .2s ease,background .2s ease,color .2s ease;}',
-      '.riverlea-mode-switch[data-mode="light"]{background:#c9c9cf;box-shadow:inset 0 1px 3px rgba(0,0,0,.25);}',
-      '.riverlea-mode-switch[data-mode="light"] .riverlea-mode-thumb{left:2px;background:#ececef;color:#4b4b4b;}',
-      '.riverlea-mode-switch[data-mode="inherit"]{background:linear-gradient(90deg,#c9c9cf 0%,#23262c 100%);box-shadow:inset 0 1px 4px rgba(0,0,0,.35);}',
-      '.riverlea-mode-switch[data-mode="inherit"] .riverlea-mode-thumb{left:16px;background:#d5d5da;color:#2f3033;}',
-      '.riverlea-mode-switch[data-mode="dark"]{background:#1f2227;box-shadow:inset 0 1px 5px rgba(255,255,255,.08),inset 0 -1px 6px rgba(0,0,0,.45);}',
-      '.riverlea-mode-switch[data-mode="dark"] .riverlea-mode-thumb{left:30px;background:#5a5d64;color:#f3f3f4;}',
-      '.riverlea-mode-switch:focus-visible{box-shadow:0 0 0 2px #4c9ffe;}',
-      '@media (max-width: 991px){',
-      '#civicrm-menu > .riverlea-mode-toggle-item{float:none;clear:both;display:block;height:auto;padding:8px 12px;}',
-      '#crm-menubar-toggle-position + .riverlea-mode-toggle-item{padding-left:12px;}',
-      '.riverlea-mode-toggle-wrap{display:flex;justify-content:flex-end;align-items:center;width:100%;height:auto;}',
-      '.riverlea-mode-switch{width:52px;height:28px;}',
-      '.riverlea-mode-switch .riverlea-mode-thumb{width:24px;height:24px;font-size:12px;}',
-      '.riverlea-mode-switch[data-mode="inherit"] .riverlea-mode-thumb{left:14px;}',
-      '.riverlea-mode-switch[data-mode="dark"] .riverlea-mode-thumb{left:26px;}',
-      '}'
-    ].join('');
-
-    document.head.appendChild(style);
+    const serverMode = CRM && CRM.vars && CRM.vars.riverlea && CRM.vars.riverlea.backendMode;
+    return normalizeMode(getCookie(COOKIE_NAME) || serverMode || 'light');
   }
 
   function isVisible(element) {
@@ -107,7 +73,7 @@
   }
 
   function updateSwitchState(button, mode) {
-    var normalizedMode = normalizeMode(mode);
+    const normalizedMode = normalizeMode(mode);
     button.setAttribute('data-mode', normalizedMode);
     button.setAttribute('aria-checked', normalizedMode === 'dark' ? 'true' : 'false');
     button.setAttribute('aria-label', 'Backend theme mode: ' + getModeLabel(normalizedMode) + '. Click to switch.');
@@ -116,20 +82,20 @@
   }
 
   function createToggleButton(mode) {
-    var button = document.createElement('button');
+    const button = document.createElement('button');
     button.type = 'button';
     button.className = 'riverlea-mode-switch';
     button.setAttribute('role', 'switch');
 
-    var thumb = document.createElement('span');
+    const thumb = document.createElement('span');
     thumb.className = 'riverlea-mode-thumb';
     button.appendChild(thumb);
 
     updateSwitchState(button, mode);
 
     button.addEventListener('click', function () {
-      var currentMode = getCurrentMode();
-      var nextMode = getNextMode(currentMode);
+      const currentMode = getCurrentMode();
+      const nextMode = getNextMode(currentMode);
       setCookieMode(nextMode);
       window.location.reload();
     });
@@ -153,8 +119,8 @@
       return;
     }
 
-    var observer = new MutationObserver(function () {
-      var wrapper = document.getElementById('riverlea-mode-toggle');
+    const observer = new MutationObserver(function () {
+      const wrapper = document.getElementById('riverlea-mode-toggle');
       if (!wrapper || wrapper.parentNode !== container) {
         return;
       }
@@ -174,50 +140,47 @@
       return true;
     }
 
-    var container = getToolbarContainer();
+    const container = getToolbarContainer();
     if (!container) {
       return false;
     }
 
-    ensureStyles();
-
-    var wrapperTag = container.tagName === 'UL' ? 'li' : 'div';
-    var wrapper = document.createElement(wrapperTag);
+    const wrapperTag = container.tagName === 'UL' ? 'li' : 'div';
+    const wrapper = document.createElement(wrapperTag);
     wrapper.id = 'riverlea-mode-toggle';
     wrapper.className = 'riverlea-mode-toggle-item';
 
-    var innerWrap = document.createElement('span');
+    const innerWrap = document.createElement('span');
     innerWrap.className = 'riverlea-mode-toggle-wrap';
 
-    var currentMode = getCurrentMode();
+    const currentMode = getCurrentMode();
     innerWrap.appendChild(createToggleButton(currentMode));
     wrapper.appendChild(innerWrap);
 
-    var placedBesideToggle = placeNextToMenuPositionToggle(container, wrapper);
+    const placedBesideToggle = placeNextToMenuPositionToggle(container, wrapper);
     if (!placedBesideToggle) {
       watchForMenuPositionToggle(container);
     }
     return true;
   }
 
-  function mountWithRetry(attempt) {
+  function mountOrObserve() {
     if (mount()) {
       return;
     }
-    if (attempt >= 40) {
-      return;
-    }
-    window.setTimeout(function () {
-      mountWithRetry(attempt + 1);
-    }, 100);
+    // Menu not yet in DOM — watch for it being added
+    const observer = new MutationObserver(function () {
+      if (mount()) {
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, {childList: true, subtree: true});
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      mountWithRetry(0);
-    });
+    document.addEventListener('DOMContentLoaded', mountOrObserve);
   }
   else {
-    mountWithRetry(0);
+    mountOrObserve();
   }
 })();

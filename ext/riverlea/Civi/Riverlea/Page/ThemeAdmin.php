@@ -26,11 +26,15 @@ class ThemeAdmin extends \CRM_Core_Page {
 
     foreach ($themeSettings as &$setting) {
       $value = \Civi::settings()->get($setting['name']);
+      $options = $setting['options'] ?? NULL;
 
       // render option values if applicable
       // use raw value if not a valid option
-      if ($setting['options']) {
-        $valueLabel = $setting['options'][$value] ?? E::ts("%1 [unrecognised option]", [1 => $value]);
+      if (is_array($options) && $options) {
+        $valueLabel = $options[$value] ?? E::ts("%1 [unrecognised option]", [1 => $value]);
+      }
+      elseif (($setting['type'] ?? NULL) === 'Boolean') {
+        $valueLabel = (bool) $value ? E::ts('Enabled') : E::ts('Disabled');
       }
       else {
         $valueLabel = $value;

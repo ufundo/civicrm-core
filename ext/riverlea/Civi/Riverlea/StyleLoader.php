@@ -118,16 +118,18 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
       }
 
       if (!\CRM_Utils_System::isFrontendPage()) {
-        // Inject dark mode preference for backend toggle
-        $bundle->addScript(
-          'window.riverleaBackendMode = ' . json_encode($this->getBackendDarkMode()) . ';',
-          ['weight' => 950, 'translate' => FALSE]
-        );
-        // Load the dark mode toggle button
-        $bundle->addScriptFile('riverlea', 'js/modeToggle.js', [
-          'weight' => 960,
-          'translate' => FALSE,
-        ]);
+        $backendMode = $this->getBackendDarkMode();
+        // Pass dark mode preference to JS via CRM.vars.riverlea.backendMode
+        \Civi::resources()->addVars('riverlea', ['backendMode' => $backendMode]);
+
+        if ($this->isBackendToggleEnabled()) {
+          // Load the dark mode toggle styles and button
+          $bundle->addStyleFile('riverlea', 'css/modeToggle.css', ['weight' => 955]);
+          $bundle->addScriptFile('riverlea', 'js/modeToggle.js', [
+            'weight' => 960,
+            'translate' => FALSE,
+          ]);
+        }
       }
     }
 
@@ -277,21 +279,21 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
     }
   }
   /**
-   * Get the backend dark mode, respecting per-user cookie override.
+   * Get the backend dark mode setting, respecting per-user cookie override.
    */
-  private function getBackendDarkMode() {
-    return $this->getDarkModeSetting();
+  private function getBackendDarkMode(): string {
+    $setting = \Civi::settings()->get('riverlea_dark_mode_backend');
+    if ($this->isBackendToggleEnabled() && !empty($_COOKIE['riverlea_dark_mode_backend'])) {
+      $setting = $_COOKIE['riverlea_dark_mode_backend'];
+    }
+    return in_array($setting, ['light', 'dark', 'inherit'], TRUE) ? $setting : 'light';
   }
 
   /**
-   * Determine the active dark-mode option, checking cookie first.
+   * Is the backend dark-mode toggle enabled in theme settings?
    */
-  private function getDarkModeSetting() {
-    $darkModeSetting = \Civi::settings()->get('riverlea_dark_mode_backend');
-    if (!empty($_COOKIE['riverlea_dark_mode_backend'])) {
-      $darkModeSetting = $_COOKIE['riverlea_dark_mode_backend'];
-    }
-    return in_array($darkModeSetting, ['light', 'dark', 'inherit'], TRUE) ? $darkModeSetting : 'light';
+  private function isBackendToggleEnabled(): bool {
+    return (bool) \Civi::settings()->get('riverlea_dark_mode_toggle_backend');
   }
 
 }
