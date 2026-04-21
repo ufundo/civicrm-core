@@ -278,6 +278,7 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
       }
     }
   }
+
   /**
    * Get the backend dark mode setting, respecting per-user cookie override.
    */
