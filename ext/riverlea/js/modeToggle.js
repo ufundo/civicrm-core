@@ -8,9 +8,9 @@
     inherit: 'Auto'
   };
   const MODE_ICONS = {
-    light: '☀',
-    dark: '🌙',
-    inherit: '◐'
+    light: 'fa-sun',
+    dark: 'fa-moon',
+    inherit: 'fa-circle-half-stroke'
   };
 
   function normalizeMode(mode) {
@@ -50,6 +50,16 @@
     return MODE_ICONS[normalizeMode(mode)];
   }
 
+  function renderModeIcon(thumb, mode) {
+    const normalizedMode = normalizeMode(mode);
+    thumb.textContent = '';
+
+    const icon = document.createElement('i');
+    icon.className = 'crm-i ' + getModeIcon(normalizedMode);
+    icon.setAttribute('aria-hidden', 'true');
+    thumb.appendChild(icon);
+  }
+
   function getCurrentMode() {
     const serverMode = CRM && CRM.vars && CRM.vars.riverlea && CRM.vars.riverlea.backendMode;
     return normalizeMode(getCookie(COOKIE_NAME) || serverMode || 'light');
@@ -78,7 +88,7 @@
     button.setAttribute('aria-checked', normalizedMode === 'dark' ? 'true' : 'false');
     button.setAttribute('aria-label', 'Backend theme mode: ' + getModeLabel(normalizedMode) + '. Click to switch.');
     button.title = 'Backend theme mode: ' + getModeLabel(normalizedMode) + ' (click to switch)';
-    button.querySelector('.riverlea-mode-thumb').textContent = getModeIcon(normalizedMode);
+    renderModeIcon(button.querySelector('.riverlea-mode-thumb'), normalizedMode);
   }
 
   function createToggleButton(mode) {

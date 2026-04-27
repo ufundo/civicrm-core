@@ -38,6 +38,11 @@
   background: var(--crm-input-toggle-button-bg);
   color: var(--crm-text-color);
 }
+.riverlea-mode-switch .riverlea-mode-thumb .crm-i {
+  font-size: var(--crm-font-small-size);
+  line-height: 1;
+}
+
 .riverlea-mode-switch[data-mode="light"] {
   background: var(--crm-input-toggle-disabled-bg);
 }
@@ -57,6 +62,17 @@
 }
 .riverlea-mode-switch:focus-visible {
   box-shadow: 0 0 0 2px var(--crm-focus-color);
+}
+#riverlea-mode-toggle i {
+  margin: 0;
+}
+
+#riverlea-mode-toggle i.crm-i.fa-sun {
+  color: var(--crm-c-amber);
+}
+
+#riverlea-mode-toggle i.crm-i.fa-moon {
+  color: var(--crm-c-yellow);
 }
 @media (max-width: 991px) {
   #crm-menubar-toggle-position + .riverlea-mode-toggle-item {
