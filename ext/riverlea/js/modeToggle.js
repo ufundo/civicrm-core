@@ -1,5 +1,5 @@
 (function () {
-  const COOKIE_NAME = 'riverlea_dark_mode_backend';
+  const COOKIE_NAME = 'riverlea_user_display_tweaks';
   const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
   const MODES = ['light', 'dark', 'inherit'];
   const MODE_LABELS = {
@@ -12,31 +12,47 @@
     dark: 'fa-moon',
     inherit: 'fa-circle-half-stroke'
   };
+  // JSON config structure: { v: 1, backendMode: 'light'|'dark'|'inherit' }
 
   function normalizeMode(mode) {
     return MODES.indexOf(mode) !== -1 ? mode : 'light';
   }
 
-  function getCookie(name) {
+  function getCookieConfig() {
     const cookieParts = document.cookie ? document.cookie.split('; ') : [];
     for (let i = 0; i < cookieParts.length; i += 1) {
       const part = cookieParts[i];
-      if (part.indexOf(name + '=') === 0) {
-        return decodeURIComponent(part.substring(name.length + 1));
+      if (part.indexOf(COOKIE_NAME + '=') === 0) {
+        try {
+          return JSON.parse(decodeURIComponent(part.substring(COOKIE_NAME.length + 1)));
+        } catch (e) {
+          return {};
+        }
       }
     }
-    return null;
+    return {};
   }
 
-  function setCookieMode(mode) {
+  function setCookieConfig(config) {
     document.cookie = [
-      COOKIE_NAME + '=' + encodeURIComponent(mode),
+      COOKIE_NAME + '=' + encodeURIComponent(JSON.stringify(config)),
       'path=/',
       'max-age=' + COOKIE_MAX_AGE,
       'SameSite=Lax'
     ].join('; ');
   }
 
+  function setBackendMode(mode) {
+    const config = getCookieConfig();
+    config.v = 1;
+    config.backendMode = normalizeMode(mode);
+    setCookieConfig(config);
+  }
+
+  function getBackendMode() {
+    const config = getCookieConfig();
+    return normalizeMode(config.backendMode);
+  }
   function getNextMode(currentMode) {
     const index = MODES.indexOf(normalizeMode(currentMode));
     return MODES[(index + 1) % MODES.length];
@@ -62,7 +78,8 @@
 
   function getCurrentMode() {
     const serverMode = CRM && CRM.vars && CRM.vars.riverlea && CRM.vars.riverlea.backendMode;
-    return normalizeMode(getCookie(COOKIE_NAME) || serverMode || 'light');
+    // Prefer cookie, fallback to server
+    return getBackendMode() || normalizeMode(serverMode || 'light');
   }
 
   function isVisible(element) {
@@ -106,7 +123,7 @@
     button.addEventListener('click', function () {
       const currentMode = getCurrentMode();
       const nextMode = getNextMode(currentMode);
-      setCookieMode(nextMode);
+      setBackendMode(nextMode);
       window.location.reload();
     });
 

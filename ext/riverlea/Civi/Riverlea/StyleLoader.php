@@ -284,8 +284,11 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
    */
   private function getBackendDarkMode(): string {
     $setting = \Civi::settings()->get('riverlea_dark_mode_backend');
-    if ($this->isBackendToggleEnabled() && !empty($_COOKIE['riverlea_dark_mode_backend'])) {
-      $setting = $_COOKIE['riverlea_dark_mode_backend'];
+    if ($this->isBackendToggleEnabled() && !empty($_COOKIE['riverlea_user_display_tweaks'])) {
+      $cookie = json_decode($_COOKIE['riverlea_user_display_tweaks'], true);
+      if (isset($cookie['backendMode']) && in_array($cookie['backendMode'], ['light', 'dark', 'inherit'], true)) {
+        $setting = $cookie['backendMode'];
+      }
     }
     return in_array($setting, ['light', 'dark', 'inherit'], TRUE) ? $setting : 'light';
   }
@@ -294,7 +297,8 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
    * Is the backend dark-mode toggle enabled in theme settings?
    */
   private function isBackendToggleEnabled(): bool {
-    return (bool) \Civi::settings()->get('riverlea_dark_mode_toggle_backend');
+    // Toggle is shown only if backend mode is set to 'inherit'
+    return \Civi::settings()->get('riverlea_dark_mode_backend') === 'inherit';
   }
 
 }

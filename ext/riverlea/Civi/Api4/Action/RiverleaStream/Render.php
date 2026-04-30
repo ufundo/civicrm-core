@@ -100,9 +100,12 @@ class Render extends \Civi\Api4\Generic\BasicBatchAction {
     }
     else {
       // Backend requests may be overridden by user cookie
-      if ((bool) \Civi::settings()->get('riverlea_dark_mode_toggle_backend') && !empty($_COOKIE['riverlea_dark_mode_backend'])) {
-        $cookieVal = $_COOKIE['riverlea_dark_mode_backend'];
-        return in_array($cookieVal, ['light', 'dark', 'inherit'], TRUE) ? $cookieVal : ($stream['dark_backend'] ?? \Civi::settings()->get('riverlea_dark_mode_backend'));
+      // Backend requests may be overridden by user cookie (JSON)
+      if (\Civi::settings()->get('riverlea_dark_mode_backend') === 'inherit' && !empty($_COOKIE['riverlea_user_display_tweaks'])) {
+        $cookie = json_decode($_COOKIE['riverlea_user_display_tweaks'], true);
+        if (isset($cookie['backendMode']) && in_array($cookie['backendMode'], ['light', 'dark', 'inherit'], true)) {
+          return $cookie['backendMode'];
+        }
       }
       return $stream['dark_backend'] ?? \Civi::settings()->get('riverlea_dark_mode_backend');
     }
