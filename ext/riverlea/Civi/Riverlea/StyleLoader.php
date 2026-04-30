@@ -285,8 +285,8 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
   private function getBackendDarkMode(): string {
     $setting = \Civi::settings()->get('riverlea_dark_mode_backend');
     if ($this->isBackendToggleEnabled() && !empty($_COOKIE['riverlea_user_display_tweaks'])) {
-      $cookie = json_decode($_COOKIE['riverlea_user_display_tweaks'], true);
-      if (isset($cookie['backendMode']) && in_array($cookie['backendMode'], ['light', 'dark', 'inherit'], true)) {
+      $cookie = json_decode($_COOKIE['riverlea_user_display_tweaks'], TRUE);
+      if (isset($cookie['backendMode']) && in_array($cookie['backendMode'], ['light', 'dark', 'inherit'], TRUE)) {
         $setting = $cookie['backendMode'];
       }
     }
