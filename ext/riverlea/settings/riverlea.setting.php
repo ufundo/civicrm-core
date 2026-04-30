@@ -15,7 +15,7 @@ return [
     'is_contact' => 0,
     'help_text' => E::ts('Control whether and how dark mode can be activated (for supported Riverlea themes only).'),
     'options' => [
-      'inherit' => E::ts('Use in-page toggle'),
+      'inherit' => E::ts('User-controlled via toggle/inherit'),
       'light' => E::ts('Always use light mode'),
       'dark' => E::ts('Always use dark mode'),
     ],
