@@ -153,20 +153,21 @@
 
         // Set up watches to refresh search results when needed.
         // And trigger the first run of the search if appropriate.
-        function setUpWatches() {
+        const setUpWatches = () => {
           // Kick off first run of the search immediately if there's no search button
           // NOTE: if there is an afFieldset it is better to wait for filters to load
           // any default values
-          if (!ctrl.settings.button && !ctrl.afFieldset) {
-            ctrl.getResultsPronto();
+          if (!this.settings.button && !this.afFieldset) {
+            this.getResultsPronto();
             // Prevent the below watchers from running the search while we're already doing it.
-            ctrl.doingFirstRun = true;
-            $timeout(() => ctrl.doingFirstRun = false, 1000);
+            this.doingFirstRun = true;
+            $timeout(() => this.doingFirstRun = false, 1000);
           }
-          if (ctrl.afFieldset) {
-            $scope.$watch(ctrl.afFieldset.getFilterValues, onChangeFilters, true);
+          if (this.afFieldset) {
+            console.log(this.afFieldset);
+            $element[0].closest('[af-fieldset]').addEventListener('crmFormChangeFilters', onChangeFilters);
           }
-          if (ctrl.settings.pager && ctrl.settings.pager.expose_limit) {
+          if (this.settings.pager && this.settings.pager.expose_limit) {
             $scope.$watch('$ctrl.limit', onChangePageSize);
           }
           $scope.$watch('$ctrl.filters', onChangeFilters, true);
