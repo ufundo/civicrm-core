@@ -128,11 +128,16 @@ return new class() {
   }
 
   public function generateIndexSql(string $indexName, array $index) {
+    $type = match (TRUE) {
+      !empty($index['unique']) => 'UNIQUE',
+      !empty($index['fts']) => 'FULLTEXT',
+      default => NULL,
+    };
     $indexFields = [];
     foreach ($index['fields'] as $fieldName => $length) {
       $indexFields[] = "`$fieldName`" . (is_int($length) ? "($length)" : '');
     }
-    return (!empty($index['unique']) ? 'UNIQUE ' : '') . "INDEX `$indexName`(" . implode(', ', $indexFields) . ')';
+    return ($type ? "{$type} " : '') . "INDEX `$indexName` (" . implode(', ', $indexFields) . ')';
   }
 
   private function generateConstraintsSql(array $entity): string {
