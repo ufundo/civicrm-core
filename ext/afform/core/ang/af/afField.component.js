@@ -461,13 +461,9 @@
         }
       };
 
-      $scope.select2Options = function() {
-        return {
-          results: _.transform($scope.getOptions(), function(result, opt) {
-            result.push({id: opt.id, text: opt.label});
-          }, [])
-        };
-      };
+      $scope.select2Options = () => ({
+        results: $scope.getOptions().map((opt) => ({id: opt.id, text: opt.label}))
+      });
 
       this.onChangeOperator = function() {
         $scope.dataProvider.getFieldData()[ctrl.fieldName] = {};
