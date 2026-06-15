@@ -609,13 +609,10 @@ UNION (
     }
 
     $menu = new CRM_Core_DAO_Menu();
-    $menu->query($query);
-
+    $menu->query($query)->fetch();
     $menuPath = [];
-    while ($menu->fetch()) {
-      if (!str_contains($path, $menu->path)) {
-        continue;
-      }
+
+    if ($menu && str_contains($path, $menu->path)) {
       CRM_Core_DAO::storeValues($menu, $menuPath);
 
       // Move module_data into main item.
