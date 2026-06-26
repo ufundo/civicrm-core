@@ -117,19 +117,13 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
         $bundle->addVars(E::LONG_NAME, ['resourceUrl' => E::url()]);
       }
 
-      if (!\CRM_Utils_System::isFrontendPage()) {
-        $backendMode = $this->getBackendDarkMode();
-        // Pass dark mode preference to JS via CRM.vars.riverlea.backendMode
-        \Civi::resources()->addVars('riverlea', ['backendMode' => $backendMode]);
-
-        if ($this->isBackendToggleEnabled()) {
-          // Load the dark mode toggle styles and button
-          $bundle->addStyleFile('riverlea', 'css/modeToggle.css', ['weight' => 955]);
-          $bundle->addScriptFile('riverlea', 'js/modeToggle.js', [
-            'weight' => 960,
-            'translate' => FALSE,
-          ]);
-        }
+      if ($this->userControlsEnabled()) {
+        // Load the user controls
+        $bundle->addStyleFile('riverlea', 'elements/civi-riverlea-user-controls.css', ['weight' => 955]);
+        $bundle->addScriptFile('riverlea', 'elements/civi-riverlea-user-controls.js', [
+          'weight' => 960,
+          'translate' => FALSE,
+        ]);
       }
     }
 
@@ -192,7 +186,8 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
     $streamModified = $stream['modified_date'] ?? NULL;
 
     $isFrontend = \CRM_Utils_System::isFrontendPage();
-    $darkMode = $isFrontend ? \Civi::settings()->get('riverlea_dark_mode_frontend') : \Civi::settings()->get('riverlea_dark_mode_backend');
+
+    $darkMode = $this->getCurrentDarkMode();
 
     return [
       'stream' => $stream['name'],
@@ -200,6 +195,15 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
       'is_frontend' => $isFrontend,
       'dark_mode' => $darkMode,
     ];
+  }
+
+  public function getCurrentDarkMode(): string {
+    if ($this->userControlsEnabled()) {
+      // we need to inherit from the user controlled preference
+      return 'inherit';
+    }
+
+    return \CRM_Utils_System::isFrontendPage() ? \Civi::settings()->get('riverlea_dark_mode_frontend') : \Civi::settings()->get('riverlea_dark_mode_backend');
   }
 
   /**
@@ -238,6 +242,7 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
     $render = \Civi\Api4\RiverleaStream::render(FALSE)
       ->addWhere('name', '=', $e->params['stream'])
       ->setIsFrontend($e->params['is_frontend'])
+      ->setDarkMode($e->params['dark_mode'])
       ->execute()
       ->first();
 
@@ -280,25 +285,13 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
   }
 
   /**
-   * Get the backend dark mode setting, respecting per-user cookie override.
-   */
-  private function getBackendDarkMode(): string {
-    $setting = \Civi::settings()->get('riverlea_dark_mode_backend');
-    if ($this->isBackendToggleEnabled() && !empty($_COOKIE['riverlea_user_display_tweaks'])) {
-      $cookie = json_decode($_COOKIE['riverlea_user_display_tweaks'], TRUE);
-      if (isset($cookie['backendMode']) && in_array($cookie['backendMode'], ['light', 'dark', 'inherit'], TRUE)) {
-        $setting = $cookie['backendMode'];
-      }
-    }
-    return in_array($setting, ['light', 'dark', 'inherit'], TRUE) ? $setting : 'light';
-  }
-
-  /**
    * Is the backend dark-mode toggle enabled in theme settings?
    */
-  private function isBackendToggleEnabled(): bool {
-    // Toggle is shown only if backend mode is set to 'inherit'
-    return \Civi::settings()->get('riverlea_dark_mode_backend') === 'inherit';
+  private function userControlsEnabled(): bool {
+    if (!\CRM_Utils_System::isFrontendPage()) {
+      return !!\Civi::settings()->get('riverlea_user_controls_backend');
+    }
+    return FALSE;
   }
 
 }

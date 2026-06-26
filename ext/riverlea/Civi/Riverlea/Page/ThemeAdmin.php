@@ -31,10 +31,9 @@ class ThemeAdmin extends \CRM_Core_Page {
       // render option values if applicable
       // use raw value if not a valid option
       if (is_array($options) && $options) {
-        $valueLabel = $options[$value] ?? E::ts("%1 [unrecognised option]", [1 => $value]);
-      }
-      elseif (($setting['type'] ?? NULL) === 'Boolean') {
-        $valueLabel = (bool) $value ? E::ts('Enabled') : E::ts('Disabled');
+        $values = (array) $value;
+        $valueLabels = array_map(fn ($value) => $options[$value] ?? E::ts("%1 [unrecognised option]", [1 => $value]), $values);
+        $valueLabel = implode(', ', $valueLabels);
       }
       else {
         $valueLabel = $value;
