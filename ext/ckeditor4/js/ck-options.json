@@ -290,6 +290,11 @@
         "description": "Sets the DOCTYPE to be used when loading the editor content as HTML."
     },
     {
+        "id": "editorplaceholder",
+        "type": "String",
+        "description": "The text that will be used as a placeholder inside the editor."
+    },
+    {
         "id": "emailProtection",
         "type": "String",
         "description": "The e-mail address anti-spam protection option."
