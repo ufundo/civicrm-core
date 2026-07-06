@@ -43,10 +43,12 @@ class PriceFieldUtils {
   }
 
   public static function getPriceFieldSpecs(): array {
-    if (!isset(\Civi::$statics[__CLASS__])) {
-      \Civi::$statics[__CLASS__] = self::fetchPriceFieldSpecs();
+    $value = \Civi::cache('metadata')->get('price_field_specs');
+    if (!\is_array($value)) {
+      $value = self::fetchPriceFieldSpecs();
+      \Civi::cache('metadata')->set('price_field_specs', $value);
     }
-    return \Civi::$statics[__CLASS__];
+    return $value;
   }
 
   protected static function fetchPriceFieldSpecs(): array {
