@@ -13,8 +13,12 @@
       urlArg: '@',
       selectedTab: '=?',
       rememberSelection: '<',
+      pageNavButtons: '<',
+      pageNavSubmitText: '<',
     },
     controller: function($scope, $element, $timeout) {
+      const ts = $scope.ts = CRM.ts('org.civicrm.afform');
+
       this.tabs = [];
 
       this.$onInit = function() {
@@ -30,16 +34,20 @@
 
         $timeout(() => {
           if (!this.selectedTab && this.rememberSelection) {
-            this.selectedTab = CRM.cache.get(this.getCacheKey());
+            const cachedName = CRM.cache.get(this.getCacheKey());
+            const cachedIndex = this.tabs.findIndex((tab) => tab.name === selectedName);
+            if (cachedIndex !== -1) {
+              this.selectedTab = cachedIndex;
+            }
           }
           if (!this.selectedTab && this.tabs.length) {
-            this.selectedTab = this.tabs[0].name;
+            this.selectedTab = 0;
           }
         });
 
         if (this.rememberSelection) {
-          // Watch for tab changes and remember the selection
-          $scope.$watch('$ctrl.selectedTab', (newTab) => {
+          // Watch for tab changes and remember the selection name
+          $scope.$watch('$ctrl.getSelectedName', (newTab) => {
             if (newTab) {
               CRM.cache.set(this.getCacheKey(), newTab);
             }
@@ -51,9 +59,18 @@
         this.tabs.push(tab);
       };
 
-      this.selectTab = (tabName) => {
-        this.selectedTab = tabName;
+      this.selectTab = (tabIndex) => {
+        // validate before moving forward
+        if (tabIndex > this.selectedTab) {
+          const currentInvalid = this.tabs[this.selectedTab]?.findInvalid();
+          if (currentInvalid.length) {
+            return;
+          }
+        }
+        this.selectedTab = tabIndex;
       };
+
+      this.getSelectedName = () => this.tabs[this.selectedTab]?.name;
 
       this.getFormName = () => this.afFormCtrl?.getFormMeta().name ?? $scope.$parent.meta.name;
 
@@ -74,10 +91,11 @@
       // Transclude allows the tab scope to be accessed from the inner html as $parent
       transclude: true,
       // ngShow will toggle the class `ng-hide`; also adding it to the markup avoids initial flash
-      template: '<div ng-transclude role="tabpanel" ng-show="name === afTabsetCtrl.selectedTab" class="ng-hide"></div>',
+      template: '<div ng-transclude role="tabpanel" ng-show="afTabsetCtrl.getSelectedName() === name" class="ng-hide"></div>',
       link: function (scope, element, attrs, afTabsetCtrl) {
         scope.name = scope.name || 'tab' + tabNumber++;
         scope.afTabsetCtrl = afTabsetCtrl;
+        scope.findInvalid = () => element.find('.ng-invalid');
         afTabsetCtrl.addTab(scope);
       }
     };
