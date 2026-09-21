@@ -76,25 +76,23 @@
       this.editor.getEntities().forEach((entity) => {
         const entityFields = this.editor.getEntityFields(entity.name);
 
-        const items = entityFields.fields.reduce((items, field) => {
-          // Conditional in case field is missing
-          if (field) {
-            const key = entity.name + "[0][fields][" + field.name + "]";
-            this.fieldDefns[key] = field;
-            items.push({id: key, text: field.label || field.input_attrs.label});
-          }
-          return items;
-        }, []);
+        const items = entityFields.fields.filter(Boolean).map((field) => {
+          const key = entity.name + "[0][fields][" + field.name + "]";
+          this.fieldDefns[key] = field;
+          return {id: key, text: field.label || field.input_attrs.label};
+        });
 
         entityFields.joins.forEach((join) => {
           items.push({
             text: afGui.getEntity(join.entity).label,
-            children: join.fields.reduce((items, field) => {
+            children: join.fields.filter(Boolean).map((field) => {
+              // we dont have tokens for joined entity values
+              // NOTE: these options always pick the first record from a repeating join
+              // though there's no UI indication of this
               const key = entity.name + "[0][joins][" + join.entity + "][0][" + field.name + "]";
               this.fieldDefns[key] = field;
-              items.push({id: key, text: field.label || field.input_attrs.label});
-              return items;
-            }, [])
+              return {id: key, text: field.label || field.input_attrs.label};
+            })
           });
         });
         this.fieldSelector.push({
