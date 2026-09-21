@@ -100,30 +100,29 @@
         }
 
         // Watch conditional required attribute
+        // TODO: in future we may be able to optimise this to only recalculate
+        // the conditional if tokens with the attribute change. currently it is
+        // hard to parse out what values are referenced in the expression
         const afRequiredAttr = $element.attr('af-required');
         if (afRequiredAttr) {
-          $scope.$watch(() => {
-            const conditions = $scope.$eval(afRequiredAttr);
-            return ctrl.afForm.checkConditions(conditions);
-          }, (value) => {
-            ctrl.defn.required = value;
-          });
+          $scope.$watch(
+            () => this.afForm.checkConditional(afRequiredAttr),
+            (value) => this.defn.required = value
+          );
         }
 
         // Watch conditional disabled attribute
         const afDisabledAttr = $element.attr('af-disabled');
         if (afDisabledAttr) {
-          $scope.$watch(() => {
-            const conditions = $scope.$eval(afDisabledAttr);
-            return ctrl.afForm.checkConditions(conditions);
-          }, (value) => {
-            ctrl.defn.disabled = value;
-          });
+          $scope.$watch(
+            () => this.afForm.checkConditional(afDisabledAttr),
+            (value) => this.defn.disabled = value
+          );
         }
 
         // check for tokens in the default value
         const tokens = this.afForm?.identifyTokens(this.defn.afform_default);
-        if (tokens && tokens.size) {
+        if (tokens) {
           const calculateValueWatcher = $scope.$watchCollection(() => Object.values(this.afForm.getTokenValues(tokens)), () => {
             if ($element[0].querySelector('.ng-touched')) {
               // user has touched this input, stop calculating
@@ -459,7 +458,7 @@
         return fieldOptions.filter((opt) => {
           if (!opt.if || !opt.if.length) return true;
           try {
-            return this.afForm.checkConditions(opt.if);
+            return this.afForm.checkConditional(opt.if);
           } catch (e) {
             // Permissive: misconfigured rule => visible. Server-side checks
             // are still authoritative.

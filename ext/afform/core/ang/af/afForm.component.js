@@ -234,37 +234,62 @@
         );
       }
 
-      // Handle the logic for conditional fields
-      this.checkConditions = function(conditions, op) {
-        op = op || 'AND';
-        // OR and AND have the opposite behavior so the logic is inverted
-        // NOT works identically to OR but gets flipped at the end
-        let ret = op === 'AND',
-          flip = !ret;
-        (conditions || []).forEach((clause) => {
-          // Recurse into nested group
-          if (Array.isArray(clause[1])) {
-            if (ctrl.checkConditions(clause[1], clause[0]) === flip) {
-              ret = flip;
-            }
-          } else {
-            // Angular can't handle expressions with quotes inside brackets, so they are omitted
-            // Here we add them back to make valid js
-            if (typeof clause[0] === 'string' && clause[0].charAt(0) !== '"') {
-              clause[0] = clause[0].replace(/\[([^'"])/g, "['$1").replace(/([^'"])]/g, "$1']");
-            }
-            let parser1 = $parse(clause[0]);
-            let parser2 = $parse(clause[2]);
-            let result = compareConditions(parser1(data), clause[1], parser2(data));
-            if (result === flip) {
-              ret = flip;
-            }
+      this.checkConditional = (conditional) => {
+        if (Array.isArray(conditional)) {
+          // treat array of arrays as implicit AND
+          if (conditional.every((c) => Array.isArray(c))) {
+            return conditional.every((c) => this.checkConditional(c));
           }
-        });
-        return op === 'NOT' ? !ret : ret;
-      };
+          switch (conditional[0]) {
+            case 'AND':
+              return conditional[1].every((c) => this.checkConditional(c));
 
-      function compareConditions(val1, op, val2) {
+            case 'OR':
+              return conditional[1].some((c) => this.checkConditional(c));
+
+            case 'NOT':
+              return !this.checkConditional(conditional[1]);
+
+            default:
+              return compareConditions(conditional[0], conditional[1], conditional[2]);
+          }
+        }
+
+        // strip redundant quotes and brackets
+        while (conditional.startsWith('"') || conditional.startsWith("'") || conditional.startsWith('(')) {
+          conditional = conditional.substring(1, conditional.length - 1)
+        }
+
+        // parse JSON strings into arrays
+        // NOTE: this previously used $parse in some places, $eval in others
+        // but serverside uses solely json_decode -- so switching to pure
+        // function here
+        const conditions = JSON.parse(conditional);
+        return this.checkConditions(conditions);
+      }
+
+      const evaluateConditionalDataValue = (val) => {
+        // TODO: switch to tokens
+        // Angular can't handle expressions with quotes inside brackets, so they are omitted
+        // Here we add them back to make valid js
+        if (typeof val[0] === 'string' && val[0].charAt(0) !== '"') {
+          val[0] = val[0].replace(/\[([^'"])/g, "['$1").replace(/([^'"])]/g, "$1']");
+        }
+
+        // resolve data values
+        return $parse(val)(data);
+      }
+
+      const compareConditions = (val1, op, val2) => {
+        val1 = evaluateConditionalDataValue(val1);
+
+        // NOTE: previously we passed the `data` object when $parsing the second value
+        // but
+        //   a) we only really expect constant values in val2
+        //   b) we weren't restoring the array quotes, so accessing on data wouldn't have
+        //      worked anyway
+        val2 = $parse(val2)();
+
         const yes = (op !== '!=' && !op.includes('NOT '));
 
         switch (op) {
