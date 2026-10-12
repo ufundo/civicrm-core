@@ -851,9 +851,6 @@ SET    version = '$version'
     // But there's one report of getting here with 'upgrade.main' (not yet reproduced).
     $restore = \CRM_Upgrade_DispatchPolicy::useTemporarily('upgrade.finish');
 
-    $config = CRM_Core_Config::singleton(TRUE, TRUE);
-    $config->userSystem->flush();
-
     Civi::rebuild(['*' => TRUE, 'triggers' => FALSE, 'sessions' => FALSE])->execute();
     // NOTE: triggerRebuild is FALSE becaues it will run again in a moment (via fixSchemaDifferences).
     // sessionReset is FALSE because upgrade status/postUpgradeMessages are needed by the Page. We reset later in doFinish().
