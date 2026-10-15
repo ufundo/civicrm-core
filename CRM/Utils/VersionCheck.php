@@ -184,31 +184,9 @@ class CRM_Utils_VersionCheck {
   private function getEntityStats() {
     // FIXME hardcoded list = bad
     $tables = [
-      'CRM_Activity_DAO_Activity' => NULL,
-      'CRM_Case_DAO_Case' => 'is_deleted = 0',
       'CRM_Contact_DAO_Contact' => 'is_deleted = 0',
-      'CRM_Contact_DAO_Relationship' => NULL,
-      'CRM_Campaign_DAO_Campaign' => NULL,
       'CRM_Contribute_DAO_Contribution' => 'is_test = 0',
-      'CRM_Contribute_DAO_ContributionPage' => 'is_active = 1',
-      'CRM_Contribute_DAO_ContributionProduct' => NULL,
-      'CRM_Contribute_DAO_Widget' => 'is_active = 1',
-      'CRM_Core_DAO_Discount' => NULL,
-      'CRM_Price_DAO_PriceSetEntity' => NULL,
-      'CRM_Core_DAO_UFGroup' => 'is_active = 1',
-      'CRM_Event_DAO_Event' => 'is_active = 1',
-      'CRM_Event_DAO_Participant' => 'is_test = 0',
-      'CRM_Friend_DAO_Friend' => 'is_active = 1',
-      'CRM_Grant_DAO_Grant' => NULL,
-      'CRM_Mailing_DAO_Mailing' => 'is_completed = 1',
-      'CRM_Member_DAO_Membership' => 'is_test = 0',
-      'CRM_Member_DAO_MembershipBlock' => 'is_active = 1',
-      'CRM_Pledge_DAO_Pledge' => 'is_test = 0',
-      'CRM_Pledge_DAO_PledgeBlock' => NULL,
-      'CRM_Mailing_Event_DAO_MailingEventDelivered' => NULL,
     ];
-    // Provide continuity in wire format.
-    $compat = ['MailingEventDelivered' => 'Delivered'];
     foreach ($tables as $daoName => $where) {
       if (class_exists($daoName)) {
         $short_name = substr($daoName, strrpos($daoName, '_') + 1);
