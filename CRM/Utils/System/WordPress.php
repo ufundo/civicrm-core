@@ -838,6 +838,8 @@ class CRM_Utils_System_WordPress extends CRM_Utils_System_Base {
       }
     }
 
+    CRM_Core_Error::deprecatedWarning('CiviCRM is having to guess where Wordpress is installed, which may not be reliable and will not be supported in a future version. Please set $civicrm_settings["domain"]["wpLoadPhp"] in your civicrm.settings.php file.');
+
     /*
      * Keep previous logic as fallback of last resort.
      *
