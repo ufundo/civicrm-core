@@ -44,7 +44,44 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
       'hook_civicrm_themes' => ['onGetThemes', 0],
       'hook_civicrm_alterBundle' => ['alterBundles', 0],
       'hook_civicrm_buildAsset' => ['buildDynamicCss', 0],
+      'hook_civicrm_navigationMenu' => ['addUserMenuItems', 0],
     ];
+  }
+
+  /**
+   * Backend user controls: setting value => [UserMenu slot name, label, weight].
+   */
+  protected function getUserControlSlots(): array {
+    return [
+      'dark-mode' => ['RiverleaDarkModeControl', E::ts('Theme mode'), 10],
+      'font-size' => ['RiverleaFontSizeControl', E::ts('Text size'), 20],
+    ];
+  }
+
+  /**
+   * Reserve a slot in the core UserMenu for each enabled control; the loader mounts the element into it.
+   */
+  public function addUserMenuItems(GenericHookEvent $e): void {
+    if (!$this->isActive()) {
+      return;
+    }
+    $menu = &$e->params;
+    foreach ($menu as &$item) {
+      if (($item['attributes']['name'] ?? NULL) !== 'UserMenu') {
+        continue;
+      }
+      foreach ($this->enabledUserControls() as $control) {
+        [$name, $label, $weight] = $this->getUserControlSlots()[$control];
+        $item['child'][] = [
+          'attributes' => [
+            'label' => $label,
+            'name' => $name,
+            'weight' => $weight,
+          ],
+        ];
+      }
+      return;
+    }
   }
 
   protected ?array $streams;
@@ -117,7 +154,7 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
         $bundle->addVars(E::LONG_NAME, ['resourceUrl' => E::url()]);
       }
 
-      $userControls = \Civi::settings()->get('riverlea_user_controls_backend') ?: [];
+      $userControls = $this->enabledUserControls();
 
       if ($userControls) {
         foreach ($userControls as $control) {
@@ -206,7 +243,7 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
   }
 
   public function getCurrentDarkMode(): string {
-    if (in_array('dark-mode', \Civi::settings()->get('riverlea_user_controls_backend') ?: [])) {
+    if (in_array('dark-mode', $this->enabledUserControls(), TRUE)) {
       // we need to inherit from the user controlled preference
       return 'inherit';
     }
@@ -255,6 +292,17 @@ class StyleLoader extends AutoService implements \Symfony\Component\EventDispatc
       ->first();
 
     $e->content = $render['content'] ?? '';
+  }
+
+  /**
+   * Enabled backend user controls, limited to known ones; none on front-end pages.
+   */
+  private function enabledUserControls(): array {
+    if (\CRM_Utils_System::isFrontendPage()) {
+      return [];
+    }
+    $enabled = (array) (\Civi::settings()->get('riverlea_user_controls_backend') ?: []);
+    return array_values(array_intersect(array_keys($this->getUserControlSlots()), $enabled));
   }
 
 }

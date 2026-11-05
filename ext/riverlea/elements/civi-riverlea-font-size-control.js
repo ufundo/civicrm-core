@@ -1,67 +1,85 @@
 (function () {
 
+  const STORAGE_KEY = 'civi-riverlea-user-controls-font-size';
+
   class CiviRiverleaFontSizeControl extends HTMLElement {
 
+    // Three levels, as in the original cycler; small and big are further from default than before.
      /* jshint ignore:start */
     static MODES = {
-      small: {value: '0.875rem', label: ts('Smaller'), next: 'default'},
-      default: {value: '1rem', label: ts('Default'), next: 'big'},
-      big: {value: '1.125rem', label: ts('Bigger'), next: 'small'},
+      small: {label: ts('Smaller')},
+      default: {label: ts('Default')},
+      big: {label: ts('Larger')},
     };
+
+    // Choices stored by the five-level version of this control.
+    static LEGACY_MODES = {smaller: 'small', bigger: 'big'};
     /* jshint ignore:end */
+
+    static savedMode() {
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      const mode = CiviRiverleaFontSizeControl.LEGACY_MODES[saved] || saved;
+      return CiviRiverleaFontSizeControl.MODES[mode] ? mode : 'default';
+    }
+
+    static applyMode(mode) {
+      // civi-riverlea-font-size-control.css maps this attribute to the --crm-font-size variables.
+      document.documentElement.dataset.civiFontSize = mode;
+    }
 
     connectedCallback() {
       this.render();
-      this.loadMode();
-      this.querySelector('button').addEventListener('click', () => this.nextMode());
+      this.setMode(CiviRiverleaFontSizeControl.savedMode());
+      this.querySelectorAll('button').forEach((button) => {
+        button.addEventListener('click', () => this.setMode(button.dataset.mode));
+      });
+      this.querySelector('[role="radiogroup"]').addEventListener('keydown', (e) => this.onKeydown(e));
     }
 
     render() {
+      const buttons = Object.entries(CiviRiverleaFontSizeControl.MODES).map(([mode, details]) => {
+        const label = ts('Text size: %1', {1: details.label});
+        return `<button type="button" role="radio" class="civi-riverlea-font-size-option" data-mode="${mode}" title="${label}" aria-label="${label}">A</button>`;
+      }).join('');
       this.innerHTML = `
-        <button type="button" role="switch" class="civi-riverlea-font-size-switch">
-          <i class="crm-i fa-font" role="img" aria-disabled="true" style="font-size: 0.75rem" data-font-option="small"></i>
-          <i class="crm-i fa-font" role="img" aria-disabled="true" style="font-size: 1rem" data-font-option="default"></i>
-          <i class="crm-i fa-font" role="img" aria-disabled="true" style="font-size: 1.5rem" data-font-option="big"></i>
-          <span class="sr-only"></span>
-        </button>
+        <span class="civi-riverlea-font-size-control-wrap">
+          <span role="radiogroup" class="civi-riverlea-font-size-picker" aria-label="${ts('Text size')}">${buttons}</span>
+        </span>
       `;
-
-      this.querySelector('.sr-only').innerText = ts('Adjust font size');
-    }
-
-    nextMode() {
-      this.setMode(CiviRiverleaFontSizeControl.MODES[this.mode].next);
     }
 
     setMode(mode) {
+      if (!CiviRiverleaFontSizeControl.MODES[mode]) {
+        return;
+      }
       this.mode = mode;
-
-      const value = CiviRiverleaFontSizeControl.MODES[this.mode].value;
-      document.querySelector(':root').style.setProperty('--crm-font-size', value);
-
-      this.renderMode();
-
-      this.saveMode();
+      CiviRiverleaFontSizeControl.applyMode(mode);
+      // Roving tabindex: only the checked option is in the tab order; arrow keys move between options.
+      this.querySelectorAll('button').forEach((button) => {
+        const checked = button.dataset.mode === mode;
+        button.setAttribute('aria-checked', checked ? 'true' : 'false');
+        button.tabIndex = checked ? 0 : -1;
+      });
+      window.localStorage.setItem(STORAGE_KEY, mode);
     }
 
-    renderMode() {
-      const label = CiviRiverleaFontSizeControl.MODES[this.mode].label;
-      this.querySelector('button').title = ts('Font-size: %1. Click to adjust.', {1: label});
-
-      this.querySelectorAll('.crm-i').forEach((el) => el.style.color = 'var(--crm-menubar-text-color)');
-      this.querySelector(`.crm-i[data-font-option=${this.mode}]`).style.color = 'var(--crm-primary-color)';
-    }
-
-    saveMode() {
-      window.localStorage.setItem('civi-riverlea-user-controls-font-size', this.mode);
-    }
-
-    loadMode() {
-      const saved = window.localStorage.getItem('civi-riverlea-user-controls-font-size');
-      this.setMode(saved ? saved : 'default');
+    onKeydown(e) {
+      const modes = Object.keys(CiviRiverleaFontSizeControl.MODES);
+      const step = {ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1}[e.key];
+      if (!step) {
+        return;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      const next = modes[Math.min(modes.length - 1, Math.max(0, modes.indexOf(this.mode) + step))];
+      this.setMode(next);
+      this.querySelector(`button[data-mode="${next}"]`).focus();
     }
   }
 
   customElements.define('civi-riverlea-font-size-control', CiviRiverleaFontSizeControl);
+
+  // Apply the saved size as soon as this script runs, rather than when the control mounts in the menu.
+  CiviRiverleaFontSizeControl.applyMode(CiviRiverleaFontSizeControl.savedMode());
 
 })();

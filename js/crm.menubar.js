@@ -80,14 +80,47 @@
               } else {
                 $(menu).siblings('a[accesskey]').focus();
               }
+              CRM.menubar.toggleUserMenu(false);
+            })
+            // UserMenu is a click-only disclosure kept outside SmartMenus (no ul/a), so it never opens on hover
+            .on('click', '.crm-menubar-usermenu-toggle', function(e) {
+              e.preventDefault();
+              CRM.menubar.toggleUserMenu();
+            })
+            .on('keydown', '.crm-menubar-usermenu', function(e) {
+              if (e.key === 'Escape' && CRM.menubar.isUserMenuOpen()) {
+                e.stopPropagation();
+                CRM.menubar.toggleUserMenu(false);
+                $('.crm-menubar-usermenu-toggle', '#civicrm-menu').focus();
+              }
             })
             .smartmenus(CRM.menubar.settings);
+          $(document).on('click', function(e) {
+            if (CRM.menubar.isUserMenuOpen() && !$(e.target).closest('.crm-menubar-usermenu').length) {
+              CRM.menubar.toggleUserMenu(false);
+            }
+          });
           initialized = true;
           CRM.menubar.initializeResponsive();
           CRM.menubar.initializeSearch();
           CRM.menubar.initializeDrill();
         });
       }
+    },
+    toggleUserMenu: function(open) {
+      var $toggle = $('.crm-menubar-usermenu-toggle', '#civicrm-menu');
+      if (!$toggle.length) {
+        return;
+      }
+      open = (open === undefined) ? $toggle.attr('aria-expanded') !== 'true' : !!open;
+      if (open && initialized) {
+        $('#civicrm-menu').smartmenus('menuHideAll');
+      }
+      $toggle.attr('aria-expanded', open ? 'true' : 'false');
+      $('#crm-menubar-usermenu-panel').prop('hidden', !open);
+    },
+    isUserMenuOpen: function() {
+      return $('.crm-menubar-usermenu-toggle', '#civicrm-menu').attr('aria-expanded') === 'true';
     },
     destroy: function() {
       $.SmartMenus.destroy();
@@ -457,7 +490,7 @@
     initializeDrill: function() {
       $('#civicrm-menu').on('keyup', '#crm-menubar-drilldown', function() {
         var term = $(this).val(),
-          results = term ? CRM.menubar.findItems(term).slice(0, 20) : [];
+          results = term ? CRM.menubar.findItems(term).filter((item) => item.name !== 'UserMenu').slice(0, 20) : [];
         // The drill results are rendered by the drill box itself, so it must not render another one inside them.
         $(this).parent().next('ul').html(branchTpl(results, false));
         $('#civicrm-menu').smartmenus('refresh').smartmenus('itemActivate', $(this).closest('a'));
@@ -511,8 +544,27 @@
     '</li>';
   }
 
+  function userMenuTpl(item) {
+    const children = (item.child || []).map((child) => {
+      const content = (child.url && child.url !== '#')
+        ? `<a href="${esc(child.url)}">${child.icon ? `<i class="${esc(child.icon)}" role="img" aria-hidden="true"></i> ` : ''}${esc(child.label)}</a>`
+        : `<span class="crm-menubar-usermenu-label">${esc(child.label)}</span>`;
+      return `<div class="crm-menubar-usermenu-item" data-name="${esc(child.name)}">${content}</div>`;
+    }).join('');
+    return '<li data-name="UserMenu" class="crm-menubar-right crm-menubar-usermenu">' +
+      `<button type="button" class="crm-menubar-usermenu-toggle" aria-expanded="false" aria-controls="crm-menubar-usermenu-panel" title="${esc(item.label)}">` +
+        `<i class="${esc(item.icon)}" role="img" aria-hidden="true"></i>` +
+        `<span class="sr-only">${esc(item.label)}</span>` +
+      '</button>' +
+      `<div id="crm-menubar-usermenu-panel" class="crm-menubar-usermenu-panel" role="group" aria-label="${esc(item.label)}" hidden>${children}</div>` +
+    '</li>';
+  }
+
   function branchTpl(items, showDrill = true) {
     return (items || []).map((item) => {
+      if (item.name === 'UserMenu') {
+        return userMenuTpl(item);
+      }
       let inner = item.icon ? `<i class="${esc(item.icon)}" role="img" aria-hidden="true"></i>` : '';
       inner += item.label ? `<span>${esc(item.label)}</span>` : `<span class="sr-only">${esc(item.name)}</span>`;
       let children = '';

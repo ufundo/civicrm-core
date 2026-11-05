@@ -921,4 +921,35 @@ class CRM_Core_BAO_Navigation extends CRM_Core_DAO_Navigation {
     }
   }
 
+  /**
+   * Add the right-aligned "UserMenu" dropdown; hook implementations add its children.
+   *
+   * @param array $menu
+   */
+  public static function buildUserMenu(&$menu) {
+    $menu[] = [
+      'attributes' => [
+        'label' => ts('My preferences'),
+        'name' => 'UserMenu',
+        'icon' => 'crm-i fa-circle-user',
+        'weight' => 99999,
+        'attr' => ['class' => 'crm-menubar-right'],
+      ],
+      'child' => [],
+    ];
+  }
+
+  /**
+   * Drop the UserMenu again if nothing populated it.
+   *
+   * @param array $menu
+   */
+  public static function removeEmptyUserMenu(&$menu) {
+    foreach ($menu as $key => $item) {
+      if (($item['attributes']['name'] ?? NULL) === 'UserMenu' && empty($item['child'])) {
+        unset($menu[$key]);
+      }
+    }
+  }
+
 }

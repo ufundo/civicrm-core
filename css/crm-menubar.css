@@ -193,6 +193,91 @@ body.crm-menubar-over-cms-menu #crm-menubar-toggle-position a i {
   transform: rotate(180deg);
 }
 
+/* UserMenu: a click-only disclosure (button + panel), deliberately not a SmartMenus sub-menu */
+#civicrm-menu .crm-menubar-usermenu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: var(--crm-menubar-height);
+  padding: 0 10px;
+  border: 0;
+  background-color: var(--crm-menubar-item-color);
+  color: var(--crm-menubar-text-color);
+  font-size: 15px;
+  cursor: pointer;
+}
+#civicrm-menu .crm-menubar-usermenu-toggle i {
+  margin: 0;
+  font-size: inherit;
+}
+#civicrm-menu .crm-menubar-usermenu-toggle:hover,
+#civicrm-menu .crm-menubar-usermenu-toggle[aria-expanded="true"] {
+  filter: brightness(1.3);
+}
+#civicrm-menu .crm-menubar-usermenu-toggle:focus-visible {
+  outline: 2px solid var(--crm-menubar-text-color);
+  outline-offset: -2px;
+}
+#civicrm-menu .crm-menubar-usermenu-panel {
+  background-color: var(--crm-menubar-item-color);
+  color: var(--crm-menubar-text-color);
+  padding: 4px 0;
+}
+#civicrm-menu .crm-menubar-usermenu-panel[hidden] {
+  display: none;
+}
+#civicrm-menu .crm-menubar-usermenu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 12px;
+  min-height: 42px;
+  white-space: nowrap;
+  font-size: 13px;
+}
+#civicrm-menu .crm-menubar-usermenu-item a {
+  color: inherit;
+  padding: 0;
+}
+@media (min-width: $breakMin) {
+  #civicrm-menu > li.crm-menubar-right {
+    float: right;
+    position: relative;
+  }
+  #civicrm-menu .crm-menubar-usermenu-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 14em;
+    z-index: 100001;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);
+  }
+}
+@media (max-width: $breakMax) {
+  /* In the open burger menu the UserMenu is the last item: centred and labelled like the others */
+  #civicrm-menu .crm-menubar-usermenu-toggle {
+    margin: 0 auto;
+    gap: .5em;
+    font-size: 14px;
+  }
+  #civicrm-menu .crm-menubar-usermenu-toggle .sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    clip: auto;
+    clip-path: none;
+    overflow: visible;
+    white-space: nowrap;
+  }
+  #civicrm-menu .crm-menubar-usermenu-panel {
+    max-width: 22em;
+    margin: 0 auto;
+  }
+}
+
 /* Drilldown menu item finder */
 #civicrm-menu [data-name=MenubarDrillDown] > a {
   padding-top: 2px;
@@ -293,6 +378,8 @@ body.crm-menubar-over-cms-menu #crm-menubar-toggle-position a i {
   body.crm-menubar-below-cms-menu #civicrm-menu {
     position: fixed;
     top: 0;
+    /* Keep right-floated items on screen when Drupal displaces content (e.g. its Navigation sidebar) */
+    width: calc(100% - var(--drupal-displace-offset-left, 0px) - var(--drupal-displace-offset-right, 0px));
   }
 
   body.crm-menubar-over-cms-menu #civicrm-menu {
