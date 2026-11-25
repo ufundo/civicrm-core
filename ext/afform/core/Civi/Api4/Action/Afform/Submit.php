@@ -540,11 +540,18 @@ class Submit extends AbstractProcessor {
       $relationship = $relationship['fields'] ?? [];
       // For handling suffixed values, particularly relationship_type_id:name since we do reference relationship_type_id specifically here.
       $event->getApiRequest()->formatWriteValues($relationship, 'Relationship', 'create');
-      if (empty($relationship['contact_id_a']) || empty($relationship['contact_id_b']) || empty($relationship['relationship_type_id'])) {
-        self::saveRelationshipById($relationship, $event->getEntity(), $api4);
-      }
-      else {
+      
+      // if we have the required fields to create a new relationship, save by values
+      if (!empty($relationship['contact_id_a']) && !empty($relationship['contact_id_b']) && !empty($relationship['relationship_type_id'])) {
         self::saveRelationshipByValues($relationship, $event->getEntity(), $api4);
+      }
+      // else try to update if we have the required fields to create a new relationship, save by values
+      elseif (!empty($entity->getEntity()['actions']['update']) && !empty($relationship['id'])) {
+      	$api4('Relationship', 'save', ['records' => [$relationship]]);
+      }
+      // else we wont be able to save. that may be expected but let's log a warning
+      else {
+        \Civi::log('afform')->debug('Afform: ' . $event->getAfform()['name'] . ': missing required fields to save Relationship in processRelationships');
       }
     }
   }
@@ -555,8 +562,6 @@ class Submit extends AbstractProcessor {
    * @param callable $api4
    */
   private static function saveRelationshipById(array $relationship, array $entity, callable $api4): void {
-    if (!empty($entity['actions']['update']) && !empty($relationship['id'])) {
-      $api4('Relationship', 'save', ['records' => [$relationship]]);
     }
   }
 
